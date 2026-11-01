@@ -14,7 +14,7 @@ from .drivers import run_trees
 from .flags import evaluate_rules
 from .metrics import compute_all
 from .registry import REGISTRY, load_all
-from .scoring import band_vars, roll_up, score_metric
+from .scoring import band_vars, merger_exclusions, roll_up, score_metric
 from .standardise import Standardised, load_standardised
 
 
@@ -27,9 +27,9 @@ class Computed:
 
 
 def compute(ticker: str, cfg: Config, asof: Optional[str] = None, beta: Optional[float] = None,
-            archetype: Optional[str] = None) -> Computed:
+            archetype: Optional[str] = None, fy_end: bool = False) -> Computed:
     load_all()
-    std = load_standardised(ticker, cfg, archetype=archetype, asof=normalise_asof(asof))
+    std = load_standardised(ticker, cfg, archetype=archetype, asof=normalise_asof(asof), fy_end=fy_end)
     coc = capital_cost.compute(std, cfg, beta_override=beta)
     metrics, ctx = compute_all(std, cfg, coc)
     return Computed(std=std, coc=coc, metrics=metrics, ctx=ctx)
@@ -38,9 +38,10 @@ def compute(ticker: str, cfg: Config, asof: Optional[str] = None, beta: Optional
 class PeerSet:
     """Latest metric values of same-archetype companies, computed as of the same fiscal year (no look-ahead)."""
 
-    def __init__(self, cfg: Config, cache: Optional[Dict] = None):
+    def __init__(self, cfg: Config, cache: Optional[Dict] = None, fy_end: bool = False):
         self.cfg = cfg
         self.cache = cache if cache is not None else {}
+        self.fy_end = fy_end
 
     def members(self, archetype: str) -> List[str]:
         return [t for t, r in self.cfg.universe.items() if r.get("archetype") == archetype]
@@ -50,7 +51,7 @@ class PeerSet:
         if key in self.cache:
             return self.cache[key]
         try:
-            c = compute(ticker, self.cfg, asof=asof_label)
+            c = compute(ticker, self.cfg, asof=asof_label, fy_end=self.fy_end)
         except (ValueError, FileNotFoundError):
             self.cache[key] = None
             return None
@@ -94,8 +95,8 @@ class PeerSet:
 
 
 def analyse(ticker: str, cfg: Config, asof: Optional[str] = None, beta: Optional[float] = None,
-            archetype: Optional[str] = None, peers: Optional[PeerSet] = None) -> Dict:
-    comp = compute(ticker, cfg, asof=asof, beta=beta, archetype=archetype)
+            archetype: Optional[str] = None, peers: Optional[PeerSet] = None, fy_end: bool = False) -> Dict:
+    comp = compute(ticker, cfg, asof=asof, beta=beta, archetype=archetype, fy_end=fy_end)
     std, coc, metrics, ctx = comp.std, comp.coc, comp.metrics, comp.ctx
     names = band_vars(cfg, coc)
     sector = cfg.sector_of(std.archetype)
@@ -103,11 +104,12 @@ def analyse(ticker: str, cfg: Config, asof: Optional[str] = None, beta: Optional
     manual = std.manual.reindex(std.annual.index) if std.manual is not None and not std.manual.empty else None
     flags = evaluate_rules(cfg.rules_for(std.archetype), metrics, std.annual, ctx.tokens, names, manual=manual, info=ctx.info)
     triggered = [f for f in flags if f["status"] == "triggered"]
-    peers = peers or PeerSet(cfg)
+    peers = peers or PeerSet(cfg, fy_end=fy_end)
     peer_vals = peers.values(std.archetype, std.last_fy, ticker, metrics)
     results = {}
     for mid, s in metrics.items():
         results[mid] = score_metric(mid, s, std.last_fy, cfg, std.archetype, std.family, names, peer_vals.get(mid) if peer_vals else None)
+    merger_exclusions(results, std.notes, std.last_fy)
     pillars, overall = roll_up(results, std.family, cfg, triggered, archetype=std.archetype)
 
     def get(node):

@@ -160,3 +160,33 @@ def test_real_trees_are_exact(real_cfg, ticker, tree):
         assert not res["inexact_nodes"], f"{ticker} {tree} {w}: {res['inexact_nodes']}"
         assert abs(res["residual"]) < 1e-9 * max(1.0, abs(res["root_change"])) + 1e-12
         assert res["top_drivers"]
+
+
+def test_merger_window_growth_not_scored():
+    from engine.scoring import merger_exclusions
+
+    notes = [{"category": "merger", "fy": "FY24", "text": "... likely a merger/acquisition paid in shares. ..."},
+             {"category": "merger", "fy": "FY20", "text": "Balance-sheet step change ... large capital raise ..."}]
+    res = {k: {"rag": "green", "composite": 80.0, "level": {"basis": "band"}} for k in
+           ("revenue_cagr_3y", "revenue_cagr_5y", "revenue_cagr_10y", "nii_cagr_3y", "roe")}
+    out = merger_exclusions(res, notes, "FY26")
+    # FY24 lies inside every window ending FY26 (FY23->FY26 and longer); the FY20 asset jump is not a share-paid merger
+    assert sorted(out) == ["nii_cagr_3y", "revenue_cagr_10y", "revenue_cagr_3y", "revenue_cagr_5y"]
+    assert res["roe"]["rag"] == "green" and res["revenue_cagr_3y"]["rag"] is None and "FY24" in res["revenue_cagr_3y"]["reason"]
+    res2 = {"revenue_cagr_3y": {"rag": "green"}}
+    assert merger_exclusions(res2, notes, "FY28") == []          # FY25-FY28 window no longer spans FY24
+
+
+def test_first_of_is_lazy():
+    from engine.expr import Missing, compile_expr, evaluate
+    from engine.sector_metrics import FORMULA_FUNCS
+
+    def boom():
+        raise Missing("kpi")
+
+    funcs = {"first_of": lambda *a: a[0], "boom": boom, "one": lambda: 1.0, "nan": lambda: float("nan")}
+    t = compile_expr("first_of(boom(), one())", set(FORMULA_FUNCS) | {"boom", "one"})
+    assert evaluate(t, {}, funcs) == 1.0
+    assert evaluate(compile_expr("first_of(nan(), one())", set(FORMULA_FUNCS) | {"one"}), {}, funcs) == 1.0
+    with pytest.raises(Missing):
+        evaluate(compile_expr("first_of(boom(), boom())", set(FORMULA_FUNCS) | {"boom"}), {}, funcs)

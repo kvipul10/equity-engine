@@ -30,6 +30,7 @@ manual_kpis:
   - {id: pcr_pct, unit: "%", required: true, description: "Provision coverage ratio at 31 March (excluding technical write-offs, as reported)", where: "Quarterly results / presentation"}
   - {id: crar_pct, unit: "%", required: true, description: "Total capital adequacy ratio (Basel III) at 31 March", where: "Quarterly results / Basel III Pillar 3"}
   - {id: provisions_cr, unit: "Rs cr", required: true, description: "Provisions and contingencies for the full fiscal year (not one quarter)", where: "P&L / annual results press release"}
+  - {id: npa_divergence_cr, unit: "Rs cr", required: false, description: "RBI-assessed divergence in gross NPAs for the fiscal year (disclosure required by the April-2017 RBI circular when material)", where: "Annual report notes / results release"}
   - {id: cet1_pct, unit: "%", required: false, description: "Common equity tier-1 ratio at 31 March", where: "Basel III disclosures"}
   - {id: nim_pct, unit: "%", required: false, description: "Net interest margin for the year as reported (bank's own definition)", where: "Investor presentation"}
   - {id: yield_on_advances_pct, unit: "%", required: false, description: "Yield on advances for the year", where: "Investor presentation / analyst sheet"}
@@ -53,6 +54,10 @@ metrics_add:
      equation: "(Opex excluding provisions + depreciation) / (NII + other income)", meaning: "Operating efficiency before credit costs."}
   - {id: credit_cost, name: "Credit cost", pillar: cash_quality, unit: pct, direction: lower, formula: "kpi('provisions_cr') / avg('kpi:advances_cr')",
      equation: "Provisions & contingencies / average advances", meaning: "Share of the loan book lost to provisions in the year: the price of growth."}
+  - {id: npa_divergence_share, name: "NPA divergence / reported GNPA", pillar: cash_quality, unit: pct, direction: lower,
+     formula: "max_last('kpi:npa_divergence_cr', 3, 1) / (kpi('gnpa_pct') * kpi('advances_cr'))",
+     equation: "max over 3 years of RBI-assessed NPA divergence / (GNPA ratio x advances)",
+     meaning: "Bad loans the regulator found that the bank had not reported: when material, reported asset quality cannot be trusted."}
   - {id: gnpa_ratio, name: "Gross NPA ratio", pillar: cash_quality, unit: pct, direction: lower, formula: "kpi('gnpa_pct')",
      equation: "Gross NPAs / gross advances (reported)", meaning: "Share of loans that have stopped paying."}
   - {id: nnpa_ratio, name: "Net NPA ratio", pillar: cash_quality, unit: pct, direction: lower, formula: "kpi('nnpa_pct')",
@@ -141,6 +146,12 @@ bands:
     source_url: https://www.business-standard.com/finance/news/yes-bank-s-casa-liquidity-coverage-ratio-rises-in-q2-loan-growth-up-13-1-124100300477_1.html
     as_of: "2024-09-06"
     rationale: "System credit-deposit ratio 77.2% (RBI data, Sep 2024; about 82% by mid-2026). Green = within ~5pp of the system level; red below 60% (idle deposits) or above 100% (lending more than deposits, i.e. wholesale funding)."
+  npa_divergence_share:
+    red: 0.15
+    green: 0.0
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "RBI requires disclosure when divergence exceeds 15% of the reported incremental GNPA (April-2017 circular); any divergence means the regulator disagreed with the bank's classification."
   loan_growth:
     red: inflation_target
     green: nominal_gdp_growth
@@ -261,6 +272,16 @@ flags:
     values: {now: "m('provisions_to_ppop')"}
     explanation: >
       Provisions took {{ now|pct }} of pre-provision operating profit.
+  - id: BK09
+    name: Regulator found unreported bad loans (NPA divergence)
+    pillar: cash_quality
+    severity: high
+    applies: [BL]
+    condition: "m('npa_divergence_share') > 0.15"
+    values: {d: "m('npa_divergence_share')"}
+    explanation: >
+      RBI-assessed NPA divergence in the last 3 years was {{ d|pct }} of the reported gross NPAs: reported asset quality understates
+      the stress, so treat GNPA, provisions and profits as optimistic (Yes Bank FY16-FY17 is the template).
 
 drivers:
   add:

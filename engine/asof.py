@@ -6,7 +6,7 @@ scoring, drivers and flags then run unchanged, so no later data can leak in by c
 (tests/test_asof.py proves it by scrambling all later data and comparing outputs).
 
 as-of == the latest fiscal year in the file is treated as the normal ('latest') run: current price and all
-quarters are kept.
+quarters are kept, unless fy_end=True (CLI --fy-end), which truncates at that year-end like any other as-of.
 """
 from __future__ import annotations
 
@@ -40,10 +40,14 @@ def is_latest(raw: RawExport, asof: Optional[str]) -> bool:
     return a is None or a == available_fys(raw)[-1]
 
 
-def truncate_raw(raw: RawExport, asof: str) -> RawExport:
+def truncate_raw(raw: RawExport, asof: str, fy_end: bool = False) -> RawExport:
+    """fy_end=True also truncates when the as-of is the newest year: quarters after that year-end and the
+    export-date price are dropped (information as at the fiscal year-end and its results)."""
     a = normalise_asof(asof)
     labels = {fy_label(d): d for d in raw.annual.columns}
-    if a is None or a == list(labels)[-1]:
+    if a is None and fy_end:
+        a = list(labels)[-1]
+    if a is None or (a == list(labels)[-1] and not fy_end):
         return raw
     if a not in labels:
         raise ValueError(f"{raw.ticker}: as-of {a} not in export (available: {', '.join(labels)})")

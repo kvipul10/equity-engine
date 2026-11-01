@@ -142,3 +142,19 @@ def test_yesbank_blowup_flags_fire_asof_fy18(real_cfg):
     rep = analyse("YESBANK", real_cfg, asof="FY18")
     ids = {f["id"] for f in rep["flags"]["triggered"]}
     assert {"A06", "B06"} <= ids
+
+
+def test_fy_end_mode_truncates_the_newest_year(project_root):
+    """--fy-end: as-of the newest FY still drops later quarters and the export-date price (FY-end basis)."""
+    from engine.analysis import analyse
+    from engine.config import Config
+    from engine.paths import Paths
+
+    cfg = Config.load(Paths.default(project_root))
+    latest = analyse("SYNTHCO", cfg)
+    strict = analyse("SYNTHCO", cfg, asof=latest["asof"]["fy"], fy_end=True)
+    assert strict["asof"]["fy"] == latest["asof"]["fy"] and "as-of" in strict["asof"]["mode"]
+    assert strict["asof"]["price_basis"] == "fy_end_asof"
+    lq = strict["asof"]["latest_quarter_used"]
+    assert lq is None or lq <= strict["asof"]["period_end"]
+    assert latest["asof"]["latest_quarter_used"] is None or latest["asof"]["latest_quarter_used"] >= (lq or "")

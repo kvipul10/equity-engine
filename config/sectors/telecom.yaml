@@ -34,6 +34,11 @@ metrics_add:
   - {id: spectrum_share_of_debt, name: "Deferred spectrum share of borrowings", pillar: balance_sheet, unit: pct, direction: neutral,
      formula: "kpi('spectrum_liabilities_cr') / f('borrowings')", equation: "Deferred spectrum liabilities / borrowings", meaning: "Government dues inside debt."}
 bands:
+  arpu_growth:
+    red: 0.0
+    green: inflation_target
+    source_type: derived
+    rationale: "ARPU growth above CPI inflation (RBI target, config/market.yaml) is real pricing power; below zero is price erosion."
   net_debt_to_ebitda:
     green: 2.0
     red: 3.5
@@ -71,7 +76,8 @@ flags:
     pillar: capital_efficiency
     severity: low
     applies: [telecom]
-    condition: "m('capex_to_sales') > 0.35"
+    # Session 4 validation: global telcos spend about 15-20% of revenue; above 30% is a heavy build phase.
+    condition: "m('capex_to_sales') > 0.30"
     values: {c: "m('capex_to_sales')"}
     explanation: >
       Capex (balance-sheet proxy) is {{ c|pct }} of revenue.

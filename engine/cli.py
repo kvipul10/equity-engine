@@ -43,14 +43,14 @@ def cmd_ingest(args) -> int:
 
 
 def _analyse_one(cfg: Config, ticker: str, asof: Optional[str], beta: Optional[float], archetype: Optional[str], peers=None,
-                 quiet: bool = False):
+                 quiet: bool = False, fy_end: bool = False):
     from .analysis import analyse
     from .report import console_summary, out_dir_for, write_outputs
     from .standardise import load_standardised, write_processed
 
     std = load_standardised(ticker, cfg, archetype=archetype)
     write_processed(std, cfg.paths.processed_dir / ticker)
-    rep = analyse(ticker, cfg, asof=asof, beta=beta, archetype=archetype, peers=peers)
+    rep = analyse(ticker, cfg, asof=asof, beta=beta, archetype=archetype, peers=peers, fy_end=fy_end)
     out = out_dir_for(cfg.paths, ticker, rep)
     files = write_outputs(rep, out, cfg)
     if not quiet:
@@ -62,7 +62,7 @@ def _analyse_one(cfg: Config, ticker: str, asof: Optional[str], beta: Optional[f
 def cmd_analyse(args) -> int:
     cfg = _cfg(args)
     asof = args.asof if args.asof is not None else cfg.universe_asof(args.ticker)
-    _analyse_one(cfg, args.ticker, asof, args.beta, args.archetype, quiet=args.quiet)
+    _analyse_one(cfg, args.ticker, asof, args.beta, args.archetype, quiet=args.quiet, fy_end=args.fy_end)
     return 0
 
 
@@ -73,12 +73,12 @@ def cmd_analyse_all(args) -> int:
     if not cfg.universe:
         print("data/universe.csv is empty or missing", file=sys.stderr)
         return 1
-    peers = PeerSet(cfg)
+    peers = PeerSet(cfg, fy_end=args.fy_end)
     rows = []
     for t, row in cfg.universe.items():
         asof = args.asof if args.asof is not None else row.get("asof")
         try:
-            rep, files = _analyse_one(cfg, t, asof, None, None, peers=peers, quiet=True)
+            rep, files = _analyse_one(cfg, t, asof, None, None, peers=peers, quiet=True, fy_end=args.fy_end)
         except Exception as e:  # keep going; report the failure
             print(f"{t}: FAILED - {type(e).__name__}: {e}", file=sys.stderr)
             rows.append({"ticker": t, "archetype": row.get("archetype"), "status": f"failed: {e}"})
@@ -96,7 +96,7 @@ def cmd_analyse_all(args) -> int:
         sc = f"{o['score']:.0f}" if o["score"] is not None else "--"
         print(f"{t:<12} {rep['asof']['fy']:<5} {(o['rag'] or 'n/a').upper():<6} {sc:>3}  {rep['root']['verdict']:<15} "
               f"flags H/M/L {rep['flags']['counts']['high']}/{rep['flags']['counts']['medium']}/{rep['flags']['counts']['low']}  -> {files['analysis'].parent}")
-    out = cfg.paths.reports_dir / "universe_summary.csv"
+    out = cfg.paths.reports_dir / ("universe_summary_fy_end.csv" if args.fy_end else "universe_summary.csv")
     out.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(out, index=False, float_format="%.4f")
     print(f"Wrote {out}")
@@ -112,12 +112,12 @@ def cmd_compare(args) -> int:
         print("compare takes 2 to 5 distinct tickers", file=sys.stderr)
         return 1
     cfg = _cfg(args)
-    peers = PeerSet(cfg)
+    peers = PeerSet(cfg, fy_end=args.fy_end)
     reps = []
     for t in tickers:
         asof = args.asof if args.asof is not None else cfg.universe_asof(t)
         try:
-            reps.append(analyse(t, cfg, asof=asof, peers=peers))
+            reps.append(analyse(t, cfg, asof=asof, peers=peers, fy_end=args.fy_end))
         except FileNotFoundError as e:
             print(str(e), file=sys.stderr)
             return 1
@@ -250,14 +250,17 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--beta", type=float, help="override the levered beta")
     p.add_argument("--archetype", help="override the archetype from universe.csv")
     p.add_argument("--quiet", action="store_true")
+    p.add_argument("--fy-end", action="store_true", help="truncate at the as-of fiscal year-end even when it is the newest year (drop later quarters, FY-end price)")
     p.set_defaults(fn=cmd_analyse)
     p = sub.add_parser("analyse-all", help="analyse every company in data/universe.csv")
     p.add_argument("--asof", help="override every row's asof")
+    p.add_argument("--fy-end", action="store_true", help="truncate at the as-of fiscal year-end even when it is the newest year (drop later quarters, FY-end price)")
     p.set_defaults(fn=cmd_analyse_all)
     p = sub.add_parser("compare", help="reports/compare.html: side-by-side pillar scores for 2-5 tickers")
     p.add_argument("tickers", nargs="+")
     p.add_argument("--asof", help="common fiscal year for all tickers (default: each ticker's universe as-of)")
     p.add_argument("--out", help="output path (default reports/compare.html)")
+    p.add_argument("--fy-end", action="store_true", help="truncate at the as-of fiscal year-end even when it is the newest year (drop later quarters, FY-end price)")
     p.set_defaults(fn=cmd_compare)
     p = sub.add_parser("validate", help="compare reports with validation/expected.yaml -> validation/results.md")
     p.add_argument("--include-holdout", action="store_true", help="also score the holdout peers (aggregates only)")

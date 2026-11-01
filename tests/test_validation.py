@@ -77,3 +77,33 @@ def test_expected_file_is_valid_and_markdown_in_sync(real_cfg):
     for t, c in exp["companies"].items():
         if c.get("role") == "test":
             assert len(c["strengths"]) == 3 and len(c["weaknesses"]) == 3, t
+
+
+# ---------------------------------------------------------------------------------------------- Session 4 rule changes
+def _run(real_cfg, archetype, rule_id, series):
+    import pandas as pd
+
+    from engine.flags import evaluate_rules
+
+    idx = ["FY22", "FY23", "FY24", "FY25", "FY26"]
+    metrics = {k: pd.Series(v, index=idx, dtype=float) for k, v in series.items()}
+    rules = [r for r in real_cfg.rules_for(archetype) if r["id"] == rule_id]
+    return evaluate_rules(rules, metrics, pd.DataFrame(index=idx), real_cfg.tokens(archetype), {})[0]
+
+
+@pytest.mark.parametrize("archetype, rule, series, fires", [
+    # IT01: 12.5% -> 13.3% -> 13.7% rises two years running above 12% (TCS FY24-FY26); 12.6% after a fall does not
+    ("it_services", "IT01", {"attrition": [0.174, 0.201, 0.125, 0.133, 0.137]}, True),
+    ("it_services", "IT01", {"attrition": [0.277, 0.209, 0.126, 0.141, 0.126]}, False),
+    # IN01: 194% -> 177% is a 17pp fall in a year (> 15pp) though above 170%
+    ("insurance", "IN01", {"solvency_ratio": [1.76, 2.03, 1.87, 1.94, 1.77]}, True),
+    ("insurance", "IN01", {"solvency_ratio": [1.76, 2.03, 1.87, 1.94, 1.90]}, False),
+    # IN03: 26.3% -> 25.6% -> 24.2%: -1.4pp in a year (> 1pp)
+    ("insurance", "IN03", {"vnb_margin": [0.274, 0.276, 0.263, 0.256, 0.242]}, True),
+    ("insurance", "IN03", {"vnb_margin": [0.274, 0.276, 0.263, 0.258, 0.255]}, False),
+    # TC03: capex 34.4% of revenue > 30%
+    ("telecom", "TC03", {"capex_to_sales": [0.30, 0.31, 0.33, 0.36, 0.344]}, True),
+    ("telecom", "TC03", {"capex_to_sales": [0.30, 0.31, 0.33, 0.36, 0.28]}, False),
+])
+def test_session4_rule_thresholds(real_cfg, archetype, rule, series, fires):
+    assert (_run(real_cfg, archetype, rule, series)["status"] == "triggered") is fires

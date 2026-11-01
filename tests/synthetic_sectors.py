@@ -33,6 +33,7 @@ SECTOR_COMPANIES: Dict[str, Dict] = {
         "pcr_pct": last(6, [68, 70, 72, 66, 62, 58]),               # < 60% -> BK02
         "crar_pct": last(6, [16.5, 16.0, 15.2, 14.1, 13.4, 12.6]), # < 13% -> BK03
         "provisions_cr": last(6, [40, 45, 50, 60, 70, 85]),
+        "npa_divergence_cr": {"FY25": 300},                          # RBI divergence -> BK09
         "cet1_pct": last(6, [13.0, 12.6, 12.0, 11.2, 10.6, 10.0]),
         "nim_pct": last(6, [3.9, 3.8, 3.7, 3.6, 3.5, 3.4]),
         "yield_on_advances_pct": last(6, [9.5, 9.3, 9.4, 9.6, 9.7, 9.8]),

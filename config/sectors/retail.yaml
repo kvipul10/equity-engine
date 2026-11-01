@@ -31,6 +31,12 @@ metrics_add:
      formula: "(f('net_debt') - kpi('lease_liabilities_cr')) / (f('ebitda') - kpi('lease_payments_cr'))",
      equation: "(Net debt - lease liabilities) / (EBITDA - lease rentals)", meaning: "Financial leverage on a pre-Ind AS 116 basis."}
 bands:
+  store_growth:
+    red: 0.0
+    green: 0.10
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Organised retail is gaining share from unorganised trade; a store base growing 10%+ a year is expanding share, a shrinking one is retreating."
   sssg:
     red: inflation_target
     green: nominal_gdp_growth

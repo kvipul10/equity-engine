@@ -249,3 +249,30 @@ def roll_up(metric_results: Dict[str, Dict], family: str, cfg: Config, triggered
     overall = {"score": score, "rag": rag, "coverage": (sum(w for _, w in avail) / total_w) if total_w else 0.0,
                "high_flags": n_high, "capped_by_flags": capped, "weights_basis": fam_key}
     return pillars, overall
+
+
+# ---------------------------------------------------------------------------------------------- mergers (Session 4)
+def merger_exclusions(results: Dict[str, Dict], notes: List[Dict], last_fy: str) -> List[str]:
+    """Growth CAGRs whose window spans a merger or balance-sheet step change (standardisation note category
+    'merger') are not scored: that growth is largely inorganic, so it is neither an organic strength nor weakness.
+    Returns the metric ids that were un-scored."""
+    import re
+
+    # only the "paid in shares" step (assets +40% with share count +10%): a plain asset jump can be leases or a capital raise
+    years = sorted({n["fy"] for n in notes if n.get("category") == "merger" and n.get("fy") and "paid in shares" in n.get("text", "")},
+                   key=fy_year)
+    if not years:
+        return []
+    t = fy_year(last_fy)
+    out = []
+    for mid, r in results.items():
+        m = re.search(r"_cagr_(\d+)y$", mid)
+        if not m or r.get("rag") is None:
+            continue
+        n = int(m.group(1))
+        hit = [y for y in years if t - n < fy_year(y) <= t]
+        if hit:
+            r.update({"level": None, "composite": None, "rag": None,
+                      "reason": f"window spans a merger or balance-sheet step change ({', '.join(hit)}): growth largely inorganic, not scored"})
+            out.append(mid)
+    return out

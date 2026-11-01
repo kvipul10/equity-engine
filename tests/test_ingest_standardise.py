@@ -140,3 +140,31 @@ def test_quarter_labels():
     assert quarter_label(pd.Timestamp("2026-09-30")) == "Q2FY27"
     assert quarter_label(pd.Timestamp("2026-03-31")) == "Q4FY26"
     assert quarter_label(pd.Timestamp("2025-12-31")) == "Q3FY26"
+
+
+def test_one_off_tax_normalised_hand_computed():
+    """ETR -5% vs a 25% norm on core PBT 100: the 30 gap is a one-off credit, removed from core PAT."""
+    import pandas as pd
+
+    from engine.standardise import _normalise_tax
+
+    class N:
+        def __init__(self):
+            self.items = []
+
+        def add(self, cat, text, fy=None):
+            self.items.append((cat, fy, text))
+
+    S = pd.DataFrame({"pbt_core": [100.0] * 5, "tax_core": [25.0, 25.0, 24.0, 26.0, -5.0],
+                      "pat_core": [75.0, 75.0, 76.0, 74.0, 105.0]}, index=["FY22", "FY23", "FY24", "FY25", "FY26"])
+    notes = N()
+    _normalise_tax(S, notes, 0.25168)
+    # normal = median(25, 25, 24, 26) = 25%; gap = 0.25 x 100 - (-5) = 30
+    assert S.loc["FY26", "tax_oneoff"] == pytest.approx(30.0)
+    assert S.loc["FY26", "tax_core"] == pytest.approx(25.0) and S.loc["FY26", "pat_core"] == pytest.approx(75.0)
+    assert S.loc["FY25", "tax_oneoff"] == 0 and notes.items and notes.items[0][1] == "FY26"
+    # three anomalous years: too erratic, reported tax kept
+    E = pd.DataFrame({"pbt_core": [100.0] * 6, "tax_core": [25.0, -5.0, 25.0, 60.0, 25.0, -10.0],
+                      "pat_core": [75.0, 105.0, 75.0, 40.0, 75.0, 110.0]}, index=[f"FY{y}" for y in range(21, 27)])
+    _normalise_tax(E, N(), 0.25168)
+    assert (E["tax_oneoff"] == 0).all() and E.loc["FY26", "pat_core"] == 110.0

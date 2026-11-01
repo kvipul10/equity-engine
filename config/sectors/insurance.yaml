@@ -124,10 +124,11 @@ flags:
     pillar: balance_sheet
     severity: high
     applies: [INS]
-    condition: "m('solvency_ratio') < 1.70"
-    values: {now: "m('solvency_ratio')"}
+    # Session 4 validation: a fast fall (more than 15pp in a year) signals a coming capital raise even above 170%.
+    condition: "m('solvency_ratio') < 1.70 or chg('solvency_ratio', 1) < -0.15"
+    values: {now: "m('solvency_ratio')", d: "chg('solvency_ratio', 1)"}
     explanation: >
-      Solvency ratio is {{ now|pct }}, within 20pp of IRDAI's 150% control level: growth or dividends may need fresh capital.
+      Solvency ratio is {{ now|pct }} ({{ d|pp }} in a year; IRDAI control level 150%): growth or dividends may need fresh capital.
   - id: IN02
     name: 13th-month persistency slipping
     pillar: cash_quality
@@ -142,10 +143,11 @@ flags:
     pillar: margins
     severity: medium
     applies: [INS]
-    condition: "chg('vnb_margin', 2) < -0.03"
-    values: {now: "m('vnb_margin')", d: "chg('vnb_margin', 2)"}
+    # Session 4 validation: a 1pp fall in one year is material for a life insurer (analysts re-rate on 100-150 bps).
+    condition: "chg('vnb_margin', 1) < -0.01 or chg('vnb_margin', 2) < -0.02"
+    values: {now: "m('vnb_margin')", d: "chg('vnb_margin', 2)", d1: "chg('vnb_margin', 1)"}
     explanation: >
-      VNB margin fell {{ d|pp }} over 2 years to {{ now|pct }} (product mix shift to low-margin ULIPs/group, or pricing pressure).
+      VNB margin fell {{ d|pp }} over 2 years ({{ d1|pp }} in the latest year) to {{ now|pct }} (product mix, regulation or pricing pressure).
   - id: IN04
     name: Rich P/EV with slow VNB growth
     pillar: valuation

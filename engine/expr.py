@@ -108,6 +108,18 @@ def evaluate(tree: ast.Expression, names: Dict[str, Any], funcs: Dict[str, Calla
         if isinstance(n, ast.IfExp):
             return ev(n.body) if ev(n.test) else ev(n.orelse)
         if isinstance(n, ast.Call):
+            if n.func.id == "first_of" and "first_of" in funcs:
+                # lazy fallback: the first argument whose inputs are all available (a preferred source, then proxies)
+                last = None
+                for a in n.args:
+                    try:
+                        v = ev(a)
+                    except Missing as e:
+                        last = e
+                        continue
+                    if not (isinstance(v, float) and v != v):
+                        return v
+                raise last or Missing("first_of: no argument available")
             fn = funcs.get(n.func.id)
             if fn is None:
                 raise ExprError(f"unknown function '{n.func.id}'")
