@@ -217,7 +217,58 @@ One file per archetype: bank, nbfc, insurance, it_services, fmcg, consumer_manuf
 
 **Manual KPIs (v2).** `metric,fiscal_year,value,unit,source_url,source_date,verified` (see `data/manual/README.md`). Blank values are ignored and values are never estimated. As-of runs drop KPI rows after the as-of year. KPI years before the first Screener year extend the timeline as KPI-only rows: their financial fields stay empty, so only KPI-based metrics are computed there. `data/manual/COVERAGE.md` (from `python -m engine kpi-coverage`) shows the found and blank company-years.
 
-## 11. Known limitations
+## 11. Report (engine/report/)
+
+The report presents what the engine computes. It adds no metrics, scores or thresholds. Every sentence is a Jinja2 template in `engine/report/templates/text.yaml` with pre-formatted numbers, so the same inputs always give the same text (`tests/test_report_outputs.py` checks that rendering is byte-identical).
+
+**Ranking (Strengths / Weaknesses / Watch, at most 6 each).** Each item scores severity × confidence. The settings are in `config/scoring.yaml: report`.
+- **Metric severity** = |composite − 50| / 50 × pillar factor × role factor.
+  - Pillar factor = pillar weight / largest pillar weight, floored at 0.25.
+  - Role factor: 1.0 for scored metrics, 0.67 for components.
+  - On the watch list, the larger of the composite and trend-score distances from 50 is used.
+- **Flag severity**: high 1.0, medium 0.6, low 0.3.
+- **Confidence** = data coverage × level source × input quality.
+  - Data coverage = min(1, years with data / 5); 0.6 for point metrics.
+  - Level source: external band or peer percentile 1.0, derived band 0.9, indicative band 0.6, no band 0.5.
+  - Input quality: 0.8 when an unverified manual KPI feeds the metric or flag.
+- **Which list:**
+  - Green metrics go to strengths, unless the trend score is ≤ 25 (then watch).
+  - Red metrics go to weaknesses, unless the trend is improving (then watch).
+  - Amber metrics with a deteriorating trend go to watch.
+  - Medium and high flags go to weaknesses; low flags go to watch.
+- **Caps**: at most 2 items per pillar per list, and one variant per concept (e.g. revenue CAGR 3y or 5y, not both). A metric already referenced by a flag in the same list is dropped.
+
+**Driver chains.** These come from the exact decompositions in section 7. The 3y window is preferred, then 5y, then 1y, and the ROE tree before the ROIC and EPS trees.
+- For a root or inner node, the chain gives:
+  1. its change
+  2. the child that contributes most in the same direction, with its share
+  3. the leaf under that child that contributes most, with its start and end values
+
+  Example: "−4.1 pts over 3y; 70% from asset turnover; asset turnover fell because receivables / sales rose 60 days → 85 days".
+- For a leaf, the chain gives its share of the root change.
+
+**Missing data.** A static dependency map is built from the sector configs:
+- sector-metric formulas (`kpi('x')`, `m('y')`, followed transitively)
+- flag conditions
+- driver-tree nodes
+
+For each KPI that is absent at the as-of year, the panel lists the metrics it leaves n/a, the rules it leaves not evaluable, and the trees that fall back, using the engine's own notes.
+
+**Bull and bear case starter.** Financial evidence only, each bullet citing its metric, flag or tree id. Sources:
+- the top strengths or weaknesses
+- the economic-profit verdict
+- multiples ≥ 20% below or above the peer median or the Damodaran industry multiple, or at or below the 30th / at or above the 70th percentile of own history
+- reverse-DCF implied growth vs delivered growth
+- the largest positive and negative ROE driver
+- missing required KPIs
+
+**Equations.** `engine/report/latex.py` turns the registry's plain-text equations into LaTeX with a small recursive-descent parser. 255 of the 257 convert; the reverse DCF and the economic-profit definition fall back to plain text. All converted strings were checked to render in KaTeX 0.16.11, the version the page pins.
+
+**Self-contained output.** CSS, JS and SVG are inline. The only external request is the pinned KaTeX build from jsdelivr, which is optional.
+
+**No look-ahead.** The as-of guarantee extends to the outputs: the FY21 report.html and analysis.xlsx of a company whose post-FY21 data are scrambled are identical to the unscrambled ones (`tests/test_report_outputs.py`).
+
+## 12. Known limitations
 
 - Ten annual points and ten quarters per export. YESBANK as of FY18 has two years and no quarters, so trend and stability are not computable there and level-only flags carry the analysis (A06 and B06 still fire).
 - No payables, current/non-current split, capex, goodwill or shareholding in the export. These are proxies until `data/manual` is filled.

@@ -281,7 +281,8 @@ def chain_for_node(mid: str, win: Dict, window: str, root_name: str) -> Optional
     if child is None:
         return parts[0]
     ch = nodes[child]
-    parts.append(say("chain.share", share=fmt.pct(ch["contribution"] / c), child=mid_sentence(ch["name"])))
+    share = ch["contribution"] / c
+    parts.append(say("chain.share_offset" if share > 1.0 else "chain.share", share=fmt.pct(share), child=mid_sentence(ch["name"])))
     if ch["leaf"]:
         parts.append(say("chain.leaf_only", child=mid_sentence(ch["name"]), child_move=_move(ch["change"]),
                          a=fmt.value(ch["t0"], ch["unit"]), b=fmt.value(ch["t1"], ch["unit"])))

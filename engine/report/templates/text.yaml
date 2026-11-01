@@ -30,6 +30,7 @@ trend: "{{ label }} {{ slope }}/yr over {{ window }}"
 chain:
   head: "{{ delta }} over {{ window }}"
   share: "{{ share }} from {{ child }}"
+  share_offset: "{{ share }} from {{ child }}, partly offset by the other drivers"
   because: "{{ child }} {{ child_move }} because {{ leaf }} {{ leaf_move }} {{ a }} → {{ b }}"
   leaf_only: "{{ child }} {{ child_move }} {{ a }} → {{ b }}"
   as_leaf: "drove {{ share }} of the {{ root }} change over {{ window }} ({{ root_delta }})"
