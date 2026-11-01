@@ -10,7 +10,7 @@ only when the file has a value with a source URL and date; blanks mean no source
 
 | Ticker | Archetype | Required KPI-years found | Optional KPI-years found | Verified |
 |---|---|---|---|---|
-| HDFCBANK | bank | 27/40 (68%) | 3/45 | 0 |
+| HDFCBANK | bank | 27/40 (68%) | 5/45 | 0 |
 | ICICIBANK | bank | 26/40 (65%) | 3/45 | 0 |
 | BAJFINANCE | nbfc | 20/50 (40%) | 8/75 | 0 |
 | HDFCLIFE | insurance | 31/35 (89%) | 5/25 | 0 |
@@ -20,7 +20,7 @@ only when the file has a value with a source URL and date; blanks mean no source
 | NESTLEIND | fmcg | 1/10 (10%) | 0/15 | 0 |
 | ASIANPAINT | consumer_manufacturing | 3/10 (30%) | 0/15 | 0 |
 | TATASTEEL | metals | 8/10 (80%) | 5/15 | 0 |
-| ULTRACEMCO | cement | 6/10 (60%) | 0/15 | 0 |
+| ULTRACEMCO | cement | 7/10 (70%) | 0/15 | 0 |
 | MARUTI | auto | 5/5 (100%) | 0/15 | 0 |
 | SUNPHARMA | pharma | 15/15 (100%) | 3/25 | 0 |
 | BEL | capital_goods_defence | 8/10 (80%) | 0/15 | 0 |
@@ -30,7 +30,7 @@ only when the file has a value with a source URL and date; blanks mean no source
 | BHARTIARTL | telecom | 3/15 (20%) | 0/20 | 0 |
 | DMART | retail | 3/10 (30%) | 0/25 | 0 |
 | ADANIENT | holdco | 2/10 (20%) | 0/30 | 0 |
-| YESBANK | bank | 57/80 (71%) | 6/90 | 0 |
+| YESBANK | bank | 58/80 (72%) | 6/90 | 0 |
 
 ## Detail (required KPIs; missing years are blank in the file)
 
@@ -47,6 +47,7 @@ only when the file has a value with a source URL and date; blanks mean no source
 | `pcr_pct` | FY25 | FY22, FY23, FY24, FY26 |
 | `provisions_cr` | - | FY22, FY23, FY24, FY25, FY26 |
 | `cet1_pct` (optional) | FY24, FY25, FY26 | FY22, FY23 |
+| `nim_pct` (optional) | FY25, FY26 | FY22, FY23, FY24 |
 
 ### ICICIBANK (bank)
 
@@ -151,7 +152,7 @@ only when the file has a value with a source URL and date; blanks mean no source
 | KPI | Found | Missing |
 |---|---|---|
 | `capacity_mtpa` | FY23, FY24, FY25, FY26 | FY22 |
-| `sales_volume_mt` | FY25, FY26 | FY22, FY23, FY24 |
+| `sales_volume_mt` | FY24, FY25, FY26 | FY22, FY23 |
 
 ### MARUTI (auto)
 
@@ -227,7 +228,7 @@ only when the file has a value with a source URL and date; blanks mean no source
 | `advances_cr` | FY14, FY15, FY16, FY17, FY18, FY22, FY24, FY25, FY26 | FY23 |
 | `casa_pct` | FY14, FY15, FY16, FY17, FY18, FY22, FY24, FY25, FY26 | FY23 |
 | `crar_pct` | FY14, FY16, FY17, FY18 | FY15, FY22, FY23, FY24, FY25, FY26 |
-| `deposits_cr` | FY14, FY15, FY16, FY17, FY22, FY24, FY25, FY26 | FY18, FY23 |
+| `deposits_cr` | FY14, FY15, FY16, FY17, FY18, FY22, FY24, FY25, FY26 | FY23 |
 | `gnpa_pct` | FY14, FY15, FY16, FY17, FY18, FY22, FY23, FY24, FY25, FY26 | - |
 | `nnpa_pct` | FY14, FY15, FY16, FY17, FY18, FY24, FY25, FY26 | FY22, FY23 |
 | `pcr_pct` | FY16, FY17, FY23, FY24, FY25, FY26 | FY14, FY15, FY18, FY22 |

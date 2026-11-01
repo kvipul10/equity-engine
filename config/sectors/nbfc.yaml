@@ -63,6 +63,13 @@ metrics_add:
      equation: "Deposits / total borrowings", meaning: "Retail deposit funding (stable but regulated)."}
 
 bands:
+  pcr:
+    red: 0.45
+    green: 0.65
+    source_type: external
+    source_url: https://www.brickworkratings.com/Research/NBFC_Sector_Report_Final-05June2026.pdf
+    as_of: "2026-06-05"
+    rationale: "Green at the NBFC sector provision coverage of about 66.6% (Brickwork NBFC sector report, June 2026, on RBI data); red at 45% (indicative), the low end of large-NBFC stage-3 coverage. NBFC stage-3 loans are mostly secured (vehicles, gold, property), so coverage below the 70% bank norm is not by itself a weakness."
   nii_to_assets: null
   nim_reported: null
   roa:

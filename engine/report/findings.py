@@ -573,10 +573,23 @@ def build_findings(rep: Dict, cfg) -> Dict:
     unver = unverified_kpis(rep)
     kpi_ids = set(cfg.sector_of(arch).manual_kpis)
     cands = {"strengths": [], "weaknesses": [], "watch": []}
+    # a medium/high flag that puts a metric's inputs or meaning in doubt keeps it off the strengths list (config: suppresses)
+    supp = {}
+    for f in (rep.get("flags") or {}).get("triggered", []):
+        if f["severity"] in ("high", "medium"):
+            for sid in f.get("suppresses") or []:
+                supp.setdefault(sid, f)
     for mid, m in rep["metrics"].items():
         lst = classify(m, rc)
+        held = lst == "strengths" and mid in supp
+        if held:
+            lst = "watch"
         if lst:
-            cands[lst].append(_metric_item(mid, m, rep, rc, unver, mk, watch=(lst == "watch")))
+            item = _metric_item(mid, m, rep, rc, unver, mk, watch=(lst == "watch"))
+            if held:
+                item["suppressed_by"] = supp[mid]["id"]
+                item["text"] = say("finding.suppressed", text=item["text"], id=supp[mid]["id"], name=supp[mid]["name"])
+            cands[lst].append(item)
     for f in (rep.get("flags") or {}).get("triggered", []):
         lst = "watch" if f["severity"] == "low" else "weaknesses"
         cands[lst].append(_flag_item(f, rep, rc, unver, mk, kpi_ids))

@@ -65,6 +65,7 @@ def test_rules_from_the_brief_trigger(real_cfg):
          "cwip_to_net_block": [0.1, 0.1, 0.1, 0.2, 0.25, 0.35, 0.40],  # > 30% for 2 years
          "other_income_to_pbt": [0.1] * 6 + [0.30],                 # > 25% of PBT
          "debt_vs_ebitda_growth": [0, 0, 0, -0.1, 0.05, 0.10, 0.20],   # debt outgrew EBITDA 3 years
+         "net_debt_to_ebitda": [1.0] * 7,                           # material debt (B01 gate >= 0.5x)
          "roe": [0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.14],
          "equity_multiplier": [2.0, 2.0, 2.0, 2.0, 2.4, 2.8, 3.2],
          "pat_margin": [0.10, 0.10, 0.10, 0.10, 0.09, 0.085, 0.08],

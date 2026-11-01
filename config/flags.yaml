@@ -250,6 +250,8 @@ rules:
     pillar: returns
     severity: high
     applies: [ALL]
+    not_for: [INS]
+    not_for_reason: "An insurer's equity multiplier is policyholder funds over equity: it rises with every policy sold, so it is not financial leverage."
     condition: "chg('roe', 3) > 0 and chg('equity_multiplier', 3) > 0 and chg('pat_margin', 3) < 0"
     values: {droe: "chg('roe', 3)", dem: "chg('equity_multiplier', 3)", dnpm: "chg('pat_margin', 3)"}
     explanation: >
@@ -373,7 +375,8 @@ rules:
     pillar: balance_sheet
     severity: high
     applies: [NF]
-    condition: "all_last('debt_vs_ebitda_growth', 3, '>', 0)"
+    # Session 4: only material debt (net debt >= 0.5x EBITDA); a net-cash company's lease or working-capital lines are no credit risk
+    condition: "all_last('debt_vs_ebitda_growth', 3, '>', 0) and m('net_debt_to_ebitda') >= 0.5"
     values: {debt: "m('borrowings')", debt3: "m('borrowings', 3)", e: "m('ebitda')", e3: "m('ebitda', 3)"}
     explanation: >
       Borrowings have outgrown EBITDA for 3 consecutive years (debt {{ debt3|cr }} to {{ debt|cr }}; EBITDA {{ e3|cr }} to
@@ -407,14 +410,16 @@ rules:
     condition: "m('current_ratio_proxy') < 1.0 and m('cash_to_st_borrowings') < 0.2"
     values: {cr: "m('current_ratio_proxy')", cash: "m('cash_to_st_borrowings')"}
     explanation: >
-      Other assets cover other liabilities only {{ cr|x }} and cash covers debt {{ cash|x }}: short-term obligations depend
-      on refinancing.
+      Other assets and investments cover other liabilities only {{ cr|x }} and cash and investments cover debt {{ cash|x }}:
+      short-term obligations depend on refinancing.
 
   - id: B05
     name: Altman Z'' in distress zone
     pillar: balance_sheet
     severity: high
     applies: [NF]
+    not_for: [telecom]
+    not_for_reason: "Z''-EM penalises negative working capital and spectrum-heavy (intangible) assets, both structural in telecom; distress is read through leverage and spectrum dues (B02, TC02)."
     condition: "m('altman_z_india') < 4.35"
     values: {z: "m('altman_z_india')", x1: "m('altman_x1')", x3: "m('altman_x3')"}
     explanation: >
@@ -427,6 +432,7 @@ rules:
     severity: high
     applies: [BL]
     condition: "chg('equity_to_assets', 1) < -0.01 and pchg('total_assets', 1) > 0.25"
+    suppresses: [crar, cet1]   # risk-weighted ratios flatter while leverage rises this fast (AT1/tier-2 fill the gap)
     values: {now: "m('equity_to_assets')", prev: "m('equity_to_assets', 1)", g: "pchg('total_assets', 1)"}
     explanation: >
       Total assets grew {{ g|pct }} in a year while equity/assets fell from {{ prev|pct }} to {{ now|pct }}: the lender is
@@ -501,10 +507,10 @@ rules:
     severity: medium
     applies: [NF]
     condition: "m('acquisition_roic_delta_3y') < -0.03"
-    values: {d: "m('acquisition_roic_delta_3y')", spend: "m('non_capex_investing_3y')"}
+    values: {d: "m('acquisition_roic_delta_3y')", spend: "m('acquisition_spend_3y')"}
     explanation: >
-      Non-capex investing equal to {{ spend|pct }} of invested capital over 3 years was followed by a {{ d|pp }} change
-      in ROIC: acquisitions/investments are not earning their keep (yet).
+      Acquisition-like spend (investing beyond capex, treasury moves excluded) equal to {{ spend|pct }} of invested capital
+      over 3 years was followed by a {{ d|pp }} change in ROIC: acquisitions/investments are not earning their keep (yet).
 
   - id: A06
     name: Lender growing beyond its internal capital
@@ -512,6 +518,8 @@ rules:
     severity: high
     applies: [BL]
     condition: "m('growth_minus_icg') > 0.15"
+    # growth this far beyond internal capital is a risk, not a strength (a lender's revenue grows with its balance sheet)
+    suppresses: [loan_growth, deposit_growth, aum_growth, revenue_cagr_3y, revenue_cagr_5y, revenue_cagr_10y]
     values: {gap: "m('growth_minus_icg')", g: "pchg('total_assets', 1)", icg: "m('internal_capital_generation')"}
     explanation: >
       Assets grew {{ g|pct }} versus internal capital generation of {{ icg|pct }} ({{ gap|pp }} gap): growth must be funded by
@@ -556,21 +564,28 @@ rules:
     pillar: valuation
     severity: medium
     applies: [ALL]
-    condition: "m('pb_to_justified_pb') > 1.5"
+    not_for: [real_estate]
+    not_for_reason: "Developers carry land at historical cost and book profit on completion, so book value and ROE understate the land bank; they are valued on NAV."
+    # Session 4: single-stage justified P/B caps growth at the terminal rate. For non-financials, when the reverse DCF implies
+    # less growth than the business delivered (gap <= 0), P/B above the single-stage value is explained by growth, so the flag
+    # needs both. Financials keep the plain test: their P/B-implied growth is a perpetual rate and delivered book-value growth
+    # includes equity raises and mergers, so the two are not comparable.
+    condition: "m('pb_to_justified_pb') > 1.5 and first_of(m('implied_minus_delivered_growth'), 1.0) > 0"
     values: {pb: "m('pb')", j: "m('justified_pb')", r: "m('pb_to_justified_pb')"}
     explanation: >
-      P/B of {{ pb|x }} is {{ r|x }} the {{ j|x }} that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects
-      returns to rise.
+      P/B of {{ pb|x }} is {{ r|x }} the {{ j|x }} that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not
+      explained by growth already delivered: the market expects returns to rise.
 
   - id: V04
     name: EV/IC rich relative to ROIC/WACC
     pillar: valuation
     severity: low
     applies: [NF]
-    condition: "m('ev_ic_to_roic_wacc') > 1.5"
+    condition: "m('ev_ic_to_roic_wacc') > 1.5 and first_of(m('implied_minus_delivered_growth'), 1.0) > 0"
     values: {r: "m('ev_ic_to_roic_wacc')", evic: "m('ev_ic')"}
     explanation: >
-      EV/IC is {{ evic|x }}, {{ r|x }} what current ROIC/WACC would support in steady state.
+      EV/IC is {{ evic|x }}, {{ r|x }} the (ROIC - g)/(WACC - g) that current returns support at sustainable growth, and the
+      market prices more growth than the company has delivered.
 
   - id: V05
     name: Financial rich versus own history

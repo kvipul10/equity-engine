@@ -70,13 +70,23 @@ def non_capex_investing_3y(c: Ctx):
     return c.div(c.rolling_sum(c.f("non_capex_investing"), 3), c.lag(c.f("invested_capital"), 3), positive=True)
 
 
+@metric(id="acquisition_spend_3y", name="Acquisition-like spend (3y, % of IC)", pillar="capital_allocation", unit="pct",
+        direction="neutral", applies="NF", stability=False,
+        meaning="Investing outflows beyond capex that did not end up as cash or investments on the balance sheet (stakes and "
+                "businesses bought), over 3 years, relative to opening invested capital. Treasury moves are netted out.",
+        equation="sum3(max(0, -CFI - capex proxy - (change in cash + investments - net cash flow))) / IC_t-3")
+def acquisition_spend_3y(c: Ctx):
+    return c.div(c.rolling_sum(c.f("acquisition_spend"), 3), c.lag(c.f("invested_capital"), 3), positive=True)
+
+
 @metric(id="acquisition_roic_delta_3y", name="ROIC change after acquisition spend", pillar="capital_allocation", unit="pp",
         direction="higher", applies="NF",
-        meaning="When a company spent materially beyond capex (> 10% of IC over 3 years), did ROIC subsequently rise or fall?",
-        equation="ROIC_t - ROIC_t-3 if non_capex_investing_3y > 10%, else n/a")
+        meaning="When a company spent materially on acquisitions (> 10% of IC over 3 years, treasury moves excluded), did ROIC "
+                "subsequently rise or fall?",
+        equation="ROIC_t - ROIC_t-3 if acquisition_spend_3y > 10%, else n/a")
 def acquisition_roic_delta_3y(c: Ctx):
     r = c.m("roic")
-    return (r - c.lag(r, 3)).where(c.m("non_capex_investing_3y") > 0.10)
+    return (r - c.lag(r, 3)).where(c.m("acquisition_spend_3y") > 0.10)
 
 
 @metric(id="promoter_holding", name="Promoter holding", pillar="capital_allocation", unit="pct", direction="neutral", applies="ALL",

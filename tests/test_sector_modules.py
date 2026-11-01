@@ -140,6 +140,7 @@ EXPECTED = {
     # real estate
     "presales_growth": ("SYNTHRE", 2500 / 2600 - 1), "presales_to_revenue": ("SYNTHRE", 2500 / T.rev[9]),
     "collections_to_presales": ("SYNTHRE", 1650 / 2500), "cfo_to_collections": ("SYNTHRE", T.cfo[9] / 1650),
+    "collections_to_presales_3y": ("SYNTHRE", 1650 / ((2400 + 2600 + 2500) / 3)),   # FY26 collections / avg FY24-26 pre-sales
     "cfo_to_presales": ("SYNTHRE", T.cfo[9] / 2500), "inventory_months": ("SYNTHRE", 5600 / (2500 / 12)),
     "net_debt_to_presales": ("SYNTHRE", T.nd[9] / 2500),
     # utilities
@@ -262,7 +263,8 @@ def test_nbfc_inherits_bank_and_overrides(reps, scfg):
     assert s.lineage == ["default", "bank", "nbfc"]
     assert "casa_pct" not in s.manual_kpis and "aum_cr" in s.manual_kpis
     assert "nii_to_assets" not in s.bands and s.bands["crar"]["red"] == 0.15
-    assert s.bands["pcr"]["_origin"] == "config/sectors/bank.yaml"   # inherited band keeps its true origin
+    assert s.bands["credit_cost"]["_origin"] == "config/sectors/bank.yaml"   # inherited band keeps its true origin
+    assert s.bands["pcr"]["_origin"] == "config/sectors/nbfc.yaml" and s.bands["pcr"]["green"] == 0.65  # NBFC's own band
     trig = {f["id"] for f in reps["SYNTHNB"]["flags"]["triggered"]}
     assert {"NB02", "NB03", "NB04"} <= trig
     assert "bank_dupont" in reps["SYNTHNB"]["drivers"]

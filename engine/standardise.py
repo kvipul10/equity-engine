@@ -42,7 +42,8 @@ BS_COLS = [
     "total_liabilities", "net_block", "cwip", "investments", "other_assets", "receivables", "inventory", "cash",
     "other_assets_rest", "total_assets", "invested_capital", "net_debt", "nwc",
 ]
-CF_COLS = ["period_end", "cfo", "cfi", "cff", "net_cash_flow", "capex_proxy", "capex_basis", "fcf", "non_capex_investing"]
+CF_COLS = ["period_end", "cfo", "cfi", "cff", "net_cash_flow", "capex_proxy", "capex_basis", "fcf", "non_capex_investing",
+           "treasury_shift", "acquisition_spend"]
 MARKET_COLS = ["period_end", "price", "adjusted_shares_cr", "market_cap", "ev"]
 SHARE_COLS = ["period_end", "shares_raw_cr", "face_value", "bonus_shares_cr", "adjusted_shares_cr", "adjustment_factor",
               "eps_core", "bvps", "revenue_per_share"]
@@ -374,10 +375,7 @@ def standardise(raw: RawExport, archetype: str, cfg: Config, manual: Optional[pd
     S["pbt_core"] = S["pbt"] - S["exceptional_est"]
     S["tax_core"] = S["tax"] - S["exceptional_tax"]
     S["pat_core"] = S["pat"] - S["exceptional_est"] + S["exceptional_tax"]
-    if family != "insurance":  # life insurers are taxed on the shareholders' surplus: their ETR is not comparable
-        _normalise_tax(S, notes, stat_tax)
-    else:
-        S["tax_oneoff"] = 0.0
+    apply_tax_normalisation(S, notes, stat_tax, cfg.sector_of(archetype))
     S["ebit_core"] = S["pbt_core"] + S["interest"]
 
     # minority / associates
@@ -453,6 +451,11 @@ def standardise(raw: RawExport, archetype: str, cfg: Config, manual: Optional[pd
                        "FCF = CFO - capex proxy.")
     S["fcf"] = S["cfo"] - S["capex_proxy"]
     S["non_capex_investing"] = -S["cfi"] - S["capex_proxy"]
+    # Session 4: treasury moves inside investing (term deposits that Screener counts as cash, liquid-fund purchases held as
+    # investments) are not acquisitions. treasury_shift = change in (cash + investments) not explained by the net cash flow.
+    liquid = S["cash"].fillna(0.0) + S["investments"].fillna(0.0)
+    S["treasury_shift"] = liquid.diff() - S["net_cash_flow"]
+    S["acquisition_spend"] = (S["non_capex_investing"] - S["treasury_shift"]).clip(lower=0.0)
     for lab in labels:
         r = S.loc[lab, ["cfo", "cfi", "cff"]].sum() - S.loc[lab, "net_cash_flow"]
         if not pd.isna(r) and abs(r) > 1.0:
@@ -647,6 +650,17 @@ def _detect_step_changes(S: pd.DataFrame, labels: List[str], notes: _Notes) -> N
             S.loc[lab, "inorganic_step"] = True
             notes.add("merger", f"Balance-sheet step change: total assets {g_ta:+.0%} in one year (acquisition, consolidation change or "
                                 f"large capital raise). Growth across {p}->{lab} may not be organic.", lab)
+
+
+def apply_tax_normalisation(S: pd.DataFrame, notes: "_Notes", stat_tax: float, sector) -> None:
+    """Normalise one-off tax unless the sector module switches it off (tax_normalisation: {apply: false, reason, ...}),
+    e.g. life insurers, whose effective tax rate has no stable normal."""
+    tn = getattr(sector, "tax_normalisation", None) or {}
+    if tn.get("apply", True):
+        _normalise_tax(S, notes, stat_tax)
+        return
+    S["tax_oneoff"] = 0.0
+    notes.add("exceptional", f"One-off tax normalisation is off for {sector.archetype}: {tn['reason']} Reported tax kept.")
 
 
 def _normalise_tax(S: pd.DataFrame, notes: "_Notes", stat_tax: float) -> None:

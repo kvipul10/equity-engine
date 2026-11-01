@@ -19,6 +19,7 @@ rag_word:
 finding:
   metric: "{{ name }}: {{ value }}{% if context %} ({{ context }}){% endif %}{% if trend %}; {{ trend }}{% endif %}{% if chain %}; {{ chain }}{% endif %}"
   flag: "{{ id }} {{ name }}: {{ text }}"
+  suppressed: "{{ text }}; not counted as a strength while {{ id }} ({{ name }}) stands"
 
 level_context:
   band: "{{ rag }} vs band: red {{ red_op }} {{ red }}, green {{ green_op }} {{ green }}{% if indicative %}, indicative{% endif %}"

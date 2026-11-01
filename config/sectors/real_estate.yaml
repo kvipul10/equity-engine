@@ -18,6 +18,9 @@ metrics_off:
   - {id: nwc_days, reason: "Working capital is the project book itself"}
   - {id: asset_turnover, reason: "Revenue recognition lags bookings, so turnover on assets is mis-timed"}
   - {id: fixed_asset_turnover, reason: "Development assets sit in inventory, not net block"}
+  - {id: justified_pb, reason: "Land is carried at historical cost and profit is booked on completion, so book value and ROE understate the land bank; developers are valued on NAV (Session 4)"}
+  - {id: pb_to_justified_pb, reason: "As justified P/B"}
+  - {id: ev_ic_to_roic_wacc, reason: "Invested capital carries land at historical cost, so the steady-state EV/IC test understates what the land bank supports (Session 4)"}
   - {id: ic_turnover, reason: "As asset turnover"}
   - {id: dol, reason: "Recognised revenue is lumpy (project completions), so DOL is noise"}
   - {id: capex_to_sales, reason: "Land and construction spend runs through inventory, not capex"}
@@ -38,8 +41,14 @@ metrics_add:
      equation: "Pre-sales_t / Pre-sales_t-1 - 1", meaning: "Growth in bookings: the leading indicator for a developer."}
   - {id: presales_to_revenue, name: "Pre-sales / recognised revenue", pillar: growth, unit: x, direction: neutral, formula: "kpi('presales_cr') / f('revenue')",
      equation: "Pre-sales / revenue", meaning: "Above 1 = bookings running ahead of recognition (future revenue)."}
-  - {id: collections_to_presales, name: "Collections / pre-sales", pillar: cash_quality, unit: ratio, direction: higher,
-     formula: "kpi('collections_cr') / kpi('presales_cr')", equation: "Collections / pre-sales", meaning: "Whether bookings are turning into cash."}
+  # driver-tree link (CFO = pre-sales x collections/pre-sales x CFO/collections); scored through the 3-year version below
+  - {id: collections_to_presales, name: "Collections / pre-sales", pillar: cash_quality, unit: ratio, direction: neutral,
+     formula: "kpi('collections_cr') / kpi('presales_cr')", equation: "Collections / pre-sales", meaning: "Whether bookings are turning into cash (one year; context)."}
+  # Session 4: buyers pay in construction-linked instalments over roughly 3 years, so RE01 sets a year's collections against
+  # the average bookings of the last 3 years (a single year's pre-sales overstates the shortfall in a launch-heavy year).
+  - {id: collections_to_presales_3y, name: "Collections / average pre-sales (3y)", pillar: cash_quality, unit: ratio, direction: higher,
+     formula: "kpi('collections_cr') / mean_last('kpi:presales_cr', 3, 2)", equation: "Collections / average pre-sales of the last 3 years (>= 2 needed)",
+     meaning: "Whether bookings are turning into cash, allowing for construction-linked payment plans."}
   - {id: cfo_to_collections, name: "CFO / collections", pillar: cash_quality, unit: ratio, direction: higher, formula: "f('cfo') / kpi('collections_cr')",
      equation: "Operating cash flow / customer collections", meaning: "Cash left after construction, land, overheads and tax per rupee collected."}
   - {id: cfo_to_presales, name: "CFO / pre-sales", pillar: cash_quality, unit: ratio, direction: higher, formula: "f('cfo') / kpi('presales_cr')",
@@ -50,12 +59,12 @@ metrics_add:
   - {id: net_debt_to_presales, name: "Net debt / pre-sales", pillar: balance_sheet, unit: x, direction: lower, formula: "f('net_debt') / kpi('presales_cr')",
      equation: "(Borrowings - cash) / pre-sales", meaning: "Leverage against the business's real volume."}
 bands:
-  collections_to_presales:
+  collections_to_presales_3y:
     red: 0.70
     green: 0.90
     source_type: indicative
     as_of: "2026-11-01"
-    rationale: "Healthy developers collect 85-100% of a year's bookings value within the cycle; under 70% means bookings are not converting."
+    rationale: "Same thresholds as collections / pre-sales, on the 3-year average of bookings so that a launch-heavy year (collections lag bookings under construction-linked plans) is not read as non-conversion."
   inventory_months:
     green: 24
     red: 36
@@ -86,10 +95,10 @@ flags:
     pillar: cash_quality
     severity: high
     applies: [real_estate]
-    condition: "m('collections_to_presales') < 0.70"
-    values: {r: "m('collections_to_presales')"}
+    condition: "m('collections_to_presales_3y') < 0.70"
+    values: {r: "m('collections_to_presales_3y')"}
     explanation: >
-      Collections were only {{ r|pct }} of the year's pre-sales: bookings are not turning into cash (stretched buyers, slow construction or cancellations).
+      Collections were only {{ r|pct }} of the average pre-sales of the last 3 years: bookings are not turning into cash (stretched buyers, slow construction or cancellations).
   - id: RE02
     name: Inventory piling up
     pillar: capital_efficiency

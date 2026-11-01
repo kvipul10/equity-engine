@@ -252,6 +252,38 @@ def roll_up(metric_results: Dict[str, Dict], family: str, cfg: Config, triggered
 
 
 # ---------------------------------------------------------------------------------------------- mergers (Session 4)
+def materiality_exclusions(results: Dict[str, Dict], rules: List[Dict]) -> List[str]:
+    """config/scoring.yaml: materiality. A metric is scored only when the quantity it judges is material: when the gate
+    metric's latest value is below `min`, the metric keeps its value but gets no RAG (reason recorded)."""
+    out = []
+    for rule in rules or []:
+        r, g = results.get(rule["metric"]), results.get(rule["gate"])
+        if not r or r.get("rag") is None or not g or g.get("value") is None:
+            continue
+        v = float(g["value"])
+        if v < float(rule["min"]):
+            r.update({"level": None, "composite": None, "rag": None,
+                      "reason": f"{rule['reason']} ({rule['gate']} {v:.2f} < {float(rule['min']):g})"})
+            out.append(rule["metric"])
+    return out
+
+
+def merger_window_flags(flags: List[Dict], rules: List[Dict], merged: List[str]) -> List[Dict]:
+    """A triggered flag whose condition reads a growth metric that merger_exclusions un-scored becomes not_evaluable:
+    its comparison spans the same share-paid merger, so it measures the deal, not the business."""
+    import re
+
+    conds = {r["id"]: r["condition"] for r in rules}
+    out = []
+    for f in flags:
+        hit = sorted(set(re.findall(r"['\"]([A-Za-z0-9_:]+)['\"]", conds.get(f["id"], ""))) & set(merged))
+        if f["status"] == "triggered" and hit:
+            f = {k: v for k, v in f.items() if k not in ("values", "text", "suppresses")}
+            f.update(status="not_evaluable", missing=f"window spans a share-paid merger ({', '.join(hit)} not scored)")
+        out.append(f)
+    return out
+
+
 def merger_exclusions(results: Dict[str, Dict], notes: List[Dict], last_fy: str) -> List[str]:
     """Growth CAGRs whose window spans a merger or balance-sheet step change (standardisation note category
     'merger') are not scored: that growth is largely inorganic, so it is neither an organic strength nor weakness.

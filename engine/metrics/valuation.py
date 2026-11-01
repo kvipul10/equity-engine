@@ -189,7 +189,7 @@ def _ronic(c: Ctx) -> Optional[float]:
         meaning="Annual free-cash-flow growth for the next 10 years that today's enterprise value implies, starting from the "
                 "steady-state FCF the business generates at its 3-year average ROIC, then growing at the terminal rate.",
         equation="solve g: EV = sum_{t=1..10} F0(1+g)^t/(1+WACC)^t + F10(1+gT)/((WACC-gT)(1+WACC)^10), "
-                 "F0 = NOPAT0 x (1 - gT/RONIC), RONIC = 3y avg ROIC (capped at 100%)")
+                 "F0 = NOPAT0 x (1 - gT/RONIC), RONIC = 3y avg ROIC (capped at 100%); n/m if RONIC <= WACC")
 def implied_growth_reverse_dcf(c: Ctx):
     ev = _current_ev(c)
     n0 = nopat(c)[c.asof]
@@ -202,6 +202,10 @@ def implied_growth_reverse_dcf(c: Ctx):
         return c.point(np.nan)
     if ronic <= gT:
         c.info["implied_growth_reverse_dcf"] = f"n/m: ROIC {ronic:.1%} <= terminal growth {gT:.1%} (growth would destroy cash)"
+        return c.point(np.nan)
+    if ronic <= wacc:  # Session 4: growth at returns below WACC adds no value, so the price is a bet on returns, not growth
+        c.info["implied_growth_reverse_dcf"] = (f"n/m: ROIC {ronic:.1%} <= WACC {wacc:.2%}: growth at these returns adds no value, "
+                                                "so the price implies rising returns (see P/B and EV/IC versus justified)")
         return c.point(np.nan)
     f0 = float(n0) * (1 - gT / ronic)
     g, msg = solve_implied_growth(ev, f0, wacc, gT, yrs)
@@ -287,15 +291,33 @@ def ev_ic(c: Ctx):
     return c.point(ev / ic if (ev is not None and not pd.isna(ic) and ic > 0) else np.nan)
 
 
-@metric(id="ev_ic_to_roic_wacc", name="(EV/IC) / (ROIC/WACC)", pillar="valuation", unit="x", direction="lower", applies="NF",
+def _justified_ev_ic(c: Ctx) -> Tuple[float, Dict]:
+    """Value-driver steady state: EV/IC = (ROIC - g) / (WACC - g), ROIC = 3y average, g = min(ROIC x reinvestment, gT)."""
+    w = c.window(c.m("roic"), 3)
+    ri = c.window(c.m("reinvestment_rate"), 3)
+    wacc = float(c.coc.current["wacc"] or np.nan)
+    gT = float(c.cfg.mv("valuation", "terminal_growth"))
+    if not len(w) or pd.isna(wacc):
+        return np.nan, {}
+    roic = float(w.mean())
+    reinv = float(ri.clip(0, 1).mean()) if len(ri) else 0.0
+    g = min(max(roic, 0.0) * reinv, gT)
+    if roic <= 0 or wacc - g <= 0.005:
+        return np.nan, {}
+    return (roic - g) / (wacc - g), {"roic": roic, "reinv": reinv, "g": g, "wacc": wacc}
+
+
+@metric(id="ev_ic_to_roic_wacc", name="EV/IC / justified EV/IC", pillar="valuation", unit="x", direction="lower", applies="NF",
         kind="point",
-        meaning="In a no-growth steady state EV/IC = ROIC/WACC. Above 1 = the market pays for growth or improvement beyond today's "
-                "returns; below 1 = priced for decline.",
-        equation="(EV / IC) / (ROIC / WACC), ROIC = latest, WACC = current")
+        meaning="Market EV/IC relative to the steady-state EV/IC that current returns support with sustainable growth "
+                "((ROIC - g)/(WACC - g), the value-driver formula; = ROIC/WACC when g = 0). Above 1 = paying for growth or "
+                "rising returns beyond the steady state; below 1 = priced for decline.",
+        equation="(EV / IC) / ((ROIC - g) / (WACC - g)); ROIC = 3y avg, g = min(ROIC x 3y avg reinvestment rate, terminal g)")
 def ev_ic_to_roic_wacc(c: Ctx):
     evic = c.m("ev_ic").iloc[-1]
-    r = c.m("roic").iloc[-1]
-    w = c.coc.current["wacc"]
-    if pd.isna(evic) or pd.isna(r) or r <= 0 or not w:
+    j, d = _justified_ev_ic(c)
+    if pd.isna(evic) or pd.isna(j) or j <= 0:
         return c.point(np.nan)
-    return c.point(evic / (r / w))
+    c.info["ev_ic_to_roic_wacc"] = (f"justified EV/IC {j:.2f}x = (ROIC {d['roic']:.1%} - g {d['g']:.1%}) / "
+                                    f"(WACC {d['wacc']:.2%} - g)")
+    return c.point(evic / j)

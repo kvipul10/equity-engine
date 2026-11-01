@@ -2,6 +2,8 @@
 
 Each rule: id, name, pillar, severity (high|medium|low), applies (archetype tokens), condition (safe expression),
 values (named expressions for the explanation), explanation (Jinja2 template with fixed number formats).
+Optional: not_for (tokens the rule is switched off for) + not_for_reason; suppresses (metric ids that cannot be listed as
+strengths while the rule stands, because the rule puts their inputs or meaning in doubt).
 Outcome per rule: triggered | clear | not_evaluable (data missing, with the missing input named).
 
 Functions available in conditions (ids may be metric ids or standardised field names):
@@ -14,6 +16,7 @@ Functions available in conditions (ids may be metric ids or standardised field n
   count_last(id, n, op, x) number of the last n years where the condition holds
   sum_last(id, n)         sum over the last n years
   avail(id)               True if a value exists at the as-of year (never 'missing')
+  first_of(a, b, ...)     the first argument that is available (lazy fallback; a constant ends the chain)
   abs, min, max
 Names: wacc, ke, rf, tax_rate, inflation_target, nominal_gdp_growth, terminal_growth.
 """
@@ -28,7 +31,7 @@ import pandas as pd
 from .expr import OPS_BY_STR, ExprError, Missing, compile_expr, evaluate
 from .standardise import fy_year
 
-FUNCS = {"m", "chg", "pchg", "rising", "falling", "all_last", "count_last", "sum_last", "avail", "abs", "min", "max"}
+FUNCS = {"m", "chg", "pchg", "rising", "falling", "all_last", "count_last", "sum_last", "avail", "abs", "min", "max", "first_of"}
 SEVERITIES = ("high", "medium", "low")
 
 
@@ -146,7 +149,8 @@ def make_funcs(book: SeriesBook) -> Dict:
             return False
 
     return {"m": m, "chg": chg, "pchg": pchg, "rising": rising, "falling": falling, "all_last": all_last,
-            "count_last": count_last, "sum_last": sum_last, "avail": avail, "abs": abs, "min": min, "max": max}
+            "count_last": count_last, "sum_last": sum_last, "avail": avail, "abs": abs, "min": min, "max": max,
+            "first_of": lambda *a: next((x for x in a if not _isnan(x)), float("nan"))}  # lazy in expr.evaluate
 
 
 def validate_rules(rules: List[Dict]) -> None:
@@ -162,6 +166,10 @@ def validate_rules(rules: List[Dict]) -> None:
         seen.add(r["id"])
         if r["pillar"] not in PILLARS:
             raise ExprError(f"flag {r['id']}: unknown pillar {r['pillar']}")
+        if r.get("not_for") and not r.get("not_for_reason"):
+            raise ExprError(f"flag {r['id']}: not_for needs not_for_reason")
+        if not isinstance(r.get("suppresses", []), list):
+            raise ExprError(f"flag {r['id']}: suppresses must be a list of metric ids")
         if r["severity"] not in SEVERITIES:
             raise ExprError(f"flag {r['id']}: unknown severity {r['severity']}")
         compile_expr(r["condition"], FUNCS)
@@ -180,7 +188,7 @@ def evaluate_rules(rules: List[Dict], metrics: Dict[str, pd.Series], annual: pd.
         applies = r["applies"] if isinstance(r["applies"], list) else [r["applies"]]
         base = {"id": r["id"], "name": r["name"], "pillar": r["pillar"], "severity": r["severity"],
                 "origin": r.get("_origin", "config/flags.yaml")}
-        if not any(a in tokens for a in applies):
+        if not any(a in tokens for a in applies) or any(a in tokens for a in (r.get("not_for") or [])):
             continue
         try:
             hit = bool(evaluate(compile_expr(r["condition"], FUNCS), names, funcs))
@@ -200,6 +208,8 @@ def evaluate_rules(rules: List[Dict], metrics: Dict[str, pd.Series], annual: pd.
             text = env.from_string(r["explanation"]).render(**vals, **names)
         except Exception as e:  # pragma: no cover - template authoring error
             text = f"{r['name']} (explanation template error: {e})"
+        if r.get("suppresses"):
+            base["suppresses"] = list(r["suppresses"])
         out.append({**base, "status": "triggered", "values": {k: (None if _isnan(v) else v) for k, v in vals.items()},
                     "text": " ".join(text.split())})
     return out

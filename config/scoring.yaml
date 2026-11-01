@@ -110,6 +110,13 @@ drivers:
   exactness_tolerance: 1.0e-6
 
 # Report ranking (engine/report/findings.py). score = severity x confidence; lists are capped and de-duplicated.
+# Session 4: a metric is scored only when the quantity it judges is material; below the gate it keeps its value, no RAG.
+materiality:
+  - metric: debt_vs_ebitda_growth
+    gate: net_debt_to_ebitda
+    min: 0.5
+    reason: "debt is immaterial (net debt below 0.5x EBITDA): growth in leases or working-capital lines carries no credit risk"
+
 report:
   severity:
     flag: {high: 1.0, medium: 0.6, low: 0.3}

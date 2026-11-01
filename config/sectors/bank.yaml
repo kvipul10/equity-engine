@@ -278,6 +278,9 @@ flags:
     severity: high
     applies: [BL]
     condition: "m('npa_divergence_share') > 0.15"
+    # inputs are the reported NPAs, and profits are overstated by the missing provisions
+    suppresses: [gnpa_ratio, nnpa_ratio, credit_cost, pcr, provisions_to_ppop, slippage_ratio, roa, roe,
+                 pat_cagr_3y, pat_cagr_5y, pat_cagr_10y, eps_cagr_3y, eps_cagr_5y, eps_cagr_10y]
     values: {d: "m('npa_divergence_share')"}
     explanation: >
       RBI-assessed NPA divergence in the last 3 years was {{ d|pct }} of the reported gross NPAs: reported asset quality understates

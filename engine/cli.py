@@ -198,8 +198,10 @@ def cmd_rules(args) -> int:
                  "| id | pillar | severity | applies | origin | name | condition |", "|---|---|---|---|---|---|---|"]
         for r in rules:
             cond = r["condition"].replace("|", "\\|")
-            lines.append(f"| {r['id']} | {r['pillar']} | {r['severity']} | {', '.join(r['applies'])} | "
-                         f"{r.get('_origin', 'config/flags.yaml')} | {r['name']} | `{cond}` |")
+            applies = ", ".join(r["applies"]) + (f" (not {', '.join(r['not_for'])})" if r.get("not_for") else "")
+            name = r["name"] + (f"; keeps {', '.join(r['suppresses'])} off the strengths list" if r.get("suppresses") else "")
+            lines.append(f"| {r['id']} | {r['pillar']} | {r['severity']} | {applies} | "
+                         f"{r.get('_origin', 'config/flags.yaml')} | {name} | `{cond}` |")
         out = cfg.paths.root / "docs" / "flags.md"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text("\n".join(lines) + "\n")

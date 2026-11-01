@@ -14,7 +14,7 @@ from .drivers import run_trees
 from .flags import evaluate_rules
 from .metrics import compute_all
 from .registry import REGISTRY, load_all
-from .scoring import band_vars, merger_exclusions, roll_up, score_metric
+from .scoring import band_vars, materiality_exclusions, merger_exclusions, merger_window_flags, roll_up, score_metric
 from .standardise import Standardised, load_standardised
 
 
@@ -109,7 +109,11 @@ def analyse(ticker: str, cfg: Config, asof: Optional[str] = None, beta: Optional
     results = {}
     for mid, s in metrics.items():
         results[mid] = score_metric(mid, s, std.last_fy, cfg, std.archetype, std.family, names, peer_vals.get(mid) if peer_vals else None)
-    merger_exclusions(results, std.notes, std.last_fy)
+    merged = merger_exclusions(results, std.notes, std.last_fy)
+    if merged:  # growth flags over the same merger window are inorganic too: not evaluable rather than triggered
+        flags = merger_window_flags(flags, cfg.rules_for(std.archetype), merged)
+        triggered = [f for f in flags if f["status"] == "triggered"]
+    materiality_exclusions(results, cfg.sv("materiality", default=[]))
     pillars, overall = roll_up(results, std.family, cfg, triggered, archetype=std.archetype)
 
     def get(node):

@@ -168,3 +168,36 @@ def test_one_off_tax_normalised_hand_computed():
                       "pat_core": [75.0, 105.0, 75.0, 40.0, 75.0, 110.0]}, index=[f"FY{y}" for y in range(21, 27)])
     _normalise_tax(E, N(), 0.25168)
     assert (E["tax_oneoff"] == 0).all() and E.loc["FY26", "pat_core"] == 110.0
+
+
+def test_tax_normalisation_switched_off_by_sector_module():
+    """Life insurers (taxed under s.115B, no stable normal rate) keep reported tax; other archetypes, utilities included,
+    get the same -5% vs 25% year normalised (gap 30)."""
+    from engine.config import Config
+    from engine.paths import Paths
+    from engine.standardise import apply_tax_normalisation
+
+    cfg = Config.load(Paths.default(REPO))
+
+    class N:
+        def __init__(self):
+            self.items = []
+
+        def add(self, cat, text, fy=None):
+            self.items.append((cat, fy, text))
+
+    def frame():
+        return pd.DataFrame({"pbt_core": [100.0] * 5, "tax_core": [25.0, 25.0, 24.0, 26.0, -5.0],
+                             "pat_core": [75.0, 75.0, 76.0, 74.0, 105.0]}, index=["FY22", "FY23", "FY24", "FY25", "FY26"])
+
+    for arch in ("insurance",):
+        S, notes = frame(), N()
+        apply_tax_normalisation(S, notes, 0.25168, cfg.sector_of(arch))
+        assert (S["tax_oneoff"] == 0).all() and S.loc["FY26", "pat_core"] == 105.0, arch
+        assert any("normalisation is off" in t for _, _, t in notes.items), arch
+        tn = cfg.sector_of(arch).tax_normalisation
+        assert tn["apply"] is False and tn["source_url"].startswith("https://") and tn["as_of"]
+    for arch in ("fmcg", "utilities"):
+        S = frame()
+        apply_tax_normalisation(S, N(), 0.25168, cfg.sector_of(arch))
+        assert S.loc["FY26", "tax_oneoff"] == pytest.approx(30.0) and S.loc["FY26", "pat_core"] == pytest.approx(75.0), arch
