@@ -1,0 +1,277 @@
+# Banks. Screener semantics: Sales = interest earned, Interest = interest expended, Borrowings = deposits + borrowings,
+# Other expenses include provisions (split out with the provisions_cr manual KPI).
+archetype: bank
+family: bank_like
+subtype: bank
+damodaran_industries: ["Bank (Money Center)"]
+evidence: "HDFCBANK, ICICIBANK, YESBANK -> Bank (Money Center) in Damodaran's indname.xls (Jan 2026)"
+how_to_read: |
+  Judge a bank after credit costs, not before: RoA = NII/A + fees/A - opex/A - provisions/A - tax/A, and RoE = RoA x leverage.
+  NIM and fees show earning power; credit cost, GNPA/NNPA and PCR show what the loan book really earns.
+  CRAR and CASA decide how long growth can last: fast loan growth with falling capital is the classic Indian blow-up pattern.
+  Read asset quality and capital before profit growth.
+pillar_names:
+  cash_quality: "5 Cash and earnings quality (asset quality)"
+pillar_weights: {growth: 15, margins: 15, capital_efficiency: 5, returns: 20, cash_quality: 15, balance_sheet: 20, capital_allocation: 5, valuation: 5}
+
+metrics_off:
+  - id: non_financial_metrics
+    applies: NF
+    reason: "Banks have no EBITDA, gross margin, capex cycle or working-capital days: interest is the raw material and loans are the inventory"
+  - id: credit_deposit_proxy
+    reason: "Superseded by the reported credit-deposit ratio (cd_ratio, from advances and deposits)"
+
+manual_kpis:
+  - {id: advances_cr, unit: "Rs cr", required: true, description: "Net advances (loans) at 31 March", where: "Balance sheet / investor presentation"}
+  - {id: deposits_cr, unit: "Rs cr", required: true, description: "Total deposits at 31 March", where: "Balance sheet / investor presentation"}
+  - {id: casa_pct, unit: "%", required: true, description: "CASA deposits as % of total deposits at 31 March", where: "Investor presentation, deposits slide"}
+  - {id: gnpa_pct, unit: "%", required: true, description: "Gross NPA ratio at 31 March (as reported)", where: "Quarterly results, asset quality"}
+  - {id: nnpa_pct, unit: "%", required: true, description: "Net NPA ratio at 31 March", where: "Quarterly results, asset quality"}
+  - {id: pcr_pct, unit: "%", required: true, description: "Provision coverage ratio at 31 March (excluding technical write-offs, as reported)", where: "Quarterly results / presentation"}
+  - {id: crar_pct, unit: "%", required: true, description: "Total capital adequacy ratio (Basel III) at 31 March", where: "Quarterly results / Basel III Pillar 3"}
+  - {id: provisions_cr, unit: "Rs cr", required: true, description: "Provisions and contingencies for the full fiscal year (not one quarter)", where: "P&L / annual results press release"}
+  - {id: cet1_pct, unit: "%", required: false, description: "Common equity tier-1 ratio at 31 March", where: "Basel III disclosures"}
+  - {id: nim_pct, unit: "%", required: false, description: "Net interest margin for the year as reported (bank's own definition)", where: "Investor presentation"}
+  - {id: yield_on_advances_pct, unit: "%", required: false, description: "Yield on advances for the year", where: "Investor presentation / analyst sheet"}
+  - {id: cost_of_funds_pct, unit: "%", required: false, description: "Cost of funds (or cost of deposits) for the year", where: "Investor presentation"}
+  - {id: cost_to_income_pct, unit: "%", required: false, description: "Cost-to-income ratio for the year as reported", where: "Investor presentation"}
+  - {id: slippage_ratio_pct, unit: "%", required: false, description: "Gross slippages as % of opening standard advances", where: "Investor presentation"}
+
+metrics_add:
+  - {id: loan_growth, name: "Loan growth", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:advances_cr', 1)",
+     equation: "Advances_t / Advances_t-1 - 1", meaning: "Growth of the loan book (reported advances)."}
+  - {id: deposit_growth, name: "Deposit growth", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:deposits_cr', 1)",
+     equation: "Deposits_t / Deposits_t-1 - 1", meaning: "Growth of the deposit franchise."}
+  - {id: nim_reported, name: "Net interest margin (reported)", pillar: margins, unit: pct, direction: higher, formula: "kpi('nim_pct')",
+     equation: "NIM as reported by the bank", meaning: "Spread earned on interest-earning assets, bank's own definition."}
+  - {id: yield_on_advances, name: "Yield on advances", pillar: margins, unit: pct, direction: neutral, formula: "kpi('yield_on_advances_pct')",
+     equation: "Interest on advances / average advances (reported)", meaning: "Pricing of the loan book; higher can mean riskier lending."}
+  - {id: cost_of_funds_reported, name: "Cost of funds (reported)", pillar: margins, unit: pct, direction: lower, formula: "kpi('cost_of_funds_pct')",
+     equation: "Interest expended / average interest-bearing funds (reported)", meaning: "What the bank pays for deposits and borrowings."}
+  - {id: cost_to_income_bank, name: "Cost-to-income (ex-provisions)", pillar: margins, unit: pct, direction: lower,
+     formula: "(f('total_opex') - kpi('provisions_cr') + f('depreciation')) / f('net_total_income')",
+     equation: "(Opex excluding provisions + depreciation) / (NII + other income)", meaning: "Operating efficiency before credit costs."}
+  - {id: credit_cost, name: "Credit cost", pillar: cash_quality, unit: pct, direction: lower, formula: "kpi('provisions_cr') / avg('kpi:advances_cr')",
+     equation: "Provisions & contingencies / average advances", meaning: "Share of the loan book lost to provisions in the year: the price of growth."}
+  - {id: gnpa_ratio, name: "Gross NPA ratio", pillar: cash_quality, unit: pct, direction: lower, formula: "kpi('gnpa_pct')",
+     equation: "Gross NPAs / gross advances (reported)", meaning: "Share of loans that have stopped paying."}
+  - {id: nnpa_ratio, name: "Net NPA ratio", pillar: cash_quality, unit: pct, direction: lower, formula: "kpi('nnpa_pct')",
+     equation: "(Gross NPAs - provisions) / net advances (reported)", meaning: "Bad loans not yet provided for: the hit still to come."}
+  - {id: pcr, name: "Provision coverage ratio", pillar: cash_quality, unit: pct, direction: higher, formula: "kpi('pcr_pct')",
+     equation: "Provisions held / gross NPAs (reported, ex technical write-offs)", meaning: "How much of the bad-loan stock is already provided."}
+  - {id: provisions_to_ppop, name: "Provisions / pre-provision profit", pillar: cash_quality, unit: pct, direction: lower,
+     formula: "kpi('provisions_cr') / (f('net_total_income') - (f('total_opex') - kpi('provisions_cr') + f('depreciation')))",
+     equation: "Provisions / (NII + other income - opex ex provisions - depreciation)", meaning: "Share of operating profit consumed by credit costs."}
+  - {id: slippage_ratio, name: "Slippage ratio", pillar: cash_quality, unit: pct, direction: lower, formula: "kpi('slippage_ratio_pct')",
+     equation: "Gross slippages / opening standard advances (reported)", meaning: "Pace at which good loans turn bad."}
+  - {id: crar, name: "Capital adequacy (CRAR)", pillar: balance_sheet, unit: pct, direction: higher, formula: "kpi('crar_pct')",
+     equation: "Total capital / risk-weighted assets (Basel III, reported)", meaning: "Regulatory capital cushion against losses."}
+  - {id: cet1, name: "CET1 ratio", pillar: balance_sheet, unit: pct, direction: higher, formula: "kpi('cet1_pct')",
+     equation: "Common equity tier 1 / risk-weighted assets (reported)", meaning: "Highest-quality capital cushion."}
+  - {id: casa_ratio, name: "CASA ratio", pillar: balance_sheet, unit: pct, direction: higher, formula: "kpi('casa_pct')",
+     equation: "CASA deposits / total deposits (reported)", meaning: "Share of cheap, sticky funding."}
+  - {id: cd_ratio, name: "Credit-deposit ratio", pillar: balance_sheet, unit: ratio, direction: target, formula: "kpi('advances_cr') / kpi('deposits_cr')",
+     equation: "Advances / deposits", meaning: "How fully deposits are lent out: too low wastes funding, too high relies on wholesale money."}
+  - {id: bank_opex_to_assets, name: "Opex (ex provisions) / assets", pillar: returns, unit: pct, direction: lower, role: component,
+     formula: "(f('total_opex') - kpi('provisions_cr') + f('depreciation')) / avg('f:total_assets')",
+     equation: "(Opex excluding provisions + depreciation) / average total assets", meaning: "Operating cost per rupee of balance sheet (bank DuPont)."}
+  - {id: provisions_to_assets, name: "Provisions / assets", pillar: returns, unit: pct, direction: lower, role: component,
+     formula: "kpi('provisions_cr') / avg('f:total_assets')",
+     equation: "Provisions & contingencies / average total assets", meaning: "Credit cost per rupee of balance sheet (bank DuPont)."}
+
+bands:
+  crar:
+    red: 0.115
+    green: 0.173
+    source_type: external
+    source_url: https://website.rbi.org.in/ml/web/rbi/-/notifications/master-circular-basel-iii-capital-regulations-8142
+    as_of: "2025-06-30"
+    rationale: "Red = RBI Basel III minimum total capital 9% + capital conservation buffer 2.5% = 11.5% (Master Circular, Basel III Capital Regulations). Green = scheduled commercial banks' system CRAR of 17.3% at March 2025 (RBI FSR June 2025, https://informistmedia.com/MoneyWire/31505/RBI-Report-Capital-ratio-of-banks-seen-above-mandated-level-even-in-worst-case)."
+  cet1:
+    red: 0.08
+    green: 0.13
+    source_type: external
+    source_url: https://website.rbi.org.in/ml/web/rbi/-/notifications/master-circular-basel-iii-capital-regulations-8142
+    as_of: "2024-04-01"
+    rationale: "Red = RBI minimum CET1 5.5% + CCB 2.5% = 8%. Green 13% = 5pp buffer above the regulatory floor (indicative component)."
+  gnpa_ratio:
+    green: 0.018
+    red: 0.036
+    source_type: external
+    source_url: https://psuwatch.com/newsupdates/banks-gnpas-at-a-multidecadal-low-may-inch-up-to-19-pc-by-mar-2028-rbi
+    as_of: "2026-06-30"
+    rationale: "Green = scheduled commercial banks' GNPA of 1.8% at March 2026 (RBI FSR June 2026, multi-decadal low); red = twice the system level."
+  nnpa_ratio:
+    green: 0.005
+    red: 0.010
+    source_type: external
+    source_url: https://informistmedia.com/MoneyWire/31505/RBI-Report-Capital-ratio-of-banks-seen-above-mandated-level-even-in-worst-case
+    as_of: "2025-06-30"
+    rationale: "Green = system net NPA of 0.5% at March 2025 (RBI FSR June 2025); red = twice the system level."
+  pcr:
+    red: 0.60
+    green: 0.70
+    source_type: external
+    source_url: https://website.rbi.org.in/web/rbi/-/notifications/provisioning-coverage-ratio-for-advances-6357
+    as_of: "2011-04-21"
+    rationale: "Green = RBI's 70% provisioning coverage benchmark (DBOD.No.BP.BC.64/21.04.048/2009-10 and the April 2011 circular); red = 10pp short of it."
+  roa:
+    red: 0.0112
+    green: 0.0168
+    centre: 0.014
+    source_type: external
+    source_url: https://www.newsonair.gov.in/rbi-releases-its-report-on-trend-and-progress-of-banking-in-india-2024-25
+    as_of: "2025-12-29"
+    rationale: "RBI Report on Trend and Progress of Banking 2024-25: scheduled commercial banks' RoA 1.4% (RoE 13.5%). Amber zone = 1.4% +/- 20%."
+  nii_to_assets: &nim_band
+    red: 0.028
+    green: 0.042
+    centre: 0.035
+    source_type: external
+    source_url: https://www.indiainfoline.com/blog/how-healthy-were-indian-banks-in-the-year-2024-25
+    as_of: "2025-06-30"
+    rationale: "RBI FSR June 2025: SCB net interest margin 3.5% (private banks 4.1%, PSBs 3.0%); RBI defines NIM as NII / average total assets. Amber zone = 3.5% +/- 20%."
+  nim_reported: *nim_band
+  cd_ratio:
+    green_low: 0.72
+    green_high: 0.88
+    red_low: 0.60
+    red_high: 1.00
+    source_type: external
+    source_url: https://www.business-standard.com/finance/news/yes-bank-s-casa-liquidity-coverage-ratio-rises-in-q2-loan-growth-up-13-1-124100300477_1.html
+    as_of: "2024-09-06"
+    rationale: "System credit-deposit ratio 77.2% (RBI data, Sep 2024; about 82% by mid-2026). Green = within ~5pp of the system level; red below 60% (idle deposits) or above 100% (lending more than deposits, i.e. wholesale funding)."
+  loan_growth:
+    red: inflation_target
+    green: nominal_gdp_growth
+    source_type: derived
+    rationale: "Loan growth below CPI inflation = shrinking in real terms; above nominal GDP = gaining share. Unusually fast growth is caught by flags BK05/A06, not by this band."
+  deposit_growth:
+    red: inflation_target
+    green: nominal_gdp_growth
+    source_type: derived
+    rationale: "As loan growth."
+  casa_ratio:
+    red: 0.30
+    green: 0.40
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "System CASA share is about 39% (secondary report, down from a 44% peak in FY22); 40%+ is a strong low-cost franchise, under 30% means funding at near-wholesale cost."
+  cost_to_income_bank:
+    green: 0.42
+    red: 0.55
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Large Indian private banks run at roughly 38-45%; above 55% leaves little room for credit costs."
+  credit_cost:
+    green: 0.008
+    red: 0.020
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Credit cost under 0.8% of loans is benign for a diversified Indian bank; above 2% consumes most of the margin."
+  provisions_to_ppop:
+    green: 0.20
+    red: 0.50
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Provisions taking more than half of pre-provision profit leave earnings exposed to any further stress."
+  slippage_ratio:
+    green: 0.015
+    red: 0.030
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Fresh slippages under 1.5% of standard advances are benign; above 3% signal a deteriorating book."
+  cost_of_funds_reported:
+    green: 0.050
+    red: 0.065
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "With the policy repo near 5.5-6.5% in 2024-26, a cost of funds under 5% reflects a strong CASA franchise; above 6.5% is wholesale-like."
+
+flags:
+  - id: BK01
+    name: Gross NPAs rising and elevated
+    pillar: cash_quality
+    severity: high
+    applies: [BL]
+    condition: "rising('gnpa_ratio', 2) and m('gnpa_ratio') > 0.03"
+    values: {now: "m('gnpa_ratio')", then: "m('gnpa_ratio', 2)"}
+    explanation: >
+      Gross NPAs rose for 2 years running, from {{ then|pct }} to {{ now|pct }} (above 3%): the loan book is deteriorating faster than it is being cleaned up.
+  - id: BK02
+    name: Thin provision cover
+    pillar: cash_quality
+    severity: medium
+    applies: [BANK]
+    condition: "m('pcr') < 0.60 or (falling('pcr', 2) and chg('pcr', 2) < -0.05)"
+    values: {now: "m('pcr')"}
+    explanation: >
+      Provision coverage is {{ now|pct }} (below RBI's 70% benchmark, or falling fast): future credit costs are being deferred.
+  - id: BK03
+    name: Capital near the regulatory floor
+    pillar: balance_sheet
+    severity: high
+    applies: [BL]
+    condition: "m('crar') < 0.13"
+    values: {now: "m('crar')"}
+    explanation: >
+      CRAR is {{ now|pct }}, within 1.5pp of the 11.5% Basel III floor (incl. buffer): growth needs fresh capital, or the dividend is at risk.
+  - id: BK04
+    name: Credit costs eating the margin
+    pillar: cash_quality
+    severity: medium
+    applies: [BANK]
+    condition: "m('credit_cost') > 0.02"
+    values: {cc: "m('credit_cost')"}
+    explanation: >
+      Credit cost is {{ cc|pct }} of average advances (above 2%).
+  - id: BK05
+    name: Fast loan growth while capital falls
+    pillar: balance_sheet
+    severity: high
+    applies: [BL]
+    condition: "m('loan_growth') > 0.25 and chg('crar', 1) < 0"
+    values: {g: "m('loan_growth')", d: "chg('crar', 1)"}
+    explanation: >
+      Loans grew {{ g|pct }} while CRAR changed {{ d|pp }}: growth is outrunning capital, the pattern that preceded most Indian lending blow-ups.
+  - id: BK06
+    name: Low-cost deposits slipping
+    pillar: balance_sheet
+    severity: medium
+    applies: [BANK]
+    condition: "chg('casa_ratio', 2) < -0.03"
+    values: {now: "m('casa_ratio')", d: "chg('casa_ratio', 2)"}
+    explanation: >
+      CASA fell {{ d|pp }} over 2 years to {{ now|pct }}: funding is getting more expensive, which squeezes NIM.
+  - id: BK07
+    name: Lending more than the deposit base supports
+    pillar: balance_sheet
+    severity: medium
+    applies: [BANK]
+    condition: "m('cd_ratio') > 0.90"
+    values: {now: "m('cd_ratio')"}
+    explanation: >
+      Credit-deposit ratio is {{ now|pct }}: growth relies on borrowings or will be constrained by deposit mobilisation.
+  - id: BK08
+    name: Provisions consume most of operating profit
+    pillar: cash_quality
+    severity: medium
+    applies: [BL]
+    condition: "m('provisions_to_ppop') > 0.50"
+    values: {now: "m('provisions_to_ppop')"}
+    explanation: >
+      Provisions took {{ now|pct }} of pre-provision operating profit.
+
+drivers:
+  add:
+    - id: bank_dupont
+      title: "Bank DuPont: RoE = RoA x A/E; RoA = NII/A + fees & other income/A - opex/A - provisions/A - tax/A (+ minority & associates/A)"
+      applies: [BL]
+      root: roe
+      links:
+        roe: {type: product, children: [roa, equity_multiplier]}
+        roa: {type: sum, children: [nii_to_assets, other_income_to_assets, -bank_opex_to_assets, -provisions_to_assets, -tax_to_assets, minority_to_assets]}
+        nii_to_assets: {type: sum, children: [yield_on_assets, -interest_to_assets]}
+        equity_multiplier: {type: sum, const: 1.0, children: [debt_to_equity_avg, other_liab_to_equity_avg]}
+  replace:
+    fin_roe: bank_dupont

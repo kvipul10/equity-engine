@@ -9,7 +9,7 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 import pandas as pd
 
-from .config import Config, ConfigError
+from .config import Config, ConfigError, normalise_source_type
 from .expr import Missing, eval_number
 from .registry import PILLARS, REGISTRY, Metric
 from .standardise import fy_year
@@ -28,6 +28,11 @@ def band_vars(cfg: Config, coc) -> Dict[str, float]:
 
 
 def find_band(mid: str, archetype: str, family: str, cfg: Config) -> Tuple[Optional[Dict], Optional[str]]:
+    """Lookup order: sector module (config/sectors, incl. inherited) > Damodaran sector benchmarks > bands.yaml."""
+    sec = cfg.sector_of(archetype)
+    b = sec.bands.get(mid)
+    if b:
+        return b, b.get("_origin") or sec.file
     b = ((cfg.bands.get("archetype") or {}).get(archetype) or {}).get(mid)
     if b:
         return b, f"config/bands.yaml (archetype: {archetype})"
@@ -155,7 +160,7 @@ def score_metric(mid: str, series: pd.Series, asof: str, cfg: Config, archetype:
             rb = resolve_band(band, m.direction if m.direction != "neutral" else "higher", vars_, mid)
         except (ConfigError, Missing):
             rb = None
-        res["band"] = {**(rb or {}), "origin": origin, "source_type": band.get("source_type", "external"),
+        res["band"] = {**(rb or {}), "origin": origin, "source_type": normalise_source_type(band.get("source_type")),
                        "source_url": band.get("source_url"), "as_of": band.get("as_of"),
                        "rationale": band.get("rationale") or band.get("derivation"), "centre": band.get("centre")}
     if not scorable:
@@ -206,11 +211,15 @@ def weighted(scores: List[Tuple[float, float]]) -> Optional[float]:
     return sum(s * w for s, w in scores) / tot if tot > 0 else None
 
 
-def roll_up(metric_results: Dict[str, Dict], family: str, cfg: Config, triggered_flags: List[Dict]) -> Tuple[Dict, Dict]:
+def roll_up(metric_results: Dict[str, Dict], family: str, cfg: Config, triggered_flags: List[Dict],
+            archetype: Optional[str] = None) -> Tuple[Dict, Dict]:
     pc = cfg.scoring["pillar"]
     mw = cfg.scoring.get("metric_weights", {}) or {}
     fam_key = family if family in cfg.scoring["pillar_weights"] else "non_financial"
     pw = cfg.scoring["pillar_weights"][fam_key]
+    sec_pw = cfg.sector_of(archetype).pillar_weights if archetype else None
+    if sec_pw:
+        pw, fam_key = sec_pw, f"sector:{archetype}"
     high_by_pillar: Dict[str, List[str]] = {}
     for f in triggered_flags:
         if f.get("severity") == "high":

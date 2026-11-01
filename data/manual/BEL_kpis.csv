@@ -1,0 +1,9 @@
+metric,fiscal_year,value,unit,source_url,source_date,verified
+order_book_cr,FY23,60690,Rs cr (as of 31 March 2023),https://www.icicidirect.com/mailimages/IDirect_BharatElectronics_Q4FY23.pdf,2023-05,N
+order_book_cr,FY24,76000,"Rs cr (approx, as on 1 April 2024)",https://www.dtnext.in/amp/story/news/business/bel-turnover-rises-to-record-rs-19700-crores-777464,2024-04-01,N
+order_book_cr,FY25,71650,Rs cr (as on 1 April 2025),https://www.business-standard.com/markets/news/psu-defence-stock-hits-new-high-on-heavy-volumes-zooms-24-in-2-weeks-125052100451_1.html,2025-05-21,N
+order_book_cr,FY26,73882,Rs cr (as on 1 April 2026),https://www.business-standard.com/markets/capital-market-news/bharat-electronics-q4-pat-jumps-5-yoy-to-rs-2-225-cr-126051901191_1.html,2026-05-19,N
+order_inflow_cr,FY22,19180,Rs cr,https://www.hdfcsec.com/hsl.research.pdf/Stock%20Update%20-Bharat%20Electronics%20Ltd%20(BEL)-%20160822.pdf,2022-08-16,N
+order_inflow_cr,FY23,20690,Rs cr,https://www.hdfcsec.com/hsl.research.pdf/Stock%20Update_Bharat%20Electronics%20Ltd-%20040923.pdf,2023-09-04,N
+order_inflow_cr,FY24,35000,Rs cr (approx),https://www.dtnext.in/amp/story/news/business/bel-turnover-rises-to-record-rs-19700-crores-777464,2024-04-01,N
+order_inflow_cr,FY26,30000,"Rs cr (approx, per Motilal Oswal)",https://www.business-standard.com/markets/news/bharat-electronics-bel-share-price-target-bse-nse-q4-results-profit-revenue-126052100302_1.html,2026-05-21,N

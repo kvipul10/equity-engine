@@ -20,6 +20,7 @@
     "period_end": "2026-03-31",
     "data_window": "FY17-FY26",
     "n_years": 10,
+    "manual_kpi_window": "FY22-FY26",
     "latest_quarter_used": "2026-09-30",
     "price_basis": "export"
   },
@@ -134,7 +135,7 @@
     "text": "Creates value: ROIC 48.3% vs WACC 12.5% in FY26 -> economic profit Rs 20,449 cr. Economic profit was positive in 9 of 9 years; trend improving."
   },
   "overall": {
-    "score": 70.62358,
+    "score": 69.651272,
     "rag": "green",
     "coverage": 1.0,
     "high_flags": 0,
@@ -143,20 +144,20 @@
   },
   "pillars": {
     "growth": {
-      "score": 60.912903,
-      "rag": "green",
+      "score": 57.118602,
+      "rag": "amber",
       "weight": 15.0,
-      "n_scored": 18,
-      "n_metrics": 18,
+      "n_scored": 20,
+      "n_metrics": 21,
       "rag_counts": {
         "green": 11,
         "amber": 4,
-        "red": 3,
-        "n/a": 0
+        "red": 5,
+        "n/a": 1
       },
       "capped_by_flags": [],
       "name": "1 Growth",
-      "summary": "1 Growth: GREEN (61/100, 18 scored metrics). Strongest: Revenue CAGR (full span, up to 10y) 11.2% (green), Latest quarter revenue YoY 10.7% (green). Weakest: EBITDA CAGR 3y 6.4% (red), Revenue CAGR 3y 6.8% (red).",
+      "summary": "1 Growth: AMBER (57/100, 20 scored metrics). Strongest: Revenue CAGR (full span, up to 10y) 11.2% (green), Latest quarter revenue YoY 10.7% (green). Weakest: Book-to-bill (TCV / revenue) 0.74x (red), Constant-currency growth 3.1% (red).",
       "metrics": [
         "revenue_cagr_3y",
         "revenue_cagr_5y",
@@ -175,31 +176,33 @@
         "organic_capital_share_3y",
         "q_revenue_yoy",
         "q_pat_yoy",
-        "q_revenue_yoy_trend"
+        "q_revenue_yoy_trend",
+        "cc_growth",
+        "book_to_bill",
+        "deal_tcv_growth",
+        "headcount_growth"
       ],
       "flags_triggered": []
     },
     "margins": {
-      "score": 66.791489,
+      "score": 63.811383,
       "rag": "green",
       "weight": 15.0,
       "n_scored": 7,
-      "n_metrics": 10,
+      "n_metrics": 8,
       "rag_counts": {
-        "green": 6,
-        "amber": 1,
+        "green": 5,
+        "amber": 2,
         "red": 0,
-        "n/a": 3
+        "n/a": 1
       },
       "capped_by_flags": [],
       "name": "2 Margins",
-      "summary": "2 Margins: GREEN (67/100, 7 scored metrics). Strongest: Gross margin 81.4% (green), EBITDA margin volatility (sd) +1.6pp (green). Weakest: Latest quarter EBITDA margin change YoY +0.1pp (amber), Other income / PBT 7.6% (green).",
+      "summary": "2 Margins: GREEN (64/100, 7 scored metrics). Strongest: EBITDA margin volatility (sd) +1.6pp (green), EBIT margin 22.6% (green). Weakest: Latest quarter EBITDA margin change YoY +0.1pp (amber), Employee cost % of sales 53.2% (amber).",
       "metrics": [
-        "gross_margin",
         "ebitda_margin",
         "ebit_margin",
         "pat_margin",
-        "materials_pct",
         "employee_pct",
         "other_expenses_pct",
         "dol",
@@ -213,29 +216,25 @@
       "flags_triggered": []
     },
     "capital_efficiency": {
-      "score": 64.459193,
+      "score": 64.897727,
       "rag": "green",
       "weight": 10.0,
-      "n_scored": 5,
+      "n_scored": 6,
       "n_metrics": 10,
       "rag_counts": {
-        "green": 4,
+        "green": 5,
         "amber": 1,
         "red": 0,
-        "n/a": 5
+        "n/a": 4
       },
       "capped_by_flags": [],
       "name": "3 Capital efficiency",
-      "summary": "3 Capital efficiency: GREEN (64/100, 5 scored metrics). Strongest: Net working capital days 48 days (green), Invested-capital turnover 3.13x (green). Weakest: CWIP / net block 1.6% (amber), Receivable days (DSO) 72 days (green).",
+      "summary": "3 Capital efficiency: GREEN (65/100, 6 scored metrics). Strongest: Attrition (LTM) 12.6% (green), Net working capital days 48 days (green). Weakest: CWIP / net block 1.6% (amber), Receivable days (DSO) 72 days (green).",
       "metrics": [
         "asset_turnover",
         "fixed_asset_turnover",
         "ic_turnover",
         "dso",
-        "dio",
-        "dpo",
-        "cash_conversion_cycle",
-        "operating_cycle",
         "nwc_days",
         "capex_to_sales",
         "capex_to_depreciation",
@@ -247,7 +246,11 @@
         "inventory_to_sales",
         "cash_to_sales",
         "other_assets_rest_to_sales",
-        "other_liabilities_to_sales"
+        "other_liabilities_to_sales",
+        "utilisation",
+        "attrition",
+        "dso_incl_unbilled",
+        "revenue_per_employee"
       ],
       "flags_triggered": []
     },
@@ -788,7 +791,8 @@
           ],
           "text": "Return on equity moved from 27.3% to 31.2% (FY21->FY26). Largest drivers: Other expenses % of sales (+6.1pp) -> -7.3pp (-186% of the change); Other liabilities / equity (average) (+0.17x) -> +3.4pp (86% of the change); Cash & bank / sales (-31 days of sales) -> +2.7pp (69% of the change)."
         }
-      }
+      },
+      "origin": "config/drivers.yaml"
     },
     "roic_tree": {
       "title": "ROIC = NOPAT margin x invested-capital turnover, down to cost lines and capital intensity (net of other liabilities)",
@@ -1061,7 +1065,8 @@
           ],
           "text": "Return on invested capital moved from 42.1% to 48.3% (FY21->FY26). Largest drivers: Other expenses % of sales (+6.1pp) -> -12.2pp (-195% of the change); Net block / sales (-23 days of sales) -> +7.8pp (125% of the change); Employee cost % of sales (-2.0pp) -> +4.1pp (65% of the change)."
         }
-      }
+      },
+      "origin": "config/drivers.yaml"
     },
     "eps_tree": {
       "title": "EPS = revenue per share x net margin (volume/price vs margin vs dilution)",
@@ -1220,7 +1225,8 @@
           ],
           "text": "eps_core moved from 45.42 to 72.59 (FY21->FY26). Largest drivers: revenue (+78,178 cr) -> 33.35 (123% of the change); PAT margin (-2.8pp) -> -9.04 (-33% of the change); adjusted_shares_cr (-20.510) -> 2.86 (11% of the change)."
         }
-      }
+      },
+      "origin": "config/drivers.yaml"
     }
   },
   "flags": {
@@ -1230,6 +1236,7 @@
         "name": "EV/IC rich relative to ROIC/WACC",
         "pillar": "valuation",
         "severity": "low",
+        "origin": "config/flags.yaml",
         "status": "triggered",
         "values": {
           "r": 1.982565,
@@ -1247,7 +1254,6 @@
       "G06",
       "M01",
       "M02",
-      "M03",
       "M04",
       "M05",
       "M06",
@@ -1279,13 +1285,21 @@
       "A07",
       "V01",
       "V02",
-      "V03"
+      "V03",
+      "IT01",
+      "IT03",
+      "IT05"
     ],
     "not_evaluable": [
       {
+        "id": "M03",
+        "name": "Materials cost creeping up",
+        "missing": "materials_pct (not available for this company)"
+      },
+      {
         "id": "C02",
         "name": "Inventory days up three years running",
-        "missing": "dio FY23"
+        "missing": "dio (not available for this company)"
       },
       {
         "id": "A02",
@@ -1301,6 +1315,16 @@
         "id": "A05",
         "name": "Acquisition spend followed by falling ROIC",
         "missing": "acquisition_roic_delta_3y FY26"
+      },
+      {
+        "id": "IT02",
+        "name": "Utilisation slipping",
+        "missing": "utilisation FY25"
+      },
+      {
+        "id": "IT04",
+        "name": "Unbilled and receivable days rising",
+        "missing": "dso_incl_unbilled FY24"
       }
     ],
     "counts": {
@@ -1318,6 +1342,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "core PAT / average equity (share capital + reserves)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Owners' core profit per rupee of shareholders' equity.",
       "value": 0.312079,
       "value_text": "31.2%",
@@ -1378,6 +1404,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "core PAT / average total assets",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Owners' core profit per rupee of total assets.",
       "value": 0.194913,
       "value_text": "19.5%",
@@ -1425,6 +1453,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "EBIT / average (equity + borrowings), EBIT = core PBT + interest",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Pre-tax operating return on all funding (Screener's definition).",
       "value": 0.392201,
       "value_text": "39.2%",
@@ -1485,6 +1515,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "NOPAT / average IC; NOPAT = (EBITDA - Dep) x (1 - ETR), ETR = core tax / core PBT clipped 0-40% (statutory if PBT <= 0); IC = equity + borrowings - cash - investments (+ manual minority interest); n/m if IC <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "After-tax operating return on the capital actually tied up in operations (excludes cash, investments and the income they earn).",
       "value": 0.48327,
       "value_text": "48.3%",
@@ -1545,6 +1577,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "ROIC - WACC (WACC from config/market.yaml, see capital_cost.py)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Value created per rupee of invested capital: positive = earns more than investors require.",
       "value": 0.35876,
       "value_text": "+35.9pp",
@@ -1605,6 +1639,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(NOPAT_t - NOPAT_t-3) / (avg IC_t - avg IC_t-3); n/m if capital grew < 5%",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Return on the capital added over the last 3 years: is new money earning as much as the old?",
       "value": 0.548415,
       "value_text": "54.8%",
@@ -1665,6 +1701,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "core PAT / (core PBT - core tax)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Owners' share of after-tax profit: below 1 = minorities take a slice; above 1 = associate/JV income adds to it.",
       "value": 0.998846,
       "value_text": "1.00",
@@ -1712,6 +1750,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(core PBT - core tax) / core PBT",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Share of pre-tax profit kept after tax (1 - effective tax rate).",
       "value": 0.736942,
       "value_text": "0.74",
@@ -1759,6 +1799,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "core PBT / EBIT",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Share of EBIT left after interest.",
       "value": 0.989706,
       "value_text": "0.99",
@@ -1806,6 +1848,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "average total assets / average equity",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Assets per rupee of equity: the leverage term in DuPont.",
       "value": 1.601118,
       "value_text": "1.60x",
@@ -1853,6 +1897,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "average borrowings / average equity",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Debt part of the equity multiplier.",
       "value": 0.09224,
       "value_text": "0.09x",
@@ -1900,6 +1946,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "average other liabilities / average equity",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Non-debt liabilities part of the equity multiplier.",
       "value": 0.508878,
       "value_text": "0.51x",
@@ -1947,6 +1995,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "1 - ETR (as in ROIC)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Operating profit kept after tax.",
       "value": 0.736942,
       "value_text": "0.74",
@@ -1994,6 +2044,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "NOPAT / Revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "After-tax operating profit per rupee of revenue (the margin half of ROIC).",
       "value": 0.154187,
       "value_text": "15.4%",
@@ -2041,6 +2093,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "(Capex proxy - Depreciation + change in NWC) / NOPAT (NOPAT > 0); NWC = other assets - cash - other liabilities",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Share of after-tax operating profit ploughed back into fixed assets and working capital. Good only if incremental ROIC exceeds WACC.",
       "value": 0.068904,
       "value_text": "0.07",
@@ -2088,6 +2142,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "Dividend / core PAT (PAT > 0)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Share of core profit paid as dividends (Screener 'Dividend Amount', declared for the year).",
       "value": 0.66,
       "value_text": "0.66",
@@ -2135,6 +2191,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "Adjusted shares_t / Adjusted shares_t-1 - 1",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Net issuance (dilution, +) or buyback (-) of shares, adjusted for splits and bonuses.",
       "value": -0.023523,
       "value_text": "-2.4%",
@@ -2177,7 +2235,7 @@
         "red": 0.03,
         "green": 0.0,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Net issuance above 3% a year is material dilution; flat or falling share count = no dilution/buybacks.",
@@ -2185,7 +2243,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Share count change: -2.4% GREEN (level green vs band (green <= 0.0%, red >= 3.0%); trend stable -0.1pp/yr; moderate (CV 0.34))"
+      "text": "Share count change: -2.4% GREEN (level green vs indicative band (green <= 0.0%, red >= 3.0%); trend stable -0.1pp/yr; moderate (CV 0.34))"
     },
     "buyback_estimate": {
       "name": "Buyback (estimate)",
@@ -2195,6 +2253,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "max(0, -(Adj shares_t - Adj shares_t-1)) x (Price_t + Price_t-1)/2",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Estimated rupees spent on buybacks: shares retired x average of the two year-end prices.",
       "value": 13781.80625,
       "value_text": "Rs 13,782 cr",
@@ -2235,6 +2295,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "(Dividend + buyback estimate) / Market cap (FY-end)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Cash returned to shareholders (dividends + estimated buybacks) as a share of year-end market value.",
       "value": 0.065482,
       "value_text": "6.5%",
@@ -2282,6 +2344,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "Dividend / (CFO - capex proxy); 99 if FCF <= 0 and dividend > 0; 0 if no dividend",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Dividends relative to free cash flow: above 1 = payouts funded from the balance sheet (99 = dividend paid with FCF <= 0).",
       "value": 0.731484,
       "value_text": "0.73",
@@ -2310,7 +2374,7 @@
         "red": 1.2,
         "green": 0.7,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Paying out more than 120% of FCF must be funded by cash reserves or debt; under 70% leaves room to reinvest.",
@@ -2318,7 +2382,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Dividends / FCF: 0.73 GREEN (level amber vs band (green <= 0.70, red >= 1.20))"
+      "text": "Dividends / FCF: 0.73 GREEN (level amber vs indicative band (green <= 0.70, red >= 1.20))"
     },
     "non_capex_investing_3y": {
       "name": "Non-capex investing (3y, % of IC)",
@@ -2328,6 +2392,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "sum3(-CFI - capex proxy) / IC_t-3 (IC_t-3 > 0)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Investing outflows beyond capex over 3 years (acquisitions, stakes, treasury investments) relative to opening invested capital.",
       "value": -0.302834,
       "value_text": "-30.3%",
@@ -2368,6 +2434,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "ROIC_t - ROIC_t-3 if non_capex_investing_3y > 10%, else n/a",
+      "formula": null,
+      "origin": "engine",
       "meaning": "When a company spent materially beyond capex (> 10% of IC over 3 years), did ROIC subsequently rise or fall?",
       "value": null,
       "value_text": "n/a",
@@ -2392,7 +2460,7 @@
         "red": -0.03,
         "green": 0.0,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Acquisition-heavy periods followed by a 3pp+ fall in ROIC suggest value-destructive deals.",
@@ -2410,6 +2478,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "manual promoter_holding_pct (FY-end)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Promoter (controlling shareholder) stake. Not in the Screener export: supply promoter_holding_pct in data/manual.",
       "value": null,
       "value_text": "n/a",
@@ -2443,6 +2513,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "Promoter holding_t - Promoter holding_t-3",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Change in promoter stake over 3 years (selling down = negative).",
       "value": null,
       "value_text": "n/a",
@@ -2467,7 +2539,7 @@
         "red": -0.03,
         "green": 0.0,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Promoters selling more than 3pp of the company over 3 years is a signal worth explaining.",
@@ -2485,6 +2557,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "manual promoter_pledge_pct (pledged shares / promoter shares)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Share of promoter holding pledged to lenders (forced-selling risk). Manual data only.",
       "value": null,
       "value_text": "n/a",
@@ -2509,7 +2583,7 @@
         "red": 0.25,
         "green": 0.01,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Pledges above a quarter of promoter holding create forced-selling risk in a drawdown.",
@@ -2527,6 +2601,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "(Borrowings - Cash & bank) / EBITDA (EBITDA > 0)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Years of operating profit needed to repay net debt (negative = net cash). Borrowings include lease liabilities.",
       "value": -0.308065,
       "value_text": "-0.31x",
@@ -2587,6 +2663,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "(Borrowings - Cash & bank) / Equity",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Net financial leverage on book equity.",
       "value": -0.140277,
       "value_text": "-0.14x",
@@ -2629,7 +2707,7 @@
         "red": 1.5,
         "green": 0.5,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Net debt above 1.5x book equity is aggressive for an Indian non-financial; under 0.5x is conservative.",
@@ -2637,7 +2715,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Net debt / equity: -0.14x GREEN (level green vs band (green <= 0.50x, red >= 1.50x); trend stable -0.01x/yr; stable (CV 0.10))"
+      "text": "Net debt / equity: -0.14x GREEN (level green vs indicative band (green <= 0.50x, red >= 1.50x); trend stable -0.01x/yr; stable (CV 0.10))"
     },
     "interest_cover": {
       "name": "Interest cover",
@@ -2647,6 +2725,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "EBIT / Interest, EBIT = core PBT + interest; = 99 if interest ~ 0; clipped to [-99, 99]",
+      "formula": null,
+      "origin": "engine",
       "meaning": "How many times EBIT covers interest (capped at 99x when interest is negligible).",
       "value": 97.141827,
       "value_text": "97.14x",
@@ -2707,6 +2787,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "Other assets / Other liabilities",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Short-term liquidity proxy: the export has no current/non-current split, so other assets / other liabilities is used (Screener's own working-capital split). Excludes short-term debt (inside Borrowings).",
       "value": 1.877382,
       "value_text": "1.88x",
@@ -2749,7 +2831,7 @@
         "red": 1.0,
         "green": 1.5,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Textbook liquidity norm: below 1.0x short-term obligations exceed short-term assets; 1.5x+ is comfortable. Proxy excludes short-term debt.",
@@ -2757,7 +2839,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Current ratio (Screener proxy): 1.88x GREEN (level green vs band (red <= 1.00x, green >= 1.50x); trend stable 0.01x/yr; moderate (CV 0.27))"
+      "text": "Current ratio (Screener proxy): 1.88x GREEN (level green vs indicative band (red <= 1.00x, green >= 1.50x); trend stable 0.01x/yr; moderate (CV 0.27))"
     },
     "cash_to_st_borrowings": {
       "name": "Cash / short-term borrowings",
@@ -2767,6 +2849,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "Cash & bank / short-term borrowings (manual) or / Borrowings; = 99 when there is no debt",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Cash cover for debt falling due soon. Uses manual short_term_borrowings when supplied, otherwise total borrowings (conservative: treats all debt as short-term).",
       "value": 2.419464,
       "value_text": "2.42x",
@@ -2809,7 +2893,7 @@
         "red": 0.2,
         "green": 1.0,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Cash covering all short-term debt (1.0x) removes refinancing risk; under 0.2x depends on rollovers.",
@@ -2817,7 +2901,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Cash / short-term borrowings: 2.42x GREEN (level green vs band (red <= 0.20x, green >= 1.00x); trend stable -0.00x/yr; volatile (CV 1.46))"
+      "text": "Cash / short-term borrowings: 2.42x GREEN (level green vs indicative band (red <= 0.20x, green >= 1.00x); trend stable -0.00x/yr; volatile (CV 1.46))"
     },
     "debt_vs_ebitda_growth": {
       "name": "Debt growth - EBITDA growth",
@@ -2827,6 +2911,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "(Borrowings_t/Borrowings_t-1 - 1) - (EBITDA_t/EBITDA_t-1 - 1); n/m if prior debt < 1% of assets or prior EBITDA <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Debt growing faster than the profit that services it (n/m when debt was negligible).",
       "value": 0.03777,
       "value_text": "+3.8pp",
@@ -2869,7 +2955,7 @@
         "red": 0.1,
         "green": 0.0,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Debt growing 10pp a year faster than EBITDA erodes coverage quickly.",
@@ -2877,7 +2963,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Debt growth - EBITDA growth: +3.8pp AMBER (level amber vs band (green <= +0.0pp, red >= +10.0pp); trend improving -2.2pp/yr; volatile (CV 9.75))"
+      "text": "Debt growth - EBITDA growth: +3.8pp AMBER (level amber vs indicative band (green <= +0.0pp, red >= +10.0pp); trend improving -2.2pp/yr; volatile (CV 9.75))"
     },
     "altman_x1": {
       "name": "Altman Z'' X1",
@@ -2887,6 +2973,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(Other assets - Other liabilities) / Total assets",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Working capital (Screener split) / total assets",
       "value": 0.297184,
       "value_text": "0.30",
@@ -2934,6 +3022,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "Reserves / Total assets",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Reserves (proxy for retained earnings; includes securities premium) / total assets",
       "value": 0.588691,
       "value_text": "0.59",
@@ -2981,6 +3071,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "EBIT / Total assets",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Operating return on assets",
       "value": 0.261919,
       "value_text": "0.26",
@@ -3028,6 +3120,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "Equity / (Borrowings + Other liabilities)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Book equity / total liabilities (book value replaces market value in Z'')",
       "value": 1.511361,
       "value_text": "1.51",
@@ -3075,6 +3169,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "3.25 + 6.56 X1 + 3.26 X2 + 6.72 X3 + 1.05 X4 (X1..X4 as defined in altman_x1..x4)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Distress score for emerging-market non-financials (Altman 2005 EM score: Z'' + 3.25) using Screener proxies. Above 5.85 safe, below 4.35 distress zone.",
       "value": 10.465691,
       "value_text": "10.47",
@@ -3135,6 +3231,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "CFO / EBITDA (EBITDA > 0)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "How much of operating profit arrives as operating cash (after working capital and tax).",
       "value": 0.803832,
       "value_text": "0.80",
@@ -3177,7 +3275,7 @@
         "red": 0.5,
         "green": 0.8,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "After tax (~25%) and normal working-capital needs, 80%+ of EBITDA should arrive as CFO; below 50% means profit is being absorbed by working capital.",
@@ -3185,7 +3283,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "CFO / EBITDA: 0.80 GREEN (level green vs band (red <= 0.50, green >= 0.80); trend improving 0.04/yr; stable (CV 0.12))"
+      "text": "CFO / EBITDA: 0.80 GREEN (level green vs indicative band (red <= 0.50, green >= 0.80); trend improving 0.04/yr; stable (CV 0.12))"
     },
     "fcf_to_pat": {
       "name": "FCF / PAT",
@@ -3195,6 +3293,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(CFO - capex proxy) / core PAT (PAT > 0)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Free cash flow per rupee of core profit in the year.",
       "value": 0.902276,
       "value_text": "0.90",
@@ -3237,7 +3337,7 @@
         "red": 0.2,
         "green": 0.8,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Single-year FCF is lumpy (capex cycles), hence the wide amber zone; use the 5-year version for judgement.",
@@ -3245,7 +3345,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "FCF / PAT: 0.90 GREEN (level green vs band (red <= 0.20, green >= 0.80); trend improving 0.03/yr; moderate (CV 0.25))"
+      "text": "FCF / PAT: 0.90 GREEN (level green vs indicative band (red <= 0.20, green >= 0.80); trend improving 0.03/yr; moderate (CV 0.25))"
     },
     "fcf_to_pat_5y": {
       "name": "FCF / PAT (5y cumulative)",
@@ -3255,6 +3355,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "sum5(CFO - capex proxy) / sum5(core PAT)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Free cash flow conversion over a full cycle (5 years), smoothing lumpy capex.",
       "value": 0.865379,
       "value_text": "0.87",
@@ -3297,7 +3399,7 @@
         "red": 0.3,
         "green": 0.7,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Over a cycle, a mature business should convert 70%+ of profit into free cash; below 30% profit is being reinvested or is not real.",
@@ -3305,7 +3407,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "FCF / PAT (5y cumulative): 0.87 GREEN (level green vs band (red <= 0.30, green >= 0.70); trend improving 0.03/yr; stable (CV 0.08))"
+      "text": "FCF / PAT (5y cumulative): 0.87 GREEN (level green vs indicative band (red <= 0.30, green >= 0.70); trend improving 0.03/yr; stable (CV 0.08))"
     },
     "cfo_to_pat_5y": {
       "name": "CFO / PAT (5y cumulative)",
@@ -3315,6 +3417,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "sum5(CFO) / sum5(core PAT)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Operating cash flow conversion of profits over 5 years: below 60% means profits are not turning into cash.",
       "value": 1.098382,
       "value_text": "1.10",
@@ -3357,7 +3461,7 @@
         "red": 0.6,
         "green": 0.9,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Cumulative CFO below 60% of cumulative PAT over 5 years is the red-flag threshold in the brief; 90%+ = profits are cash-backed.",
@@ -3365,7 +3469,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "CFO / PAT (5y cumulative): 1.10 GREEN (level green vs band (red <= 0.60, green >= 0.90); trend stable 0.02/yr; stable (CV 0.04))"
+      "text": "CFO / PAT (5y cumulative): 1.10 GREEN (level green vs indicative band (red <= 0.60, green >= 0.90); trend stable 0.02/yr; stable (CV 0.04))"
     },
     "accruals_ratio": {
       "name": "Accruals ratio",
@@ -3375,6 +3479,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "(reported PAT - CFO) / average total assets",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Profit not backed by operating cash, scaled by assets (Sloan-style total accruals): high = lower-quality earnings.",
       "value": -0.030098,
       "value_text": "-3.0%",
@@ -3435,6 +3541,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "(Rec_t / Rec_t-1 - 1) - (Rev_t / Rev_t-1 - 1); n/m if prior receivables < 0.5% of revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Receivables growing faster than sales can signal channel stuffing, looser credit or collection problems.",
       "value": 0.034738,
       "value_text": "+3.5pp",
@@ -3477,7 +3585,7 @@
         "red": 0.1,
         "green": 0.0,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Receivables outgrowing revenue by 10pp+ in a year is a classic quality warning (Beneish DSRI logic).",
@@ -3485,7 +3593,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Receivables growth - revenue growth: +3.5pp RED (level amber vs band (green <= +0.0pp, red >= +10.0pp); trend deteriorating +2.0pp/yr; volatile (CV 4.28))"
+      "text": "Receivables growth - revenue growth: +3.5pp RED (level amber vs indicative band (green <= +0.0pp, red >= +10.0pp); trend deteriorating +2.0pp/yr; volatile (CV 4.28))"
     },
     "exceptional_frequency_5y": {
       "name": "Exceptional items frequency (5y)",
@@ -3495,6 +3603,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "count over last 5 years of [|estimated exceptional| > 5% x |PBT|]",
+      "formula": null,
+      "origin": "engine",
       "meaning": "In how many of the last 5 years profit contained a material exceptional item (|item| > 5% of PBT).",
       "value": 0.0,
       "value_text": "0",
@@ -3530,7 +3640,7 @@
         "red": 3.0,
         "green": 1.0,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "One exceptional year in five is normal; three or more means 'exceptional' items are recurring.",
@@ -3538,7 +3648,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Exceptional items frequency (5y): 0 GREEN (level green vs band (green <= 1, red >= 3); trend improving -0/yr)"
+      "text": "Exceptional items frequency (5y): 0 GREEN (level green vs indicative band (green <= 1, red >= 3); trend improving -0/yr)"
     },
     "exceptional_size_5y": {
       "name": "Exceptional items size (5y)",
@@ -3548,6 +3658,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "sum5(|estimated exceptional|) / sum5(|reported PBT|)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "How big exceptional items were relative to profit over 5 years.",
       "value": 0.0,
       "value_text": "0.0%",
@@ -3583,7 +3695,7 @@
         "red": 0.2,
         "green": 0.05,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Exceptional items above 20% of cumulative PBT make reported profit an unreliable guide to core earnings.",
@@ -3591,7 +3703,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Exceptional items size (5y): 0.0% GREEN (level green vs band (green <= 5.0%, red >= 20.0%); trend improving -0.3pp/yr)"
+      "text": "Exceptional items size (5y): 0.0% GREEN (level green vs indicative band (green <= 5.0%, red >= 20.0%); trend improving -0.3pp/yr)"
     },
     "beneish_dsri": {
       "name": "Beneish DSRI",
@@ -3601,6 +3713,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "(Rec_t/Sales_t) / (Rec_t-1/Sales_t-1)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Days-sales-in-receivables index: receivables/sales this year vs last.",
       "value": 1.031693,
       "value_text": "1.03",
@@ -3648,6 +3762,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "GM_t-1 / GM_t, GM = 1 - COGS/Sales",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Gross-margin index: last year's gross margin / this year's (>1 = deteriorating margins).",
       "value": 0.997157,
       "value_text": "1.00",
@@ -3695,6 +3811,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "[1 - (CA_t + NB_t)/TA_t] / [1 - (CA_t-1 + NB_t-1)/TA_t-1], CA proxy = receivables + inventory + cash",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Asset-quality index: share of 'soft' assets (not current assets or net block) this year vs last.",
       "value": 0.987051,
       "value_text": "0.99",
@@ -3742,6 +3860,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "Sales_t / Sales_t-1",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Sales-growth index.",
       "value": 1.09608,
       "value_text": "1.10",
@@ -3789,6 +3909,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "DepRate_t-1 / DepRate_t, DepRate = Dep / (Dep + Net block)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Depreciation index: last year's depreciation rate / this year's (>1 = slower depreciation).",
       "value": 1.061191,
       "value_text": "1.06",
@@ -3836,6 +3958,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "(SGA_t/Sales_t) / (SGA_t-1/Sales_t-1), SGA proxy = selling & admin + other expenses (other opex if that is <= 0)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "SG&A index: SG&A/sales this year vs last.",
       "value": 1.032478,
       "value_text": "1.03",
@@ -3883,6 +4007,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "[(Borrowings_t + OL_t)/TA_t] / [(Borrowings_t-1 + OL_t-1)/TA_t-1]",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Leverage index: (debt + other liabilities)/assets this year vs last.",
       "value": 1.132242,
       "value_text": "1.13",
@@ -3930,6 +4056,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "(reported PAT - CFO) / Total assets_t",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Total accruals to total assets (year-end).",
       "value": -0.029464,
       "value_text": "-0.03",
@@ -3977,6 +4105,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "-4.84 + 0.920 DSRI + 0.528 GMI + 0.404 AQI + 0.892 SGI + 0.115 DEPI - 0.172 SGAI + 4.679 TATA - 0.327 LVGI",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Probability-style earnings-manipulation screen (Beneish 1999, 8 variables) built from Screener line items. Above -1.78 = profile resembles known manipulators; a screen, not proof.",
       "value": -2.551529,
       "value_text": "-2.55",
@@ -4037,6 +4167,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "Revenue / average total assets",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Revenue generated per rupee of total assets (the AT in DuPont).",
       "value": 1.182788,
       "value_text": "1.18x",
@@ -4084,6 +4216,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "Revenue / average net block",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Revenue per rupee of net fixed assets (plant, property, equipment, intangibles).",
       "value": 5.519766,
       "value_text": "5.52x",
@@ -4131,6 +4265,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "Revenue / average invested capital, IC = equity + borrowings - cash - investments (n/m if IC <= 0)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Revenue per rupee of operating invested capital (the turnover half of ROIC).",
       "value": 3.134321,
       "value_text": "3.13x",
@@ -4191,6 +4327,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "Receivables / Revenue x 365",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Days of sales tied up in customer receivables (year-end, as Screener's debtor days).",
       "value": 71.986622,
       "value_text": "72 days",
@@ -4243,192 +4381,6 @@
       "note": null,
       "text": "Receivable days (DSO): 72 days GREEN (level amber vs band (green <= 71 days, red >= 107 days); trend stable 1 days/yr; stable (CV 0.05))"
     },
-    "dio": {
-      "name": "Inventory days (DIO)",
-      "pillar": "capital_efficiency",
-      "role": "scored",
-      "unit": "days",
-      "direction": "lower",
-      "kind": "annual",
-      "equation": "Inventory / COGS x 365, COGS = materials + power & fuel + other mfr.",
-      "meaning": "Days of production cost held as inventory (n/m when inventory < 0.5% of revenue or COGS < 2% of revenue).",
-      "value": null,
-      "value_text": "n/a",
-      "series": {
-        "FY17": null,
-        "FY18": null,
-        "FY19": null,
-        "FY20": null,
-        "FY21": null,
-        "FY22": null,
-        "FY23": null,
-        "FY24": null,
-        "FY25": null,
-        "FY26": null
-      },
-      "level": null,
-      "trend": null,
-      "stability": null,
-      "composite": null,
-      "rag": "n/a",
-      "band": {
-        "red": 16.508609,
-        "green": -3.491391,
-        "origin": "config/sector_benchmarks.yaml (it_services)",
-        "source_type": "external",
-        "source_url": "https://pages.stern.nyu.edu/~adamodar/pc/datasets/wcdataIndia.xls",
-        "as_of": "2026-01-05",
-        "rationale": "Damodaran India 'Inventory/Sales' (Computer Services) x365 / industry COGS/Sales; amber zone = centre +/- max(20%, 10.0)",
-        "centre": 6.508609
-      },
-      "reason": "no value for the as-of year",
-      "note": null,
-      "text": "Inventory days (DIO): n/a [no value for the as-of year]"
-    },
-    "dpo": {
-      "name": "Payable days (DPO)",
-      "pillar": "capital_efficiency",
-      "role": "scored",
-      "unit": "days",
-      "direction": "higher",
-      "kind": "annual",
-      "equation": "Trade payables (manual) / COGS x 365",
-      "meaning": "Days of production cost financed by suppliers. Needs trade_payables in data/manual (not in the Screener export).",
-      "value": null,
-      "value_text": "n/a",
-      "series": {
-        "FY17": null,
-        "FY18": null,
-        "FY19": null,
-        "FY20": null,
-        "FY21": null,
-        "FY22": null,
-        "FY23": null,
-        "FY24": null,
-        "FY25": null,
-        "FY26": null
-      },
-      "level": null,
-      "trend": null,
-      "stability": null,
-      "composite": null,
-      "rag": "n/a",
-      "band": {
-        "red": 21.774172,
-        "green": 41.774172,
-        "origin": "config/sector_benchmarks.yaml (it_services)",
-        "source_type": "external",
-        "source_url": "https://pages.stern.nyu.edu/~adamodar/pc/datasets/wcdataIndia.xls",
-        "as_of": "2026-01-05",
-        "rationale": "Damodaran India 'Acc Pay/ Sales' (Computer Services) x365 / industry COGS/Sales; amber zone = centre +/- max(20%, 10.0)",
-        "centre": 31.774172
-      },
-      "reason": "no value for the as-of year",
-      "note": null,
-      "text": "Payable days (DPO): n/a [no value for the as-of year]"
-    },
-    "cash_conversion_cycle": {
-      "name": "Cash conversion cycle",
-      "pillar": "capital_efficiency",
-      "role": "scored",
-      "unit": "days",
-      "direction": "lower",
-      "kind": "annual",
-      "equation": "DSO + DIO - DPO (DIO = 0 when inventory is immaterial)",
-      "meaning": "Days between paying suppliers and collecting from customers. Needs manual trade payables.",
-      "value": null,
-      "value_text": "n/a",
-      "series": {
-        "FY17": null,
-        "FY18": null,
-        "FY19": null,
-        "FY20": null,
-        "FY21": null,
-        "FY22": null,
-        "FY23": null,
-        "FY24": null,
-        "FY25": null,
-        "FY26": null
-      },
-      "level": null,
-      "trend": null,
-      "stability": null,
-      "composite": null,
-      "rag": "n/a",
-      "band": {
-        "red": 76.523219,
-        "green": 51.015479,
-        "origin": "config/sector_benchmarks.yaml (it_services)",
-        "source_type": "external",
-        "source_url": "https://pages.stern.nyu.edu/~adamodar/pc/datasets/wcdataIndia.xls",
-        "as_of": "2026-01-05",
-        "rationale": "Industry receivable days + inventory days - payable days (Computer Services); amber zone = centre +/- max(20%, 10 days)",
-        "centre": 63.769349
-      },
-      "reason": "no value for the as-of year",
-      "note": null,
-      "text": "Cash conversion cycle: n/a [no value for the as-of year]"
-    },
-    "operating_cycle": {
-      "name": "Operating cycle",
-      "pillar": "capital_efficiency",
-      "role": "scored",
-      "unit": "days",
-      "direction": "lower",
-      "kind": "annual",
-      "equation": "DSO + DIO (DIO = 0 when inventory is immaterial)",
-      "meaning": "Days from buying inventory to collecting cash (before supplier credit): always computable from the export.",
-      "value": 71.986622,
-      "value_text": "72 days",
-      "series": {
-        "FY17": 65.672712,
-        "FY18": 68.018916,
-        "FY19": 65.459389,
-        "FY20": 74.321849,
-        "FY21": 70.092265,
-        "FY22": 68.108368,
-        "FY23": 63.227837,
-        "FY24": 71.715006,
-        "FY25": 69.775262,
-        "FY26": 71.986622
-      },
-      "level": {
-        "score": 70.546395,
-        "basis": "band",
-        "rag": "green"
-      },
-      "trend": {
-        "slope_per_year": 1.430393,
-        "normalised_slope": 0.020742,
-        "n": 5,
-        "window": "FY22-FY26",
-        "score": 39.775419,
-        "label": "stable"
-      },
-      "stability": {
-        "cv": 0.049578,
-        "sd": 3.412827,
-        "n": 10,
-        "score": 86.792427,
-        "label": "stable",
-        "window": "FY17-FY26"
-      },
-      "composite": 65.290556,
-      "rag": "green",
-      "band": {
-        "red": 114.652225,
-        "green": 76.434817,
-        "origin": "config/sector_benchmarks.yaml (it_services)",
-        "source_type": "external",
-        "source_url": "https://pages.stern.nyu.edu/~adamodar/pc/datasets/wcdataIndia.xls",
-        "as_of": "2026-01-05",
-        "rationale": "Industry receivable days + inventory days (Computer Services); amber zone = centre +/- max(20%, 10 days)",
-        "centre": 95.543521
-      },
-      "reason": null,
-      "note": null,
-      "text": "Operating cycle: 72 days GREEN (level green vs band (green <= 76 days, red >= 115 days); trend stable 1 days/yr; stable (CV 0.05))"
-    },
     "nwc_days": {
       "name": "Net working capital days",
       "pillar": "capital_efficiency",
@@ -4437,6 +4389,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "(Other assets - cash - other liabilities) / Revenue x 365",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Non-cash working capital in days of sales; includes payables and provisions implicitly (proxy for CCC). Negative = suppliers/customers fund the business.",
       "value": 48.321383,
       "value_text": "48 days",
@@ -4497,6 +4451,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "Capex proxy / Revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Capital spending intensity (capex proxy from the balance sheet).",
       "value": 0.041551,
       "value_text": "4.2%",
@@ -4544,6 +4500,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "Capex proxy / Depreciation",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Above 1 = growing the asset base; persistently below 1 = under-investing (or asset-light).",
       "value": 1.51428,
       "value_text": "1.51x",
@@ -4591,6 +4549,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "CWIP / Net block",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Capital work in progress relative to productive assets: high and persistent = capital locked in projects not yet earning.",
       "value": 0.015576,
       "value_text": "1.6%",
@@ -4633,7 +4593,7 @@
         "red": 0.3,
         "green": 0.1,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "CWIP above 30% of net block (the red-flag threshold in the brief) means a large share of capital is not yet earning; under 10% is normal maintenance/expansion.",
@@ -4641,7 +4601,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "CWIP / net block: 1.6% AMBER (level green vs band (green <= 10.0%, red >= 30.0%); trend deteriorating +0.2pp/yr; volatile (CV 0.84))"
+      "text": "CWIP / net block: 1.6% AMBER (level green vs indicative band (green <= 10.0%, red >= 30.0%); trend deteriorating +0.2pp/yr; volatile (CV 0.84))"
     },
     "nb_to_sales": {
       "name": "Net block / sales",
@@ -4651,6 +4611,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "average Net block / Revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Average net block per rupee of revenue: a capital-intensity term in the asset-turnover / IC-turnover driver trees (x365 = days of sales).",
       "value": 0.181167,
       "value_text": "0.18",
@@ -4698,6 +4660,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "average CWIP / Revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Average cwip per rupee of revenue: a capital-intensity term in the asset-turnover / IC-turnover driver trees (x365 = days of sales).",
       "value": 0.00375,
       "value_text": "0.00",
@@ -4745,6 +4709,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "average Investments / Revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Average investments per rupee of revenue: a capital-intensity term in the asset-turnover / IC-turnover driver trees (x365 = days of sales).",
       "value": 0.127123,
       "value_text": "0.13",
@@ -4792,6 +4758,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "average Receivables / Revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Average receivables per rupee of revenue: a capital-intensity term in the asset-turnover / IC-turnover driver trees (x365 = days of sales).",
       "value": 0.185816,
       "value_text": "0.19",
@@ -4839,6 +4807,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "average Inventory / Revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Average inventory per rupee of revenue: a capital-intensity term in the asset-turnover / IC-turnover driver trees (x365 = days of sales).",
       "value": 0.0,
       "value_text": "0.00",
@@ -4886,6 +4856,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "average Cash & bank / Revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Average cash & bank per rupee of revenue: a capital-intensity term in the asset-turnover / IC-turnover driver trees (x365 = days of sales).",
       "value": 0.130579,
       "value_text": "0.13",
@@ -4933,6 +4905,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "average Other assets (loans, advances, other) / Revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Average other assets (loans, advances, other) per rupee of revenue: a capital-intensity term in the asset-turnover / IC-turnover driver trees (x365 = days of sales).",
       "value": 0.217025,
       "value_text": "0.22",
@@ -4980,6 +4954,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "average Other liabilities / Revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Average other liabilities per rupee of revenue: a capital-intensity term in the asset-turnover / IC-turnover driver trees (x365 = days of sales).",
       "value": 0.26871,
       "value_text": "0.27",
@@ -5027,6 +5003,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(Revenue_t / Revenue_t-3)^(1/3) - 1; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of revenue (Screener 'Sales'; banks: interest earned; insurers: premium + investment income) over 3 years.",
       "value": 0.067722,
       "value_text": "6.8%",
@@ -5080,6 +5058,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(Revenue_t / Revenue_t-5)^(1/5) - 1; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of revenue (Screener 'Sales'; banks: interest earned; insurers: premium + investment income) over 5 years.",
       "value": 0.121997,
       "value_text": "12.2%",
@@ -5133,6 +5113,8 @@
       "direction": "higher",
       "kind": "point",
       "equation": "(Revenue_t / Revenue_t-n)^(1/n) - 1, n = full available span <= 10; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of revenue (Screener 'Sales'; banks: interest earned; insurers: premium + investment income) over the longest available history (max 10 years; 9 with a 10-column export).",
       "value": 0.112419,
       "value_text": "11.2%",
@@ -5168,6 +5150,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(EBITDA_t / EBITDA_t-3)^(1/3) - 1; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of EBITDA (operating profit before other income) over 3 years.",
       "value": 0.063699,
       "value_text": "6.4%",
@@ -5221,6 +5205,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(EBITDA_t / EBITDA_t-5)^(1/5) - 1; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of EBITDA (operating profit before other income) over 5 years.",
       "value": 0.086777,
       "value_text": "8.7%",
@@ -5274,6 +5260,8 @@
       "direction": "higher",
       "kind": "point",
       "equation": "(EBITDA_t / EBITDA_t-n)^(1/n) - 1, n = full available span <= 10; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of EBITDA (operating profit before other income) over the longest available history (max 10 years; 9 with a 10-column export).",
       "value": 0.095505,
       "value_text": "9.6%",
@@ -5309,6 +5297,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(PAT_t / PAT_t-3)^(1/3) - 1; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of core PAT (owners' net profit excluding estimated exceptional items) over 3 years.",
       "value": 0.069064,
       "value_text": "6.9%",
@@ -5362,6 +5352,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(PAT_t / PAT_t-5)^(1/5) - 1; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of core PAT (owners' net profit excluding estimated exceptional items) over 5 years.",
       "value": 0.087544,
       "value_text": "8.8%",
@@ -5415,6 +5407,8 @@
       "direction": "higher",
       "kind": "point",
       "equation": "(PAT_t / PAT_t-n)^(1/n) - 1, n = full available span <= 10; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of core PAT (owners' net profit excluding estimated exceptional items) over the longest available history (max 10 years; 9 with a 10-column export).",
       "value": 0.083094,
       "value_text": "8.3%",
@@ -5450,6 +5444,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(EPS_t / EPS_t-3)^(1/3) - 1; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of EPS = core PAT / split-adjusted shares over 3 years.",
       "value": 0.077174,
       "value_text": "7.7%",
@@ -5503,6 +5499,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(EPS_t / EPS_t-5)^(1/5) - 1; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of EPS = core PAT / split-adjusted shares over 5 years.",
       "value": 0.098328,
       "value_text": "9.8%",
@@ -5556,6 +5554,8 @@
       "direction": "higher",
       "kind": "point",
       "equation": "(EPS_t / EPS_t-n)^(1/n) - 1, n = full available span <= 10; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of EPS = core PAT / split-adjusted shares over the longest available history (max 10 years; 9 with a 10-column export).",
       "value": 0.098197,
       "value_text": "9.8%",
@@ -5591,6 +5591,8 @@
       "direction": "lower",
       "kind": "point",
       "equation": "sd(g_t) / |mean(g_t)| over the last 10 annual growth rates (>= 4 needed); n/m if |mean| < 1%",
+      "formula": null,
+      "origin": "engine",
       "meaning": "How erratic annual revenue growth is: standard deviation of yearly growth divided by its mean (lower = steadier).",
       "value": 0.590381,
       "value_text": "0.59",
@@ -5608,7 +5610,7 @@
         "red": 1.5,
         "green": 0.5,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "sd/mean of annual growth below 0.5 = steady compounding; above 1.5 = growth is mostly noise (cyclical or lumpy).",
@@ -5616,7 +5618,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Revenue growth volatility: 0.59 GREEN (level amber vs band (green <= 0.50, red >= 1.50))"
+      "text": "Revenue growth volatility: 0.59 GREEN (level amber vs indicative band (green <= 0.50, red >= 1.50))"
     },
     "pat_growth_volatility": {
       "name": "PAT growth volatility",
@@ -5626,6 +5628,8 @@
       "direction": "lower",
       "kind": "point",
       "equation": "sd(g_t) / |mean(g_t)| of core PAT growth over the last 10 years (base year PAT > 0); n/m if |mean| < 1%",
+      "formula": null,
+      "origin": "engine",
       "meaning": "How erratic annual core-profit growth is (sd / mean of yearly growth).",
       "value": 0.590879,
       "value_text": "0.59",
@@ -5643,7 +5647,7 @@
         "red": 1.5,
         "green": 0.5,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Same scale as revenue growth volatility.",
@@ -5651,7 +5655,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "PAT growth volatility: 0.59 GREEN (level amber vs band (green <= 0.50, red >= 1.50))"
+      "text": "PAT growth volatility: 0.59 GREEN (level amber vs indicative band (green <= 0.50, red >= 1.50))"
     },
     "organic_capital_share_3y": {
       "name": "Organic share of capital deployed 3y",
@@ -5661,6 +5665,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "sum3(capex) / (sum3(capex) + sum3(max(delta Investments, 0)))",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Of the money put into long-term assets over 3 years, the share spent on own capex rather than on additions to investments (acquisitions, stakes in associates, treasury). Proxy for organic vs bought growth: the export has no goodwill line.",
       "value": 0.788446,
       "value_text": "0.79",
@@ -5696,7 +5702,7 @@
         "red": 0.3,
         "green": 0.7,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "At least 70% of long-term capital deployed into own capex = predominantly organic; under 30% = growth largely bought (or cash parked in investments).",
@@ -5704,7 +5710,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Organic share of capital deployed 3y: 0.79 GREEN (level green vs band (red <= 0.30, green >= 0.70); trend improving 0.06/yr)"
+      "text": "Organic share of capital deployed 3y: 0.79 GREEN (level green vs indicative band (red <= 0.30, green >= 0.70); trend improving 0.06/yr)"
     },
     "q_revenue_yoy": {
       "name": "Latest quarter revenue YoY",
@@ -5714,6 +5720,8 @@
       "direction": "higher",
       "kind": "point",
       "equation": "Revenue_q / Revenue_q-4 - 1",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Revenue growth in the latest reported quarter versus the same quarter a year earlier.",
       "value": 0.106855,
       "value_text": "10.7%",
@@ -5749,6 +5757,8 @@
       "direction": "higher",
       "kind": "point",
       "equation": "PAT_q / PAT_q-4 - 1 (PAT_q-4 > 0)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Reported net profit growth in the latest quarter versus a year earlier (n/m if the year-ago quarter was a loss).",
       "value": 0.06233,
       "value_text": "6.2%",
@@ -5784,6 +5794,8 @@
       "direction": "higher",
       "kind": "point",
       "equation": "OLS slope of the last 4 values of (Revenue_q / Revenue_q-4 - 1), per quarter",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Is quarterly growth accelerating or decelerating? Slope of the last 4 quarterly YoY revenue growth prints.",
       "value": 0.006019,
       "value_text": "+0.6pp",
@@ -5801,7 +5813,7 @@
         "red": -0.01,
         "green": 0.01,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "YoY growth accelerating by >= 1pp per quarter = improving momentum; decelerating by >= 1pp per quarter = fading.",
@@ -5809,67 +5821,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Quarterly YoY growth trend: +0.6pp GREEN (level amber vs band (red <= -1.0pp, green >= +1.0pp))"
-    },
-    "gross_margin": {
-      "name": "Gross margin",
-      "pillar": "margins",
-      "role": "scored",
-      "unit": "pct",
-      "direction": "higher",
-      "kind": "annual",
-      "equation": "1 - COGS / Revenue, COGS = (raw material - change in inventory) + power & fuel + other mfr. exp",
-      "meaning": "Share of revenue left after the direct cost of making the product (materials, power & fuel, other manufacturing). n/m when such costs are under 2% of revenue (services).",
-      "value": 0.81447,
-      "value_text": "81.4%",
-      "series": {
-        "FY17": 0.898662,
-        "FY18": 0.893749,
-        "FY19": 0.877557,
-        "FY20": 0.875373,
-        "FY21": 0.871178,
-        "FY22": 0.828824,
-        "FY23": 0.819401,
-        "FY24": 0.821735,
-        "FY25": 0.812154,
-        "FY26": 0.81447
-      },
-      "level": {
-        "score": 100.0,
-        "basis": "band",
-        "rag": "green"
-      },
-      "trend": {
-        "slope_per_year": -0.003596,
-        "normalised_slope": -0.004389,
-        "n": 5,
-        "window": "FY22-FY26",
-        "score": 47.807155,
-        "label": "stable"
-      },
-      "stability": {
-        "cv": 0.041057,
-        "sd": 0.034952,
-        "n": 10,
-        "score": 88.931337,
-        "label": "stable",
-        "window": "FY17-FY26"
-      },
-      "composite": 85.291489,
-      "rag": "green",
-      "band": {
-        "red": 0.241458,
-        "green": 0.362186,
-        "origin": "config/sector_benchmarks.yaml (it_services)",
-        "source_type": "external",
-        "source_url": "https://pages.stern.nyu.edu/~adamodar/pc/datasets/marginIndia.xls",
-        "as_of": "2026-01-05",
-        "rationale": "Damodaran India 'Gross Margin' (Computer Services); amber zone = centre +/- max(20%, 0.02)",
-        "centre": 0.301822
-      },
-      "reason": null,
-      "note": null,
-      "text": "Gross margin: 81.4% GREEN (level green vs band (red <= 24.1%, green >= 36.2%); trend stable -0.4pp/yr; stable (CV 0.04))"
+      "text": "Quarterly YoY growth trend: +0.6pp GREEN (level amber vs indicative band (red <= -1.0pp, green >= +1.0pp))"
     },
     "ebitda_margin": {
       "name": "EBITDA margin",
@@ -5879,6 +5831,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "EBITDA / Revenue, EBITDA = Revenue - (materials + employee + other opex)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Operating profit before depreciation, interest and other income, per rupee of revenue (Screener OPM).",
       "value": 0.236664,
       "value_text": "23.7%",
@@ -5939,6 +5893,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "EBIT / Revenue, EBIT = core PBT + interest = EBITDA - depreciation + core other income",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Profit before interest and tax (including core other income, excluding exceptional items) per rupee of revenue.",
       "value": 0.226202,
       "value_text": "22.6%",
@@ -5999,6 +5955,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "core PAT / Revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Owners' core net profit per rupee of revenue (net profit margin, NPM).",
       "value": 0.164791,
       "value_text": "16.5%",
@@ -6051,53 +6009,6 @@
       "note": null,
       "text": "PAT margin: 16.5% GREEN (level green vs band (red <= 10.6%, green >= 15.9%); trend stable -0.3pp/yr; stable (CV 0.09))"
     },
-    "materials_pct": {
-      "name": "Materials % of sales",
-      "pillar": "margins",
-      "role": "scored",
-      "unit": "pct",
-      "direction": "lower",
-      "kind": "annual",
-      "equation": "(Raw material - Change in inventory) / Revenue",
-      "meaning": "Raw materials consumed (net of inventory change) as a share of revenue.",
-      "value": 0.0,
-      "value_text": "0.0%",
-      "series": {
-        "FY17": 0.0,
-        "FY18": 0.0,
-        "FY19": 0.0,
-        "FY20": 0.0,
-        "FY21": 0.0,
-        "FY22": 0.0,
-        "FY23": 0.0,
-        "FY24": 0.0,
-        "FY25": 0.0,
-        "FY26": 0.0
-      },
-      "level": null,
-      "trend": {
-        "slope_per_year": 0.0,
-        "normalised_slope": 0.0,
-        "n": 5,
-        "window": "FY22-FY26",
-        "score": 50.0,
-        "label": "stable"
-      },
-      "stability": {
-        "cv": 0.0,
-        "sd": 0.0,
-        "n": 10,
-        "score": 100.0,
-        "label": "stable",
-        "window": "FY17-FY26"
-      },
-      "composite": null,
-      "rag": "n/a",
-      "band": null,
-      "reason": "no sourced band and fewer than 4 same-archetype peers: level not scored",
-      "note": null,
-      "text": "Materials % of sales: 0.0% [no sourced band and fewer than 4 same-archetype peers: level not scored]"
-    },
     "employee_pct": {
       "name": "Employee cost % of sales",
       "pillar": "margins",
@@ -6106,6 +6017,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "Employee cost / Revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Staff costs as a share of revenue.",
       "value": 0.532393,
       "value_text": "53.2%",
@@ -6121,7 +6034,11 @@
         "FY25": 0.527443,
         "FY26": 0.532393
       },
-      "level": null,
+      "level": {
+        "score": 55.869018,
+        "basis": "band",
+        "rag": "amber"
+      },
       "trend": {
         "slope_per_year": 0.0006,
         "normalised_slope": 0.001129,
@@ -6138,12 +6055,21 @@
         "label": "stable",
         "window": "FY17-FY26"
       },
-      "composite": null,
-      "rag": "n/a",
-      "band": null,
-      "reason": "no sourced band and fewer than 4 same-archetype peers: level not scored",
+      "composite": 59.960585,
+      "rag": "amber",
+      "band": {
+        "red": 0.6,
+        "green": 0.5,
+        "origin": "config/sectors/it_services.yaml",
+        "source_type": "indicative",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Large Indian IT services firms spend roughly 50-56% of revenue on employees; above 60% leaves little operating margin.",
+        "centre": null
+      },
+      "reason": null,
       "note": null,
-      "text": "Employee cost % of sales: 53.2% [no sourced band and fewer than 4 same-archetype peers: level not scored]"
+      "text": "Employee cost % of sales: 53.2% AMBER (level amber vs indicative band (green <= 50.0%, red >= 60.0%); trend stable +0.1pp/yr; stable (CV 0.02))"
     },
     "other_expenses_pct": {
       "name": "Other expenses % of sales",
@@ -6153,6 +6079,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "(Power & fuel + Other mfr. + Selling & admin + Other expenses) / Revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "All other operating costs (power & fuel, other manufacturing, selling & admin, other) as a share of revenue. Summed because Screener reclassifies between these lines.",
       "value": 0.230943,
       "value_text": "23.1%",
@@ -6200,6 +6128,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "%change EBIT / %change Revenue (n/m if |%change revenue| < 2% or prior EBIT <= 0)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "How much EBIT moves for a 1% move in sales: high DOL magnifies both upturns and downturns.",
       "value": 0.653377,
       "value_text": "0.65x",
@@ -6247,6 +6177,8 @@
       "direction": "lower",
       "kind": "point",
       "equation": "sd(EBITDA margin_t) over the last 10 years (>= 4 needed, sample sd)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Standard deviation of the EBITDA margin over up to 10 years: pricing power and cost pass-through.",
       "value": 0.015512,
       "value_text": "+1.6pp",
@@ -6264,7 +6196,7 @@
         "red": 0.05,
         "green": 0.02,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "EBITDA margin moving within +/-2pp over a decade signals pricing power; a 5pp+ standard deviation signals commodity exposure or weak pass-through.",
@@ -6272,7 +6204,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "EBITDA margin volatility (sd): +1.6pp GREEN (level green vs band (green <= +2.0pp, red >= +5.0pp))"
+      "text": "EBITDA margin volatility (sd): +1.6pp GREEN (level green vs indicative band (green <= +2.0pp, red >= +5.0pp))"
     },
     "other_income_to_pbt": {
       "name": "Other income / PBT",
@@ -6282,6 +6214,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "Other income (reported, incl. exceptional) / PBT (reported); n/m if PBT <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "How much of pre-tax profit comes from other income (treasury, one-offs) rather than operations (reported basis).",
       "value": 0.075834,
       "value_text": "7.6%",
@@ -6324,7 +6258,7 @@
         "red": 0.25,
         "green": 0.1,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Above 25% of PBT from other income = profits depend on treasury/one-offs (the red-flag threshold in the brief); under 10% = operations drive profit.",
@@ -6332,7 +6266,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Other income / PBT: 7.6% GREEN (level green vs band (green <= 10.0%, red >= 25.0%); trend stable +0.1pp/yr; moderate (CV 0.30))"
+      "text": "Other income / PBT: 7.6% GREEN (level green vs indicative band (green <= 10.0%, red >= 25.0%); trend stable +0.1pp/yr; moderate (CV 0.30))"
     },
     "q_ebitda_margin_yoy_change": {
       "name": "Latest quarter EBITDA margin change YoY",
@@ -6342,6 +6276,8 @@
       "direction": "higher",
       "kind": "point",
       "equation": "OPM_q - OPM_q-4, OPM = operating profit / revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Latest quarter's operating margin versus the same quarter a year earlier.",
       "value": 0.000574,
       "value_text": "+0.1pp",
@@ -6359,7 +6295,7 @@
         "red": -0.01,
         "green": 0.01,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "A 1pp year-on-year move in quarterly operating margin is material for most companies.",
@@ -6367,7 +6303,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Latest quarter EBITDA margin change YoY: +0.1pp AMBER (level amber vs band (red <= -1.0pp, green >= +1.0pp))"
+      "text": "Latest quarter EBITDA margin change YoY: +0.1pp AMBER (level amber vs indicative band (red <= -1.0pp, green >= +1.0pp))"
     },
     "dep_to_sales": {
       "name": "Depreciation / sales",
@@ -6377,6 +6313,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "Depreciation / Revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Depreciation per rupee of revenue (bridge from EBITDA to EBIT margin).",
       "value": 0.027439,
       "value_text": "2.7%",
@@ -6424,6 +6362,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "(Other income - estimated exceptional items) / Revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Recurring other income per rupee of revenue (bridge from EBITDA to EBIT margin).",
       "value": 0.016977,
       "value_text": "1.7%",
@@ -6471,6 +6411,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(EBITDA - Depreciation) / Revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Operating EBIT per rupee of revenue, excluding other income (used for NOPAT/ROIC).",
       "value": 0.209225,
       "value_text": "20.9%",
@@ -6518,6 +6460,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "Non-financials: (ROIC - WACC) x average IC = NOPAT - WACC x average IC (defined even when IC <= 0); financials: (ROE - Ke) x average equity",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Rupees of value created (or destroyed) in the year after charging for all capital at its required return.",
       "value": 20448.581792,
       "value_text": "Rs 20,449 cr",
@@ -6558,6 +6502,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "Market cap / core PAT (current: TTM PAT when available)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "P/E multiple. Series = FY-end values; the last value is the current multiple (export price) in a latest run.",
       "value": 15.640798,
       "value_text": "15.64x",
@@ -6591,6 +6537,8 @@
       "direction": "lower",
       "kind": "point",
       "equation": "(# historical FY-end P/E below current + 0.5 x # equal) / # historical values",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Where today's P/E sits within the company's own FY-end history (0% = cheapest ever, 100% = richest). Needs >= 5 years.",
       "value": 0.0,
       "value_text": "0.0%",
@@ -6608,7 +6556,7 @@
         "red": 0.67,
         "green": 0.33,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Bottom third of the company's own 10-year range = cheap versus itself; top third = rich versus itself.",
@@ -6616,7 +6564,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "P/E percentile vs own history: 0.0% GREEN (level green vs band (green <= 33.0%, red >= 67.0%))"
+      "text": "P/E percentile vs own history: 0.0% GREEN (level green vs indicative band (green <= 33.0%, red >= 67.0%))"
     },
     "pb": {
       "name": "P/B",
@@ -6626,6 +6574,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "Market cap / book equity",
+      "formula": null,
+      "origin": "engine",
       "meaning": "P/B multiple. Series = FY-end values; the last value is the current multiple (export price) in a latest run.",
       "value": 5.179292,
       "value_text": "5.18x",
@@ -6659,6 +6609,8 @@
       "direction": "lower",
       "kind": "point",
       "equation": "(# historical FY-end P/B below current + 0.5 x # equal) / # historical values",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Where today's P/B sits within the company's own FY-end history (0% = cheapest ever, 100% = richest). Needs >= 5 years.",
       "value": 0.4,
       "value_text": "40.0%",
@@ -6676,7 +6628,7 @@
         "red": 0.67,
         "green": 0.33,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Bottom third of the company's own 10-year range = cheap versus itself; top third = rich versus itself.",
@@ -6684,7 +6636,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "P/B percentile vs own history: 40.0% AMBER (level amber vs band (green <= 33.0%, red >= 67.0%))"
+      "text": "P/B percentile vs own history: 40.0% AMBER (level amber vs indicative band (green <= 33.0%, red >= 67.0%))"
     },
     "ev_ebitda": {
       "name": "EV/EBITDA",
@@ -6694,6 +6646,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "EV / EBITDA, EV = market cap + borrowings - cash - investments",
+      "formula": null,
+      "origin": "engine",
       "meaning": "EV/EBITDA multiple. Series = FY-end values; the last value is the current multiple (export price) in a latest run.",
       "value": 9.933464,
       "value_text": "9.93x",
@@ -6727,6 +6681,8 @@
       "direction": "lower",
       "kind": "point",
       "equation": "(# historical FY-end EV/EBITDA below current + 0.5 x # equal) / # historical values",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Where today's EV/EBITDA sits within the company's own FY-end history (0% = cheapest ever, 100% = richest). Needs >= 5 years.",
       "value": 0.0,
       "value_text": "0.0%",
@@ -6744,7 +6700,7 @@
         "red": 0.67,
         "green": 0.33,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Bottom third of the company's own 10-year range = cheap versus itself; top third = rich versus itself.",
@@ -6752,7 +6708,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "EV/EBITDA percentile vs own history: 0.0% GREEN (level green vs band (green <= 33.0%, red >= 67.0%))"
+      "text": "EV/EBITDA percentile vs own history: 0.0% GREEN (level green vs indicative band (green <= 33.0%, red >= 67.0%))"
     },
     "ev_sales": {
       "name": "EV/Sales",
@@ -6762,6 +6718,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "EV / Revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "EV/Sales multiple. Series = FY-end values; the last value is the current multiple (export price) in a latest run.",
       "value": 2.355614,
       "value_text": "2.36x",
@@ -6795,6 +6753,8 @@
       "direction": "lower",
       "kind": "point",
       "equation": "(# historical FY-end EV/Sales below current + 0.5 x # equal) / # historical values",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Where today's EV/Sales sits within the company's own FY-end history (0% = cheapest ever, 100% = richest). Needs >= 5 years.",
       "value": 0.0,
       "value_text": "0.0%",
@@ -6812,7 +6772,7 @@
         "red": 0.67,
         "green": 0.33,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Bottom third of the company's own 10-year range = cheap versus itself; top third = rich versus itself.",
@@ -6820,7 +6780,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "EV/Sales percentile vs own history: 0.0% GREEN (level green vs band (green <= 33.0%, red >= 67.0%))"
+      "text": "EV/Sales percentile vs own history: 0.0% GREEN (level green vs indicative band (green <= 33.0%, red >= 67.0%))"
     },
     "implied_growth_reverse_dcf": {
       "name": "Reverse-DCF implied FCF growth (10y)",
@@ -6830,6 +6790,8 @@
       "direction": "neutral",
       "kind": "point",
       "equation": "solve g: EV = sum_{t=1..10} F0(1+g)^t/(1+WACC)^t + F10(1+gT)/((WACC-gT)(1+WACC)^10), F0 = NOPAT0 x (1 - gT/RONIC), RONIC = 3y avg ROIC (capped at 100%)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Annual free-cash-flow growth for the next 10 years that today's enterprise value implies, starting from the steady-state FCF the business generates at its 3-year average ROIC, then growing at the terminal rate.",
       "value": 0.077557,
       "value_text": "7.8%",
@@ -6852,6 +6814,8 @@
       "direction": "lower",
       "kind": "point",
       "equation": "implied_growth_reverse_dcf - 5y NOPAT CAGR (revenue CAGR 5y if NOPAT CAGR is n/m)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "How much faster the market expects NOPAT to grow than it did over the last 5 years (positive = priced for acceleration).",
       "value": -0.011748,
       "value_text": "-1.2pp",
@@ -6869,7 +6833,7 @@
         "red": 0.05,
         "green": 0.0,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Price requiring 5pp+ faster growth than delivered over the last 5 years = expectations risk; at or below delivered = undemanding.",
@@ -6877,7 +6841,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Implied - delivered growth: -1.2pp GREEN (level green vs band (green <= +0.0pp, red >= +5.0pp))"
+      "text": "Implied - delivered growth: -1.2pp GREEN (level green vs indicative band (green <= +0.0pp, red >= +5.0pp))"
     },
     "justified_pb": {
       "name": "Justified P/B",
@@ -6887,6 +6851,8 @@
       "direction": "neutral",
       "kind": "point",
       "equation": "(ROE - g) / (Ke - g); ROE = 3y avg, g = min(ROE x (1 - 3y avg payout), terminal g)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "P/B a single-stage residual-income model supports: (ROE - g) / (Ke - g) with sustainable ROE and growth.",
       "value": 3.769156,
       "value_text": "3.77x",
@@ -6909,6 +6875,8 @@
       "direction": "lower",
       "kind": "point",
       "equation": "current P/B / justified P/B (justified > 0)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Market P/B relative to what returns justify: above 1 = paying for more than current ROE supports.",
       "value": 1.374125,
       "value_text": "1.37x",
@@ -6926,7 +6894,7 @@
         "red": 1.5,
         "green": 1.0,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Paying 50%+ above the P/B that sustainable ROE justifies needs ROE to rise; at or below 1.0x the price is covered by current returns.",
@@ -6934,7 +6902,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "P/B / justified P/B: 1.37x AMBER (level amber vs band (green <= 1.00x, red >= 1.50x))"
+      "text": "P/B / justified P/B: 1.37x AMBER (level amber vs indicative band (green <= 1.00x, red >= 1.50x))"
     },
     "ev_ic": {
       "name": "EV / invested capital",
@@ -6944,6 +6912,8 @@
       "direction": "neutral",
       "kind": "point",
       "equation": "current EV / IC (latest FY, IC > 0)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Market value of operations per rupee of capital invested in them.",
       "value": 7.696734,
       "value_text": "7.70x",
@@ -6966,6 +6936,8 @@
       "direction": "lower",
       "kind": "point",
       "equation": "(EV / IC) / (ROIC / WACC), ROIC = latest, WACC = current",
+      "formula": null,
+      "origin": "engine",
       "meaning": "In a no-growth steady state EV/IC = ROIC/WACC. Above 1 = the market pays for growth or improvement beyond today's returns; below 1 = priced for decline.",
       "value": 1.982565,
       "value_text": "1.98x",
@@ -6983,7 +6955,7 @@
         "red": 1.5,
         "green": 1.0,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "In steady state EV/IC = ROIC/WACC; 50%+ above that requires growth or rising returns to be justified.",
@@ -6991,7 +6963,348 @@
       },
       "reason": null,
       "note": null,
-      "text": "(EV/IC) / (ROIC/WACC): 1.98x RED (level red vs band (green <= 1.00x, red >= 1.50x))"
+      "text": "(EV/IC) / (ROIC/WACC): 1.98x RED (level red vs indicative band (green <= 1.00x, red >= 1.50x))"
+    },
+    "cc_growth": {
+      "name": "Constant-currency growth",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "Revenue growth at constant exchange rates (reported)",
+      "formula": "kpi('cc_revenue_growth_pct')",
+      "origin": "config/sectors/it_services.yaml",
+      "meaning": "Underlying demand growth without currency effects.",
+      "value": 0.031,
+      "value_text": "3.1%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": 0.197,
+        "FY23": 0.154,
+        "FY24": 0.014,
+        "FY25": 0.042,
+        "FY26": 0.031
+      },
+      "level": {
+        "score": 34.0,
+        "basis": "band",
+        "rag": "amber"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 34.0,
+      "rag": "red",
+      "band": {
+        "red": 0.03,
+        "green": 0.08,
+        "origin": "config/sectors/it_services.yaml",
+        "source_type": "indicative",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Global IT services spend grows mid-single-digit; Indian tier-1 firms growing above 8% in constant currency are taking share.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Constant-currency growth: 3.1% RED (level amber vs indicative band (red <= 3.0%, green >= 8.0%))"
+    },
+    "book_to_bill": {
+      "name": "Book-to-bill (TCV / revenue)",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "x",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "Deal TCV (USD) / revenue (USD)",
+      "formula": "kpi('deal_tcv_usd_bn') * 1000 / kpi('revenue_usd_mn')",
+      "origin": "config/sectors/it_services.yaml",
+      "meaning": "Order intake relative to sales: the lead indicator of growth.",
+      "value": 0.739161,
+      "value_text": "0.74x",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": 0.538107,
+        "FY24": 0.951613,
+        "FY25": 0.601753,
+        "FY26": 0.739161
+      },
+      "level": {
+        "score": 4.351181,
+        "basis": "band",
+        "rag": "red"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 4.351181,
+      "rag": "red",
+      "band": {
+        "red": 1.0,
+        "green": 1.3,
+        "origin": "config/sectors/it_services.yaml",
+        "source_type": "indicative",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "TCV below annual revenue means wins are not replacing what is billed; 1.3x+ supports growth.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Book-to-bill (TCV / revenue): 0.74x RED (level red vs indicative band (red <= 1.00x, green >= 1.30x))"
+    },
+    "deal_tcv_growth": {
+      "name": "Deal TCV growth",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "TCV_t / TCV_t-1 - 1",
+      "formula": "growth('kpi:deal_tcv_usd_bn', 1)",
+      "origin": "config/sectors/it_services.yaml",
+      "meaning": "Momentum in deal wins.",
+      "value": 0.284483,
+      "value_text": "28.4%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": 0.031579,
+        "FY24": 0.806122,
+        "FY25": -0.344633,
+        "FY26": 0.284483
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "no sourced band and fewer than 4 same-archetype peers: level not scored",
+      "note": null,
+      "text": "Deal TCV growth: 28.4% [no sourced band and fewer than 4 same-archetype peers: level not scored]"
+    },
+    "headcount_growth": {
+      "name": "Headcount growth",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "Headcount_t / Headcount_t-1 - 1",
+      "formula": "growth('kpi:headcount', 1)",
+      "origin": "config/sectors/it_services.yaml",
+      "meaning": "Capacity added; compare with revenue growth.",
+      "value": null,
+      "value_text": "n/a",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": null,
+        "FY25": null,
+        "FY26": null
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": "n/a in FY26: missing headcount FY25 (manual KPI)",
+      "text": "Headcount growth: n/a [informational (neutral direction)] Note: n/a in FY26: missing headcount FY25 (manual KPI)"
+    },
+    "utilisation": {
+      "name": "Utilisation",
+      "pillar": "capital_efficiency",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "Billed effort / available effort (reported, ex trainees)",
+      "formula": "kpi('utilisation_pct')",
+      "origin": "config/sectors/it_services.yaml",
+      "meaning": "How fully the workforce is billed: the main margin lever.",
+      "value": 0.844,
+      "value_text": "84.4%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": 0.825,
+        "FY24": 0.822,
+        "FY25": null,
+        "FY26": 0.844
+      },
+      "level": {
+        "score": 63.809524,
+        "basis": "band",
+        "rag": "amber"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 63.809524,
+      "rag": "green",
+      "band": {
+        "red": 0.78,
+        "green": 0.85,
+        "origin": "config/sectors/it_services.yaml",
+        "source_type": "indicative",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Tier-1 Indian IT reports utilisation (ex trainees) of about 82-88%; under 78% is bench-heavy.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Utilisation: 84.4% GREEN (level amber vs indicative band (red <= 78.0%, green >= 85.0%))"
+    },
+    "attrition": {
+      "name": "Attrition (LTM)",
+      "pillar": "capital_efficiency",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "Voluntary leavers over the last 12 months / average headcount (reported)",
+      "formula": "kpi('attrition_ltm_pct')",
+      "origin": "config/sectors/it_services.yaml",
+      "meaning": "Talent churn: drives hiring, training and wage costs.",
+      "value": 0.126,
+      "value_text": "12.6%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": 0.277,
+        "FY23": 0.209,
+        "FY24": 0.126,
+        "FY25": 0.141,
+        "FY26": 0.126
+      },
+      "level": {
+        "score": 68.571429,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 68.571429,
+      "rag": "green",
+      "band": {
+        "red": 0.2,
+        "green": 0.13,
+        "origin": "config/sectors/it_services.yaml",
+        "source_type": "indicative",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Tier-1 attrition normalised to 12-14% after the FY22-23 spike of 20%+.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Attrition (LTM): 12.6% GREEN (level green vs indicative band (green <= 13.0%, red >= 20.0%))"
+    },
+    "dso_incl_unbilled": {
+      "name": "DSO incl. unbilled",
+      "pillar": "capital_efficiency",
+      "role": "scored",
+      "unit": "days",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "(Receivables + unbilled revenue) / revenue x 365",
+      "formula": "(f('receivables') + kpi('unbilled_revenue_cr')) / f('revenue') * 365",
+      "origin": "config/sectors/it_services.yaml",
+      "meaning": "Days of revenue not yet collected, including work not yet invoiced.",
+      "value": null,
+      "value_text": "n/a",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": null,
+        "FY25": null,
+        "FY26": null
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": {
+        "red": 100.0,
+        "green": 75.0,
+        "origin": "config/sectors/it_services.yaml",
+        "source_type": "indicative",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Tier-1 IT collects in roughly 65-80 days including unbilled; above 100 days signals billing or collection problems.",
+        "centre": null
+      },
+      "reason": "no value for the as-of year",
+      "note": "n/a in FY26: missing unbilled_revenue_cr FY26 (manual KPI)",
+      "text": "DSO incl. unbilled: n/a [no value for the as-of year] Note: n/a in FY26: missing unbilled_revenue_cr FY26 (manual KPI)"
+    },
+    "revenue_per_employee": {
+      "name": "Revenue per employee",
+      "pillar": "capital_efficiency",
+      "role": "scored",
+      "unit": "inr",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "Revenue / average headcount (Rs)",
+      "formula": "f('revenue') * 10000000 / avg('kpi:headcount')",
+      "origin": "config/sectors/it_services.yaml",
+      "meaning": "Productivity and pricing per person.",
+      "value": null,
+      "value_text": "n/a",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": null,
+        "FY25": null,
+        "FY26": null
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "no value for the as-of year",
+      "note": "n/a in FY26: missing headcount FY26 (manual KPI)",
+      "text": "Revenue per employee: n/a [no value for the as-of year] Note: n/a in FY26: missing headcount FY26 (manual KPI)"
     }
   },
   "sector_references": {
@@ -7028,6 +7341,418 @@
     "revenue_cagr_5y_hist": 0.371246,
     "net_income_cagr_5y_hist": 0.384832,
     "aggregate_tax_rate": 0.257423
+  },
+  "sector": {
+    "archetype": "it_services",
+    "lineage": [
+      "default",
+      "it_services"
+    ],
+    "file": "config/sectors/it_services.yaml",
+    "family": "non_financial",
+    "how_to_read": "IT services sell people-hours: revenue = headcount x utilisation x price, and the cost base is mostly salaries.\nRead constant-currency growth (strips out the rupee), deal wins (TCV / book-to-bill) as the lead indicator, and utilisation\nand attrition as the margin levers. Employee cost % is the margin story; DSO including unbilled revenue catches revenue\nrecognised ahead of billing. Treasury income is large, so check other income / PBT.",
+    "switched_off": [
+      {
+        "id": "cash_conversion_cycle",
+        "name": "Cash conversion cycle",
+        "reason": "No inventory; payables are immaterial"
+      },
+      {
+        "id": "dio",
+        "name": "Inventory days (DIO)",
+        "reason": "No inventory"
+      },
+      {
+        "id": "dpo",
+        "name": "Payable days (DPO)",
+        "reason": "Payables are immaterial for a people business"
+      },
+      {
+        "id": "gross_margin",
+        "name": "Gross margin",
+        "reason": "No material cost of goods: delivery cost is employee cost"
+      },
+      {
+        "id": "materials_pct",
+        "name": "Materials % of sales",
+        "reason": "No raw materials"
+      },
+      {
+        "id": "operating_cycle",
+        "name": "Operating cycle",
+        "reason": "No inventory: receivables (incl. unbilled) are the cycle"
+      }
+    ],
+    "switched_off_groups": [],
+    "manual_kpis": [
+      {
+        "id": "promoter_holding_pct",
+        "unit": "%",
+        "required": false,
+        "description": "Promoter and promoter-group shareholding at fiscal year end (% of equity)",
+        "years_present": [],
+        "present_asof": false
+      },
+      {
+        "id": "promoter_pledge_pct",
+        "unit": "%",
+        "required": false,
+        "description": "Promoter shares pledged or encumbered as % of promoter holding at fiscal year end",
+        "years_present": [],
+        "present_asof": false
+      },
+      {
+        "id": "cc_revenue_growth_pct",
+        "unit": "%",
+        "required": true,
+        "description": "Constant-currency revenue growth for the year",
+        "years_present": [
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25",
+          "FY26"
+        ],
+        "present_asof": true
+      },
+      {
+        "id": "utilisation_pct",
+        "unit": "%",
+        "required": true,
+        "description": "Utilisation (IT services, excluding trainees) for the year or Q4",
+        "years_present": [
+          "FY23",
+          "FY24",
+          "FY26"
+        ],
+        "present_asof": true
+      },
+      {
+        "id": "attrition_ltm_pct",
+        "unit": "%",
+        "required": true,
+        "description": "Last-twelve-month attrition at 31 March",
+        "years_present": [
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25",
+          "FY26"
+        ],
+        "present_asof": true
+      },
+      {
+        "id": "deal_tcv_usd_bn",
+        "unit": "USD bn",
+        "required": true,
+        "description": "Total contract value of deals won in the year",
+        "years_present": [
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25",
+          "FY26"
+        ],
+        "present_asof": true
+      },
+      {
+        "id": "revenue_usd_mn",
+        "unit": "USD mn",
+        "required": true,
+        "description": "Revenue in US dollars for the year",
+        "years_present": [
+          "FY23",
+          "FY24",
+          "FY25",
+          "FY26"
+        ],
+        "present_asof": true
+      },
+      {
+        "id": "unbilled_revenue_cr",
+        "unit": "Rs cr",
+        "required": true,
+        "description": "Unbilled revenue / contract assets at 31 March",
+        "years_present": [],
+        "present_asof": false
+      },
+      {
+        "id": "headcount",
+        "unit": "count",
+        "required": true,
+        "description": "Total employees at 31 March",
+        "years_present": [
+          "FY23"
+        ],
+        "present_asof": false
+      }
+    ],
+    "required_kpis_present_asof": "5/7",
+    "missing_required_asof": [
+      "unbilled_revenue_cr",
+      "headcount"
+    ],
+    "kpi_values": 23,
+    "kpi_verified_share": 0.0,
+    "indicative_bands_used": [
+      "attrition",
+      "book_to_bill",
+      "cash_to_st_borrowings",
+      "cc_growth",
+      "cfo_to_ebitda",
+      "cfo_to_pat_5y",
+      "current_ratio_proxy",
+      "cwip_to_net_block",
+      "debt_vs_ebitda_growth",
+      "dividend_to_fcf",
+      "ebitda_margin_sd_10y",
+      "employee_pct",
+      "ev_ebitda_percentile_10y",
+      "ev_ic_to_roic_wacc",
+      "ev_sales_percentile_10y",
+      "exceptional_frequency_5y",
+      "exceptional_size_5y",
+      "fcf_to_pat",
+      "fcf_to_pat_5y",
+      "implied_minus_delivered_growth",
+      "net_debt_to_equity",
+      "organic_capital_share_3y",
+      "other_income_to_pbt",
+      "pat_growth_volatility",
+      "pb_percentile_10y",
+      "pb_to_justified_pb",
+      "pe_percentile_10y",
+      "q_ebitda_margin_yoy_change",
+      "q_revenue_yoy_trend",
+      "receivables_vs_revenue_growth",
+      "revenue_growth_volatility",
+      "share_count_change",
+      "utilisation"
+    ],
+    "sector_flags_triggered": [],
+    "constants": {}
+  },
+  "manual_kpis": {
+    "attrition_ltm_pct": {
+      "unit": "% (LTM)",
+      "description": "Last-twelve-month attrition at 31 March",
+      "values": {
+        "FY22": {
+          "value": 0.277,
+          "raw_value": "27.7",
+          "unit": "% (LTM)",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1067491/000106749122000020/exv99w05.htm",
+          "source_date": "2022-04-13",
+          "verified": "N"
+        },
+        "FY23": {
+          "value": 0.209,
+          "raw_value": "20.9",
+          "unit": "% (voluntary LTM, IT services)",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1067491/000106749124000016/exv99w04.htm",
+          "source_date": "2024-04-18",
+          "verified": "N"
+        },
+        "FY24": {
+          "value": 0.126,
+          "raw_value": "12.6",
+          "unit": "% (voluntary LTM, IT services)",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1067491/000106749124000016/exv99w04.htm",
+          "source_date": "2024-04-18",
+          "verified": "N"
+        },
+        "FY25": {
+          "value": 0.141,
+          "raw_value": "14.1",
+          "unit": "% (LTM)",
+          "source_url": "https://www.infosys.com/investors/reports-filings/quarterly-results/2024-2025/q4/documents/transcripts/earningscall.pdf",
+          "source_date": "2025-04-17",
+          "verified": "N"
+        },
+        "FY26": {
+          "value": 0.126,
+          "raw_value": "12.6",
+          "unit": "% (voluntary LTM)",
+          "source_url": "https://www.infosys.com/investors/reports-filings/quarterly-results/2025-2026/q4/documents/transcripts/earningscall.pdf",
+          "source_date": "2026-04-23",
+          "verified": "N"
+        }
+      }
+    },
+    "cc_revenue_growth_pct": {
+      "unit": "%",
+      "description": "Constant-currency revenue growth for the year",
+      "values": {
+        "FY22": {
+          "value": 0.197,
+          "raw_value": "19.7",
+          "unit": "%",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1067491/000106749122000020/exv99w05.htm",
+          "source_date": "2022-04-13",
+          "verified": "N"
+        },
+        "FY23": {
+          "value": 0.154,
+          "raw_value": "15.4",
+          "unit": "%",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1067491/000106749123000027/exv99w01.htm",
+          "source_date": "2023-04-13",
+          "verified": "N"
+        },
+        "FY24": {
+          "value": 0.014,
+          "raw_value": "1.4",
+          "unit": "%",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1067491/000106749124000016/exv99w01.htm",
+          "source_date": "2024-04-18",
+          "verified": "N"
+        },
+        "FY25": {
+          "value": 0.042,
+          "raw_value": "4.2",
+          "unit": "%",
+          "source_url": "https://www.infosys.com/investors/reports-filings/quarterly-results/2024-2025/q4/documents/transcripts/earningscall.pdf",
+          "source_date": "2025-04-17",
+          "verified": "N"
+        },
+        "FY26": {
+          "value": 0.031,
+          "raw_value": "3.1",
+          "unit": "%",
+          "source_url": "https://www.infosys.com/investors/reports-filings/quarterly-results/2025-2026/q4/documents/transcripts/earningscall.pdf",
+          "source_date": "2026-04-23",
+          "verified": "N"
+        }
+      }
+    },
+    "deal_tcv_usd_bn": {
+      "unit": "USD bn (large deals)",
+      "description": "Total contract value of deals won in the year",
+      "values": {
+        "FY22": {
+          "value": 9.5,
+          "raw_value": "9.5",
+          "unit": "USD bn (large deals)",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1067491/000106749122000020/exv99w05.htm",
+          "source_date": "2022-04-13",
+          "verified": "N"
+        },
+        "FY23": {
+          "value": 9.8,
+          "raw_value": "9.8",
+          "unit": "USD bn (large deals)",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1067491/000106749123000027/exv99w05.htm",
+          "source_date": "2023-04-13",
+          "verified": "N"
+        },
+        "FY24": {
+          "value": 17.7,
+          "raw_value": "17.7",
+          "unit": "USD bn (large deals)",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1067491/000106749124000016/exv99w01.htm",
+          "source_date": "2024-04-18",
+          "verified": "N"
+        },
+        "FY25": {
+          "value": 11.6,
+          "raw_value": "11.6",
+          "unit": "USD bn (large deals)",
+          "source_url": "https://www.infosys.com/investors/reports-filings/quarterly-results/2024-2025/q4/documents/transcripts/earningscall.pdf",
+          "source_date": "2025-04-17",
+          "verified": "N"
+        },
+        "FY26": {
+          "value": 14.9,
+          "raw_value": "14.9",
+          "unit": "USD bn (large deals)",
+          "source_url": "https://www.infosys.com/investors/reports-filings/quarterly-results/2025-2026/q4/documents/ifrs-usd-press-release.pdf",
+          "source_date": "2026-04-23",
+          "verified": "N"
+        }
+      }
+    },
+    "headcount": {
+      "unit": "count",
+      "description": "Total employees at 31 March",
+      "values": {
+        "FY23": {
+          "value": 343234.0,
+          "raw_value": "343234",
+          "unit": "count",
+          "source_url": "https://www.infosys.com/investors/reports-filings/quarterly-results/2023-2024/q1/documents/fact-sheet.pdf",
+          "source_date": "2023-07-20",
+          "verified": "N"
+        }
+      }
+    },
+    "revenue_usd_mn": {
+      "unit": "USD mn",
+      "description": "Revenue in US dollars for the year",
+      "values": {
+        "FY23": {
+          "value": 18212.0,
+          "raw_value": "18212",
+          "unit": "USD mn",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1067491/000106749123000027/exv99w01.htm",
+          "source_date": "2023-04-13",
+          "verified": "N"
+        },
+        "FY24": {
+          "value": 18600.0,
+          "raw_value": "18600",
+          "unit": "USD mn (stated as USD 18.6 bn)",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1067491/000106749124000016/exv99w01.htm",
+          "source_date": "2024-04-18",
+          "verified": "N"
+        },
+        "FY25": {
+          "value": 19277.0,
+          "raw_value": "19277",
+          "unit": "USD mn",
+          "source_url": "https://www.infosys.com/investors/reports-filings/quarterly-results/2024-2025/q4/documents/ifrs-usd-press-release.pdf",
+          "source_date": "2025-04-17",
+          "verified": "N"
+        },
+        "FY26": {
+          "value": 20158.0,
+          "raw_value": "20158",
+          "unit": "USD mn",
+          "source_url": "https://www.infosys.com/investors/reports-filings/quarterly-results/2025-2026/q4/documents/ifrs-usd-press-release.pdf",
+          "source_date": "2026-04-23",
+          "verified": "N"
+        }
+      }
+    },
+    "utilisation_pct": {
+      "unit": "% (excl. trainees, full year)",
+      "description": "Utilisation (IT services, excluding trainees) for the year or Q4",
+      "values": {
+        "FY23": {
+          "value": 0.825,
+          "raw_value": "82.5",
+          "unit": "% (excl. trainees, full year)",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1067491/000095017024076649/infy-20240331.htm",
+          "source_date": "2024 (Form 20-F FY2024)",
+          "verified": "N"
+        },
+        "FY24": {
+          "value": 0.822,
+          "raw_value": "82.2",
+          "unit": "% (excl. trainees, full year)",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1067491/000095017024076649/infy-20240331.htm",
+          "source_date": "2024 (Form 20-F FY2024)",
+          "verified": "N"
+        },
+        "FY26": {
+          "value": 0.844,
+          "raw_value": "84.4",
+          "unit": "% (excl. trainees, full year)",
+          "source_url": "https://www.infosys.com/investors/reports-filings/quarterly-results/2025-2026/q4/documents/transcripts/earningscall.pdf",
+          "source_date": "2026-04-23",
+          "verified": "N"
+        }
+      }
+    }
   },
   "data_notes": [
     {
@@ -7089,6 +7814,16 @@
       "category": "quarterly",
       "fy": null,
       "text": "10 quarters from 2024-06-30 to 2026-09-30 (Q1FY25-Q2FY27). Quarterly profit is as reported (no exceptional-item estimate)."
+    },
+    {
+      "category": "manual",
+      "fy": null,
+      "text": "Manual KPIs loaded: attrition_ltm_pct, cc_revenue_growth_pct, deal_tcv_usd_bn, headcount, revenue_usd_mn, utilisation_pct for FY22, FY23, FY24, FY25, FY26."
+    },
+    {
+      "category": "manual",
+      "fy": null,
+      "text": "23 manual KPI values: 0 verified against the primary document (Y), 23 from secondary sources (N). Provenance is in analysis.json (manual_kpis)."
     }
   ]
 }

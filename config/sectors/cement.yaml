@@ -1,0 +1,23 @@
+archetype: cement
+extends: _cyclical
+family: non_financial
+damodaran_industries: ["Construction Supplies"]
+evidence: "ULTRACEMCO -> Construction Supplies in Damodaran's indname.xls (Jan 2026)"
+how_to_read: |
+  Cement is regional and capacity-driven: prices follow utilisation in each region, and margins follow power, fuel and freight costs.
+  Read EBITDA per tonne (the industry's unit margin), capacity utilisation and capacity growth; acquisitions of stressed capacity
+  are common, so check ROCE and EV per tonne of capacity after deals. Through-cycle ROCE is the honest return measure, and leverage
+  at the trough tests the balance sheet.
+bands:
+  ebitda_per_tonne:
+    red: 800
+    green: 1200
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Large Indian cement makers have reported EBITDA of roughly Rs 900-1,400 per tonne in recent years; under Rs 800 is weak, above Rs 1,200 strong."
+  capacity_utilisation:
+    red: 0.60
+    green: 0.75
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Indian cement capacity utilisation has run near 65-75%; leaders above 75% enjoy pricing power, under 60% signals oversupply."

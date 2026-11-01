@@ -1,0 +1,127 @@
+archetype: real_estate
+family: non_financial
+damodaran_industries: ["Real Estate (General/Diversified)"]
+evidence: "DLF -> Real Estate (General/Diversified) in Damodaran's indname.xls (Jan 2026)"
+how_to_read: |
+  Developers recognise revenue only when projects complete, so the P&L lags the business by 2-4 years. Lead with cash:
+  pre-sales (bookings) show demand, collections show whether customers pay, and operating cash flow shows what is left after
+  construction and land spend. Inventory months (unsold stock / monthly sales) shows how long the land bank takes to monetise.
+  Margins on recognised revenue reflect projects sold years ago; leverage should be judged against pre-sales and collections.
+pillar_weights: {growth: 15, margins: 5, capital_efficiency: 10, returns: 15, cash_quality: 25, balance_sheet: 15, capital_allocation: 5, valuation: 10}
+
+metrics_off:
+  - {id: dio, reason: "Inventory is the land bank and work in progress, monetised over years: days of COGS is not meaningful"}
+  - {id: dso, reason: "Customer receivables depend on milestone billing, not credit terms"}
+  - {id: operating_cycle, reason: "Project cycles span years; inventory months replaces it"}
+  - {id: cash_conversion_cycle, reason: "As operating cycle"}
+  - {id: dpo, reason: "Contractor payables follow construction milestones"}
+  - {id: nwc_days, reason: "Working capital is the project book itself"}
+  - {id: asset_turnover, reason: "Revenue recognition lags bookings, so turnover on assets is mis-timed"}
+  - {id: fixed_asset_turnover, reason: "Development assets sit in inventory, not net block"}
+  - {id: ic_turnover, reason: "As asset turnover"}
+  - {id: dol, reason: "Recognised revenue is lumpy (project completions), so DOL is noise"}
+  - {id: capex_to_sales, reason: "Land and construction spend runs through inventory, not capex"}
+  - {id: capex_to_depreciation, reason: "As capex/sales (rental assets aside)"}
+  - {id: receivables_vs_revenue_growth, reason: "Receivables track milestone billing, not credit quality"}
+  - {id: beneish_m_score, reason: "Beneish receivable and asset-quality indices are distorted by project accounting"}
+
+manual_kpis:
+  - {id: presales_cr, unit: "Rs cr", required: true, description: "New sales bookings (pre-sales value) for the year", where: "Investor presentation"}
+  - {id: collections_cr, unit: "Rs cr", required: true, description: "Customer collections for the year", where: "Investor presentation"}
+  - {id: unsold_inventory_cr, unit: "Rs cr", required: true, description: "Value of unsold inventory (completed + under construction) at 31 March", where: "Investor presentation"}
+  - {id: area_sold_msf, unit: "msf", required: false, description: "Area sold during the year (million sq ft)", where: "Investor presentation"}
+  - {id: launches_msf, unit: "msf", required: false, description: "New launches during the year (million sq ft)", where: "Investor presentation"}
+  - {id: rental_income_cr, unit: "Rs cr", required: false, description: "Rental / annuity income for the year (incl. share of JV)", where: "Investor presentation"}
+
+metrics_add:
+  - {id: presales_growth, name: "Pre-sales growth", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:presales_cr', 1)",
+     equation: "Pre-sales_t / Pre-sales_t-1 - 1", meaning: "Growth in bookings: the leading indicator for a developer."}
+  - {id: presales_to_revenue, name: "Pre-sales / recognised revenue", pillar: growth, unit: x, direction: neutral, formula: "kpi('presales_cr') / f('revenue')",
+     equation: "Pre-sales / revenue", meaning: "Above 1 = bookings running ahead of recognition (future revenue)."}
+  - {id: collections_to_presales, name: "Collections / pre-sales", pillar: cash_quality, unit: ratio, direction: higher,
+     formula: "kpi('collections_cr') / kpi('presales_cr')", equation: "Collections / pre-sales", meaning: "Whether bookings are turning into cash."}
+  - {id: cfo_to_collections, name: "CFO / collections", pillar: cash_quality, unit: ratio, direction: higher, formula: "f('cfo') / kpi('collections_cr')",
+     equation: "Operating cash flow / customer collections", meaning: "Cash left after construction, land, overheads and tax per rupee collected."}
+  - {id: cfo_to_presales, name: "CFO / pre-sales", pillar: cash_quality, unit: ratio, direction: higher, formula: "f('cfo') / kpi('presales_cr')",
+     equation: "Operating cash flow / pre-sales", meaning: "Cash generated per rupee booked."}
+  - {id: inventory_months, name: "Inventory months", pillar: capital_efficiency, unit: num, direction: lower,
+     formula: "kpi('unsold_inventory_cr') / (kpi('presales_cr') / 12)", equation: "Unsold inventory value / (pre-sales / 12)",
+     meaning: "Months of sales needed to clear unsold stock at the current pace."}
+  - {id: net_debt_to_presales, name: "Net debt / pre-sales", pillar: balance_sheet, unit: x, direction: lower, formula: "f('net_debt') / kpi('presales_cr')",
+     equation: "(Borrowings - cash) / pre-sales", meaning: "Leverage against the business's real volume."}
+bands:
+  collections_to_presales:
+    red: 0.70
+    green: 0.90
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Healthy developers collect 85-100% of a year's bookings value within the cycle; under 70% means bookings are not converting."
+  inventory_months:
+    green: 24
+    red: 36
+    source_type: external
+    source_url: https://businessworld.in/article/q1-2023-end-housing-inventory-down-to-20-months-from-42-months-in-2018-472228
+    as_of: "2023-04-10"
+    rationale: "Anarock: an inventory overhang of 18-24 months is normally considered healthy (the top-7-city overhang fell from 42 months in 2018 to 20 in 2023). Red = 1.5x the healthy upper bound."
+  cfo_to_collections:
+    red: 0.0
+    green: 0.25
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "After construction and land spend, a self-funding developer keeps a positive share of collections as CFO; negative means growth consumes cash."
+  net_debt_to_presales:
+    green: 0.5
+    red: 1.5
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Net debt above 1.5x a year's bookings is heavy for a developer; under 0.5x is conservative (net cash is best)."
+  presales_growth:
+    red: inflation_target
+    green: nominal_gdp_growth
+    source_type: derived
+    rationale: "As revenue growth."
+flags:
+  - id: RE01
+    name: Bookings not converting to cash
+    pillar: cash_quality
+    severity: high
+    applies: [real_estate]
+    condition: "m('collections_to_presales') < 0.70"
+    values: {r: "m('collections_to_presales')"}
+    explanation: >
+      Collections were only {{ r|pct }} of the year's pre-sales: bookings are not turning into cash (stretched buyers, slow construction or cancellations).
+  - id: RE02
+    name: Inventory piling up
+    pillar: capital_efficiency
+    severity: medium
+    applies: [real_estate]
+    condition: "m('inventory_months') > 24 and rising('inventory_months', 1)"
+    values: {now: "m('inventory_months')", prev: "m('inventory_months', 1)"}
+    explanation: >
+      Unsold inventory rose to {{ now|num(0) }} months of sales (from {{ prev|num(0) }}): above the 18-24 month healthy range.
+  - id: RE03
+    name: Growth consuming cash
+    pillar: cash_quality
+    severity: medium
+    applies: [real_estate]
+    condition: "m('cfo') < 0 and m('presales_growth') > 0"
+    values: {cfo: "m('cfo')", g: "m('presales_growth')"}
+    explanation: >
+      Pre-sales grew {{ g|pct }} but operating cash flow was {{ cfo|cr }}: land and construction spend is outrunning collections.
+  - id: RE04
+    name: Debt rising while bookings fall
+    pillar: balance_sheet
+    severity: high
+    applies: [real_estate]
+    condition: "chg('net_debt', 1) > 0 and m('presales_growth') < 0"
+    values: {nd: "chg('net_debt', 1)", g: "m('presales_growth')"}
+    explanation: >
+      Net debt rose by {{ nd|cr }} while pre-sales fell {{ g|pct }}.
+drivers:
+  add:
+    - id: real_estate_cash
+      title: "Cash-flow-led: CFO = pre-sales x collections/pre-sales x CFO/collections"
+      applies: [real_estate]
+      root: cfo
+      links:
+        cfo: {type: product, children: ["kpi:presales_cr", collections_to_presales, cfo_to_collections]}

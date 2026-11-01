@@ -1,0 +1,74 @@
+archetype: retail
+family: non_financial
+damodaran_industries: ["Retail (Grocery and Food)"]
+evidence: "DMART -> Retail (Grocery and Food) in Damodaran's indname.xls (Jan 2026)"
+how_to_read: |
+  Retail growth = more stores x more sales per store. Separate store additions from same-store (like-for-like) growth: new stores
+  can hide a slowing mature estate. Revenue per square foot measures productivity. After Ind AS 116 lease rentals sit below EBITDA,
+  so compare margins and leverage on a lease-adjusted (pre-Ind AS 116) basis, especially versus owners of stores (DMart owns many).
+  Inventory turns and supplier credit drive working capital; thin margins make cost discipline everything.
+manual_kpis:
+  - {id: store_count, unit: "count", required: true, description: "Number of stores at 31 March", where: "Investor presentation / annual report"}
+  - {id: retail_area_msf, unit: "msf", required: true, description: "Total retail business area at 31 March (million sq ft)", where: "Investor presentation"}
+  - {id: lfl_growth_pct, unit: "%", required: false, description: "Like-for-like (same-store) revenue growth for the year, as reported", where: "Results release / call"}
+  - {id: lease_payments_cr, unit: "Rs cr", required: false, description: "Lease rentals paid during the year (pre-Ind AS 116 rent)", where: "Cash-flow statement / lease note"}
+  - {id: lease_liabilities_cr, unit: "Rs cr", required: false, description: "Lease liabilities at 31 March", where: "Balance sheet"}
+metrics_add:
+  - {id: avg_retail_area, name: "Average retail area", pillar: capital_efficiency, unit: num, direction: neutral, role: component,
+     formula: "avg('kpi:retail_area_msf')", equation: "(Area_t + Area_t-1) / 2 (million sq ft)", meaning: "Selling space available during the year."}
+  - {id: revenue_per_sqft, name: "Revenue per sq ft", pillar: capital_efficiency, unit: inr, direction: higher,
+     formula: "f('revenue') * 10 / avg('kpi:retail_area_msf')", equation: "Revenue (Rs) / average retail area (sq ft)", meaning: "Store productivity."}
+  - {id: store_additions, name: "Store additions", pillar: growth, unit: count, direction: neutral, formula: "kpi('store_count') - kpi('store_count', 1)",
+     equation: "Stores_t - Stores_t-1", meaning: "Pace of network expansion."}
+  - {id: store_growth, name: "Store count growth", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:store_count', 1)",
+     equation: "Stores_t / Stores_t-1 - 1", meaning: "Network growth."}
+  - {id: sssg, name: "Same-store (LFL) growth", pillar: growth, unit: pct, direction: higher, formula: "kpi('lfl_growth_pct')",
+     equation: "Like-for-like revenue growth (reported)", meaning: "Growth from the existing estate."}
+  - {id: ebitda_margin_pre_ind_as116, name: "EBITDA margin (pre-Ind AS 116)", pillar: margins, unit: pct, direction: higher,
+     formula: "(f('ebitda') - kpi('lease_payments_cr')) / f('revenue')", equation: "(EBITDA - lease rentals) / revenue",
+     meaning: "Lease-adjusted margin, comparable with store owners and with pre-FY20 history."}
+  - {id: lease_adj_net_debt_to_ebitda, name: "Net debt ex leases / EBITDA after rent", pillar: balance_sheet, unit: x, direction: lower,
+     formula: "(f('net_debt') - kpi('lease_liabilities_cr')) / (f('ebitda') - kpi('lease_payments_cr'))",
+     equation: "(Net debt - lease liabilities) / (EBITDA - lease rentals)", meaning: "Financial leverage on a pre-Ind AS 116 basis."}
+bands:
+  sssg:
+    red: inflation_target
+    green: nominal_gdp_growth
+    source_type: derived
+    rationale: "Same-store growth below CPI inflation = shrinking volumes per store; above nominal GDP = gaining share."
+flags:
+  - id: RT01
+    name: Same-store growth below inflation
+    pillar: growth
+    severity: medium
+    applies: [retail]
+    condition: "all_last('sssg', 2, '<', inflation_target)"
+    values: {g: "m('sssg')"}
+    explanation: >
+      Like-for-like growth has been below the 4% inflation target for 2 years (latest {{ g|pct }}): mature stores are losing volume.
+  - id: RT02
+    name: Productivity falling while expansion accelerates
+    pillar: capital_efficiency
+    severity: medium
+    applies: [retail]
+    condition: "chg('revenue_per_sqft', 1) < 0 and chg('store_growth', 1) > 0"
+    values: {r: "m('revenue_per_sqft')"}
+    explanation: >
+      Revenue per sq ft fell (to Rs {{ r|num(0) }}) while store growth accelerated: new stores are less productive or cannibalising.
+  - id: RT03
+    name: Lease-adjusted margin down two years
+    pillar: margins
+    severity: medium
+    applies: [retail]
+    condition: "falling('ebitda_margin_pre_ind_as116', 2)"
+    values: {now: "m('ebitda_margin_pre_ind_as116')"}
+    explanation: >
+      Lease-adjusted EBITDA margin has fallen for 2 years to {{ now|pct }}.
+drivers:
+  add:
+    - id: retail_revenue
+      title: "Revenue = average retail area x revenue per sq ft"
+      applies: [retail]
+      root: revenue
+      links:
+        revenue: {type: product, const: 0.1, children: [avg_retail_area, revenue_per_sqft]}

@@ -1,0 +1,16 @@
+metric,fiscal_year,value,unit,source_url,source_date,verified
+india_revenue_cr,FY22,12759.3,Rs cr (India formulations; stated as Rs 127593 mn),https://sunpharma.com/wp-content/uploads/2023/05/Press-Release-Sun-Pharma-Q4FY23-Financial-Result-1.pdf,2023-05-26,N
+india_revenue_cr,FY23,13603.1,Rs cr (India formulations; stated as Rs 136031 mn),https://sunpharma.com/wp-content/uploads/2023/05/Press-Release-Sun-Pharma-Q4FY23-Financial-Result-1.pdf,2023-05-26,N
+india_revenue_cr,FY24,14889.26,Rs cr (India formulations; stated as Rs 148892.6 mn),https://sunpharma.com/wp-content/uploads/2025/05/Press-Release-Sun-Pharma-Q4FY25-Financial-Result.pdf,2025-05-22,N
+india_revenue_cr,FY25,16923.0,Rs cr (India formulations; stated as Rs 169230 mn),https://sunpharma.com/wp-content/uploads/2025/05/Press-Release-Sun-Pharma-Q4FY25-Financial-Result.pdf,2025-05-22,N
+india_revenue_cr,FY26,19290.4,Rs cr (India formulations; stated as Rs 192904 mn),https://sunpharma.com/wp-content/uploads/2026/05/Press-Release-Sun-Pharma-Q4FY26-Financial-Result.pdf,2026-05-22,N
+rd_expense_cr,FY22,2219.4,Rs cr (stated as Rs 22194 mn),https://sunpharma.com/wp-content/uploads/2023/05/Press-Release-Sun-Pharma-Q4FY23-Financial-Result-1.pdf,2023-05-26,N
+rd_expense_cr,FY23,2367.6,Rs cr (stated as Rs 23676 mn),https://sunpharma.com/wp-content/uploads/2023/05/Press-Release-Sun-Pharma-Q4FY23-Financial-Result-1.pdf,2023-05-26,N
+rd_expense_cr,FY24,3177.59,Rs cr (stated as Rs 31775.9 mn),https://sunpharma.com/wp-content/uploads/2025/05/Press-Release-Sun-Pharma-Q4FY25-Financial-Result.pdf,2025-05-22,N
+rd_expense_cr,FY25,3248.4,Rs cr (stated as Rs 32484 mn),https://sunpharma.com/wp-content/uploads/2025/05/Press-Release-Sun-Pharma-Q4FY25-Financial-Result.pdf,2025-05-22,N
+rd_expense_cr,FY26,3554.0,Rs cr (stated as Rs 35540 mn),https://sunpharma.com/wp-content/uploads/2026/05/Press-Release-Sun-Pharma-Q4FY26-Financial-Result.pdf,2026-05-22,N
+us_revenue_cr,FY22,11373.66,Rs cr (US formulations; stated as Rs 113736.6 mn),https://sunpharma.com/wp-content/uploads/2023/05/Press-Release-Sun-Pharma-Q4FY23-Financial-Result-1.pdf,2023-05-26,N
+us_revenue_cr,FY23,13535.26,Rs cr (US formulations; stated as Rs 135352.6 mn),https://sunpharma.com/wp-content/uploads/2023/05/Press-Release-Sun-Pharma-Q4FY23-Financial-Result-1.pdf,2023-05-26,N
+us_revenue_cr,FY24,15349.25,Rs cr (US formulations; stated as Rs 153492.5 mn),https://sunpharma.com/wp-content/uploads/2025/05/Press-Release-Sun-Pharma-Q4FY25-Financial-Result.pdf,2025-05-22,N
+us_revenue_cr,FY25,16240.28,Rs cr (US formulations; stated as Rs 162402.8 mn),https://sunpharma.com/wp-content/uploads/2025/05/Press-Release-Sun-Pharma-Q4FY25-Financial-Result.pdf,2025-05-22,N
+us_revenue_cr,FY26,16824.2,Rs cr (US formulations; stated as Rs 168242 mn),https://sunpharma.com/wp-content/uploads/2026/05/Press-Release-Sun-Pharma-Q4FY26-Financial-Result.pdf,2026-05-22,N

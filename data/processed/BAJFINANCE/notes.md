@@ -33,3 +33,7 @@
 
 ## quarterly
 - 10 quarters from 2024-06-30 to 2026-09-30 (Q1FY25-Q2FY27). Quarterly profit is as reported (no exceptional-item estimate).
+
+## manual
+- Manual KPIs loaded: aum_cr, borrowing_deposits_pct, crar_pct, deposits_cr, gnpa_pct, nnpa_pct, pcr_pct, provisions_cr for FY22, FY23, FY24, FY25, FY26.
+- 28 manual KPI values: 0 verified against the primary document (Y), 28 from secondary sources (N). Provenance is in analysis.json (manual_kpis).

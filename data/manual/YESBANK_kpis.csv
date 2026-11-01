@@ -1,0 +1,63 @@
+metric,fiscal_year,value,unit,source_url,source_date,verified
+advances_cr,FY14,55633,Rs cr,https://www.business-standard.com/article/news-cm/strong-q4-numbers-generate-interest-in-yes-bank-114042300596_1.html,2014-04-23,N
+advances_cr,FY15,75549.8,Rs cr,https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar15.pdf,2015-04-22,N
+advances_cr,FY16,98209.9,Rs cr,https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar16.pdf,2016-04-27,N
+advances_cr,FY17,132262,Rs cr,https://angelone.in/get-html-report/AngelBrokingResearch_YES%20Bank_IC_180718.html,2018-07-18,N
+advances_cr,FY18,203533,Rs cr,https://angelone.in/get-html-report/AngelBrokingResearch_YES%20Bank_IC_180718.html,2018-07-18,N
+advances_cr,FY22,181508,Rs cr,https://www.business-standard.com/article/news-cm/yes-bank-advances-rise-8-8-yoy-in-q4-fy22-122040500261_1.html,2022-04-05,N
+advances_cr,FY24,227799,Rs cr,https://www.business-standard.com/markets/capital-market-news/yes-bank-s-loan-book-rises-to-rs-2-46-lakh-crore-in-q4-fy25-deposits-up-7-yoy-125040400700_1.html,2025-04-04,N
+advances_cr,FY25,246539,Rs cr (provisional),https://www.business-standard.com/amp/markets/capital-market-news/yes-bank-s-loan-book-rises-to-rs-2-46-lakh-crore-in-q4-fy25-deposits-up-7-yoy-125040400700_1.html,2025-04-04,N
+advances_cr,FY26,272454,Rs cr,https://www.business-standard.com/markets/capital-market-news/yes-bank-s-loan-book-rises-to-rs-2-72-lakh-crore-in-q4-fy26-deposits-up-12-yoy-126040600196_1.html,2026-04-06,N
+casa_pct,FY14,22.0,%,https://www.business-standard.com/article/news-cm/strong-q4-numbers-generate-interest-in-yes-bank-114042300596_1.html,2014-04-23,N
+casa_pct,FY15,23.1,%,https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar15.pdf,2015-04-22,N
+casa_pct,FY16,28.1,%,"https://theasianbanker.com/resultwatch/yes-bank-announces-financial-results-for-the-quarter-and-financial-year-ended-march-31,-2016",2016-04-27,N
+casa_pct,FY17,36.3,%,https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar17.pdf,2017-04-19,N
+casa_pct,FY18,36.5,%,https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar18.pdf,2018-04-25,N
+casa_pct,FY22,31.1,%,https://bsmedia.business-standard.com/_media/bs/data/announcements/bse/23072024/77d2730a-4ae8-409d-8233-e26a4763bb78.pdf,2024-07-23,N
+casa_pct,FY24,30.9,%,https://www.business-standard.com/markets/capital-market-news/yes-bank-rallies-after-q4-pat-climbs-63-yoy-to-rs-738-cr-125042100174_1.html,2025-04-21,N
+casa_pct,FY25,34.3,%,https://www.business-standard.com/markets/capital-market-news/yes-bank-rallies-after-q4-pat-climbs-63-yoy-to-rs-738-cr-125042100174_1.html,2025-04-21,N
+casa_pct,FY26,35.1,%,https://www.business-standard.com/markets/capital-market-news/yes-bank-q4-pat-climbs-45-yoy-to-rs-1-068-cr-126041800445_1.html,2026-04-18,N
+cet1_pct,FY14,9.1,% (core Tier I),https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar14.pdf,2014-04-23,N
+cet1_pct,FY17,11.4,%,https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar17.pdf,2017-04-19,N
+cet1_pct,FY18,9.7,%,https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar18.pdf,2018-04-25,N
+cet1_pct,FY22,11.6,%,https://bsmedia.business-standard.com/_media/bs/data/announcements/bse/23072024/77d2730a-4ae8-409d-8233-e26a4763bb78.pdf,2024-07-23,N
+cet1_pct,FY23,13.3,%,https://bsmedia.business-standard.com/_media/bs/data/announcements/bse/23072024/77d2730a-4ae8-409d-8233-e26a4763bb78.pdf,2024-07-23,N
+crar_pct,FY14,14.4,%,https://www.business-standard.com/article/news-cm/strong-q4-numbers-generate-interest-in-yes-bank-114042300596_1.html,2014-04-23,N
+crar_pct,FY16,16.5,%,https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar16.pdf,2016-04-27,N
+crar_pct,FY17,17.0,%,https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar17.pdf,2017-04-19,N
+crar_pct,FY18,18.4,%,https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar18.pdf,2018-04-25,N
+deposits_cr,FY14,74192,Rs cr,https://www.business-standard.com/article/news-cm/strong-q4-numbers-generate-interest-in-yes-bank-114042300596_1.html,2014-04-23,N
+deposits_cr,FY15,91175.8,Rs cr,https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar15.pdf,2015-04-22,N
+deposits_cr,FY16,111719.5,Rs cr,https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar17.pdf,2017-04-19,N
+deposits_cr,FY17,142873.9,Rs cr,https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar17.pdf,2017-04-19,N
+deposits_cr,FY22,197281,Rs cr,https://www.business-standard.com/article/news-cm/yes-bank-advances-rise-8-8-yoy-in-q4-fy22-122040500261_1.html,2022-04-05,N
+deposits_cr,FY24,266000,Rs cr (stated as Rs 2.66 trn),https://www.business-standard.com/companies/results/yes-bank-q4-results-net-profit-up-123-2-at-rs-452-cr-nii-at-rs-2-153-cr-124042700469_1.html,2024-04-27,N
+deposits_cr,FY25,284488,Rs cr (provisional),https://www.business-standard.com/amp/markets/capital-market-news/yes-bank-s-loan-book-rises-to-rs-2-46-lakh-crore-in-q4-fy25-deposits-up-7-yoy-125040400700_1.html,2025-04-04,N
+deposits_cr,FY26,318969,Rs cr,https://www.business-standard.com/markets/capital-market-news/yes-bank-q4-pat-climbs-45-yoy-to-rs-1-068-cr-126041800445_1.html,2026-04-18,N
+gnpa_pct,FY14,0.31,%,https://www.business-standard.com/article/news-cm/strong-q4-numbers-generate-interest-in-yes-bank-114042300596_1.html,2014-04-23,N
+gnpa_pct,FY15,0.41,%,https://zeebiz.com/companies/news-yes-bank-q4-net-profit-up-27-per-cent-to-rs-702-crore-548,2016-04-27,N
+gnpa_pct,FY16,0.76,%,"https://theasianbanker.com/resultwatch/yes-bank-announces-financial-results-for-the-quarter-and-financial-year-ended-march-31,-2016",2016-04-27,N
+gnpa_pct,FY17,1.52,%,https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar17.pdf,2017-04-19,N
+gnpa_pct,FY18,1.28,%,https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar18.pdf,2018-04-25,N
+gnpa_pct,FY22,13.9,%,https://bsmedia.business-standard.com/_media/bs/data/announcements/bse/23072024/77d2730a-4ae8-409d-8233-e26a4763bb78.pdf,2024-07-23,N
+gnpa_pct,FY23,2.2,%,https://www.business-standard.com/markets/news/yes-bank-shares-zoom-9-as-profit-jumps-123-asset-quality-improves-124042900314_1.html,2024-04-29,N
+gnpa_pct,FY24,1.7,%,https://www.business-standard.com/markets/capital-market-news/yes-bank-rallies-after-q4-pat-climbs-63-yoy-to-rs-738-cr-125042100174_1.html,2025-04-21,N
+gnpa_pct,FY25,1.6,%,https://www.business-standard.com/markets/capital-market-news/yes-bank-rallies-after-q4-pat-climbs-63-yoy-to-rs-738-cr-125042100174_1.html,2025-04-21,N
+gnpa_pct,FY26,1.3,%,https://www.business-standard.com/markets/capital-market-news/yes-bank-q4-pat-climbs-45-yoy-to-rs-1-068-cr-126041800445_1.html,2026-04-18,N
+nnpa_pct,FY14,0.05,%,https://www.business-standard.com/article/news-cm/strong-q4-numbers-generate-interest-in-yes-bank-114042300596_1.html,2014-04-23,N
+nnpa_pct,FY15,0.12,%,https://zeebiz.com/companies/news-yes-bank-q4-net-profit-up-27-per-cent-to-rs-702-crore-548,2016-04-27,N
+nnpa_pct,FY16,0.29,%,"https://theasianbanker.com/resultwatch/yes-bank-announces-financial-results-for-the-quarter-and-financial-year-ended-march-31,-2016",2016-04-27,N
+nnpa_pct,FY17,0.81,%,https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar17.pdf,2017-04-19,N
+nnpa_pct,FY18,0.64,%,https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar18.pdf,2018-04-25,N
+nnpa_pct,FY24,0.6,%,https://www.business-standard.com/markets/capital-market-news/yes-bank-rallies-after-q4-pat-climbs-63-yoy-to-rs-738-cr-125042100174_1.html,2025-04-21,N
+nnpa_pct,FY25,0.3,%,https://www.business-standard.com/markets/capital-market-news/yes-bank-rallies-after-q4-pat-climbs-63-yoy-to-rs-738-cr-125042100174_1.html,2025-04-21,N
+nnpa_pct,FY26,0.2,%,https://www.business-standard.com/markets/capital-market-news/yes-bank-q4-pat-climbs-45-yoy-to-rs-1-068-cr-126041800445_1.html,2026-04-18,N
+pcr_pct,FY16,62.0,%,https://www.business-standard.com/amp/article/news-cm/yes-bank-extends-post-result-gains-116042800333_1.html,2016-04-28,N
+pcr_pct,FY17,46.9,%,https://files.tijorifinance.com/insight/india/4547/Earnings%20Release/ER-Mar17.pdf,2017-04-19,N
+pcr_pct,FY23,62,%,https://bsmedia.business-standard.com/_media/bs/data/announcements/bse/23072024/77d2730a-4ae8-409d-8233-e26a4763bb78.pdf,2024-07-23,N
+pcr_pct,FY24,67,%,https://bsmedia.business-standard.com/_media/bs/data/announcements/bse/23072024/77d2730a-4ae8-409d-8233-e26a4763bb78.pdf,2024-07-23,N
+pcr_pct,FY25,79.7,%,https://www.business-standard.com/markets/capital-market-news/yes-bank-q4-pat-climbs-45-yoy-to-rs-1-068-cr-126041800445_1.html,2026-04-18,N
+pcr_pct,FY26,81.9,%,https://www.business-standard.com/markets/capital-market-news/yes-bank-q4-pat-climbs-45-yoy-to-rs-1-068-cr-126041800445_1.html,2026-04-18,N
+provisions_cr,FY16,536.3,Rs cr (excl. tax; stated as INR 5363 m),https://www.motilaloswal.com/site/rreports/636857320984788337.pdf,2019-02,N
+provisions_cr,FY17,793.4,Rs cr (excl. tax; stated as INR 7934 m),https://www.motilaloswal.com/site/rreports/636857320984788337.pdf,2019-02,N
+provisions_cr,FY18,1553.8,Rs cr (excl. tax; stated as INR 15538 m),https://www.motilaloswal.com/site/rreports/636857320984788337.pdf,2019-02,N

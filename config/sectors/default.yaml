@@ -1,0 +1,20 @@
+# Base for every archetype (and the archetype used for tickers not in data/universe.csv).
+archetype: default
+family: non_financial
+damodaran_industries: ["Total Market (without financials)"]
+evidence: "Fallback mapping to Damodaran's India market aggregate excluding financials."
+how_to_read: |
+  Generic company: read the root first (does ROIC beat WACC?), then the pillar that explains it.
+  Margins and turnover say how returns are made; cash conversion and the balance sheet say whether they are real and safe.
+  Valuation asks what the price already assumes.
+manual_kpis:
+  - id: promoter_holding_pct
+    unit: "%"
+    required: false
+    description: "Promoter and promoter-group shareholding at fiscal year end (% of equity)"
+    where: "Shareholding pattern filed with BSE/NSE for the March quarter"
+  - id: promoter_pledge_pct
+    unit: "%"
+    required: false
+    description: "Promoter shares pledged or encumbered as % of promoter holding at fiscal year end"
+    where: "Shareholding pattern (encumbered shares) for the March quarter"

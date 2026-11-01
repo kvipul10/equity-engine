@@ -1,0 +1,14 @@
+metric,fiscal_year,value,unit,source_url,source_date,verified
+capacity_mtpa,FY23,35,"mtpa (group crude steel, per release)",https://www.tatasteel.com/media/17912/press-release-1.pdf,2023-05-02,N
+capacity_mtpa,FY25,35,"mtpa (group crude steel, per release boilerplate)",https://www.tatasteel.com/media/23821/4qfy2025-press-release.pdf,2025-05-12,N
+capacity_mtpa,FY26,35,"mtpa (group crude steel, per release)",https://www.tatasteel.com/media/25700/4qfy2026-press-release.pdf,2026-05-15,N
+production_mt,FY22,31.03,mt (consolidated crude steel),https://www.tatasteel.com/media/17912/press-release-1.pdf,2023-05-02,N
+production_mt,FY23,30.65,mt (consolidated crude steel),https://www.tatasteel.com/media/17912/press-release-1.pdf,2023-05-02,N
+production_mt,FY24,29.94,mt (consolidated crude steel),https://www.tatasteel.com/media/23821/4qfy2025-press-release.pdf,2025-05-12,N
+production_mt,FY25,30.92,mt (consolidated crude steel),https://www.tatasteel.com/media/23821/4qfy2025-press-release.pdf,2025-05-12,N
+production_mt,FY26,31.67,mt (consolidated crude steel),https://www.tatasteel.com/media/25700/4qfy2026-press-release.pdf,2026-05-15,N
+sales_volume_mt,FY22,29.52,mt (consolidated deliveries),https://www.tatasteel.com/media/17912/press-release-1.pdf,2023-05-02,N
+sales_volume_mt,FY23,28.79,mt (consolidated deliveries),https://www.tatasteel.com/media/17912/press-release-1.pdf,2023-05-02,N
+sales_volume_mt,FY24,29.39,mt (consolidated deliveries),https://www.tatasteel.com/media/23821/4qfy2025-press-release.pdf,2025-05-12,N
+sales_volume_mt,FY25,30.96,mt (consolidated deliveries),https://www.tatasteel.com/media/23821/4qfy2025-press-release.pdf,2025-05-12,N
+sales_volume_mt,FY26,31.97,mt (consolidated deliveries),https://www.tatasteel.com/media/25700/4qfy2026-press-release.pdf,2026-05-15,N

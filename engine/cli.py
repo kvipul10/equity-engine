@@ -5,6 +5,7 @@
   python -m engine analyse-all [--asof FYxx]
   python -m engine metrics [--markdown]
   python -m engine rules [--markdown]
+  python -m engine kpi-templates [--years FY22-FY26]
   python -m engine build-benchmarks
 Global option: --root PATH (project root; default = repository root or $EQUITY_ENGINE_ROOT).
 """
@@ -102,9 +103,11 @@ def cmd_analyse_all(args) -> int:
 
 
 def cmd_metrics(args) -> int:
-    from .registry import load_all, to_markdown
+    from .registry import REGISTRY, load_all, to_markdown
 
-    reg = load_all()
+    load_all()
+    _cfg(args)  # registers sector metrics from config/sectors/*.yaml
+    reg = REGISTRY
     if args.markdown:
         cfg_paths = Paths.default(args.root)
         out = cfg_paths.root / "docs" / "metrics.md"
@@ -113,7 +116,7 @@ def cmd_metrics(args) -> int:
         print(f"Wrote {out} ({len(reg)} metrics)")
         return 0
     for m in reg.values():
-        print(f"{m.id:<34} {m.pillar:<20} {m.unit:<7} {m.direction:<8} {','.join(m.applies):<10} {m.role:<9} {m.equation[:80]}")
+        print(f"{m.id:<34} {m.pillar:<20} {m.unit:<7} {m.direction:<8} {','.join(m.applies)[:24]:<24} {m.role:<9} {m.equation[:70]}")
     print(f"{len(reg)} metrics")
     return 0
 
@@ -122,21 +125,41 @@ def cmd_rules(args) -> int:
     from .flags import validate_rules
 
     cfg = _cfg(args)
-    validate_rules(cfg.flags)
+    rules = cfg.all_rules()
+    validate_rules(rules)
     if args.markdown:
-        lines = ["# Red-flag rules", "", "Generated from `config/flags.yaml` by `python -m engine rules --markdown`.", "",
-                 "| id | pillar | severity | applies | name | condition |", "|---|---|---|---|---|---|"]
-        for r in cfg.flags:
+        lines = ["# Red-flag rules", "", "Generated from `config/flags.yaml` (generic) and `config/sectors/*.yaml` (sector rules) by "
+                 "`python -m engine rules --markdown`.", "",
+                 "| id | pillar | severity | applies | origin | name | condition |", "|---|---|---|---|---|---|---|"]
+        for r in rules:
             cond = r["condition"].replace("|", "\\|")
-            lines.append(f"| {r['id']} | {r['pillar']} | {r['severity']} | {', '.join(r['applies'])} | {r['name']} | `{cond}` |")
+            lines.append(f"| {r['id']} | {r['pillar']} | {r['severity']} | {', '.join(r['applies'])} | "
+                         f"{r.get('_origin', 'config/flags.yaml')} | {r['name']} | `{cond}` |")
         out = cfg.paths.root / "docs" / "flags.md"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text("\n".join(lines) + "\n")
-        print(f"Wrote {out} ({len(cfg.flags)} rules)")
+        print(f"Wrote {out} ({len(rules)} rules)")
         return 0
-    for r in cfg.flags:
-        print(f"{r['id']:<4} {r['pillar']:<20} {r['severity']:<7} {','.join(r['applies']):<8} {r['name']}")
-    print(f"{len(cfg.flags)} rules")
+    for r in rules:
+        print(f"{r['id']:<5} {r['pillar']:<20} {r['severity']:<7} {','.join(r['applies'])[:22]:<22} {r['name']}")
+    print(f"{len(rules)} rules ({len(cfg.flags)} generic, {len(rules) - len(cfg.flags)} sector)")
+    return 0
+
+
+def cmd_kpi_templates(args) -> int:
+    from .templates import write_templates
+
+    cfg = _cfg(args)
+    paths = write_templates(cfg, args.years)
+    print(f"Wrote {len(paths)} templates to {paths[0].parent if paths else '-'}")
+    return 0
+
+
+def cmd_kpi_coverage(args) -> int:
+    from .templates import write_coverage
+
+    p = write_coverage(_cfg(args))
+    print(f"Wrote {p}")
     return 0
 
 
@@ -172,6 +195,11 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("rules", help="list / validate red-flag rules")
     p.add_argument("--markdown", action="store_true", help="write docs/flags.md")
     p.set_defaults(fn=cmd_rules)
+    p = sub.add_parser("kpi-templates", help="write data/manual/templates/<archetype>_kpis.csv from config/sectors/*.yaml")
+    p.add_argument("--years", default="FY22-FY26", help="fiscal-year range, e.g. FY22-FY26")
+    p.set_defaults(fn=cmd_kpi_templates)
+    p = sub.add_parser("kpi-coverage", help="write data/manual/COVERAGE.md (found / blank per company x KPI x year)")
+    p.set_defaults(fn=cmd_kpi_coverage)
     p = sub.add_parser("build-benchmarks", help="rebuild config/sector_benchmarks.yaml from data/external/damodaran/*.xls")
     p.set_defaults(fn=cmd_build_benchmarks)
     return ap

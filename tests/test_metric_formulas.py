@@ -117,6 +117,7 @@ pgrowth = [pat_c[k] / pat_c[k - 1] - 1 for k in range(1, N)]
 yoy = [qs[k] / qs[k - 4] - 1 for k in range(6, 10)]
 ebm = [ebitda[k] / rev[k] for k in range(N)]
 ROIC_EXPECTED_FY26 = nopat[9] / avg(ic, 9)
+CO_FY = [f"FY{17 + j}" for j in range(10)]
 
 CO_EXPECTED = {
     # ---- root
@@ -273,8 +274,8 @@ def computed(project_cfg):
     return {t: compute(t, project_cfg) for t in ("SYNTHCO", "SYNTHBANK", "SYNTHNBFC", "SYNTHINS")}
 
 
-def _check(metrics, mid, exp, fy=None):
-    s = metrics[mid]
+def _check(metrics, mid, exp, fy=None, ctx=None):
+    s = metrics[mid] if mid in metrics else ctx.m(mid)  # switched-off metrics are still computable internally
     got = s.iloc[-1] if fy is None else s[fy]
     assert got == pytest.approx(exp, rel=REL, abs=1e-12), f"{mid} {fy or 'latest'}: got {got}, expected {exp}"
 
@@ -292,7 +293,7 @@ def test_nonfinancial_series(computed, key):
 
 @pytest.mark.parametrize("mid", sorted(BK_EXPECTED))
 def test_bank_metric(computed, mid):
-    _check(computed["SYNTHBANK"].metrics, mid, BK_EXPECTED[mid])
+    _check(computed["SYNTHBANK"].metrics, mid, BK_EXPECTED[mid], ctx=computed["SYNTHBANK"].ctx)
 
 
 @pytest.mark.parametrize("mid", sorted(NBFC_EXPECTED))
@@ -336,10 +337,12 @@ def test_reverse_dcf_closed_form():
 
 
 def test_every_registered_metric_has_a_hand_computed_check():
+    """Engine (Python) metrics; sector metrics are covered in tests/test_sector_modules.py."""
     from engine.registry import load_all
 
     covered = set(CO_EXPECTED) | set(BK_EXPECTED) | set(NBFC_EXPECTED) | set(INS_EXPECTED) | SPECIAL
-    missing = sorted(set(load_all()) - covered)
+    engine_ids = {m for m, d in load_all().items() if d.origin == "engine"}
+    missing = sorted(engine_ids - covered)
     assert not missing, f"metrics without a hand-computed expectation: {missing}"
 
 

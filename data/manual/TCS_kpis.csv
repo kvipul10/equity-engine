@@ -1,0 +1,29 @@
+metric,fiscal_year,value,unit,source_url,source_date,verified
+attrition_ltm_pct,FY22,17.4,% (IT services LTM),https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2022,2022-04-11,N
+attrition_ltm_pct,FY23,20.1,% (IT services LTM),https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2023,2023-04-12,N
+attrition_ltm_pct,FY24,12.5,% (IT services LTM),https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2024,2024-04-12,N
+attrition_ltm_pct,FY25,13.3,% (IT services LTM),https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2025,2025-04-10,N
+attrition_ltm_pct,FY26,13.7,"% (IT services, voluntary LTM)",https://www.tcs.com/content/dam/tcs/investor-relations/financial-statements/2025-26/q4/Presentations/Q4%202025-26%20Fact%20Sheet.pdf,2026-04-09,N
+cc_revenue_growth_pct,FY22,15.4,%,https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2022,2022-04-11,N
+cc_revenue_growth_pct,FY23,13.7,%,https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2023,2023-04-12,N
+cc_revenue_growth_pct,FY24,3.4,%,https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2024,2024-04-12,N
+cc_revenue_growth_pct,FY25,4.2,%,https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2025,2025-04-10,N
+cc_revenue_growth_pct,FY26,-2.4,%,https://www.tcs.com/content/dam/tcs/investor-relations/financial-statements/2025-26/q4/Presentations/Q4%202025-26%20Fact%20Sheet.pdf,2026-04-09,N
+deal_tcv_usd_bn,FY22,34.6,USD bn,https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2022,2022-04-11,N
+deal_tcv_usd_bn,FY23,34.1,USD bn,https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2023,2023-04-12,N
+deal_tcv_usd_bn,FY24,42.7,USD bn,https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2024,2024-04-12,N
+deal_tcv_usd_bn,FY25,39.4,USD bn,https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2025,2025-04-10,N
+deal_tcv_usd_bn,FY26,40.7,USD bn,https://www.tcs.com/content/dam/tcs/investor-relations/financial-statements/2025-26/q4/Presentations/Q4%202025-26%20Fact%20Sheet.pdf,2026-04-09,N
+headcount,FY22,592195,count,https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2022,2022-04-11,N
+headcount,FY23,614795,count,https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2023,2023-04-12,N
+headcount,FY24,601546,count,https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2024,2024-04-12,N
+headcount,FY25,607979,count,https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2025,2025-04-10,N
+headcount,FY26,584519,count,https://www.tcs.com/content/dam/tcs/investor-relations/financial-statements/2025-26/q4/Presentations/Q4%202025-26%20Fact%20Sheet.pdf,2026-04-09,N
+revenue_usd_mn,FY22,25707,USD mn,https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2022,2022-04-11,N
+revenue_usd_mn,FY23,27927,USD mn,https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2023,2023-04-12,N
+revenue_usd_mn,FY24,29080,USD mn (stated as USD 29.08 bn),https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2024,2024-04-12,N
+revenue_usd_mn,FY25,30180,USD mn (stated as USD 30.18 bn),https://www.tcs.com/who-we-are/newsroom/press-release/tcs-financial-results-q4-fy-2025,2025-04-10,N
+revenue_usd_mn,FY26,30017,USD mn,https://www.tcs.com/content/dam/tcs/investor-relations/financial-statements/2025-26/q4/Presentations/Q4%202025-26%20Fact%20Sheet.pdf,2026-04-09,N
+unbilled_revenue_cr,FY24,15300,Rs cr (consolidated unbilled revenues),https://www.tcs.com/content/dam/tcs/investor-relations/financial-statements/2024-25/q4/IND%20AS/Press%20Release%20-%20INR.pdf,2025-04-10,N
+unbilled_revenue_cr,FY25,15470,Rs cr (consolidated unbilled revenues),https://www.tcs.com/content/dam/tcs/investor-relations/financial-statements/2024-25/q4/IND%20AS/Press%20Release%20-%20INR.pdf,2025-04-10,N
+unbilled_revenue_cr,FY26,18144,Rs cr (consolidated unbilled revenues; stated as Rs 181440 mn),https://www.tcs.com/content/dam/tcs/investor-relations/financial-statements/2025-26/q4/Presentations/Q4%202025-26%20Fact%20Sheet.pdf,2026-04-09,N

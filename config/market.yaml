@@ -58,7 +58,7 @@ macro:
 valuation:
   terminal_growth:
     value: 0.06
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: 4% CPI target + ~2% long-run real growth. Kept below nominal GDP growth (8.9%) and below rf (7.41%) because a perpetuity cannot outgrow the economy.
   reverse_dcf_years: 10        # explicit-forecast horizon for the reverse DCF

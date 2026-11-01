@@ -1,0 +1,186 @@
+# NBFCs / HFCs: the bank module plus wholesale-funding, ALM and stage-wise asset-quality analysis.
+archetype: nbfc
+extends: bank
+family: bank_like
+subtype: nbfc
+damodaran_industries: ["Financial Svcs. (Non-bank & Insurance)"]
+evidence: "BAJFINANCE -> Financial Svcs. (Non-bank & Insurance) in Damodaran's indname.xls (Jan 2026)"
+how_to_read: |
+  An NBFC is a bank without cheap deposits: its edge must come from spread and underwriting, and its risk from funding.
+  Read the spread (yield on AUM minus cost of borrowing) and credit cost together; then check the funding mix and the ALM gap,
+  because NBFCs fail on liquidity before they fail on solvency (IL&FS, DHFL).
+  AUM growing much faster than equity, a rising stage-2 book or a high commercial-paper share are the early warnings.
+
+metrics_off:
+  - {id: casa_ratio, reason: "NBFCs do not take CASA deposits"}
+  - {id: cd_ratio, reason: "No deposit franchise to lend against; funding is analysed through the borrowing mix"}
+  - {id: deposit_growth, reason: "Deposits (where taken) are one funding source, covered by the borrowing mix"}
+  - {id: credit_cost, reason: "Measured on AUM for NBFCs (credit_cost_aum)"}
+
+manual_kpis:
+  - {id: casa_pct, remove: true}
+  - {id: deposits_cr, unit: "Rs cr", required: false, description: "Public/corporate deposits at 31 March (deposit-taking NBFCs only)", where: "Balance sheet"}
+  - {id: advances_cr, unit: "Rs cr", required: true, description: "On-book loans (net) at 31 March", where: "Balance sheet / investor presentation"}
+  - {id: gnpa_pct, unit: "%", required: true, description: "Gross stage-3 assets as % of loans at 31 March (GS3, Ind AS)", where: "Quarterly results, asset quality"}
+  - {id: nnpa_pct, unit: "%", required: true, description: "Net stage-3 assets as % of loans at 31 March (NS3)", where: "Quarterly results, asset quality"}
+  - {id: pcr_pct, unit: "%", required: false, description: "Stage-3 provision coverage at 31 March", where: "Investor presentation"}
+  - {id: provisions_cr, unit: "Rs cr", required: true, description: "Impairment on financial instruments (loan losses and provisions) for the full year", where: "P&L"}
+  - {id: aum_cr, unit: "Rs cr", required: true, description: "Assets under management at 31 March (on-book + off-book)", where: "Investor presentation"}
+  - {id: stage2_pct, unit: "%", required: true, description: "Stage-2 assets as % of loans at 31 March", where: "Investor presentation / ECL disclosure"}
+  - {id: yield_on_aum_pct, unit: "%", required: false, description: "Yield on average AUM for the year", where: "Investor presentation"}
+  - {id: cost_of_borrowing_pct, unit: "%", required: true, description: "Cost of borrowings for the year", where: "Investor presentation"}
+  - {id: alm_gap_1y_pct, unit: "%", required: false, description: "Cumulative ALM gap up to 1 year as % of cumulative outflows up to 1 year (positive = surplus)", where: "Annual report, maturity pattern of assets and liabilities"}
+  - {id: borrowing_bank_pct, unit: "%", required: true, description: "Bank loans as % of total borrowings at 31 March", where: "Investor presentation, borrowing mix"}
+  - {id: borrowing_market_pct, unit: "%", required: true, description: "Market borrowings (NCDs + CP + bonds) as % of total borrowings at 31 March", where: "Investor presentation, borrowing mix"}
+  - {id: borrowing_cp_pct, unit: "%", required: false, description: "Commercial paper as % of total borrowings at 31 March", where: "Investor presentation, borrowing mix"}
+  - {id: borrowing_deposits_pct, unit: "%", required: false, description: "Deposits as % of total borrowings at 31 March", where: "Investor presentation, borrowing mix"}
+
+metrics_add:
+  - {id: aum_growth, name: "AUM growth", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:aum_cr', 1)",
+     equation: "AUM_t / AUM_t-1 - 1", meaning: "Growth of the managed loan book."}
+  - {id: aum_vs_equity_growth, name: "AUM growth - equity growth", pillar: balance_sheet, unit: pp, direction: lower,
+     formula: "growth('kpi:aum_cr', 1) - growth('f:equity', 1)",
+     equation: "(AUM_t/AUM_t-1 - 1) - (Equity_t/Equity_t-1 - 1)", meaning: "Book growth beyond capital growth = rising leverage."}
+  - {id: spread, name: "Spread (yield on AUM - cost of borrowing)", pillar: margins, unit: pp, direction: higher,
+     formula: "kpi('yield_on_aum_pct') - kpi('cost_of_borrowing_pct')",
+     equation: "Yield on average AUM - cost of borrowings (reported)", meaning: "The lending spread before operating and credit costs."}
+  - {id: cost_of_borrowing, name: "Cost of borrowing", pillar: margins, unit: pct, direction: lower, formula: "kpi('cost_of_borrowing_pct')",
+     equation: "Interest on borrowings / average borrowings (reported)", meaning: "Funding cost: NBFCs depend on banks and bond markets."}
+  - {id: credit_cost_aum, name: "Credit cost (on AUM)", pillar: cash_quality, unit: pct, direction: lower,
+     formula: "kpi('provisions_cr') / avg('kpi:aum_cr')",
+     equation: "Impairment on financial instruments / average AUM", meaning: "Loan losses per rupee of managed book."}
+  - {id: stage2_ratio, name: "Stage-2 assets", pillar: cash_quality, unit: pct, direction: lower, formula: "kpi('stage2_pct')",
+     equation: "Stage-2 loans / total loans (reported)", meaning: "Loans with a significant rise in credit risk: tomorrow's NPAs."}
+  - {id: alm_gap_1y, name: "ALM gap up to 1 year", pillar: balance_sheet, unit: pct, direction: higher, formula: "kpi('alm_gap_1y_pct')",
+     equation: "(Cumulative inflows - outflows up to 1 year) / cumulative outflows up to 1 year (reported)", meaning: "Liquidity surplus (+) or shortfall (-) within a year."}
+  - {id: bank_borrowing_share, name: "Bank borrowings share", pillar: balance_sheet, unit: pct, direction: neutral, formula: "kpi('borrowing_bank_pct')",
+     equation: "Bank loans / total borrowings", meaning: "Reliance on bank funding (concentration and pricing)."}
+  - {id: market_borrowing_share, name: "Market borrowings share", pillar: balance_sheet, unit: pct, direction: neutral, formula: "kpi('borrowing_market_pct')",
+     equation: "(NCDs + CP + bonds) / total borrowings", meaning: "Reliance on debt markets (cheaper but flightier)."}
+  - {id: cp_share, name: "Commercial paper share", pillar: balance_sheet, unit: pct, direction: lower, formula: "kpi('borrowing_cp_pct')",
+     equation: "Commercial paper / total borrowings", meaning: "Short-term wholesale funding that must be rolled over every few months."}
+  - {id: deposit_share, name: "Deposits share of borrowings", pillar: balance_sheet, unit: pct, direction: neutral, formula: "kpi('borrowing_deposits_pct')",
+     equation: "Deposits / total borrowings", meaning: "Retail deposit funding (stable but regulated)."}
+
+bands:
+  nii_to_assets: null
+  nim_reported: null
+  roa:
+    red: 0.015
+    green: 0.030
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Diversified retail NBFCs earn RoA of roughly 2-4% (higher yields than banks offset by higher funding cost); under 1.5% is thin for the risk taken."
+  crar:
+    red: 0.15
+    green: 0.20
+    source_type: external
+    source_url: https://www.rbi.org.in/Scripts/BS_ViewMasterDirections.aspx?id=12179
+    as_of: "2023-10-19"
+    rationale: "Red = RBI Scale Based Regulation minimum capital ratio for NBFCs of 15% of risk-weighted assets (Tier 1 >= 10%); green = 5pp buffer above it (indicative component)."
+  nnpa_ratio:
+    green: 0.02
+    red: 0.06
+    source_type: external
+    source_url: https://www.bloombergquint.com/business/rbi-puts-in-place-prompt-corrective-action-framework-for-nbfcs
+    as_of: "2021-12-14"
+    rationale: "Red = RBI prompt corrective action Risk Threshold 1 for NBFCs (net NPA above 6%, circular of 14 Dec 2021, effective Oct 2022); green = 2% (indicative)."
+  gnpa_ratio:
+    green: 0.02
+    red: 0.05
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Retail-heavy NBFCs typically report GS3 of 1-3%; above 5% is stressed."
+  alm_gap_1y:
+    red: -0.10
+    green: 0.0
+    source_type: external
+    source_url: https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=11719
+    as_of: "2019-11-04"
+    rationale: "RBI liquidity risk management framework for NBFCs (4 Nov 2019): net cumulative negative mismatches capped at 10%/10%/20% of outflows in the 1-7/8-14/15-30 day buckets. A 1-year cumulative gap worse than -10% is treated as red; a surplus is green."
+  cp_share:
+    green: 0.05
+    red: 0.10
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "After the 2018 IL&FS episode, CP above ~10% of borrowings is seen as a rollover risk; under 5% is conservative."
+  aum_vs_equity_growth:
+    green: 0.0
+    red: 0.15
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "AUM growing 15pp a year faster than equity means leverage is climbing quickly."
+  spread:
+    red: 0.03
+    green: 0.06
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Retail NBFC spreads of 6%+ absorb operating and credit costs comfortably; under 3% is wholesale-like."
+  credit_cost_aum:
+    green: 0.015
+    red: 0.030
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Unsecured consumer lending runs higher credit costs than banks; above 3% of AUM erodes most of the spread."
+  stage2_ratio:
+    green: 0.02
+    red: 0.05
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Stage-2 above 5% of loans signals a large pool of stressed accounts that may migrate to stage 3."
+
+flags:
+  - id: NB01
+    name: AUM outgrowing equity
+    pillar: balance_sheet
+    severity: high
+    applies: [NBFC]
+    condition: "all_last('aum_vs_equity_growth', 2, '>', 0.15)"
+    values: {now: "m('aum_vs_equity_growth')", g: "m('aum_growth')"}
+    explanation: >
+      AUM has grown at least 15pp faster than equity for 2 years (latest gap {{ now|pp }}, AUM growth {{ g|pct }}): leverage is rising, so the next downturn will hit capital harder.
+  - id: NB02
+    name: Stage-2 book rising
+    pillar: cash_quality
+    severity: medium
+    applies: [NBFC]
+    condition: "rising('stage2_ratio', 2)"
+    values: {now: "m('stage2_ratio')", then: "m('stage2_ratio', 2)"}
+    explanation: >
+      Stage-2 assets rose from {{ then|pct }} to {{ now|pct }} over 2 years: more of the book is showing early stress.
+  - id: NB03
+    name: Commercial-paper dependence
+    pillar: balance_sheet
+    severity: medium
+    applies: [NBFC]
+    condition: "m('cp_share') > 0.10"
+    values: {now: "m('cp_share')"}
+    explanation: >
+      Commercial paper is {{ now|pct }} of borrowings: a market freeze would force asset sales (the 2018 IL&FS lesson).
+  - id: NB04
+    name: Negative one-year ALM gap
+    pillar: balance_sheet
+    severity: high
+    applies: [NBFC]
+    condition: "m('alm_gap_1y') < 0"
+    values: {now: "m('alm_gap_1y')"}
+    explanation: >
+      Cumulative liabilities falling due within a year exceed maturing assets ({{ now|pct }} of outflows).
+  - id: NB05
+    name: Spread compressing
+    pillar: margins
+    severity: medium
+    applies: [NBFC]
+    condition: "chg('spread', 2) < -0.01"
+    values: {now: "m('spread')", d: "chg('spread', 2)"}
+    explanation: >
+      The lending spread fell {{ d|pp }} over 2 years to {{ now|pp }}.
+  - id: NB06
+    name: Credit costs eating the spread
+    pillar: cash_quality
+    severity: medium
+    applies: [NBFC]
+    condition: "m('credit_cost_aum') > 0.03"
+    values: {cc: "m('credit_cost_aum')"}
+    explanation: >
+      Credit cost is {{ cc|pct }} of average AUM (above 3%).

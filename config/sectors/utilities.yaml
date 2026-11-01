@@ -1,0 +1,100 @@
+archetype: utilities
+family: non_financial
+damodaran_industries: ["Power"]
+evidence: "NTPC (NSEI:NTPC) -> Power in Damodaran's indname.xls (Jan 2026)"
+how_to_read: |
+  Regulated generators earn a return on regulated equity set by CERC (base RoE 15.5% on 30% normative equity for 2024-29),
+  so the questions are: is reported RoE close to the allowed RoE, is capacity (and regulated equity) growing, and are discoms paying?
+  Leverage is judged against the 70:30 normative debt-equity, not against unregulated peers. Receivable days from discoms and
+  PLF (plant load factor) drive cash flow and incentives; renewables growth changes the risk profile toward merchant/tariff-bid returns.
+constants:
+  allowed_roe:
+    value: 0.155
+    source_type: external
+    source_url: https://www.angelone.in/get-co-pdf/Power%20Sector%20Update.pdf
+    as_of: "2024-03-15"
+    rationale: "CERC (Terms and Conditions of Tariff) Regulations 2024-29: base return on equity 15.5% for thermal generating stations (grossed up for tax)."
+  normative_de:
+    value: 2.333333
+    source_type: external
+    source_url: https://cercind.gov.in/2024/draft_reg/TTF2024/Presentations/CSEP.pdf
+    as_of: "2024-03-15"
+    rationale: "CERC normative debt:equity of 70:30 (Regulation 18 of the 2024 Tariff Regulations) = D/E of 2.33x."
+manual_kpis:
+  - {id: installed_capacity_mw, unit: "MW", required: true, description: "Installed capacity at 31 March (group, MW)", where: "Annual report / investor presentation"}
+  - {id: plf_pct, unit: "%", required: true, description: "Coal plant load factor for the year", where: "Investor presentation / annual report"}
+  - {id: generation_bu, unit: "BU", required: false, description: "Gross generation for the year (billion units)", where: "Annual report"}
+  - {id: regulated_equity_cr, unit: "Rs cr", required: false, description: "Regulated equity at 31 March", where: "Investor presentation"}
+  - {id: discom_receivables_cr, unit: "Rs cr", required: false, description: "Trade receivables from discoms/beneficiaries at 31 March", where: "Annual report notes"}
+  - {id: renewable_capacity_mw, unit: "MW", required: false, description: "Renewable installed capacity at 31 March (MW)", where: "Investor presentation"}
+metrics_add:
+  - {id: regulated_roe_gap, name: "RoE - allowed RoE", pillar: returns, unit: pp, direction: higher, formula: "m('roe') - allowed_roe",
+     equation: "RoE - CERC base RoE (15.5%)", meaning: "Earning the regulated return (>= 0) or leaking it (under-recovery, idle capacity, disallowances)."}
+  - {id: regulated_equity_growth, name: "Regulated equity growth", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:regulated_equity_cr', 1)",
+     equation: "Regulated equity_t / Regulated equity_t-1 - 1", meaning: "Growth of the earning base for regulated returns."}
+  - {id: capacity_growth_mw, name: "Capacity growth", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:installed_capacity_mw', 1)",
+     equation: "Capacity_t / Capacity_t-1 - 1", meaning: "Growth of the generation base."}
+  - {id: plf, name: "Plant load factor", pillar: capital_efficiency, unit: pct, direction: higher, formula: "kpi('plf_pct')",
+     equation: "Actual generation / maximum possible generation (reported)", meaning: "How hard the fleet runs; drives incentives above normative availability."}
+  - {id: discom_receivable_days, name: "Receivable days from discoms", pillar: capital_efficiency, unit: days, direction: lower,
+     formula: "kpi('discom_receivables_cr') / f('revenue') * 365", equation: "Discom receivables / revenue x 365",
+     meaning: "How long discoms take to pay."}
+  - {id: de_vs_normative, name: "Debt/equity vs normative 70:30", pillar: balance_sheet, unit: x, direction: lower,
+     formula: "(f('borrowings') / f('equity')) / normative_de", equation: "(Borrowings / equity) / 2.33", meaning: "Above 1 = more levered than the tariff norm."}
+  - {id: renewable_share, name: "Renewable share of capacity", pillar: growth, unit: pct, direction: neutral,
+     formula: "kpi('renewable_capacity_mw') / kpi('installed_capacity_mw')", equation: "Renewable MW / total MW", meaning: "Shift of the asset base."}
+bands:
+  regulated_roe_gap:
+    red: -0.03
+    green: 0.0
+    source_type: derived
+    rationale: "Measured against the CERC base RoE of 15.5% (constant allowed_roe): a shortfall of more than 3pp means regulated returns are leaking."
+  de_vs_normative:
+    green: 0.85
+    red: 1.0
+    source_type: external
+    source_url: https://cercind.gov.in/2024/draft_reg/TTF2024/Presentations/CSEP.pdf
+    as_of: "2024-03-15"
+    rationale: "CERC normative debt:equity 70:30; leverage above the norm is not recovered in tariffs. Green = comfortably below it."
+  discom_receivable_days:
+    green: 45
+    red: 90
+    source_type: external
+    source_url: https://www.scconline.com/blog/post/2022/06/04/electricity-late-payment-surcharge-and-related-matters-rules-2022/
+    as_of: "2022-06-03"
+    rationale: "Electricity (Late Payment Surcharge and Related Matters) Rules 2022: bills are due 45 days from presentation; regulation of supply follows after a further month."
+  plf:
+    red: 0.595
+    green: 0.695
+    source_type: external
+    source_url: https://www.icra.in/Research/ViewResearchReport/6645
+    as_of: "2025-10-01"
+    rationale: "ICRA: all-India thermal PLF was 69.5% in FY2025 (65.7% in H1 FY2026). Green = at or above the national average; red = 10pp below."
+flags:
+  - id: UT01
+    name: Regulated return leaking
+    pillar: returns
+    severity: medium
+    applies: [utilities]
+    condition: "all_last('regulated_roe_gap', 2, '<', -0.03)"
+    values: {g: "m('regulated_roe_gap')", roe: "m('roe')"}
+    explanation: >
+      RoE ({{ roe|pct }}) has been more than 3pp below the 15.5% regulated return for 2 years: under-recovery, idle capacity or disallowed costs.
+  - id: UT02
+    name: Discoms paying slowly
+    pillar: capital_efficiency
+    severity: medium
+    applies: [utilities]
+    condition: "m('discom_receivable_days') > 90"
+    values: {d: "m('discom_receivable_days')"}
+    explanation: >
+      Receivables from discoms equal {{ d|days }} of revenue (twice the 45-day LPS due date).
+  - id: UT03
+    name: Leverage above the tariff norm
+    pillar: balance_sheet
+    severity: medium
+    applies: [utilities]
+    condition: "m('de_vs_normative') > 1.0"
+    values: {r: "m('de_vs_normative')"}
+    explanation: >
+      Debt/equity is {{ r|x }} the CERC 70:30 norm: the excess is not recovered through tariffs.

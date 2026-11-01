@@ -1,0 +1,77 @@
+archetype: telecom
+family: non_financial
+damodaran_industries: ["Telecom (Wireless)"]
+evidence: "BHARTIARTL -> Telecom (Wireless) in Damodaran's indname.xls (Jan 2026)"
+how_to_read: |
+  Telecom is a fixed-cost network business: revenue = subscribers x ARPU, and margins expand as ARPU rises on a largely fixed base.
+  Capex (network, 5G) and spectrum are the big capital calls, and lease liabilities (towers) sit inside debt after Ind AS 116, so
+  judge leverage on net debt including leases and deferred spectrum dues. In a three-player market, tariff hikes drive ARPU;
+  subscriber growth is now mostly mix (upgrades to 4G/5G, postpaid).
+metrics_off:
+  - {id: gross_margin, reason: "No material cost of goods: network and licence costs are operating costs"}
+  - {id: materials_pct, reason: "No raw materials"}
+  - {id: dio, reason: "Handset/SIM inventory is immaterial"}
+  - {id: operating_cycle, reason: "No meaningful inventory"}
+  - {id: cash_conversion_cycle, reason: "No meaningful inventory; payables need manual data"}
+  - {id: dpo, reason: "Not material for the diagnosis"}
+manual_kpis:
+  - {id: arpu_inr, unit: "Rs", required: true, description: "India mobile ARPU (monthly) for Q4 of the fiscal year", where: "Quarterly report / factsheet"}
+  - {id: subscribers_mn, unit: "mn", required: true, description: "India mobile customers at 31 March (million)", where: "Quarterly report"}
+  - {id: lease_liabilities_cr, unit: "Rs cr", required: true, description: "Lease liabilities at 31 March", where: "Balance sheet / net debt reconciliation"}
+  - {id: spectrum_liabilities_cr, unit: "Rs cr", required: false, description: "Deferred spectrum payment liabilities at 31 March", where: "Net debt reconciliation"}
+  - {id: capex_cr, unit: "Rs cr", required: false, description: "Capex for the year excluding spectrum", where: "Quarterly report"}
+metrics_add:
+  - {id: arpu, name: "ARPU (India mobile)", pillar: growth, unit: inr, direction: higher, formula: "kpi('arpu_inr')",
+     equation: "Average monthly revenue per user (reported)", meaning: "Pricing and mix per customer."}
+  - {id: arpu_growth, name: "ARPU growth", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:arpu_inr', 1)",
+     equation: "ARPU_t / ARPU_t-1 - 1", meaning: "Tariff and mix-led growth."}
+  - {id: subscriber_growth, name: "Subscriber growth", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:subscribers_mn', 1)",
+     equation: "Subscribers_t / Subscribers_t-1 - 1", meaning: "Customer growth."}
+  - {id: capex_intensity_reported, name: "Capex / revenue (reported capex)", pillar: capital_efficiency, unit: pct, direction: neutral,
+     formula: "kpi('capex_cr') / f('revenue')", equation: "Reported capex (ex spectrum) / revenue", meaning: "Network investment intensity."}
+  - {id: lease_share_of_debt, name: "Leases share of borrowings", pillar: balance_sheet, unit: pct, direction: neutral,
+     formula: "kpi('lease_liabilities_cr') / f('borrowings')", equation: "Lease liabilities / borrowings", meaning: "How much of reported debt is tower and site leases."}
+  - {id: spectrum_share_of_debt, name: "Deferred spectrum share of borrowings", pillar: balance_sheet, unit: pct, direction: neutral,
+     formula: "kpi('spectrum_liabilities_cr') / f('borrowings')", equation: "Deferred spectrum liabilities / borrowings", meaning: "Government dues inside debt."}
+bands:
+  net_debt_to_ebitda:
+    green: 2.0
+    red: 3.5
+    source_type: external
+    source_url: https://spglobal.com/ratings/en/research/articles/200604-table-of-contents-s-p-global-ratings-corporate-criteria-5475113
+    as_of: "2024-01-07"
+    rationale: "S&P financial-risk benchmarks (2x modest, 3-4x significant); telecom red set at 3.5x because leases and spectrum are already inside borrowings."
+  capex_to_sales:
+    green: 0.20
+    red: 0.35
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Indian telcos spent 20-30% of revenue on capex in the 5G build-out; above 35% sustained strains free cash flow."
+flags:
+  - id: TC01
+    name: ARPU falling
+    pillar: growth
+    severity: medium
+    applies: [telecom]
+    condition: "m('arpu_growth') < 0"
+    values: {g: "m('arpu_growth')", a: "m('arpu')"}
+    explanation: >
+      ARPU fell {{ g|pct }} to Rs {{ a|num(0) }}: price competition or down-trading.
+  - id: TC02
+    name: Leverage high including leases and spectrum
+    pillar: balance_sheet
+    severity: high
+    applies: [telecom]
+    condition: "m('net_debt_to_ebitda') > 3.5"
+    values: {l: "m('net_debt_to_ebitda')"}
+    explanation: >
+      Net debt (including leases and deferred spectrum in borrowings) is {{ l|x }} EBITDA.
+  - id: TC03
+    name: Capex intensity very high
+    pillar: capital_efficiency
+    severity: low
+    applies: [telecom]
+    condition: "m('capex_to_sales') > 0.35"
+    values: {c: "m('capex_to_sales')"}
+    explanation: >
+      Capex (balance-sheet proxy) is {{ c|pct }} of revenue.

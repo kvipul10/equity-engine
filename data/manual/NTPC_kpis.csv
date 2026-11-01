@@ -1,0 +1,8 @@
+metric,fiscal_year,value,unit,source_url,source_date,verified
+generation_bu,FY23,399,BU (group),https://ntpc.co.in/media/press-releases/ntpc-fy24-audited-results-ntpc-group-generation-6-pat-25,2024-05-24,N
+generation_bu,FY24,422,BU (group),https://ntpc.co.in/media/press-releases/ntpc-fy24-audited-results-ntpc-group-generation-6-pat-25,2024-05-24,N
+installed_capacity_mw,FY24,76015,MW (group),https://ntpc.co.in/media/press-releases/ntpc-fy24-audited-results-ntpc-group-generation-6-pat-25,2024-05-24,N
+installed_capacity_mw,FY25,79930,MW (group),https://dev.ntpc.co.in/sites/default/files/conference_call/2026/NTPC_OFS_31032026_Final_0.pdf,2026-05,N
+installed_capacity_mw,FY26,89108,MW (group),https://dev.ntpc.co.in/sites/default/files/conference_call/2026/NTPC_OFS_31032026_Final_0.pdf,2026-05,N
+plf_pct,FY24,77.25,% (NTPC coal stations),https://ntpc.co.in/media/press-releases/ntpc-fy24-audited-results-ntpc-group-generation-6-pat-25,2024-05-24,N
+plf_pct,FY26,72.04,% (NTPC coal stations),https://dev.ntpc.co.in/sites/default/files/conference_call/2026/NTPC_OFS_31032026_Final_0.pdf,2026-05,N

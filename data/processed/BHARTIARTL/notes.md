@@ -38,3 +38,7 @@
 
 ## quarterly
 - 10 quarters from 2024-03-31 to 2026-06-30 (Q4FY24-Q1FY27). Quarterly profit is as reported (no exceptional-item estimate).
+
+## manual
+- Manual KPIs loaded: arpu_inr for FY24, FY25, FY26.
+- 3 manual KPI values: 0 verified against the primary document (Y), 3 from secondary sources (N). Provenance is in analysis.json (manual_kpis).

@@ -40,3 +40,7 @@
 
 ## quarterly
 - 10 quarters from 2024-06-30 to 2026-09-30 (Q1FY25-Q2FY27). Quarterly profit is as reported (no exceptional-item estimate).
+
+## manual
+- Manual KPIs loaded: standalone_pat_cr for FY25, FY26.
+- 2 manual KPI values: 0 verified against the primary document (Y), 2 from secondary sources (N). Provenance is in analysis.json (manual_kpis).

@@ -1,0 +1,4 @@
+metric,fiscal_year,value,unit,source_url,source_date,verified
+arpu_inr,FY24,209,"Rs per month (India mobile, Q4)",https://assets.airtel.in/static-assets/cms/investor/docs/quarterly_results/2024_25/Q4/Press-Release.pdf,2025-05-13,N
+arpu_inr,FY25,245,"Rs per month (India mobile, Q4)",https://assets.airtel.in/static-assets/cms/investor/docs/quarterly_results/2024_25/Q4/Press-Release.pdf,2025-05-13,N
+arpu_inr,FY26,257,"Rs per month (India mobile, Q4)",https://assets.airtel.in/static-assets/cms/investor/docs/quarterly_results/2025-26/Q4/Quarterly-Highlights.pdf,2026-05,N

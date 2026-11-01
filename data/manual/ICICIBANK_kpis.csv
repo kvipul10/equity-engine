@@ -1,0 +1,30 @@
+metric,fiscal_year,value,unit,source_url,source_date,verified
+advances_cr,FY24,1184400,Rs cr (stated as INR 11844 bn),https://bsmedia.business-standard.com/_media/bs/data/market-reports/equity-brokertips/2025-04/17452256210.69792500.pdf,2025-04,N
+advances_cr,FY25,1341766,Rs cr,https://www.business-standard.com/markets/capital-market-news/icici-bank-q4-pat-climbs-18-yoy-to-rs-12-630-crore-declares-dividend-of-rs-11-sh-125042100357_1.html,2025-04-21,N
+advances_cr,FY26,1553893,Rs cr,https://www.business-standard.com/markets/capital-market-news/icici-bank-ends-higher-after-net-profit-rises-over-8-to-rs-13-702-crore-in-q4-126042000767_1.html,2026-04-20,N
+casa_pct,FY24,42.2,% (period-end),https://bsmedia.business-standard.com/_media/bs/data/market-reports/equity-brokertips/2025-04/17452256210.69792500.pdf,2025-04,N
+casa_pct,FY25,41.8,% (period-end),https://bsmedia.business-standard.com/_media/bs/data/market-reports/equity-brokertips/2025-04/17452256210.69792500.pdf,2025-04,N
+cet1_pct,FY24,15.60,%,https://www.business-standard.com/markets/capital-market-news/icici-bank-hits-life-high-as-pat-climbs-17-yoy-in-q4-124042900339_1.html,2024-04-29,N
+cet1_pct,FY25,15.94,%,https://www.business-standard.com/markets/capital-market-news/icici-bank-q4-pat-climbs-18-yoy-to-rs-12-630-crore-declares-dividend-of-rs-11-sh-125042100357_1.html,2025-04-21,N
+cet1_pct,FY26,16.35,%,https://www.business-standard.com/companies/quarterly-results/icici-bank-net-profit-up-8-5-pc-in-q4-fy26-to-rs-13-701-7-crore-126041800606_1.html,2026-04-18,N
+crar_pct,FY23,18.34,%,https://www.business-standard.com/companies/results/icici-bank-q4-net-profit-rises-30-to-rs-9-122-crore-on-margin-expansion-123042200588_1.html,2023-04-22,N
+crar_pct,FY24,16.33,%,https://www.business-standard.com/markets/capital-market-news/icici-bank-hits-life-high-as-pat-climbs-17-yoy-in-q4-124042900339_1.html,2024-04-29,N
+crar_pct,FY25,16.55,%,https://www.business-standard.com/markets/capital-market-news/icici-bank-q4-pat-climbs-18-yoy-to-rs-12-630-crore-declares-dividend-of-rs-11-sh-125042100357_1.html,2025-04-21,N
+crar_pct,FY26,17.18,%,https://www.business-standard.com/companies/quarterly-results/icici-bank-net-profit-up-8-5-pc-in-q4-fy26-to-rs-13-701-7-crore-126041800606_1.html,2026-04-18,N
+deposits_cr,FY24,1412800,Rs cr (stated as INR 14128 bn),https://bsmedia.business-standard.com/_media/bs/data/market-reports/equity-brokertips/2025-04/17452256210.69792500.pdf,2025-04,N
+deposits_cr,FY25,1610348,Rs cr,https://www.business-standard.com/markets/capital-market-news/icici-bank-q4-pat-climbs-18-yoy-to-rs-12-630-crore-declares-dividend-of-rs-11-sh-125042100357_1.html,2025-04-21,N
+deposits_cr,FY26,1794625,Rs cr,https://www.business-standard.com/markets/capital-market-news/icici-bank-ends-higher-after-net-profit-rises-over-8-to-rs-13-702-crore-in-q4-126042000767_1.html,2026-04-20,N
+gnpa_pct,FY22,3.6,%,https://www.business-standard.com/article/companies/icici-bank-s-net-profit-up-59-in-q4-beats-street-estimates-122042300661_1.html,2022-04-23,N
+gnpa_pct,FY23,2.81,%,https://www.business-standard.com/companies/results/icici-bank-q4-net-profit-rises-30-to-rs-9-122-crore-on-margin-expansion-123042200588_1.html,2023-04-22,N
+gnpa_pct,FY24,2.16,%,https://www.business-standard.com/markets/capital-market-news/icici-bank-hits-life-high-as-pat-climbs-17-yoy-in-q4-124042900339_1.html,2024-04-29,N
+gnpa_pct,FY25,1.67,%,https://www.business-standard.com/markets/capital-market-news/icici-bank-q4-pat-climbs-18-yoy-to-rs-12-630-crore-declares-dividend-of-rs-11-sh-125042100357_1.html,2025-04-21,N
+nnpa_pct,FY22,0.76,%,https://www.business-standard.com/companies/results/icici-bank-q4-net-profit-rises-30-to-rs-9-122-crore-on-margin-expansion-123042200588_1.html,2023-04-22,N
+nnpa_pct,FY23,0.48,%,https://www.business-standard.com/companies/results/icici-bank-q4-net-profit-rises-30-to-rs-9-122-crore-on-margin-expansion-123042200588_1.html,2023-04-22,N
+nnpa_pct,FY24,0.42,%,https://www.business-standard.com/markets/capital-market-news/icici-bank-hits-life-high-as-pat-climbs-17-yoy-in-q4-124042900339_1.html,2024-04-29,N
+nnpa_pct,FY25,0.39,%,https://www.business-standard.com/markets/capital-market-news/icici-bank-q4-pat-climbs-18-yoy-to-rs-12-630-crore-declares-dividend-of-rs-11-sh-125042100357_1.html,2025-04-21,N
+nnpa_pct,FY26,0.33,%,https://www.business-standard.com/companies/quarterly-results/icici-bank-net-profit-up-8-5-pc-in-q4-fy26-to-rs-13-701-7-crore-126041800606_1.html,2026-04-18,N
+provisions_cr,FY22,8641,Rs cr (excl. tax; stated as Rs 86.41 bn),https://icicibank.com/ms/aboutus/annual-reports/2022-23/icici/directors-report.html,2023 (annual report FY2023),N
+provisions_cr,FY23,6666,Rs cr (excl. tax; stated as Rs 66.66 bn),https://icicibank.com/ms/aboutus/annual-reports/2022-23/icici/directors-report.html,2023 (annual report FY2023),N
+provisions_cr,FY24,3642.93,Rs cr (excl. tax),https://quantisnow.com/insight/sec-form-6k-filed-by-icici-bank-limited-5995995,2025-04-19,N
+provisions_cr,FY25,4682.62,Rs cr (excl. tax),https://quantisnow.com/insight/sec-form-6k-filed-by-icici-bank-limited-5995995,2025-04-19,N
+provisions_cr,FY26,5380.42,Rs cr (excl. tax),https://quantisnow.com/insight/sec-form-6-k-filed-by-icici-bank-limited-6507456,2026-04-18,N

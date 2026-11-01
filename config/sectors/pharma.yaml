@@ -1,0 +1,69 @@
+archetype: pharma
+family: non_financial
+damodaran_industries: ["Drugs (Pharmaceutical)"]
+evidence: "SUNPHARMA -> Drugs (Pharmaceutical) in Damodaran's indname.xls (Jan 2026)"
+how_to_read: |
+  Indian pharma has two different engines: the branded domestic franchise (steady, high-margin, marketing-led) and exports,
+  especially US generics (price erosion, FDA compliance, lumpy launches) or specialty brands (R&D-heavy, high-margin).
+  Read the US vs India mix, R&D intensity and the ANDA pipeline as the future, and FDA actions as the key risk.
+  Exceptional items (settlements, impairments) are frequent: check exceptional frequency before trusting PAT growth.
+manual_kpis:
+  - {id: rd_expense_cr, unit: "Rs cr", required: true, description: "R&D expenditure for the year (P&L charge)", where: "Annual report / investor presentation"}
+  - {id: us_revenue_cr, unit: "Rs cr", required: true, description: "US formulations revenue for the year", where: "Investor presentation, segment revenue"}
+  - {id: india_revenue_cr, unit: "Rs cr", required: true, description: "India formulations revenue for the year", where: "Investor presentation, segment revenue"}
+  - {id: anda_pending_count, unit: "count", required: false, description: "ANDAs pending US FDA approval at 31 March", where: "Investor presentation / annual report"}
+  - {id: fda_oai_count, unit: "count", required: false, description: "Plants under US FDA OAI status / warning letter at 31 March", where: "Annual report, regulatory section"}
+metrics_add:
+  - {id: rd_pct, name: "R&D % of sales", pillar: capital_allocation, unit: pct, direction: neutral, formula: "kpi('rd_expense_cr') / f('revenue')",
+     equation: "R&D expense / revenue", meaning: "Reinvestment in the pipeline (specialty and complex generics need more)."}
+  - {id: us_share, name: "US share of revenue", pillar: growth, unit: pct, direction: neutral, formula: "kpi('us_revenue_cr') / f('revenue')",
+     equation: "US revenue / total revenue", meaning: "Exposure to US generics pricing and FDA risk."}
+  - {id: india_share, name: "India share of revenue", pillar: growth, unit: pct, direction: neutral, formula: "kpi('india_revenue_cr') / f('revenue')",
+     equation: "India revenue / total revenue", meaning: "Weight of the steadier domestic branded franchise."}
+  - {id: us_growth, name: "US revenue growth", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:us_revenue_cr', 1)",
+     equation: "US revenue_t / US revenue_t-1 - 1", meaning: "Growth of the US business."}
+  - {id: india_growth, name: "India revenue growth", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:india_revenue_cr', 1)",
+     equation: "India revenue_t / India revenue_t-1 - 1", meaning: "Growth of the domestic franchise vs the market."}
+  - {id: anda_pipeline, name: "ANDAs pending", pillar: growth, unit: count, direction: higher, formula: "kpi('anda_pending_count')",
+     equation: "Pending ANDA filings (reported)", meaning: "Pipeline of future US launches."}
+bands:
+  india_growth:
+    red: 0.06
+    green: 0.10
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "The Indian pharma market has grown about 8-10% a year; under 6% is losing share."
+  us_growth:
+    red: 0.0
+    green: 0.08
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "US generics face price erosion; growth above 8% usually needs specialty or complex launches."
+flags:
+  - id: PH01
+    name: R&D cut
+    pillar: capital_allocation
+    severity: medium
+    applies: [pharma]
+    condition: "chg('rd_pct', 1) < -0.01"
+    values: {d: "chg('rd_pct', 1)", now: "m('rd_pct')"}
+    explanation: >
+      R&D fell {{ d|pp }} of sales to {{ now|pct }}: margins improve today at the cost of the future pipeline.
+  - id: PH02
+    name: US business shrinking with a thinning pipeline
+    pillar: growth
+    severity: medium
+    applies: [pharma]
+    condition: "all_last('us_growth', 2, '<', 0) and chg('anda_pipeline', 2) < 0"
+    values: {g: "m('us_growth')"}
+    explanation: >
+      US revenue fell for 2 years (latest {{ g|pct }}) and the pending ANDA pipeline shrank.
+  - id: PH03
+    name: Plants under FDA action
+    pillar: cash_quality
+    severity: high
+    applies: [pharma]
+    condition: "m('kpi:fda_oai_count') > 0"
+    values: {n: "m('kpi:fda_oai_count')"}
+    explanation: >
+      {{ n|num(0) }} plant(s) under US FDA OAI/warning-letter status: launches from those sites are blocked and remediation costs follow.

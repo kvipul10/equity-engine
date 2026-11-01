@@ -10,6 +10,7 @@
   "first_fy": "FY17",
   "last_fy": "FY26",
   "n_years": 10,
+  "manual_first_fy": "FY14",
   "latest_quarter": "2026-09-30",
   "consolidated_inferred": false,
   "asof": null

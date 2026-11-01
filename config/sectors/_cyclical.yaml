@@ -1,0 +1,93 @@
+# Shared base for metals, cement and chemicals (not an archetype). Cyclical businesses are judged through the cycle.
+how_to_read: |
+  Cyclical business: judge it through the cycle, not on one year.
+metrics_off:
+  - {id: revenue_growth_volatility, reason: "Revenue swings with commodity prices; through-cycle metrics replace this"}
+  - {id: pat_growth_volatility, reason: "Profit swings are the cycle itself; through-cycle metrics replace this"}
+manual_kpis:
+  - {id: sales_volume_mt, unit: "mt", required: true, description: "Sales volume (deliveries) for the year in million tonnes", where: "Investor presentation / annual report"}
+  - {id: capacity_mtpa, unit: "mtpa", required: true, description: "Installed capacity at 31 March in million tonnes per annum", where: "Investor presentation / annual report"}
+  - {id: production_mt, unit: "mt", required: false, description: "Production for the year in million tonnes", where: "Investor presentation"}
+metrics_add:
+  - {id: ebitda_margin_10y_avg, name: "EBITDA margin, through-cycle (10y avg)", pillar: margins, unit: pct, direction: higher, kind: point,
+     formula: "mean_last('ebitda_margin', 10, 5)", equation: "Average EBITDA margin over the last 10 years (>= 5 needed)",
+     meaning: "Mid-cycle profitability: what the business earns on average across good and bad years."}
+  - {id: roce_10y_avg, name: "ROCE, through-cycle (10y avg)", pillar: returns, unit: pct, direction: higher, kind: point,
+     formula: "mean_last('roce', 10, 5)", equation: "Average ROCE over the last 10 years (>= 5 needed)",
+     meaning: "Mid-cycle return on capital."}
+  - {id: ebitda_per_tonne, name: "EBITDA per tonne", pillar: margins, unit: inr, direction: higher,
+     formula: "f('ebitda') * 10 / kpi('sales_volume_mt')", equation: "EBITDA (Rs cr) x 1e7 / (sales volume (mt) x 1e6)",
+     meaning: "Unit profitability: the industry's own margin measure."}
+  - {id: ebitda_per_tonne_vs_avg, name: "EBITDA/t vs through-cycle average", pillar: margins, unit: pct, direction: neutral, kind: point,
+     formula: "m('ebitda_per_tonne') / mean_last('ebitda_per_tonne', 10, 3) - 1",
+     equation: "EBITDA/t / average EBITDA/t over up to 10 years - 1", meaning: "Where unit margins sit in the cycle (+ = above average)."}
+  - {id: capacity_utilisation, name: "Capacity utilisation", pillar: capital_efficiency, unit: pct, direction: higher,
+     formula: "kpi('sales_volume_mt') / avg('kpi:capacity_mtpa')", equation: "Sales volume / average installed capacity",
+     meaning: "How fully plants run: fixed-cost absorption."}
+  - {id: leverage_at_trough, name: "Net debt / EBITDA at cycle trough", pillar: balance_sheet, unit: x, direction: lower, kind: point,
+     formula: "at_min('ebitda_margin', 'net_debt_to_ebitda', 10)",
+     equation: "Net debt / EBITDA in the year of the lowest EBITDA margin within 10 years",
+     meaning: "Leverage when the cycle turns down: the real solvency test for a cyclical."}
+  - {id: peak_cycle_capex, name: "Capex/depreciation when margins are above average", pillar: capital_allocation, unit: x, direction: lower,
+     formula: "m('capex_to_depreciation') if m('ebitda_margin') > mean_last('ebitda_margin', 10, 5) else nan()",
+     equation: "Capex / depreciation in years when EBITDA margin exceeds its 10y average (else n/a)",
+     meaning: "Expansion at the top of the cycle (high = capacity arriving into the next downturn)."}
+bands:
+  leverage_at_trough:
+    green: 2.0
+    red: 4.0
+    source_type: external
+    source_url: https://spglobal.com/ratings/en/research/articles/200604-table-of-contents-s-p-global-ratings-corporate-criteria-5475113
+    as_of: "2024-01-07"
+    rationale: "S&P financial-risk benchmarks: debt/EBITDA 4x+ is 'aggressive'. Applied at the trough year because that is when covenants bind."
+  peak_cycle_capex:
+    green: 1.5
+    red: 3.0
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Capex above 3x depreciation at peak margins usually adds capacity just before prices fall."
+flags:
+  - id: CY01
+    name: Leverage at the cycle trough
+    pillar: balance_sheet
+    severity: high
+    applies: [metals, cement, chemicals]
+    condition: "m('leverage_at_trough') > 4"
+    values: {l: "m('leverage_at_trough')"}
+    explanation: >
+      In the weakest-margin year of the last decade net debt was {{ l|x }} EBITDA: the balance sheet does not survive a downturn comfortably.
+  - id: CY02
+    name: Expanding at the top of the cycle
+    pillar: capital_allocation
+    severity: medium
+    applies: [metals, cement, chemicals]
+    condition: "m('peak_cycle_capex') > 2.0"
+    values: {c: "m('peak_cycle_capex')"}
+    explanation: >
+      Capex is {{ c|x }} depreciation while margins are above their 10-year average: new capacity is being added near the peak.
+  - id: CY03
+    name: Plants running below 70%
+    pillar: capital_efficiency
+    severity: medium
+    applies: [metals, cement, chemicals]
+    condition: "m('capacity_utilisation') < 0.70"
+    values: {u: "m('capacity_utilisation')"}
+    explanation: >
+      Capacity utilisation is {{ u|pct }}: fixed costs are under-absorbed.
+  - id: CY04
+    name: Unit margins far below the cycle average
+    pillar: margins
+    severity: medium
+    applies: [metals, cement, chemicals]
+    condition: "m('ebitda_per_tonne_vs_avg') < -0.30"
+    values: {d: "m('ebitda_per_tonne_vs_avg')", e: "m('ebitda_per_tonne')"}
+    explanation: >
+      EBITDA per tonne (Rs {{ e|num(0) }}) is {{ d|pct }} versus its through-cycle average.
+drivers:
+  add:
+    - id: cyclical_ebitda
+      title: "EBITDA = sales volume x EBITDA per tonne (volume vs unit-margin effect)"
+      applies: [metals, cement, chemicals]
+      root: ebitda
+      links:
+        ebitda: {type: product, const: 0.1, children: ["kpi:sales_volume_mt", ebitda_per_tonne]}

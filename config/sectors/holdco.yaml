@@ -1,0 +1,76 @@
+archetype: holdco
+family: non_financial
+damodaran_industries: ["Diversified"]
+evidence: "ADANIENT is classified Retail (Distributors) by Damodaran; the holdco archetype maps to Diversified (conglomerates) because it describes a multi-business incubator."
+how_to_read: |
+  A holding company / incubator is a portfolio: consolidated ratios average very different businesses (trading, mining, airports,
+  roads, new energy) at different stages. Read the segment mix, the standalone company (where the cash, debt and guarantees sit)
+  versus consolidated, and value it as a sum of the parts with a holding-company discount. Rapid incubation means negative FCF and
+  rising debt by design: judge whether the incubated businesses reach returns above their cost of capital, and watch guarantees
+  and related-party exposures.
+manual_kpis:
+  - {id: standalone_pat_cr, unit: "Rs cr", required: true, description: "Standalone PAT for the year", where: "Standalone financial statements"}
+  - {id: standalone_networth_cr, unit: "Rs cr", required: true, description: "Standalone net worth at 31 March", where: "Standalone balance sheet"}
+  - {id: standalone_borrowings_cr, unit: "Rs cr", required: false, description: "Standalone borrowings at 31 March", where: "Standalone balance sheet"}
+  - {id: listed_holdings_value_cr, unit: "Rs cr", required: false, description: "Market value of the company's stakes in listed subsidiaries/associates at 31 March", where: "Analyst SOTP / exchange prices x holdings"}
+  - {id: contingent_liabilities_cr, unit: "Rs cr", required: false, description: "Contingent liabilities incl. guarantees for group companies at 31 March", where: "Annual report notes"}
+  - {id: largest_segment_ebitda_share_pct, unit: "%", required: false, description: "Largest segment's share of segment EBITDA for the year", where: "Segment reporting / investor presentation"}
+metrics_add:
+  - {id: standalone_pat_share, name: "Standalone share of consolidated PAT", pillar: returns, unit: ratio, direction: neutral,
+     formula: "kpi('standalone_pat_cr') / f('pat')", equation: "Standalone PAT / consolidated PAT", meaning: "Where the profits are made (parent vs subsidiaries)."}
+  - {id: standalone_roe, name: "Standalone RoE", pillar: returns, unit: pct, direction: higher,
+     formula: "kpi('standalone_pat_cr') / avg('kpi:standalone_networth_cr')", equation: "Standalone PAT / average standalone net worth", meaning: "Return at the parent level."}
+  - {id: conso_minus_standalone_roe, name: "Consolidated - standalone RoE", pillar: returns, unit: pp, direction: neutral,
+     formula: "m('roe') - m('standalone_roe')", equation: "Consolidated RoE - standalone RoE", meaning: "Whether subsidiaries add to or dilute returns."}
+  - {id: standalone_debt_to_equity, name: "Standalone debt / equity", pillar: balance_sheet, unit: x, direction: lower,
+     formula: "kpi('standalone_borrowings_cr') / kpi('standalone_networth_cr')", equation: "Standalone borrowings / standalone net worth",
+     meaning: "Leverage at the parent, which funds the incubation."}
+  - {id: contingent_to_networth, name: "Contingent liabilities / net worth", pillar: balance_sheet, unit: ratio, direction: lower,
+     formula: "kpi('contingent_liabilities_cr') / kpi('standalone_networth_cr')", equation: "Contingent liabilities (incl. guarantees) / standalone net worth",
+     meaning: "Off-balance-sheet exposure to group companies."}
+  - {id: holdco_discount, name: "Holding-company discount", pillar: valuation, unit: pct, direction: neutral, kind: point,
+     formula: "1 - mcap_now() / kpi('listed_holdings_value_cr')", equation: "1 - market cap / value of listed holdings",
+     meaning: "Discount (+) or premium (-) of the parent's market value to its listed stakes alone."}
+  - {id: segment_concentration, name: "Largest segment share of EBITDA", pillar: growth, unit: pct, direction: neutral,
+     formula: "kpi('largest_segment_ebitda_share_pct')", equation: "Largest segment EBITDA / total segment EBITDA (reported)", meaning: "Dependence on one business."}
+bands:
+  contingent_to_networth:
+    green: 0.25
+    red: 0.50
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Guarantees and contingent liabilities above half of net worth make the parent's solvency depend on its subsidiaries."
+  standalone_debt_to_equity:
+    green: 0.5
+    red: 1.5
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "As net debt/equity for an operating company."
+flags:
+  - id: HC01
+    name: Parent leverage rising
+    pillar: balance_sheet
+    severity: medium
+    applies: [holdco]
+    condition: "chg('standalone_debt_to_equity', 1) > 0.2"
+    values: {now: "m('standalone_debt_to_equity')", d: "chg('standalone_debt_to_equity', 1)"}
+    explanation: >
+      Standalone debt/equity rose {{ d|num }}x to {{ now|x }}: the parent is borrowing to fund the group.
+  - id: HC02
+    name: Large guarantees to group companies
+    pillar: balance_sheet
+    severity: high
+    applies: [holdco]
+    condition: "m('contingent_to_networth') > 0.50"
+    values: {r: "m('contingent_to_networth')"}
+    explanation: >
+      Contingent liabilities including guarantees equal {{ r|pct }} of standalone net worth.
+  - id: HC03
+    name: Subsidiaries diluting returns
+    pillar: returns
+    severity: low
+    applies: [holdco]
+    condition: "m('conso_minus_standalone_roe') < -0.05"
+    values: {d: "m('conso_minus_standalone_roe')"}
+    explanation: >
+      Consolidated RoE is {{ d|pp }} below standalone RoE: the incubated businesses are not yet earning their keep.

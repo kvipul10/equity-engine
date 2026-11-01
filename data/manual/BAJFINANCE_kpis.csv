@@ -1,0 +1,29 @@
+metric,fiscal_year,value,unit,source_url,source_date,verified
+aum_cr,FY22,197452,Rs cr (consolidated),https://www.business-standard.com/amp/article/news-cm/bajaj-finance-q4-pat-jumps-80-yoy-to-rs-2-420-cr-122042700390_1.html,2022-04-27,N
+aum_cr,FY23,247379,Rs cr (consolidated),https://www.business-standard.com/companies/results/bajaj-finance-q4-net-up-30-to-rs-3-158-cr-on-robust-net-interest-income-123042601081_1.html,2023-04-26,N
+aum_cr,FY24,330615,Rs cr (consolidated),https://www.business-standard.com/markets/capital-market-news/bajaj-finance-drops-on-lowering-fy26-guidance-q4-pat-jumps-17-yoy-125043000523_1.html,2025-04-30,N
+aum_cr,FY25,416661,Rs cr (consolidated),https://www.business-standard.com/markets/capital-market-news/bajaj-finance-drops-on-lowering-fy26-guidance-q4-pat-jumps-17-yoy-125043000523_1.html,2025-04-30,N
+aum_cr,FY26,509975,Rs cr (consolidated),https://www.business-standard.com/amp/markets/capital-market-news/bajaj-finance-gains-after-q4-pat-jumps-22-yoy-to-rs-5-465-cr-126043000263_1.html,2026-04-30,N
+borrowing_deposits_pct,FY25,20,% of consolidated borrowings,https://files.tijorifinance.com/insight/india/23/Investor%20Presentation/IP-Apr25.pdf,2025-04-29,N
+crar_pct,FY22,27.22,%,https://www.business-standard.com/amp/article/news-cm/bajaj-finance-q4-pat-jumps-80-yoy-to-rs-2-420-cr-122042700390_1.html,2022-04-27,N
+crar_pct,FY23,24.97,%,https://www.business-standard.com/companies/results/bajaj-finance-q4-net-up-30-to-rs-3-158-cr-on-robust-net-interest-income-123042601081_1.html,2023-04-26,N
+crar_pct,FY25,21.93,%,https://www.business-standard.com/markets/capital-market-news/bajaj-finance-drops-on-lowering-fy26-guidance-q4-pat-jumps-17-yoy-125043000523_1.html,2025-04-30,N
+crar_pct,FY26,21.55,%,https://www.business-standard.com/amp/markets/capital-market-news/bajaj-finance-gains-after-q4-pat-jumps-22-yoy-to-rs-5-465-cr-126043000263_1.html,2026-04-30,N
+deposits_cr,FY22,30800,"Rs cr (approx, business update)",https://www.business-standard.com/amp/article/news-cm/bajaj-finance-q4-fy22-new-loans-grow-15-yoy-122040500318_1.html,2022-04-05,N
+deposits_cr,FY23,44650,"Rs cr (approx, business update)",https://www.business-standard.com/companies/news/bajaj-finance-booked-highest-ever-new-loans-in-fy23-at-29-6-million-123040401046_1.html,2023-04-04,N
+deposits_cr,FY24,60151,Rs cr,https://www.business-standard.com/markets/capital-market-news/bajaj-finance-drops-on-lowering-fy26-guidance-q4-pat-jumps-17-yoy-125043000523_1.html,2025-04-30,N
+deposits_cr,FY25,71403,Rs cr,https://www.business-standard.com/markets/capital-market-news/bajaj-finance-q4-deposits-drop-4-yoy-aum-crosses-rs-5-lakh-crore-126040400204_1.html,2026-04-04,N
+deposits_cr,FY26,68550,Rs cr,https://www.business-standard.com/markets/capital-market-news/bajaj-finance-q4-deposits-drop-4-yoy-aum-crosses-rs-5-lakh-crore-126040400204_1.html,2026-04-04,N
+gnpa_pct,FY22,1.60,% (consolidated),https://www.business-standard.com/companies/results/bajaj-finance-q4-net-up-30-to-rs-3-158-cr-on-robust-net-interest-income-123042601081_1.html,2023-04-26,N
+gnpa_pct,FY23,0.94,% (consolidated),https://www.business-standard.com/companies/results/bajaj-finance-q4-net-up-30-to-rs-3-158-cr-on-robust-net-interest-income-123042601081_1.html,2023-04-26,N
+gnpa_pct,FY24,0.85,% (consolidated),https://www.business-standard.com/markets/capital-market-news/bajaj-finance-drops-on-lowering-fy26-guidance-q4-pat-jumps-17-yoy-125043000523_1.html,2025-04-30,N
+gnpa_pct,FY25,0.96,% (consolidated),https://www.business-standard.com/markets/capital-market-news/bajaj-finance-drops-on-lowering-fy26-guidance-q4-pat-jumps-17-yoy-125043000523_1.html,2025-04-30,N
+gnpa_pct,FY26,1.01,% (consolidated),https://www.business-standard.com/amp/markets/capital-market-news/bajaj-finance-gains-after-q4-pat-jumps-22-yoy-to-rs-5-465-cr-126043000263_1.html,2026-04-30,N
+nnpa_pct,FY22,0.68,% (consolidated),https://www.business-standard.com/companies/results/bajaj-finance-q4-net-up-30-to-rs-3-158-cr-on-robust-net-interest-income-123042601081_1.html,2023-04-26,N
+nnpa_pct,FY23,0.34,% (consolidated),https://www.business-standard.com/companies/results/bajaj-finance-q4-net-up-30-to-rs-3-158-cr-on-robust-net-interest-income-123042601081_1.html,2023-04-26,N
+nnpa_pct,FY24,0.37,% (consolidated),https://www.business-standard.com/markets/capital-market-news/bajaj-finance-drops-on-lowering-fy26-guidance-q4-pat-jumps-17-yoy-125043000523_1.html,2025-04-30,N
+nnpa_pct,FY25,0.44,% (consolidated),https://www.business-standard.com/markets/capital-market-news/bajaj-finance-drops-on-lowering-fy26-guidance-q4-pat-jumps-17-yoy-125043000523_1.html,2025-04-30,N
+nnpa_pct,FY26,0.41,% (consolidated),https://www.business-standard.com/amp/markets/capital-market-news/bajaj-finance-gains-after-q4-pat-jumps-22-yoy-to-rs-5-465-cr-126043000263_1.html,2026-04-30,N
+pcr_pct,FY25,54,% (stage 3),https://www.business-standard.com/markets/capital-market-news/bajaj-finance-drops-on-lowering-fy26-guidance-q4-pat-jumps-17-yoy-125043000523_1.html,2025-04-30,N
+pcr_pct,FY26,60,% (stage 3),https://www.business-standard.com/amp/markets/capital-market-news/bajaj-finance-gains-after-q4-pat-jumps-22-yoy-to-rs-5-465-cr-126043000263_1.html,2026-04-30,N
+provisions_cr,FY25,7966,"Rs cr (loan losses and provisions, consolidated)",https://quartr.com/events/bajaj-finance-limited-bajfinance-q4-24-25_3Yt4OBcW,2025-04-29,N

@@ -30,6 +30,9 @@ class Ctx:
         self.year_of = {lab: fy_year(lab) for lab in self.idx}
         self.label_of = {y: lab for lab, y in self.year_of.items()}
         self.tokens = cfg.tokens(std.archetype)
+        self.sector = cfg.sector_of(std.archetype)
+        self.switched_off: Dict[str, str] = {}
+        self.switched_off_groups: list = []
         self.family = std.family
         self.asof = self.idx[-1]
         self.snapshot = std.snapshot or {}

@@ -31,7 +31,7 @@ BS_CORE = ["share_capital", "reserves", "borrowings", "other_liabilities", "net_
 Q_FLOWS = ["sales", "expenses", "other_income", "depreciation", "interest", "pbt", "tax", "net_profit", "operating_profit"]
 
 PNL_COLS = [
-    "period_end", "period_months", "annualised", "revenue", "raw_material", "change_in_inventory", "materials_cost",
+    "period_end", "period_months", "annualised", "manual_only", "revenue", "raw_material", "change_in_inventory", "materials_cost",
     "power_fuel", "other_mfr", "cogs", "employee_cost", "selling_admin", "other_exp", "other_opex", "total_opex",
     "ebitda", "other_income", "exceptional_est", "exceptional_tax", "other_income_core", "depreciation",
     "operating_ebit", "interest", "pbt", "pbt_core", "tax", "tax_core", "minority_and_associates", "pat",
@@ -94,6 +94,14 @@ class Standardised:
     notes: List[Dict] = field(default_factory=list)
     meta: Dict = field(default_factory=dict)
     raw: Optional[RawExport] = None
+    manual_provenance: pd.DataFrame = field(default_factory=pd.DataFrame)
+
+    @property
+    def export_years(self) -> List[str]:
+        a = self.annual
+        if "manual_only" in a.columns:
+            return [y for y, mo in a["manual_only"].items() if not bool(mo)]
+        return list(a.index)
 
     @property
     def years(self) -> List[str]:
@@ -110,49 +118,74 @@ class _Notes(list):
 
 
 # ---------------------------------------------------------------------------------------------------------
-def load_manual(path: Path) -> pd.DataFrame:
-    """data/manual/<TICKER>_kpis.csv (long format): period,kpi,value[,unit,source,note]."""
+MANUAL_V2 = ["metric", "fiscal_year", "value", "unit", "source_url", "source_date", "verified"]
+PROV_COLS = ["fy", "kpi", "value", "raw_value", "unit", "source_url", "source_date", "verified", "order"]
+
+
+def _period_to_fy(period: str):
+    p = period.strip().upper()
+    if p.startswith("FY"):
+        return f"FY{int(p[2:]):02d}", pd.Timestamp(fy_year(p), 3, 31)
+    if p.startswith("Q") and "FY" in p:
+        fy = "FY" + p.split("FY")[1]
+        q = int(p[1])
+        return fy, pd.Timestamp(fy_year(fy) - 1, 3, 31) + pd.DateOffset(months=3 * q)
+    ts = pd.Timestamp(period)
+    return year_label(ts.year if ts.month <= 3 else ts.year + 1), ts
+
+
+def load_manual_full(path: Path, use_unverified: bool = True):
+    """data/manual/<TICKER>_kpis.csv -> (wide values by FY x KPI, long provenance table).
+
+    v2 columns: metric,fiscal_year,value,unit,source_url,source_date,verified (Y/N)
+    v1 columns: period,kpi,value[,unit,source] (Session 1; still read)
+    Blank values = not found (skipped). unit '%' (or a KPI id ending in _pct) = percent number, divided by 100.
+    Several observations in one fiscal year: the latest wins (= year-end value).
+    """
+    empty = (pd.DataFrame(), pd.DataFrame(columns=PROV_COLS))
     if not path.exists():
-        return pd.DataFrame()
+        return empty
     df = pd.read_csv(path, comment="#", dtype=str).fillna("")
     if df.empty:
-        return pd.DataFrame()
+        return empty
+    v2 = "metric" in df.columns and "fiscal_year" in df.columns
     recs = []
     for _, r in df.iterrows():
-        period = str(r.get("period", "")).strip()
-        kpi = str(r.get("kpi", "")).strip()
-        if not period or not kpi:
+        period = str(r.get("fiscal_year" if v2 else "period", "")).strip()
+        kpi = str(r.get("metric" if v2 else "kpi", "")).strip()
+        raw = str(r.get("value", "")).replace(",", "").strip()
+        if not period or not kpi or not raw:
             continue
         try:
-            val = float(str(r.get("value", "")).replace(",", ""))
+            val = float(raw)
         except ValueError:
             continue
         unit = str(r.get("unit", "")).strip()
-        if unit == "%" or kpi.endswith("_pct"):
+        if unit.startswith("%") or kpi.endswith("_pct"):
             val = val / 100.0
-        p = period.upper()
-        if p.startswith("FY"):
-            fy, order = p, pd.Timestamp(fy_year(p), 3, 31)
-        elif p.startswith("Q") and "FY" in p:
-            fy = "FY" + p.split("FY")[1]
-            q = int(p[1])
-            order = pd.Timestamp(fy_year(fy) - 1, 3, 31) + pd.DateOffset(months=3 * q)
-        else:
-            ts = pd.Timestamp(period)
-            fy = year_label(ts.year if ts.month <= 3 else ts.year + 1)
-            order = ts
-        recs.append({"fy": fy, "kpi": kpi, "value": val, "order": order, "source": r.get("source", "")})
+        verified = (str(r.get("verified", "")).strip().upper() or "N")[:1] if v2 else "N"
+        if not use_unverified and verified != "Y":
+            continue
+        fy, order = _period_to_fy(period)
+        recs.append({"fy": fy, "kpi": kpi, "value": val, "raw_value": raw, "unit": unit,
+                     "source_url": str(r.get("source_url", r.get("source", ""))).strip(),
+                     "source_date": str(r.get("source_date", "")).strip(), "verified": verified, "order": order})
     if not recs:
-        return pd.DataFrame()
-    m = pd.DataFrame(recs).sort_values("order")
-    wide = m.groupby(["fy", "kpi"])["value"].last().unstack("kpi")
+        return empty
+    prov = pd.DataFrame(recs).sort_values("order", kind="stable")
+    wide = prov.groupby(["fy", "kpi"])["value"].last().unstack("kpi")
     wide = wide.loc[sorted(wide.index, key=fy_year)]
-    return wide
+    return wide, prov.reset_index(drop=True)
+
+
+def load_manual(path: Path) -> pd.DataFrame:
+    """Wide values only (FY x KPI)."""
+    return load_manual_full(path)[0]
 
 
 # ---------------------------------------------------------------------------------------------------------
 def standardise(raw: RawExport, archetype: str, cfg: Config, manual: Optional[pd.DataFrame] = None,
-                vintages: Optional[List[RawExport]] = None) -> Standardised:
+                vintages: Optional[List[RawExport]] = None, manual_provenance: Optional[pd.DataFrame] = None) -> Standardised:
     notes = _Notes()
     family = cfg.family(archetype)
     stat_tax = float(cfg.mv("tax", "statutory_rate"))
@@ -481,8 +514,39 @@ def standardise(raw: RawExport, archetype: str, cfg: Config, manual: Optional[pd
 
     # ---- manual KPIs -----------------------------------------------------------------------
     man = manual if manual is not None else pd.DataFrame()
+    prov = manual_provenance if manual_provenance is not None else pd.DataFrame()
+    S["manual_only"] = False
     if not man.empty:
         notes.add("manual", f"Manual KPIs loaded: {', '.join(man.columns)} for {', '.join(man.index)}.")
+        if len(prov) and "verified" in prov.columns:
+            n_y = int((prov["verified"] == "Y").sum())
+            notes.add("manual", f"{len(prov)} manual KPI values: {n_y} verified against the primary document (Y), "
+                                f"{len(prov) - n_y} from secondary sources (N). Provenance is in analysis.json (manual_kpis).")
+        first, last = fy_year(labels[0]), fy_year(labels[-1])
+        before = sorted({y for y in man.index if fy_year(y) < first}, key=fy_year)
+        after = sorted({y for y in man.index if fy_year(y) > last}, key=fy_year)
+        if after:
+            notes.add("manual", f"Manual KPI years after {labels[-1]} ignored ({', '.join(after)}): beyond the export/as-of window.")
+            man = man.drop(index=after)
+        if before:
+            extra = pd.DataFrame(index=before, columns=S.columns)
+            extra["period_end"] = [f"{fy_year(y)}-03-31" for y in before]
+            extra["period_months"] = 12
+            extra["annualised"] = False
+            extra["stale_bs"] = False
+            extra["opening_fy"] = None
+            extra["comparability_break"] = ""
+            extra["inorganic_step"] = False
+            extra["capex_basis"] = ""
+            extra["manual_only"] = True
+            S = pd.concat([extra.astype(object), S.astype(object)])
+            S = S.loc[sorted(S.index, key=fy_year)]
+            num = [c for c in S.columns if c not in ("period_end", "opening_fy", "comparability_break", "capex_basis", "annualised",
+                                                     "stale_bs", "inorganic_step", "manual_only", "period_months")]
+            S[num] = S[num].apply(pd.to_numeric, errors="coerce")
+            S.index.name = "fy"
+            notes.add("manual", f"Manual KPI years {', '.join(before)} precede the export ({labels[0]}): added as KPI-only rows "
+                                f"(all export fields blank) so KPI trends cover them.")
 
     # ---- restatements (older exports in data/raw/screener/vintages/<TICKER>/) -------------
     if vintages:
@@ -494,12 +558,14 @@ def standardise(raw: RawExport, archetype: str, cfg: Config, manual: Optional[pd
         "source_file": str(raw.path.name) if raw.path else None, "sha256": raw.sha256,
         "screener_version": raw.version.get("current"), "units": "Rs crore",
         "first_fy": labels[0], "last_fy": labels[-1], "n_years": len(labels),
+        "manual_first_fy": (S.index[0] if bool(S["manual_only"].iloc[0]) else None),
         "latest_quarter": str(raw.quarterly.columns[-1].date()) if not raw.quarterly.empty else None,
         "consolidated_inferred": bool(len(nz) >= 2),
         "asof": raw.asof_label,
     }
     return Standardised(ticker=raw.ticker, company=raw.company, archetype=archetype, family=family, annual=S,
-                        quarterly=Q, snapshot=snap, manual=man, notes=list(notes), meta=meta, raw=raw)
+                        quarterly=Q, snapshot=snap, manual=man, notes=list(notes), meta=meta, raw=raw,
+                        manual_provenance=prov)
 
 
 def _estimate_exceptionals(S: pd.DataFrame, notes: _Notes) -> None:
@@ -648,13 +714,16 @@ def load_standardised(ticker: str, cfg: Config, archetype: Optional[str] = None,
         raise FileNotFoundError(f"No Screener export for {ticker} at {path}")
     raw = parse_workbook(path, ticker)
     arch = archetype or cfg.archetype_of(ticker)
-    manual = load_manual(paths.manual_file(ticker))
+    use_unverified = bool((cfg.scoring.get("manual") or {}).get("use_unverified", True))
+    manual, prov = load_manual_full(paths.manual_file(ticker), use_unverified=use_unverified)
     vint = [parse_workbook(p, ticker) for p in find_vintages(paths.vintages_dir, ticker)]
     if asof:
         raw = truncate_raw(raw, asof)
         manual = truncate_manual(manual, raw.asof_label)
+        if raw.asof_label and len(prov):
+            prov = prov[[fy_year(f) <= fy_year(raw.asof_label) for f in prov["fy"]]].reset_index(drop=True)
         vint = []  # restatement comparison is a latest-data feature
-    return standardise(raw, arch, cfg, manual=manual, vintages=vint)
+    return standardise(raw, arch, cfg, manual=manual, vintages=vint, manual_provenance=prov)
 
 
 def write_processed(std: Standardised, out_dir: Path) -> None:
@@ -670,6 +739,8 @@ def write_processed(std: Standardised, out_dir: Path) -> None:
     S.reindex(columns=SHARE_COLS).to_csv(out_dir / "shares.csv", float_format="%.6f")
     if std.quarterly is not None and not std.quarterly.empty:
         std.quarterly.to_csv(out_dir / "quarterly.csv", float_format="%.4f")
+    if std.manual is not None and not std.manual.empty:
+        std.manual.to_csv(out_dir / "manual_kpis.csv", float_format="%.6f")
     if std.raw is not None:
         rawdf = std.raw.annual.copy()
         rawdf.columns = [c.date().isoformat() for c in rawdf.columns]

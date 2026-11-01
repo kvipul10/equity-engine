@@ -1,0 +1,7 @@
+metric,fiscal_year,value,unit,source_url,source_date,verified
+capacity_mtpa,FY23,132.4,mtpa (consolidated total),https://www.ultratechcement.com/content/dam/ultratechcementwebsite/pdf/financials/investor-update/Ultratech%20Corporate%20Dossier%20Q4%20FY25.pdf,2025-04,N
+capacity_mtpa,FY24,146.2,mtpa (consolidated total),https://www.ultratechcement.com/content/dam/ultratechcementwebsite/pdf/financials/investor-update/Ultratech%20Corporate%20Dossier%20Q4%20FY25.pdf,2025-04,N
+capacity_mtpa,FY25,188.76,mtpa (global: 183.36 domestic grey + 5.4 overseas),https://www.ultratechcement.com/corporate/media/press-releases/UltraTech-Q4FY25-Earnings,2025-04-28,N
+capacity_mtpa,FY26,205.5,mtpa (global: 200.1 domestic grey + 5.4 overseas),https://www.adityabirla.com/media/press-releases/ultratech-cement-q4fy26-results-highest-ever-sales-volume-pbidt-and-pat-milestone-200-mtpa-capacity-reached/,2026-04-27,N
+sales_volume_mt,FY25,135.83,mt (consolidated sales volume),https://www.ultratechcement.com/corporate/media/press-releases/UltraTech-Q4FY25-Earnings,2025-04-28,N
+sales_volume_mt,FY26,154.25,mt (consolidated sales volume),https://informistmedia.com/EquityWire/49234/Earnings-Review-UltraTech-Q4-PAT-rise-slowest-in-4-quarters-YoY-but-exceeds-view,2026-04-27,N

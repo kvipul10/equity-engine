@@ -1,0 +1,9 @@
+metric,fiscal_year,value,unit,source_url,source_date,verified
+collections_cr,FY24,8655,Rs cr,https://www.dlf.in/annual_docket/Annual-report-2023-24.pdf,2024 (annual report FY2023-24),N
+collections_cr,FY25,11773,Rs cr,https://www.dlf.in/annual_docket/Annual-report-2024-25.pdf,2025 (annual report FY2024-25),N
+collections_cr,FY26,13517,Rs cr,https://www.dlf.in/qu-result/Q4FY26-Results-Presentation.pdf,2026-05,N
+presales_cr,FY23,15058,Rs cr (new sales bookings),https://www.dlf.in/qu-result/Press-Release-12-05-23.pdf,2023-05-12,N
+presales_cr,FY24,14778,Rs cr (new sales bookings),https://www.dlf.in/annual_docket/Annual-report-2023-24.pdf,2024 (annual report FY2023-24),N
+presales_cr,FY25,21223,Rs cr (new sales bookings),https://www.dlf.in/annual_docket/Annual-report-2024-25.pdf,2025 (annual report FY2024-25),N
+presales_cr,FY26,20143,Rs cr (new sales bookings),https://www.dlf.in/media-press-release/dlf_q4_and_fy26_press_release.pdf,2026-05,N
+unsold_inventory_cr,FY23,7388,"Rs cr (completed + launched, as of 31 March 2023)",https://www.dlf.in/qu-result/Q4-and-FY23-Results-Presentation.pdf,2023-05-12,N

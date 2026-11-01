@@ -1,0 +1,166 @@
+# Insurers. Screener semantics: Sales = premium + investment income; Other Mfr. Exp = benefits + change in reserves;
+# Other Liabilities = policyholders' funds. Insurers are valued on embedded value (EV), not book value.
+archetype: insurance
+family: insurance
+damodaran_industries: ["Insurance (Life)"]
+evidence: "HDFCLIFE -> Insurance (Life) in Damodaran's indname.xls (Jan 2026)"
+how_to_read: |
+  A life insurer's value is the embedded value of policies already sold plus the value of new business (VNB) it keeps writing.
+  Read VNB growth and VNB margin (profitability of new sales), persistency (do customers keep paying?) and solvency (can it fund growth?).
+  Accounting P&L understates a growing insurer because new-business strain front-loads costs, so P/EV and operating RoEV matter more than P/E or P/B.
+  For general insurers, a combined ratio above 100% means underwriting loses money and profits rely on investment income.
+pillar_names:
+  cash_quality: "5 Cash and earnings quality (persistency)"
+pillar_weights: {growth: 20, margins: 15, capital_efficiency: 0, returns: 20, cash_quality: 15, balance_sheet: 15, capital_allocation: 5, valuation: 10}
+
+metrics_off:
+  - {id: yield_on_assets, reason: "Revenue includes investment income on policyholders' funds; not a pricing signal"}
+  - {id: opex_to_assets, reason: "Includes benefits and reserve changes; meaningless per rupee of policyholder assets"}
+  - {id: liquid_assets_ratio, reason: "Investments are the business (policyholder funds), not a liquidity buffer"}
+  - {id: equity_to_assets, reason: "Policyholder liabilities dominate the balance sheet; the solvency ratio is the capital measure"}
+  - {id: justified_pb, reason: "Insurers are valued on embedded value; book-value models understate in-force value"}
+  - {id: pb_to_justified_pb, reason: "As justified P/B"}
+  - {id: implied_growth_pb, reason: "As justified P/B; P/EV is used instead"}
+  - {id: implied_pb_growth_minus_delivered, reason: "As justified P/B"}
+
+manual_kpis:
+  - {id: vnb_cr, unit: "Rs cr", required: true, description: "Value of new business for the year", where: "Investor presentation / embedded value report"}
+  - {id: vnb_margin_pct, unit: "%", required: true, description: "VNB margin (VNB / APE) for the year", where: "Investor presentation"}
+  - {id: embedded_value_cr, unit: "Rs cr", required: true, description: "Indian embedded value at 31 March", where: "Embedded value report / investor presentation"}
+  - {id: operating_roev_pct, unit: "%", required: false, description: "Operating return on embedded value for the year", where: "Embedded value report"}
+  - {id: ape_cr, unit: "Rs cr", required: true, description: "Annualised premium equivalent (individual + group) for the year", where: "Investor presentation"}
+  - {id: persistency_13m_pct, unit: "%", required: true, description: "13th-month persistency (by premium, as reported) for the year", where: "Public disclosures (L-22) / presentation"}
+  - {id: persistency_61m_pct, unit: "%", required: true, description: "61st-month persistency (by premium) for the year", where: "Public disclosures / presentation"}
+  - {id: solvency_ratio_pct, unit: "%", required: true, description: "Solvency ratio (available / required solvency margin) at 31 March", where: "Public disclosures (L-32) / results"}
+  - {id: opex_ratio_pct, unit: "%", required: false, description: "Operating expenses (excl. commission) / total premium for the year", where: "Investor presentation"}
+  - {id: combined_ratio_pct, unit: "%", required: false, description: "Combined ratio (general insurers only) for the year", where: "Investor presentation"}
+
+metrics_add:
+  - {id: vnb_margin, name: "VNB margin", pillar: margins, unit: pct, direction: higher, formula: "kpi('vnb_margin_pct')",
+     equation: "Value of new business / APE (reported)", meaning: "Profitability of the year's new policies."}
+  - {id: vnb_growth, name: "VNB growth", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:vnb_cr', 1)",
+     equation: "VNB_t / VNB_t-1 - 1", meaning: "Growth in the value created by new sales: the core growth measure for a life insurer."}
+  - {id: ape_growth, name: "APE growth", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:ape_cr', 1)",
+     equation: "APE_t / APE_t-1 - 1", meaning: "Growth in new-business premium volume."}
+  - {id: ev_growth, name: "Embedded value growth", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:embedded_value_cr', 1)",
+     equation: "EV_t / EV_t-1 - 1", meaning: "Compounding of shareholder value (includes dividends paid out as a drag)."}
+  - {id: operating_roev, name: "Operating RoEV", pillar: returns, unit: pct, direction: higher, formula: "kpi('operating_roev_pct')",
+     equation: "Operating EV earnings / opening EV (reported)", meaning: "Return on embedded value from operations: the insurer's true RoE."}
+  - {id: persistency_13m, name: "13th-month persistency", pillar: cash_quality, unit: pct, direction: higher, formula: "kpi('persistency_13m_pct')",
+     equation: "Premiums renewed in month 13 / premiums due (reported)", meaning: "Do first-year customers keep paying? Low = mis-selling or weak fit."}
+  - {id: persistency_61m, name: "61st-month persistency", pillar: cash_quality, unit: pct, direction: higher, formula: "kpi('persistency_61m_pct')",
+     equation: "Premiums renewed in month 61 / premiums due (reported)", meaning: "Long-term customer retention, which drives realised value."}
+  - {id: solvency_ratio, name: "Solvency ratio", pillar: balance_sheet, unit: pct, direction: higher, formula: "kpi('solvency_ratio_pct')",
+     equation: "Available solvency margin / required solvency margin (reported)", meaning: "Capital cushion to absorb shocks and fund growth."}
+  - {id: opex_ratio_reported, name: "Opex ratio (reported)", pillar: margins, unit: pct, direction: lower, formula: "kpi('opex_ratio_pct')",
+     equation: "Operating expenses / total premium (reported)", meaning: "Cost efficiency of distribution and operations."}
+  - {id: combined_ratio, name: "Combined ratio (GI)", pillar: margins, unit: pct, direction: lower, formula: "kpi('combined_ratio_pct')",
+     equation: "(Claims + expenses + commission) / net earned premium (reported)", meaning: "Underwriting profitability: above 100% = underwriting loss."}
+  - {id: p_ev, name: "Price / embedded value", pillar: valuation, unit: x, direction: lower, kind: point, formula: "mcap_now() / kpi('embedded_value_cr')",
+     equation: "Market cap / latest embedded value", meaning: "Premium the market pays over the value of the in-force book."}
+
+bands:
+  solvency_ratio:
+    red: 1.50
+    green: 1.80
+    source_type: external
+    source_url: https://www.business-standard.com/amp/article/finance/irdai-issues-new-insurer-solvency-margin-rules-116051801182_1.html
+    as_of: "2016-05-18"
+    rationale: "Red = IRDAI control level of solvency: available solvency margin at least 150% of required (IRDAI Assets, Liabilities and Solvency Margin regulations 2016; all life insurers met it at March 2025). Green = 30pp buffer above the control level (indicative component)."
+  combined_ratio:
+    green: 1.00
+    red: 1.10
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "By definition a combined ratio above 100% is an underwriting loss; above 110% profits depend entirely on investment income."
+  vnb_margin:
+    red: 0.18
+    green: 0.25
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Large listed Indian private life insurers report VNB margins of roughly 22-28%; under 18% is low-value new business."
+  persistency_13m:
+    red: 0.80
+    green: 0.87
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Leading private insurers report 13th-month persistency of about 85-88% by premium; under 80% points to mis-selling."
+  persistency_61m:
+    red: 0.45
+    green: 0.55
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "61st-month persistency of 50-60% is typical for leading private insurers; under 45% means most long-term value leaks away."
+  p_ev:
+    green: 2.0
+    red: 3.5
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Listed Indian life insurers have traded at about 2-4x EV; above 3.5x needs sustained high VNB growth."
+  operating_roev:
+    red: ke
+    green: ke + 0.05
+    source_type: derived
+    rationale: "Operating RoEV below the cost of equity destroys value."
+  vnb_growth:
+    red: inflation_target
+    green: nominal_gdp_growth
+    source_type: derived
+    rationale: "As revenue growth: below inflation = shrinking in real terms."
+  ape_growth:
+    red: inflation_target
+    green: nominal_gdp_growth
+    source_type: derived
+    rationale: "As revenue growth."
+  ev_growth:
+    red: inflation_target
+    green: ke
+    source_type: derived
+    rationale: "EV should compound at least at the cost of equity to create value; below inflation it shrinks in real terms."
+
+flags:
+  - id: IN01
+    name: Solvency cushion thinning
+    pillar: balance_sheet
+    severity: high
+    applies: [INS]
+    condition: "m('solvency_ratio') < 1.70"
+    values: {now: "m('solvency_ratio')"}
+    explanation: >
+      Solvency ratio is {{ now|pct }}, within 20pp of IRDAI's 150% control level: growth or dividends may need fresh capital.
+  - id: IN02
+    name: 13th-month persistency slipping
+    pillar: cash_quality
+    severity: medium
+    applies: [INS]
+    condition: "chg('persistency_13m', 2) < -0.03"
+    values: {now: "m('persistency_13m')", d: "chg('persistency_13m', 2)"}
+    explanation: >
+      13th-month persistency fell {{ d|pp }} over 2 years to {{ now|pct }}: more first-year customers are lapsing.
+  - id: IN03
+    name: VNB margin compressing
+    pillar: margins
+    severity: medium
+    applies: [INS]
+    condition: "chg('vnb_margin', 2) < -0.03"
+    values: {now: "m('vnb_margin')", d: "chg('vnb_margin', 2)"}
+    explanation: >
+      VNB margin fell {{ d|pp }} over 2 years to {{ now|pct }} (product mix shift to low-margin ULIPs/group, or pricing pressure).
+  - id: IN04
+    name: Rich P/EV with slow VNB growth
+    pillar: valuation
+    severity: low
+    applies: [INS]
+    condition: "m('p_ev') > 3.0 and m('vnb_growth') < 0.10"
+    values: {pev: "m('p_ev')", g: "m('vnb_growth')"}
+    explanation: >
+      The stock trades at {{ pev|x }} embedded value while VNB grew only {{ g|pct }}.
+  - id: IN05
+    name: Underwriting loss (general insurance)
+    pillar: margins
+    severity: medium
+    applies: [INS]
+    condition: "m('combined_ratio') > 1.0"
+    values: {now: "m('combined_ratio')"}
+    explanation: >
+      Combined ratio is {{ now|pct }}: claims and expenses exceed earned premium; profits rely on investment income.

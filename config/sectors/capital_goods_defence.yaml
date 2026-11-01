@@ -1,0 +1,75 @@
+archetype: capital_goods_defence
+family: non_financial
+damodaran_industries: ["Aerospace/Defense"]
+evidence: "BEL, HAL -> Aerospace/Defense in Damodaran's indname.xls (Jan 2026)"
+how_to_read: |
+  Order-book businesses: revenue today is yesterday's order book executed. Read order book / revenue (years of visibility),
+  book-to-bill (orders won vs revenue booked) and the execution rate. Customer advances fund working capital (defence PSUs run
+  negative working capital); falling advances or rising receivables signal stretched customers. Margins move with mix and
+  indigenisation; one large order can swing a year, so read multi-year averages.
+manual_kpis:
+  - {id: order_book_cr, unit: "Rs cr", required: true, description: "Order book (unexecuted orders) at 31 March", where: "Annual report / investor presentation"}
+  - {id: order_inflow_cr, unit: "Rs cr", required: true, description: "New orders received during the year", where: "Investor presentation / press release"}
+  - {id: customer_advances_cr, unit: "Rs cr", required: false, description: "Advances from customers at 31 March", where: "Balance sheet notes (other liabilities)"}
+metrics_add:
+  - {id: order_book_to_revenue, name: "Order book / revenue", pillar: growth, unit: x, direction: higher, formula: "kpi('order_book_cr') / f('revenue')",
+     equation: "Year-end order book / revenue", meaning: "Years of revenue visibility."}
+  - {id: book_to_bill_orders, name: "Book-to-bill", pillar: growth, unit: x, direction: higher, formula: "kpi('order_inflow_cr') / f('revenue')",
+     equation: "Order inflow / revenue", meaning: "Above 1 = order book growing."}
+  - {id: order_book_growth, name: "Order book growth", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:order_book_cr', 1)",
+     equation: "Order book_t / Order book_t-1 - 1", meaning: "Growth of future revenue."}
+  - {id: opening_order_book, name: "Opening order book", pillar: capital_efficiency, unit: inr_cr, direction: neutral, role: component,
+     formula: "kpi('order_book_cr', 1)", equation: "Order book at the previous year end", meaning: "Order book available to execute this year."}
+  - {id: execution_rate, name: "Execution rate", pillar: capital_efficiency, unit: pct, direction: higher, formula: "f('revenue') / kpi('order_book_cr', 1)",
+     equation: "Revenue / opening order book", meaning: "Share of the opening order book turned into revenue in the year."}
+  - {id: advances_to_revenue, name: "Customer advances / revenue", pillar: capital_efficiency, unit: pct, direction: higher,
+     formula: "kpi('customer_advances_cr') / f('revenue')", equation: "Customer advances / revenue", meaning: "How much customers pre-fund the business."}
+bands:
+  order_book_to_revenue:
+    red: 2.0
+    green: 3.0
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Defence and engineering majors typically carry 2.5-5 years of revenue in their order books; under 2x leaves little visibility."
+  book_to_bill_orders:
+    red: 1.0
+    green: 1.3
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Book-to-bill below 1 means the order book is being consumed faster than replenished."
+flags:
+  - id: CG01
+    name: Orders not replacing revenue
+    pillar: growth
+    severity: medium
+    applies: [capital_goods_defence]
+    condition: "all_last('book_to_bill_orders', 2, '<', 1.0)"
+    values: {b: "m('book_to_bill_orders')"}
+    explanation: >
+      Book-to-bill has been below 1 for 2 years (latest {{ b|x }}): the order book is shrinking.
+  - id: CG02
+    name: Thin order book
+    pillar: growth
+    severity: medium
+    applies: [capital_goods_defence]
+    condition: "m('order_book_to_revenue') < 2.0"
+    values: {o: "m('order_book_to_revenue')"}
+    explanation: >
+      Order book covers only {{ o|x }} revenue.
+  - id: CG03
+    name: Customer advances falling
+    pillar: capital_efficiency
+    severity: low
+    applies: [capital_goods_defence]
+    condition: "pchg('kpi:customer_advances_cr', 1) < -0.20"
+    values: {d: "pchg('kpi:customer_advances_cr', 1)"}
+    explanation: >
+      Customer advances fell {{ d|pct }}: customers are pre-funding less, so working capital will rise.
+drivers:
+  add:
+    - id: order_book_revenue
+      title: "Revenue = opening order book x execution rate"
+      applies: [capital_goods_defence]
+      root: revenue
+      links:
+        revenue: {type: product, children: [opening_order_book, execution_rate]}
