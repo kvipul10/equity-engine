@@ -1,0 +1,24 @@
+metric,fiscal_year,value,unit,source_url,source_date,verified
+attrition_ltm_pct,FY22,27.7,% (LTM),https://www.sec.gov/Archives/edgar/data/1067491/000106749122000020/exv99w05.htm,2022-04-13,N
+attrition_ltm_pct,FY23,20.9,"% (voluntary LTM, IT services)",https://www.sec.gov/Archives/edgar/data/1067491/000106749124000016/exv99w04.htm,2024-04-18,N
+attrition_ltm_pct,FY24,12.6,"% (voluntary LTM, IT services)",https://www.sec.gov/Archives/edgar/data/1067491/000106749124000016/exv99w04.htm,2024-04-18,N
+attrition_ltm_pct,FY25,14.1,% (LTM),https://www.infosys.com/investors/reports-filings/quarterly-results/2024-2025/q4/documents/transcripts/earningscall.pdf,2025-04-17,N
+attrition_ltm_pct,FY26,12.6,% (voluntary LTM),https://www.infosys.com/investors/reports-filings/quarterly-results/2025-2026/q4/documents/transcripts/earningscall.pdf,2026-04-23,N
+cc_revenue_growth_pct,FY22,19.7,%,https://www.sec.gov/Archives/edgar/data/1067491/000106749122000020/exv99w05.htm,2022-04-13,N
+cc_revenue_growth_pct,FY23,15.4,%,https://www.sec.gov/Archives/edgar/data/1067491/000106749123000027/exv99w01.htm,2023-04-13,N
+cc_revenue_growth_pct,FY24,1.4,%,https://www.sec.gov/Archives/edgar/data/1067491/000106749124000016/exv99w01.htm,2024-04-18,N
+cc_revenue_growth_pct,FY25,4.2,%,https://www.infosys.com/investors/reports-filings/quarterly-results/2024-2025/q4/documents/transcripts/earningscall.pdf,2025-04-17,N
+cc_revenue_growth_pct,FY26,3.1,%,https://www.infosys.com/investors/reports-filings/quarterly-results/2025-2026/q4/documents/transcripts/earningscall.pdf,2026-04-23,N
+deal_tcv_usd_bn,FY22,9.5,USD bn (large deals),https://www.sec.gov/Archives/edgar/data/1067491/000106749122000020/exv99w05.htm,2022-04-13,N
+deal_tcv_usd_bn,FY23,9.8,USD bn (large deals),https://www.sec.gov/Archives/edgar/data/1067491/000106749123000027/exv99w05.htm,2023-04-13,N
+deal_tcv_usd_bn,FY24,17.7,USD bn (large deals),https://www.sec.gov/Archives/edgar/data/1067491/000106749124000016/exv99w01.htm,2024-04-18,N
+deal_tcv_usd_bn,FY25,11.6,USD bn (large deals),https://www.infosys.com/investors/reports-filings/quarterly-results/2024-2025/q4/documents/transcripts/earningscall.pdf,2025-04-17,N
+deal_tcv_usd_bn,FY26,14.9,USD bn (large deals),https://www.infosys.com/investors/reports-filings/quarterly-results/2025-2026/q4/documents/ifrs-usd-press-release.pdf,2026-04-23,N
+headcount,FY23,343234,count,https://www.infosys.com/investors/reports-filings/quarterly-results/2023-2024/q1/documents/fact-sheet.pdf,2023-07-20,N
+revenue_usd_mn,FY23,18212,USD mn,https://www.sec.gov/Archives/edgar/data/1067491/000106749123000027/exv99w01.htm,2023-04-13,N
+revenue_usd_mn,FY24,18600,USD mn (stated as USD 18.6 bn),https://www.sec.gov/Archives/edgar/data/1067491/000106749124000016/exv99w01.htm,2024-04-18,N
+revenue_usd_mn,FY25,19277,USD mn,https://www.infosys.com/investors/reports-filings/quarterly-results/2024-2025/q4/documents/ifrs-usd-press-release.pdf,2025-04-17,N
+revenue_usd_mn,FY26,20158,USD mn,https://www.infosys.com/investors/reports-filings/quarterly-results/2025-2026/q4/documents/ifrs-usd-press-release.pdf,2026-04-23,N
+utilisation_pct,FY23,82.5,"% (excl. trainees, full year)",https://www.sec.gov/Archives/edgar/data/1067491/000095017024076649/infy-20240331.htm,2024 (Form 20-F FY2024),N
+utilisation_pct,FY24,82.2,"% (excl. trainees, full year)",https://www.sec.gov/Archives/edgar/data/1067491/000095017024076649/infy-20240331.htm,2024 (Form 20-F FY2024),N
+utilisation_pct,FY26,84.4,"% (excl. trainees, full year)",https://www.infosys.com/investors/reports-filings/quarterly-results/2025-2026/q4/documents/transcripts/earningscall.pdf,2026-04-23,N
