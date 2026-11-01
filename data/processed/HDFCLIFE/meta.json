@@ -1,0 +1,16 @@
+{
+  "ticker": "HDFCLIFE",
+  "company": "HDFC LIFE INSURANCE COMPANY LTD",
+  "archetype": "insurance",
+  "family": "insurance",
+  "source_file": "HDFCLIFE.xlsx",
+  "sha256": "37cf4508798ac857e613f20c33ec3a6f74eef7a2ddd04e2e8eafc64858991ee9",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-09-30",
+  "consolidated_inferred": false,
+  "asof": null
+}

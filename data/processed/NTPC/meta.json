@@ -1,0 +1,16 @@
+{
+  "ticker": "NTPC",
+  "company": "NTPC LTD",
+  "archetype": "utilities",
+  "family": "non-financial",
+  "source_file": "NTPC.xlsx",
+  "sha256": "84e7f4cf5535e8c70a1cd28249a8223d8c89c4a798b828835e0c741b406e30fc",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-09-30",
+  "consolidated_inferred": true,
+  "asof": null
+}

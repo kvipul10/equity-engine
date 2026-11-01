@@ -1,0 +1,16 @@
+{
+  "ticker": "SUNPHARMA",
+  "company": "SUN PHARMACEUTICAL INDUSTRIES LTD",
+  "archetype": "pharma",
+  "family": "non-financial",
+  "source_file": "SUNPHARMA.xlsx",
+  "sha256": "8e4f7f3443fea34e2bda1a1a0d13ba41107f82f5e2a38584b573575778fd13f3",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-09-30",
+  "consolidated_inferred": true,
+  "asof": null
+}

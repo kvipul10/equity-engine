@@ -1,0 +1,16 @@
+{
+  "ticker": "BEL",
+  "company": "BHARAT ELECTRONICS LTD",
+  "archetype": "capital_goods_defence",
+  "family": "non-financial",
+  "source_file": "BEL.xlsx",
+  "sha256": "5dea151d12ae8241da8272c307e45844b173d2fce638724cc87167b7735ceee7",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-09-30",
+  "consolidated_inferred": true,
+  "asof": null
+}

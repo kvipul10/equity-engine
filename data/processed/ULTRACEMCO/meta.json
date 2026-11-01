@@ -1,0 +1,16 @@
+{
+  "ticker": "ULTRACEMCO",
+  "company": "ULTRATECH CEMENT LTD",
+  "archetype": "cement",
+  "family": "non-financial",
+  "source_file": "ULTRACEMCO.xlsx",
+  "sha256": "5e758f9b1e002f7be832047dc22c66a5540e3ae1baf8ceed649f1a28af0400d3",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-09-30",
+  "consolidated_inferred": true,
+  "asof": null
+}

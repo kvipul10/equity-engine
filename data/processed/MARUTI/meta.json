@@ -1,0 +1,16 @@
+{
+  "ticker": "MARUTI",
+  "company": "MARUTI SUZUKI INDIA LTD",
+  "archetype": "auto",
+  "family": "non-financial",
+  "source_file": "MARUTI.xlsx",
+  "sha256": "851789b215561dca4dc12893515d6b5bfbe57d442370de70fe100f99c841c957",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-09-30",
+  "consolidated_inferred": true,
+  "asof": null
+}

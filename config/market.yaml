@@ -1,0 +1,100 @@
+# Market inputs for cost of capital and valuation. Decimals throughout (0.0741 = 7.41%).
+# Every external value carries source_url + as_of (enforced by engine/config.py).
+# Refresh before each pitch: risk_free (weekly), equity_risk_premium (Damodaran updates Jan + Jul).
+
+risk_free:
+  value: 0.0741
+  description: India 10-year benchmark G-sec yield, closing level
+  as_of: "2026-10-30"
+  source_url: https://www.investing.com/rates-bonds/india-10-year-bond-yield-historical-data
+  cross_check: "Kotak Neo: 7.39% close on 2026-10-29 (https://www.kotakneo.com/news/market-news/india-10-year-g-sec-yield-falls-to-7-39-on-fed-signals/)"
+  note: Secondary-source close (CCIL/RBI pages not reachable from the build environment). Verify on CCIL/RBI DBIE before formal use.
+
+# Optional FY-end yields for as-of runs (no look-ahead in the discount rate). Empty -> current risk_free is used
+# for every year and the as-of report says so. Example entry:
+#   FY18: {value: 0.0740, as_of: "2018-03-28", source_url: "https://dbie.rbi.org.in/..."}
+rf_history: {}
+
+equity_risk_premium:
+  value: 0.0692
+  description: Total equity risk premium for India = mature-market premium 4.20% + India country risk premium 2.72% (Moody's Baa3, rating-based)
+  as_of: "2026-07-01"
+  source_url: https://pages.stern.nyu.edu/~adamodar/pc/datasets/ctrypremJuly26.xlsx
+  local_copy: data/external/damodaran/ctrypremJuly26.xlsx
+  components:
+    mature_market_erp: 0.0420
+    country_risk_premium: 0.0272
+    sovereign_default_spread: 0.0175
+    moodys_rating: Baa3
+  note: >
+    Damodaran's July-2026 mid-year update (default spreads as of 2026-06-30). CDS-based alternative: total ERP 5.32%.
+    rf above is the G-sec yield, which already embeds India's sovereign default spread; Damodaran would strip it
+    (rf_net_of_default_spread: true) to avoid double counting country risk. Kept false to follow the spec
+    (rf = G-sec yield); switch on for a Damodaran-consistent Ke.
+
+rf_net_of_default_spread: false
+
+tax:
+  statutory_rate:
+    value: 0.25168
+    description: Domestic company rate under s.115BAA = 22% x 1.10 surcharge x 1.04 health & education cess
+    as_of: "2026-04-01"
+    source_url: https://cleartax.in/s/section-115-baa-tax-rate-domestic-companies
+    note: Used for NOPAT when PBT <= 0, for the tax shield on debt, and for the tax effect of estimated exceptional items.
+
+macro:
+  inflation_target:
+    value: 0.04
+    description: CPI inflation target (2-6% tolerance band) for 1-Apr-2026 to 31-Mar-2031, notified under s.45ZA RBI Act (gazette 25-Mar-2026)
+    as_of: "2026-03-25"
+    source_url: https://www.businesstoday.in/latest/economy/story/govt-retains-inflation-target-at-4-with-2-6-band-for-next-five-years-522390-2026-03-25
+  nominal_gdp_growth:
+    value: 0.089
+    description: India nominal GDP growth FY2025-26 (Rs 346.36 lakh cr vs Rs 318.07 lakh cr), MoSPI Provisional Estimates released 5-Jun-2026
+    as_of: "2026-06-05"
+    source_url: https://www.businesstoday.in/latest/economy/story/indias-economy-accelerates-gdp-growth-hits-7-7-in-fy26-fastest-pace-in-two-years-535164-2026-06-05
+    note: Secondary report of the MoSPI release; verify on mospi.gov.in for formal use.
+
+valuation:
+  terminal_growth:
+    value: 0.06
+    source_type: rule_of_thumb
+    as_of: "2026-11-01"
+    rationale: 4% CPI target + ~2% long-run real growth. Kept below nominal GDP growth (8.9%) and below rf (7.41%) because a perpetuity cannot outgrow the economy.
+  reverse_dcf_years: 10        # explicit-forecast horizon for the reverse DCF
+  # RONIC for the steady-state FCF in the reverse DCF = 3y average ROIC, capped below
+  ronic_cap: 1.0               # cap RONIC at 100% so near-zero-capital businesses do not get infinite value from growth
+  ev_subtract_investments: true  # EV = mcap + borrowings - cash - investments (consistent with EBITDA/IC that exclude other income)
+  min_history_points: 5        # own-history percentiles need at least this many FY-end points
+
+synthetic_rating:
+  description: Interest coverage -> rating -> default spread, large non-financial firms (Damodaran)
+  as_of: "2026-01"
+  source_url: https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ratings.html
+  local_copy: data/external/damodaran/ratings.html
+  note: Spreads are US$ default spreads (data as of January 2026); applied to the INR risk-free rate as an approximation.
+  # [minimum interest coverage, rating, default spread]; the highest row whose minimum <= coverage applies.
+  table:
+    - [-100000, "D2/D", 0.1900]
+    - [0.20, "C2/C", 0.1600]
+    - [0.65, "Ca2/CC", 0.1261]
+    - [0.80, "Caa/CCC", 0.0885]
+    - [1.25, "B3/B-", 0.0509]
+    - [1.50, "B2/B", 0.0321]
+    - [1.75, "B1/B+", 0.0275]
+    - [2.00, "Ba2/BB", 0.0184]
+    - [2.25, "Ba1/BB+", 0.0138]
+    - [2.50, "Baa2/BBB", 0.0111]
+    - [3.00, "A3/A-", 0.0089]
+    - [4.25, "A2/A", 0.0078]
+    - [5.50, "A1/A+", 0.0070]
+    - [6.50, "Aa2/AA", 0.0055]
+    - [8.50, "Aaa/AAA", 0.0040]
+
+beta:
+  # Non-financials: bottom-up beta = industry unlevered beta (cash-corrected) re-levered at the company's
+  # market D/E: beta_L = beta_U x (1 + (1 - t) x D/E). Financials: industry levered beta (unlevering a bank is not meaningful).
+  # Industry betas come from config/sector_benchmarks.yaml (generated from Damodaran's betaIndia.xls).
+  method_non_financial: bottom_up
+  method_financial: industry_levered
+  overrides: {}                # e.g. {TCS: 0.85}; also settable via data/manual/<TICKER>_kpis.csv (kpi=beta) or --beta

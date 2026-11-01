@@ -1,0 +1,51 @@
+# Driver trees as data. Node ids are metric ids from the registry (docs/metrics.md) or standardised fields.
+# link types: product (log decomposition), sum (shift-share), inverse_sum (turnover = 1 / capital intensity),
+# weighted_sum (mix/rate). Children prefixed with '-' enter with sign -1; {id: x, power: -1} for inverse factors.
+# Every link must be an exact identity on the data: the engine checks it and reports any 'inexact_nodes'.
+
+trees:
+  - id: roe_dupont
+    title: "ROE = net margin x asset turnover x equity multiplier (3-step), net margin split 5-step, down to cost lines and capital intensity"
+    applies: [NF]
+    root: roe
+    links:
+      roe: {type: product, children: [pat_margin, asset_turnover, equity_multiplier]}
+      pat_margin: {type: product, children: [attributable_factor, tax_burden, interest_burden, ebit_margin]}
+      ebit_margin: {type: sum, children: [ebitda_margin, -dep_to_sales, oi_core_to_sales]}
+      ebitda_margin: {type: sum, const: 1.0, children: [-materials_pct, -employee_pct, -other_expenses_pct]}
+      asset_turnover:
+        type: inverse_sum
+        children: [nb_to_sales, cwip_to_sales, investments_to_sales, receivables_to_sales, inventory_to_sales, cash_to_sales, other_assets_rest_to_sales]
+      equity_multiplier: {type: sum, const: 1.0, children: [debt_to_equity_avg, other_liab_to_equity_avg]}
+
+  - id: roic_tree
+    title: "ROIC = NOPAT margin x invested-capital turnover, down to cost lines and capital intensity (net of other liabilities)"
+    applies: [NF]
+    root: roic
+    links:
+      roic: {type: product, children: [nopat_margin, ic_turnover]}
+      nopat_margin: {type: product, children: [nopat_tax_factor, operating_margin]}
+      operating_margin: {type: sum, children: [ebitda_margin, -dep_to_sales]}
+      ebitda_margin: {type: sum, const: 1.0, children: [-materials_pct, -employee_pct, -other_expenses_pct]}
+      ic_turnover:
+        type: inverse_sum
+        children: [nb_to_sales, cwip_to_sales, receivables_to_sales, inventory_to_sales, other_assets_rest_to_sales, -other_liabilities_to_sales]
+
+  - id: eps_tree
+    title: "EPS = revenue per share x net margin (volume/price vs margin vs dilution)"
+    applies: [ALL]
+    root: eps_core
+    links:
+      eps_core: {type: product, children: [revenue_per_share, pat_margin]}
+      revenue_per_share: {type: product, children: [revenue, {id: adjusted_shares_cr, power: -1}]}
+
+  - id: fin_roe
+    title: "ROE = ROA x equity multiplier; ROA = yield - interest + other income - opex - depreciation - tax + minority/associates (all per rupee of assets)"
+    applies: [FIN]
+    root: roe
+    links:
+      roe: {type: product, children: [roa, equity_multiplier]}
+      roa:
+        type: sum
+        children: [yield_on_assets, -interest_to_assets, other_income_to_assets, -opex_to_assets, -dep_to_assets, -tax_to_assets, minority_to_assets]
+      equity_multiplier: {type: sum, const: 1.0, children: [debt_to_equity_avg, other_liab_to_equity_avg]}

@@ -1,0 +1,3635 @@
+{
+  "engine": {
+    "name": "equity-diagnostic-engine",
+    "version": "0.1.0",
+    "generated_on": "2026-11-01",
+    "note": "Deterministic: no network, no LLM. Diagnoses financials only; strategy and management judgement stay with the analyst."
+  },
+  "company": {
+    "ticker": "YESBANK",
+    "name": "YES BANK LTD",
+    "archetype": "bank",
+    "family": "bank_like",
+    "damodaran_industries": [
+      "Bank (Money Center)"
+    ]
+  },
+  "asof": {
+    "fy": "FY26",
+    "mode": "latest",
+    "period_end": "2026-03-31",
+    "data_window": "FY17-FY26",
+    "n_years": 10,
+    "latest_quarter_used": "2026-09-30",
+    "price_basis": "export"
+  },
+  "market": {
+    "price": 15.15,
+    "market_cap": 47555.49,
+    "shares_cr": 3138.976238,
+    "enterprise_value": null
+  },
+  "cost_of_capital": {
+    "rf": 0.0741,
+    "erp": 0.0692,
+    "beta": 1.207462,
+    "beta_method": "industry levered beta 1.21 (Bank (Money Center))",
+    "ke": 0.157656,
+    "rating": "Caa/CCC",
+    "kd_pre": 0.1626,
+    "kd_post": 0.121677,
+    "wd": 0.889912,
+    "wacc": 0.157656,
+    "tax": 0.25168,
+    "asof": "FY26",
+    "sources": {
+      "risk_free": {
+        "value": 0.0741,
+        "as_of": "2026-10-30",
+        "source_url": "https://www.investing.com/rates-bonds/india-10-year-bond-yield-historical-data"
+      },
+      "equity_risk_premium": {
+        "value": 0.0692,
+        "as_of": "2026-07-01",
+        "source_url": "https://pages.stern.nyu.edu/~adamodar/pc/datasets/ctrypremJuly26.xlsx"
+      },
+      "tax": {
+        "value": 0.25168,
+        "as_of": "2026-04-01",
+        "source_url": "https://cleartax.in/s/section-115-baa-tax-rate-domestic-companies"
+      },
+      "beta": {
+        "method": "industry levered beta 1.21 (Bank (Money Center))",
+        "source_url": "https://pages.stern.nyu.edu/~adamodar/pc/datasets/betaIndia.xls",
+        "as_of": "2026-01-05"
+      },
+      "synthetic_rating": {
+        "as_of": "2026-01",
+        "source_url": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ratings.html"
+      }
+    },
+    "notes": [
+      "Historical years use today's risk-free rate (7.41%); add rf_history for year-specific rates.",
+      "Financial company: WACC not meaningful (deposits/borrowings are raw material); Ke is the hurdle rate."
+    ],
+    "series": {
+      "wacc": {
+        "FY17": 0.157656,
+        "FY18": 0.157656,
+        "FY19": 0.157656,
+        "FY20": 0.157656,
+        "FY21": 0.157656,
+        "FY22": 0.157656,
+        "FY23": 0.157656,
+        "FY24": 0.157656,
+        "FY25": 0.157656,
+        "FY26": 0.157656
+      },
+      "ke": {
+        "FY17": 0.157656,
+        "FY18": 0.157656,
+        "FY19": 0.157656,
+        "FY20": 0.157656,
+        "FY21": 0.157656,
+        "FY22": 0.157656,
+        "FY23": 0.157656,
+        "FY24": 0.157656,
+        "FY25": 0.157656,
+        "FY26": 0.157656
+      },
+      "beta": {
+        "FY17": 1.207462,
+        "FY18": 1.207462,
+        "FY19": 1.207462,
+        "FY20": 1.207462,
+        "FY21": 1.207462,
+        "FY22": 1.207462,
+        "FY23": 1.207462,
+        "FY24": 1.207462,
+        "FY25": 1.207462,
+        "FY26": 1.207462
+      }
+    }
+  },
+  "root": {
+    "economic_profit": -4291.558979,
+    "series": {
+      "FY17": null,
+      "FY18": 465.853543,
+      "FY19": -2440.238114,
+      "FY20": -20262.239635,
+      "FY21": -7811.335107,
+      "FY22": -4204.609325,
+      "FY23": -5130.348231,
+      "FY24": -5247.556634,
+      "FY25": -4647.068411,
+      "FY26": -4291.558979
+    },
+    "return_metric": "ROE",
+    "return": 0.07095,
+    "hurdle_metric": "Ke",
+    "hurdle": 0.157656,
+    "verdict": "destroys value",
+    "positive_years": 1,
+    "years": 9,
+    "text": "Destroys value: ROE 7.1% vs Ke 15.8% in FY26 -> economic profit Rs -4,292 cr. Economic profit was positive in 1 of 9 years; trend stable."
+  },
+  "overall": {
+    "score": 51.741788,
+    "rag": "amber",
+    "coverage": 0.95,
+    "high_flags": 1,
+    "capped_by_flags": false,
+    "weights_basis": "bank_like"
+  },
+  "pillars": {
+    "growth": {
+      "score": 62.590543,
+      "rag": "green",
+      "weight": 15.0,
+      "n_scored": 15,
+      "n_metrics": 17,
+      "rag_counts": {
+        "green": 9,
+        "amber": 2,
+        "red": 4,
+        "n/a": 2
+      },
+      "capped_by_flags": [],
+      "name": "1 Growth",
+      "summary": "1 Growth: GREEN (63/100, 15 scored metrics). Strongest: EPS CAGR 3y 63.5% (green), Latest quarter revenue YoY 17.1% (green). Weakest: EPS CAGR (full span, up to 10y) -24.8% (red), PAT growth volatility 3.16 (red). Flags: G01, G04.",
+      "metrics": [
+        "revenue_cagr_3y",
+        "revenue_cagr_5y",
+        "revenue_cagr_10y",
+        "pat_cagr_3y",
+        "pat_cagr_5y",
+        "pat_cagr_10y",
+        "eps_cagr_3y",
+        "eps_cagr_5y",
+        "eps_cagr_10y",
+        "bvps_cagr_5y",
+        "assets_cagr_3y",
+        "nii_cagr_3y",
+        "revenue_growth_volatility",
+        "pat_growth_volatility",
+        "q_revenue_yoy",
+        "q_pat_yoy",
+        "q_revenue_yoy_trend"
+      ],
+      "flags_triggered": [
+        "G01",
+        "G04"
+      ]
+    },
+    "margins": {
+      "score": 31.625067,
+      "rag": "red",
+      "weight": 15.0,
+      "n_scored": 2,
+      "n_metrics": 4,
+      "rag_counts": {
+        "green": 0,
+        "amber": 0,
+        "red": 2,
+        "n/a": 2
+      },
+      "capped_by_flags": [],
+      "name": "2 Margins",
+      "summary": "2 Margins: RED (32/100, 2 scored metrics). Strongest: NII / average assets (NIM proxy) 2.2% (red), PAT margin 11.6% (red). Weakest: PAT margin 11.6% (red), NII / average assets (NIM proxy) 2.2% (red).",
+      "metrics": [
+        "pat_margin",
+        "nii_to_assets",
+        "yield_on_assets",
+        "cost_of_funds",
+        "cost_to_income",
+        "other_income_share"
+      ],
+      "flags_triggered": []
+    },
+    "capital_efficiency": {
+      "score": null,
+      "rag": "n/a",
+      "weight": 5.0,
+      "n_scored": 0,
+      "n_metrics": 1,
+      "rag_counts": {
+        "green": 0,
+        "amber": 0,
+        "red": 0,
+        "n/a": 1
+      },
+      "capped_by_flags": [],
+      "name": "3 Capital efficiency",
+      "summary": "3 Capital efficiency: not scored (no metric with a level for this company).",
+      "metrics": [
+        "opex_to_assets",
+        "credit_deposit_proxy",
+        "liquid_assets_ratio"
+      ],
+      "flags_triggered": []
+    },
+    "returns": {
+      "score": 25.111704,
+      "rag": "red",
+      "weight": 25.0,
+      "n_scored": 3,
+      "n_metrics": 3,
+      "rag_counts": {
+        "green": 0,
+        "amber": 0,
+        "red": 3,
+        "n/a": 0
+      },
+      "capped_by_flags": [],
+      "name": "4 Returns",
+      "summary": "4 Returns: RED (25/100, 3 scored metrics). Strongest: Return on assets 0.8% (red), Return on equity 7.1% (red). Weakest: ROE - cost of equity -8.7pp (red), Return on equity 7.1% (red). Flags: R05.",
+      "metrics": [
+        "roe",
+        "roa",
+        "roe_ke_spread",
+        "attributable_factor",
+        "tax_burden",
+        "equity_multiplier",
+        "debt_to_equity_avg",
+        "other_liab_to_equity_avg",
+        "interest_to_assets",
+        "other_income_to_assets",
+        "dep_to_assets",
+        "tax_to_assets",
+        "minority_to_assets"
+      ],
+      "flags_triggered": [
+        "R05"
+      ]
+    },
+    "cash_quality": {
+      "score": null,
+      "rag": "n/a",
+      "weight": 0.0,
+      "n_scored": 0,
+      "n_metrics": 0,
+      "rag_counts": {
+        "green": 0,
+        "amber": 0,
+        "red": 0,
+        "n/a": 0
+      },
+      "capped_by_flags": [],
+      "name": "5 Cash and earnings quality",
+      "summary": "5 Cash and earnings quality: not scored (no metric with a level for this company).",
+      "metrics": [],
+      "flags_triggered": []
+    },
+    "balance_sheet": {
+      "score": 65.618035,
+      "rag": "green",
+      "weight": 20.0,
+      "n_scored": 2,
+      "n_metrics": 2,
+      "rag_counts": {
+        "green": 2,
+        "amber": 0,
+        "red": 0,
+        "n/a": 0
+      },
+      "capped_by_flags": [],
+      "name": "6 Balance sheet",
+      "summary": "6 Balance sheet: GREEN (66/100, 2 scored metrics). Strongest: Equity / assets 10.9% (green), Funding growth - equity growth +0.9pp (green). Weakest: Funding growth - equity growth +0.9pp (green), Equity / assets 10.9% (green).",
+      "metrics": [
+        "equity_to_assets",
+        "funding_vs_equity_growth"
+      ],
+      "flags_triggered": []
+    },
+    "capital_allocation": {
+      "score": 60.12981,
+      "rag": "green",
+      "weight": 10.0,
+      "n_scored": 2,
+      "n_metrics": 4,
+      "rag_counts": {
+        "green": 1,
+        "amber": 1,
+        "red": 0,
+        "n/a": 2
+      },
+      "capped_by_flags": [],
+      "name": "7 Capital allocation",
+      "summary": "7 Capital allocation: GREEN (60/100, 2 scored metrics). Strongest: Share count change 0.1% (green), Asset growth - internal capital generation +3.8pp (amber). Weakest: Asset growth - internal capital generation +3.8pp (amber), Share count change 0.1% (green).",
+      "metrics": [
+        "payout_ratio",
+        "share_count_change",
+        "buyback_estimate",
+        "shareholder_yield",
+        "promoter_holding",
+        "promoter_holding_change_3y",
+        "promoter_pledge",
+        "internal_capital_generation",
+        "growth_minus_icg"
+      ],
+      "flags_triggered": []
+    },
+    "valuation": {
+      "score": 96.078431,
+      "rag": "green",
+      "weight": 10.0,
+      "n_scored": 3,
+      "n_metrics": 4,
+      "rag_counts": {
+        "green": 3,
+        "amber": 0,
+        "red": 0,
+        "n/a": 1
+      },
+      "capped_by_flags": [],
+      "name": "8 Valuation",
+      "summary": "8 Valuation: GREEN (96/100, 3 scored metrics). Strongest: P/B-implied - delivered growth -138.4pp (green), P/E percentile vs own history 0.0% (green). Weakest: P/B percentile vs own history 10.0% (green), P/E percentile vs own history 0.0% (green).",
+      "metrics": [
+        "pe",
+        "pe_percentile_10y",
+        "pb",
+        "pb_percentile_10y",
+        "implied_growth_pb",
+        "implied_pb_growth_minus_delivered",
+        "justified_pb",
+        "pb_to_justified_pb"
+      ],
+      "flags_triggered": []
+    }
+  },
+  "dupont": {
+    "three_step": {
+      "FY22": {
+        "roe": 0.03184,
+        "roa": 0.003594,
+        "equity_multiplier": 8.859896
+      },
+      "FY23": {
+        "roe": 0.019776,
+        "roa": 0.002184,
+        "equity_multiplier": 9.054121
+      },
+      "FY24": {
+        "roe": 0.031016,
+        "roa": 0.003375,
+        "equity_multiplier": 9.18951
+      },
+      "FY25": {
+        "roe": 0.054374,
+        "roa": 0.005892,
+        "equity_multiplier": 9.228799
+      },
+      "FY26": {
+        "roe": 0.07095,
+        "roa": 0.007853,
+        "equity_multiplier": 9.03437
+      }
+    },
+    "five_step": {},
+    "identity": "ROE = ROA x equity multiplier (financials)"
+  },
+  "drivers": {
+    "eps_tree": {
+      "title": "EPS = revenue per share x net margin (volume/price vs margin vs dilution)",
+      "root": "eps_core",
+      "windows": {
+        "1y": {
+          "status": "ok",
+          "from": "FY25",
+          "to": "FY26",
+          "root_from": 0.780278,
+          "root_to": 1.119099,
+          "root_change": 0.338821,
+          "residual": 0.0,
+          "inexact_nodes": [],
+          "intermediate": {
+            "revenue_per_share": {
+              "change": -0.234448,
+              "contribution": -0.022607,
+              "share_of_root": -0.066722,
+              "method": "log"
+            }
+          },
+          "top_drivers": [
+            {
+              "driver": "pat_margin",
+              "name": "PAT margin",
+              "contribution": 0.361428,
+              "share_of_root": 1.066722,
+              "own_change": 0.037123,
+              "own_change_text": "+3.7pp",
+              "path": "eps_core > pat_margin",
+              "text": "PAT margin (+3.7pp) -> 0.36 (107% of the change)"
+            },
+            {
+              "driver": "revenue",
+              "name": "revenue",
+              "contribution": -0.021837,
+              "share_of_root": -0.06445,
+              "own_change": -710.35,
+              "own_change_text": "-710 cr",
+              "path": "eps_core > revenue_per_share > revenue",
+              "text": "revenue (-710 cr) -> -0.02 (-6% of the change)"
+            },
+            {
+              "driver": "adjusted_shares_cr",
+              "name": "adjusted_shares_cr",
+              "contribution": -0.00077,
+              "share_of_root": -0.002272,
+              "own_change": 2.57,
+              "own_change_text": "+2.570",
+              "path": "eps_core > revenue_per_share > adjusted_shares_cr",
+              "text": "adjusted_shares_cr (+2.570) -> -0.00 (-0% of the change)"
+            }
+          ],
+          "text": "eps_core moved from 0.78 to 1.12 (FY25->FY26). Largest drivers: PAT margin (+3.7pp) -> 0.36 (107% of the change); revenue (-710 cr) -> -0.02 (-6% of the change); adjusted_shares_cr (+2.570) -> -0.00 (-0% of the change)."
+        },
+        "3y": {
+          "status": "ok",
+          "from": "FY23",
+          "to": "FY26",
+          "root_from": 0.255895,
+          "root_to": 1.119099,
+          "root_change": 0.863204,
+          "residual": 0.0,
+          "inexact_nodes": [],
+          "intermediate": {
+            "revenue_per_share": {
+              "change": 1.731636,
+              "contribution": 0.116011,
+              "share_of_root": 0.134395,
+              "method": "log"
+            }
+          },
+          "top_drivers": [
+            {
+              "driver": "pat_margin",
+              "name": "PAT margin",
+              "contribution": 0.747194,
+              "share_of_root": 0.865605,
+              "own_change": 0.083837,
+              "own_change_text": "+8.4pp",
+              "path": "eps_core > pat_margin",
+              "text": "PAT margin (+8.4pp) -> 0.75 (87% of the change)"
+            },
+            {
+              "driver": "revenue",
+              "name": "revenue",
+              "contribution": 0.167118,
+              "share_of_root": 0.193602,
+              "own_change": 7506.3,
+              "own_change_text": "+7,506 cr",
+              "path": "eps_core > revenue_per_share > revenue",
+              "text": "revenue (+7,506 cr) -> 0.17 (19% of the change)"
+            },
+            {
+              "driver": "adjusted_shares_cr",
+              "name": "adjusted_shares_cr",
+              "contribution": -0.051107,
+              "share_of_root": -0.059206,
+              "own_change": 262.5,
+              "own_change_text": "+262.500",
+              "path": "eps_core > revenue_per_share > adjusted_shares_cr",
+              "text": "adjusted_shares_cr (+262.500) -> -0.05 (-6% of the change)"
+            }
+          ],
+          "text": "eps_core moved from 0.26 to 1.12 (FY23->FY26). Largest drivers: PAT margin (+8.4pp) -> 0.75 (87% of the change); revenue (+7,506 cr) -> 0.17 (19% of the change); adjusted_shares_cr (+262.500) -> -0.05 (-6% of the change)."
+        },
+        "5y": {
+          "status": "ok",
+          "from": "FY21",
+          "to": "FY26",
+          "root_from": -1.392514,
+          "root_to": 1.119099,
+          "root_change": 2.511613,
+          "residual": 0.0,
+          "inexact_nodes": [],
+          "intermediate": {
+            "revenue_per_share": {
+              "change": 1.628574,
+              "contribution": -0.047111,
+              "share_of_root": -0.018757,
+              "method": "log"
+            }
+          },
+          "top_drivers": [
+            {
+              "driver": "pat_margin",
+              "name": "PAT margin",
+              "contribution": 2.558724,
+              "share_of_root": 1.018757,
+              "own_change": 0.290354,
+              "own_change_text": "+29.0pp",
+              "path": "eps_core > pat_margin",
+              "text": "PAT margin (+29.0pp) -> 2.56 (102% of the change)"
+            },
+            {
+              "driver": "revenue",
+              "name": "revenue",
+              "contribution": -0.104329,
+              "share_of_root": -0.041539,
+              "own_change": 10169.18,
+              "own_change_text": "+10,169 cr",
+              "path": "eps_core > revenue_per_share > revenue",
+              "text": "revenue (+10,169 cr) -> -0.10 (-4% of the change)"
+            },
+            {
+              "driver": "adjusted_shares_cr",
+              "name": "adjusted_shares_cr",
+              "contribution": 0.057218,
+              "share_of_root": 0.022781,
+              "own_change": 632.49,
+              "own_change_text": "+632.490",
+              "path": "eps_core > revenue_per_share > adjusted_shares_cr",
+              "text": "adjusted_shares_cr (+632.490) -> 0.06 (2% of the change)"
+            }
+          ],
+          "text": "eps_core moved from -1.39 to 1.12 (FY21->FY26). Largest drivers: PAT margin (+29.0pp) -> 2.56 (102% of the change); revenue (+10,169 cr) -> -0.10 (-4% of the change); adjusted_shares_cr (+632.490) -> 0.06 (2% of the change)."
+        }
+      }
+    },
+    "fin_roe": {
+      "title": "ROE = ROA x equity multiplier; ROA = yield - interest + other income - opex - depreciation - tax + minority/associates (all per rupee of assets)",
+      "root": "roe",
+      "windows": {
+        "1y": {
+          "status": "ok",
+          "from": "FY25",
+          "to": "FY26",
+          "root_from": 0.054374,
+          "root_to": 0.07095,
+          "root_change": 0.016576,
+          "residual": 0.0,
+          "inexact_nodes": [],
+          "intermediate": {
+            "roa": {
+              "change": 0.001962,
+              "contribution": 0.017903,
+              "share_of_root": 1.08002,
+              "method": "shift-share"
+            },
+            "equity_multiplier": {
+              "change": -0.19443,
+              "contribution": -0.001326,
+              "share_of_root": -0.08002,
+              "method": "shift-share"
+            }
+          },
+          "top_drivers": [
+            {
+              "driver": "interest_to_assets",
+              "name": "Interest expended / assets",
+              "contribution": 0.066113,
+              "share_of_root": 3.988389,
+              "own_change": -0.007244,
+              "own_change_text": "-0.7pp",
+              "path": "roe > roa > interest_to_assets",
+              "text": "Interest expended / assets (-0.7pp) -> +6.6pp (399% of the change)"
+            },
+            {
+              "driver": "yield_on_assets",
+              "name": "Revenue / average assets",
+              "contribution": -0.06301,
+              "share_of_root": -3.801251,
+              "own_change": -0.006904,
+              "own_change_text": "-0.7pp",
+              "path": "roe > roa > yield_on_assets",
+              "text": "Revenue / average assets (-0.7pp) -> -6.3pp (-380% of the change)"
+            },
+            {
+              "driver": "opex_to_assets",
+              "name": "Operating cost / average assets",
+              "contribution": 0.012486,
+              "share_of_root": 0.753274,
+              "own_change": -0.001368,
+              "own_change_text": "-0.1pp",
+              "path": "roe > roa > opex_to_assets",
+              "text": "Operating cost / average assets (-0.1pp) -> +1.2pp (75% of the change)"
+            },
+            {
+              "driver": "other_income_to_assets",
+              "name": "Other income / assets",
+              "contribution": 0.00927,
+              "share_of_root": 0.559236,
+              "own_change": 0.001016,
+              "own_change_text": "+0.1pp",
+              "path": "roe > roa > other_income_to_assets",
+              "text": "Other income / assets (+0.1pp) -> +0.9pp (56% of the change)"
+            },
+            {
+              "driver": "tax_to_assets",
+              "name": "Tax / assets",
+              "contribution": -0.006006,
+              "share_of_root": -0.362334,
+              "own_change": 0.000658,
+              "own_change_text": "+0.1pp",
+              "path": "roe > roa > tax_to_assets",
+              "text": "Tax / assets (+0.1pp) -> -0.6pp (-36% of the change)"
+            }
+          ],
+          "text": "Return on equity moved from 5.4% to 7.1% (FY25->FY26). Largest drivers: Interest expended / assets (-0.7pp) -> +6.6pp (399% of the change); Revenue / average assets (-0.7pp) -> -6.3pp (-380% of the change); Operating cost / average assets (-0.1pp) -> +1.2pp (75% of the change)."
+        },
+        "3y": {
+          "status": "ok",
+          "from": "FY23",
+          "to": "FY26",
+          "root_from": 0.019776,
+          "root_to": 0.07095,
+          "root_change": 0.051175,
+          "residual": -0.0,
+          "inexact_nodes": [],
+          "intermediate": {
+            "roa": {
+              "change": 0.005669,
+              "contribution": 0.051262,
+              "share_of_root": 1.001709,
+              "method": "shift-share"
+            },
+            "equity_multiplier": {
+              "change": -0.019751,
+              "contribution": -8.7e-05,
+              "share_of_root": -0.001709,
+              "method": "shift-share"
+            }
+          },
+          "top_drivers": [
+            {
+              "driver": "opex_to_assets",
+              "name": "Operating cost / average assets",
+              "contribution": 0.043348,
+              "share_of_root": 0.847068,
+              "own_change": -0.004794,
+              "own_change_text": "-0.5pp",
+              "path": "roe > roa > opex_to_assets",
+              "text": "Operating cost / average assets (-0.5pp) -> +4.3pp (85% of the change)"
+            },
+            {
+              "driver": "other_income_to_assets",
+              "name": "Other income / assets",
+              "contribution": 0.039034,
+              "share_of_root": 0.762758,
+              "own_change": 0.004317,
+              "own_change_text": "+0.4pp",
+              "path": "roe > roa > other_income_to_assets",
+              "text": "Other income / assets (+0.4pp) -> +3.9pp (76% of the change)"
+            },
+            {
+              "driver": "interest_to_assets",
+              "name": "Interest expended / assets",
+              "contribution": -0.016306,
+              "share_of_root": -0.318626,
+              "own_change": 0.001803,
+              "own_change_text": "+0.2pp",
+              "path": "roe > roa > interest_to_assets",
+              "text": "Interest expended / assets (+0.2pp) -> -1.6pp (-32% of the change)"
+            },
+            {
+              "driver": "tax_to_assets",
+              "name": "Tax / assets",
+              "contribution": -0.016288,
+              "share_of_root": -0.318289,
+              "own_change": 0.001801,
+              "own_change_text": "+0.2pp",
+              "path": "roe > roa > tax_to_assets",
+              "text": "Tax / assets (+0.2pp) -> -1.6pp (-32% of the change)"
+            },
+            {
+              "driver": "yield_on_assets",
+              "name": "Revenue / average assets",
+              "contribution": 0.001528,
+              "share_of_root": 0.02986,
+              "own_change": 0.000169,
+              "own_change_text": "+0.0pp",
+              "path": "roe > roa > yield_on_assets",
+              "text": "Revenue / average assets (+0.0pp) -> +0.2pp (3% of the change)"
+            }
+          ],
+          "text": "Return on equity moved from 2.0% to 7.1% (FY23->FY26). Largest drivers: Operating cost / average assets (-0.5pp) -> +4.3pp (85% of the change); Other income / assets (+0.4pp) -> +3.9pp (76% of the change); Interest expended / assets (+0.2pp) -> -1.6pp (-32% of the change)."
+        },
+        "5y": {
+          "status": "ok",
+          "from": "FY21",
+          "to": "FY26",
+          "root_from": -0.127256,
+          "root_to": 0.07095,
+          "root_change": 0.198206,
+          "residual": -0.0,
+          "inexact_nodes": [],
+          "intermediate": {
+            "roa": {
+              "change": 0.020984,
+              "contribution": 0.196472,
+              "share_of_root": 0.99125,
+              "method": "shift-share"
+            },
+            "equity_multiplier": {
+              "change": -0.657297,
+              "contribution": 0.001734,
+              "share_of_root": 0.00875,
+              "method": "shift-share"
+            }
+          },
+          "top_drivers": [
+            {
+              "driver": "opex_to_assets",
+              "name": "Operating cost / average assets",
+              "contribution": 0.283007,
+              "share_of_root": 1.427842,
+              "own_change": -0.030226,
+              "own_change_text": "-3.0pp",
+              "path": "roe > roa > opex_to_assets",
+              "text": "Operating cost / average assets (-3.0pp) -> +28.3pp (143% of the change)"
+            },
+            {
+              "driver": "yield_on_assets",
+              "name": "Revenue / average assets",
+              "contribution": -0.073601,
+              "share_of_root": -0.371335,
+              "own_change": -0.007861,
+              "own_change_text": "-0.8pp",
+              "path": "roe > roa > yield_on_assets",
+              "text": "Revenue / average assets (-0.8pp) -> -7.4pp (-37% of the change)"
+            },
+            {
+              "driver": "tax_to_assets",
+              "name": "Tax / assets",
+              "contribution": -0.068541,
+              "share_of_root": -0.345809,
+              "own_change": 0.00732,
+              "own_change_text": "+0.7pp",
+              "path": "roe > roa > tax_to_assets",
+              "text": "Tax / assets (+0.7pp) -> -6.9pp (-35% of the change)"
+            },
+            {
+              "driver": "other_income_to_assets",
+              "name": "Other income / assets",
+              "contribution": 0.038852,
+              "share_of_root": 0.196017,
+              "own_change": 0.004149,
+              "own_change_text": "+0.4pp",
+              "path": "roe > roa > other_income_to_assets",
+              "text": "Other income / assets (+0.4pp) -> +3.9pp (20% of the change)"
+            },
+            {
+              "driver": "interest_to_assets",
+              "name": "Interest expended / assets",
+              "contribution": 0.01617,
+              "share_of_root": 0.081584,
+              "own_change": -0.001727,
+              "own_change_text": "-0.2pp",
+              "path": "roe > roa > interest_to_assets",
+              "text": "Interest expended / assets (-0.2pp) -> +1.6pp (8% of the change)"
+            }
+          ],
+          "text": "Return on equity moved from -12.7% to 7.1% (FY21->FY26). Largest drivers: Operating cost / average assets (-3.0pp) -> +28.3pp (143% of the change); Revenue / average assets (-0.8pp) -> -7.4pp (-37% of the change); Tax / assets (+0.7pp) -> -6.9pp (-35% of the change)."
+        }
+      }
+    }
+  },
+  "flags": {
+    "triggered": [
+      {
+        "id": "R05",
+        "name": "ROE below cost of equity (financials)",
+        "pillar": "returns",
+        "severity": "high",
+        "status": "triggered",
+        "values": {
+          "roe": 0.07095,
+          "spread": -0.086706
+        },
+        "text": "ROE (7.1%) has been below the cost of equity for 2 years (spread -8.7pp): the franchise is not earning its cost of capital."
+      },
+      {
+        "id": "G01",
+        "name": "Profit growth far ahead of revenue growth",
+        "pillar": "growth",
+        "severity": "medium",
+        "status": "triggered",
+        "values": {
+          "pat_g": 0.683639,
+          "rev_g": 0.099902
+        },
+        "text": "Core PAT compounded at 68.4% a year over 3 years while revenue grew 10.0%. Growth driven by margin expansion or lower costs rarely compounds for long; check whether the margin gain is structural or cyclical."
+      },
+      {
+        "id": "G04",
+        "name": "Erratic revenue growth",
+        "pillar": "growth",
+        "severity": "low",
+        "status": "triggered",
+        "values": {
+          "vol": 2.406948
+        },
+        "text": "Annual revenue growth has a standard deviation 2.41x its mean over the last decade: growth is lumpy or cyclical, so trailing CAGRs are a poor guide to the future."
+      }
+    ],
+    "clear": [
+      "G05",
+      "G06",
+      "M08",
+      "R02",
+      "R04",
+      "B06",
+      "B07",
+      "A01",
+      "A06",
+      "V05",
+      "V06"
+    ],
+    "not_evaluable": [
+      {
+        "id": "G02",
+        "name": "Per-share growth lagging profit growth (dilution)",
+        "missing": "pat_cagr_5y FY26"
+      },
+      {
+        "id": "A02",
+        "name": "Rising promoter pledge",
+        "missing": "promoter_pledge FY24"
+      },
+      {
+        "id": "A03",
+        "name": "Promoters selling down",
+        "missing": "promoter_holding_change_3y FY26"
+      },
+      {
+        "id": "V03",
+        "name": "P/B well above what returns justify",
+        "missing": "pb_to_justified_pb FY26"
+      }
+    ],
+    "counts": {
+      "high": 1,
+      "medium": 1,
+      "low": 1
+    }
+  },
+  "metrics": {
+    "roe": {
+      "name": "Return on equity",
+      "pillar": "returns",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "core PAT / average equity (share capital + reserves)",
+      "meaning": "Owners' core profit per rupee of shareholders' equity.",
+      "value": 0.07095,
+      "value_text": "7.1%",
+      "series": {
+        "FY17": null,
+        "FY18": 0.177151,
+        "FY19": 0.064942,
+        "FY20": -0.676483,
+        "FY21": -0.127256,
+        "FY22": 0.03184,
+        "FY23": 0.019776,
+        "FY24": 0.031016,
+        "FY25": 0.054374,
+        "FY26": 0.07095
+      },
+      "level": {
+        "score": 0.0,
+        "basis": "band",
+        "rag": "red"
+      },
+      "trend": {
+        "slope_per_year": 0.011282,
+        "normalised_slope": 0.225637,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 98.915072,
+        "label": "improving"
+      },
+      "stability": {
+        "cv": 5.029321,
+        "sd": 0.251466,
+        "n": 9,
+        "score": 5.7e-05,
+        "label": "volatile",
+        "window": "FY18-FY26"
+      },
+      "composite": 24.728777,
+      "rag": "red",
+      "band": {
+        "red": 0.157656,
+        "green": 0.207656,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "ROE below the cost of equity destroys value; 5pp above it is clear value creation. Ke = rf + beta x ERP (config/market.yaml).",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Return on equity: 7.1% RED (level red vs band (red <= 15.8%, green >= 20.8%); trend improving +1.1pp/yr; volatile (CV 5.03))"
+    },
+    "roa": {
+      "name": "Return on assets",
+      "pillar": "returns",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "core PAT / average total assets",
+      "meaning": "Owners' core profit per rupee of total assets.",
+      "value": 0.007853,
+      "value_text": "0.8%",
+      "series": {
+        "FY17": null,
+        "FY18": 0.01605,
+        "FY19": 0.004931,
+        "FY20": -0.051457,
+        "FY21": -0.01313,
+        "FY22": 0.003594,
+        "FY23": 0.002184,
+        "FY24": 0.003375,
+        "FY25": 0.005892,
+        "FY26": 0.007853
+      },
+      "level": {
+        "score": 13.412877,
+        "basis": "band",
+        "rag": "red"
+      },
+      "trend": {
+        "slope_per_year": 0.001223,
+        "normalised_slope": 0.024454,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 61.98887,
+        "label": "stable"
+      },
+      "stability": {
+        "cv": 0.398745,
+        "sd": 0.019937,
+        "n": 9,
+        "score": 32.005185,
+        "label": "moderate",
+        "window": "FY18-FY26"
+      },
+      "composite": 28.345722,
+      "rag": "red",
+      "band": {
+        "red": 0.0112,
+        "green": 0.0168,
+        "origin": "config/bands.yaml (archetype: bank)",
+        "source_type": "external",
+        "source_url": "https://www.indiainfoline.com/blog/how-healthy-were-indian-banks-in-the-year-2024-25",
+        "as_of": "2025-06-30",
+        "rationale": "RBI Financial Stability Report (June 2025): scheduled commercial banks' annualised ROA 1.4% (secondary summary; June-2026 FSR figures were not retrievable). Amber zone = 1.4% +/- 20%.",
+        "centre": 0.014
+      },
+      "reason": null,
+      "note": null,
+      "text": "Return on assets: 0.8% RED (level red vs band (red <= 1.1%, green >= 1.7%); trend stable +0.1pp/yr; moderate (CV 0.40))"
+    },
+    "roe_ke_spread": {
+      "name": "ROE - cost of equity",
+      "pillar": "returns",
+      "role": "scored",
+      "unit": "pp",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "ROE - Ke, Ke = rf + beta x ERP",
+      "meaning": "Value created per rupee of equity for a lender/insurer.",
+      "value": -0.086706,
+      "value_text": "-8.7pp",
+      "series": {
+        "FY17": null,
+        "FY18": 0.019495,
+        "FY19": -0.092714,
+        "FY20": -0.83414,
+        "FY21": -0.284912,
+        "FY22": -0.125816,
+        "FY23": -0.137881,
+        "FY24": -0.12664,
+        "FY25": -0.103282,
+        "FY26": -0.086706
+      },
+      "level": {
+        "score": 0.0,
+        "basis": "band",
+        "rag": "red"
+      },
+      "trend": {
+        "slope_per_year": 0.011282,
+        "normalised_slope": 0.097203,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 87.47972,
+        "label": "improving"
+      },
+      "stability": {
+        "cv": 1.276767,
+        "sd": 0.251466,
+        "n": 9,
+        "score": 2.604559,
+        "label": "volatile",
+        "window": "FY18-FY26"
+      },
+      "composite": 22.260614,
+      "rag": "red",
+      "band": {
+        "red": 0.0,
+        "green": 0.05,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "Spread below zero = value destruction; above +5pp = clear value creation.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "ROE - cost of equity: -8.7pp RED (level red vs band (red <= +0.0pp, green >= +5.0pp); trend improving +1.1pp/yr; volatile (CV 1.28))"
+    },
+    "attributable_factor": {
+      "name": "Attributable-profit factor",
+      "pillar": "returns",
+      "role": "component",
+      "unit": "ratio",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "core PAT / (core PBT - core tax)",
+      "meaning": "Owners' share of after-tax profit: below 1 = minorities take a slice; above 1 = associate/JV income adds to it.",
+      "value": 0.9999,
+      "value_text": "1.00",
+      "series": {
+        "FY17": 1.0,
+        "FY18": 1.000002,
+        "FY19": 1.0,
+        "FY20": null,
+        "FY21": null,
+        "FY22": 1.0,
+        "FY23": 1.0,
+        "FY24": 0.999992,
+        "FY25": 0.999955,
+        "FY26": 0.9999
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": -2.4e-05,
+        "normalised_slope": -2.4e-05,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "flat"
+      },
+      "stability": {
+        "cv": 3.6e-05,
+        "sd": 3.6e-05,
+        "n": 8,
+        "score": null,
+        "label": "stable",
+        "window": "FY17-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Attributable-profit factor: 1.00 [informational (neutral direction)]"
+    },
+    "tax_burden": {
+      "name": "Tax burden",
+      "pillar": "returns",
+      "role": "component",
+      "unit": "ratio",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "(core PBT - core tax) / core PBT",
+      "meaning": "Share of pre-tax profit kept after tax (1 - effective tax rate).",
+      "value": 0.75635,
+      "value_text": "0.76",
+      "series": {
+        "FY17": 0.66091,
+        "FY18": 0.682277,
+        "FY19": 0.727655,
+        "FY20": null,
+        "FY21": null,
+        "FY22": 0.742176,
+        "FY23": 0.749819,
+        "FY24": 0.835806,
+        "FY25": 0.758885,
+        "FY26": 0.75635
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.003742,
+        "normalised_slope": 0.004868,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 52.432036,
+        "label": "stable"
+      },
+      "stability": {
+        "cv": 0.071651,
+        "sd": 0.052967,
+        "n": 8,
+        "score": 81.487693,
+        "label": "stable",
+        "window": "FY17-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "component metric (not scored)",
+      "note": null,
+      "text": "Tax burden: 0.76 [component metric (not scored)]"
+    },
+    "equity_multiplier": {
+      "name": "Equity multiplier",
+      "pillar": "returns",
+      "role": "component",
+      "unit": "x",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "average total assets / average equity",
+      "meaning": "Assets per rupee of equity: the leverage term in DuPont.",
+      "value": 9.03437,
+      "value_text": "9.03x",
+      "series": {
+        "FY17": null,
+        "FY18": 11.037578,
+        "FY19": 13.170791,
+        "FY20": 13.146575,
+        "FY21": 9.691667,
+        "FY22": 8.859896,
+        "FY23": 9.054121,
+        "FY24": 9.18951,
+        "FY25": 9.228799,
+        "FY26": 9.03437
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.052363,
+        "normalised_slope": 0.005771,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "flat"
+      },
+      "stability": {
+        "cv": 0.171671,
+        "sd": 1.762739,
+        "n": 9,
+        "score": null,
+        "label": "moderate",
+        "window": "FY18-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Equity multiplier: 9.03x [informational (neutral direction)]"
+    },
+    "debt_to_equity_avg": {
+      "name": "Borrowings / equity (average)",
+      "pillar": "returns",
+      "role": "component",
+      "unit": "x",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "average borrowings / average equity",
+      "meaning": "Debt part of the equity multiplier.",
+      "value": 7.483636,
+      "value_text": "7.48x",
+      "series": {
+        "FY17": null,
+        "FY18": 9.563212,
+        "FY19": 11.617881,
+        "FY20": 11.42562,
+        "FY21": 8.131867,
+        "FY22": 7.423969,
+        "FY23": 7.58614,
+        "FY24": 7.74523,
+        "FY25": 7.813617,
+        "FY26": 7.483636
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.034681,
+        "normalised_slope": 0.004557,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "flat"
+      },
+      "stability": {
+        "cv": 0.193805,
+        "sd": 1.696683,
+        "n": 9,
+        "score": null,
+        "label": "moderate",
+        "window": "FY18-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Borrowings / equity (average): 7.48x [informational (neutral direction)]"
+    },
+    "other_liab_to_equity_avg": {
+      "name": "Other liabilities / equity (average)",
+      "pillar": "returns",
+      "role": "component",
+      "unit": "x",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "average other liabilities / average equity",
+      "meaning": "Non-debt liabilities part of the equity multiplier.",
+      "value": 0.550734,
+      "value_text": "0.55x",
+      "series": {
+        "FY17": null,
+        "FY18": 0.474365,
+        "FY19": 0.552911,
+        "FY20": 0.720955,
+        "FY21": 0.5598,
+        "FY22": 0.435927,
+        "FY23": 0.467981,
+        "FY24": 0.44428,
+        "FY25": 0.415182,
+        "FY26": 0.550734
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.017682,
+        "normalised_slope": 0.017682,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "flat"
+      },
+      "stability": {
+        "cv": 0.095,
+        "sd": 0.095,
+        "n": 9,
+        "score": null,
+        "label": "stable",
+        "window": "FY18-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Other liabilities / equity (average): 0.55x [informational (neutral direction)]"
+    },
+    "interest_to_assets": {
+      "name": "Interest expended / assets",
+      "pillar": "returns",
+      "role": "component",
+      "unit": "pct",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "interest / average total assets",
+      "meaning": "Interest paid per rupee of average assets. ROA = yield - interest + other income - opex - depreciation - tax + minority/associates.",
+      "value": 0.045734,
+      "value_text": "4.6%",
+      "series": {
+        "FY17": null,
+        "FY18": 0.047504,
+        "FY19": 0.05715,
+        "FY20": 0.060305,
+        "FY21": 0.047461,
+        "FY22": 0.042314,
+        "FY23": 0.04393,
+        "FY24": 0.051282,
+        "FY25": 0.052978,
+        "FY26": 0.045734
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.001589,
+        "normalised_slope": 0.031775,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "rising"
+      },
+      "stability": {
+        "cv": 0.12133,
+        "sd": 0.006066,
+        "n": 9,
+        "score": null,
+        "label": "stable",
+        "window": "FY18-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Interest expended / assets: 4.6% [informational (neutral direction)]"
+    },
+    "other_income_to_assets": {
+      "name": "Other income / assets",
+      "pillar": "returns",
+      "role": "component",
+      "unit": "pct",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "other_income / average total assets",
+      "meaning": "Fee and other income per rupee of average assets. ROA = yield - interest + other income - opex - depreciation - tax + minority/associates.",
+      "value": 0.015843,
+      "value_text": "1.6%",
+      "series": {
+        "FY17": null,
+        "FY18": 0.020068,
+        "FY19": 0.013487,
+        "FY20": 0.037439,
+        "FY21": 0.011693,
+        "FY22": 0.011499,
+        "FY23": 0.011526,
+        "FY24": 0.014063,
+        "FY25": 0.014827,
+        "FY26": 0.015843
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.001199,
+        "normalised_slope": 0.023977,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "flat"
+      },
+      "stability": {
+        "cv": 0.1646,
+        "sd": 0.00823,
+        "n": 9,
+        "score": null,
+        "label": "moderate",
+        "window": "FY18-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Other income / assets: 1.6% [informational (neutral direction)]"
+    },
+    "dep_to_assets": {
+      "name": "Depreciation / assets",
+      "pillar": "returns",
+      "role": "component",
+      "unit": "pct",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "depreciation / average total assets",
+      "meaning": "Depreciation per rupee of average assets. ROA = yield - interest + other income - opex - depreciation - tax + minority/associates.",
+      "value": 0.001292,
+      "value_text": "0.1%",
+      "series": {
+        "FY17": null,
+        "FY18": 0.000881,
+        "FY19": 0.000881,
+        "FY20": 0.001071,
+        "FY21": 0.001355,
+        "FY22": 0.001362,
+        "FY23": 0.001287,
+        "FY24": 0.001433,
+        "FY25": 0.001188,
+        "FY26": 0.001292
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": -2.4e-05,
+        "normalised_slope": -0.000478,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "flat"
+      },
+      "stability": {
+        "cv": 0.004126,
+        "sd": 0.000206,
+        "n": 9,
+        "score": null,
+        "label": "stable",
+        "window": "FY18-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Depreciation / assets: 0.1% [informational (neutral direction)]"
+    },
+    "tax_to_assets": {
+      "name": "Tax / assets",
+      "pillar": "returns",
+      "role": "component",
+      "unit": "pct",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "tax_core / average total assets",
+      "meaning": "Tax per rupee of average assets. ROA = yield - interest + other income - opex - depreciation - tax + minority/associates.",
+      "value": 0.00253,
+      "value_text": "0.3%",
+      "series": {
+        "FY17": null,
+        "FY18": 0.007474,
+        "FY19": 0.001845,
+        "FY20": -0.013796,
+        "FY21": -0.00479,
+        "FY22": 0.001248,
+        "FY23": 0.000729,
+        "FY24": 0.000663,
+        "FY25": 0.001872,
+        "FY26": 0.00253
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.000371,
+        "normalised_slope": 0.007413,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "flat"
+      },
+      "stability": {
+        "cv": 0.119253,
+        "sd": 0.005963,
+        "n": 9,
+        "score": null,
+        "label": "stable",
+        "window": "FY18-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Tax / assets: 0.3% [informational (neutral direction)]"
+    },
+    "minority_to_assets": {
+      "name": "Minority & associates / assets",
+      "pillar": "returns",
+      "role": "component",
+      "unit": "pct",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "minority_and_associates / average total assets",
+      "meaning": "Associate income less minority share per rupee of average assets. ROA = yield - interest + other income - opex - depreciation - tax + minority/associates.",
+      "value": -1e-06,
+      "value_text": "-0.0%",
+      "series": {
+        "FY17": null,
+        "FY18": 0.0,
+        "FY19": -0.0,
+        "FY20": -0.0,
+        "FY21": -0.0,
+        "FY22": -0.0,
+        "FY23": 0.0,
+        "FY24": -0.0,
+        "FY25": -0.0,
+        "FY26": -1e-06
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": -0.0,
+        "normalised_slope": -4e-06,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "flat"
+      },
+      "stability": {
+        "cv": 5e-06,
+        "sd": 0.0,
+        "n": 9,
+        "score": null,
+        "label": "stable",
+        "window": "FY18-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Minority & associates / assets: -0.0% [informational (neutral direction)]"
+    },
+    "payout_ratio": {
+      "name": "Dividend payout",
+      "pillar": "capital_allocation",
+      "role": "scored",
+      "unit": "ratio",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "Dividend / core PAT (PAT > 0)",
+      "meaning": "Share of core profit paid as dividends (Screener 'Dividend Amount', declared for the year).",
+      "value": 0.0,
+      "value_text": "0.00",
+      "series": {
+        "FY17": 0.164014,
+        "FY18": 0.146886,
+        "FY19": 0.270882,
+        "FY20": null,
+        "FY21": null,
+        "FY22": 0.0,
+        "FY23": 0.0,
+        "FY24": 0.0,
+        "FY25": 0.0,
+        "FY26": 0.0
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.0,
+        "normalised_slope": 0.0,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "flat"
+      },
+      "stability": {
+        "cv": 0.532998,
+        "sd": 0.1066,
+        "n": 8,
+        "score": null,
+        "label": "volatile",
+        "window": "FY17-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Dividend payout: 0.00 [informational (neutral direction)]"
+    },
+    "share_count_change": {
+      "name": "Share count change",
+      "pillar": "capital_allocation",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "Adjusted shares_t / Adjusted shares_t-1 - 1",
+      "meaning": "Net issuance (dilution, +) or buyback (-) of shares, adjusted for splits and bonuses.",
+      "value": 0.00082,
+      "value_text": "0.1%",
+      "series": {
+        "FY17": null,
+        "FY18": 0.009026,
+        "FY19": 0.005211,
+        "FY20": 4.421382,
+        "FY21": 0.996327,
+        "FY22": 4e-06,
+        "FY23": 0.147667,
+        "FY24": 0.000456,
+        "FY25": 0.089899,
+        "FY26": 0.00082
+      },
+      "level": {
+        "score": 65.755923,
+        "basis": "band",
+        "rag": "amber"
+      },
+      "trend": {
+        "slope_per_year": -0.005614,
+        "normalised_slope": -0.112274,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 90.425981,
+        "label": "improving"
+      },
+      "stability": {
+        "cv": 2.313424,
+        "sd": 1.45766,
+        "n": 9,
+        "score": 0.134712,
+        "label": "volatile",
+        "window": "FY18-FY26"
+      },
+      "composite": 62.080256,
+      "rag": "green",
+      "band": {
+        "red": 0.03,
+        "green": 0.0,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "rule_of_thumb",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Net issuance above 3% a year is material dilution; flat or falling share count = no dilution/buybacks.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Share count change: 0.1% GREEN (level amber vs band (green <= 0.0%, red >= 3.0%); trend improving -0.6pp/yr; volatile (CV 2.31))"
+    },
+    "buyback_estimate": {
+      "name": "Buyback (estimate)",
+      "pillar": "capital_allocation",
+      "role": "scored",
+      "unit": "inr_cr",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "max(0, -(Adj shares_t - Adj shares_t-1)) x (Price_t + Price_t-1)/2",
+      "meaning": "Estimated rupees spent on buybacks: shares retired x average of the two year-end prices.",
+      "value": 0.0,
+      "value_text": "Rs 0 cr",
+      "series": {
+        "FY17": null,
+        "FY18": 0.0,
+        "FY19": 0.0,
+        "FY20": 0.0,
+        "FY21": 0.0,
+        "FY22": 0.0,
+        "FY23": 0.0,
+        "FY24": 0.0,
+        "FY25": 0.0,
+        "FY26": 0.0
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.0,
+        "normalised_slope": 0.0,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "flat"
+      },
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Buyback (estimate): Rs 0 cr [informational (neutral direction)]"
+    },
+    "shareholder_yield": {
+      "name": "Shareholder yield",
+      "pillar": "capital_allocation",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "(Dividend + buyback estimate) / Market cap (FY-end)",
+      "meaning": "Cash returned to shareholders (dividends + estimated buybacks) as a share of year-end market value.",
+      "value": 0.0,
+      "value_text": "0.0%",
+      "series": {
+        "FY17": 0.007758,
+        "FY18": 0.008857,
+        "FY19": 0.00727,
+        "FY20": 0.0,
+        "FY21": 0.0,
+        "FY22": 0.0,
+        "FY23": 0.0,
+        "FY24": 0.0,
+        "FY25": 0.0,
+        "FY26": 0.0
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.0,
+        "normalised_slope": 0.0,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "flat"
+      },
+      "stability": {
+        "cv": 0.077299,
+        "sd": 0.003865,
+        "n": 10,
+        "score": null,
+        "label": "stable",
+        "window": "FY17-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Shareholder yield: 0.0% [informational (neutral direction)]"
+    },
+    "promoter_holding": {
+      "name": "Promoter holding",
+      "pillar": "capital_allocation",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "manual promoter_holding_pct (FY-end)",
+      "meaning": "Promoter (controlling shareholder) stake. Not in the Screener export: supply promoter_holding_pct in data/manual.",
+      "value": null,
+      "value_text": "n/a",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": null,
+        "FY25": null,
+        "FY26": null
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Promoter holding: n/a [informational (neutral direction)]"
+    },
+    "promoter_holding_change_3y": {
+      "name": "Promoter holding change 3y",
+      "pillar": "capital_allocation",
+      "role": "scored",
+      "unit": "pp",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "Promoter holding_t - Promoter holding_t-3",
+      "meaning": "Change in promoter stake over 3 years (selling down = negative).",
+      "value": null,
+      "value_text": "n/a",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": null,
+        "FY25": null,
+        "FY26": null
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": {
+        "red": -0.03,
+        "green": 0.0,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "rule_of_thumb",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Promoters selling more than 3pp of the company over 3 years is a signal worth explaining.",
+        "centre": null
+      },
+      "reason": "no value for the as-of year",
+      "note": null,
+      "text": "Promoter holding change 3y: n/a [no value for the as-of year]"
+    },
+    "promoter_pledge": {
+      "name": "Promoter pledge",
+      "pillar": "capital_allocation",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "manual promoter_pledge_pct (pledged shares / promoter shares)",
+      "meaning": "Share of promoter holding pledged to lenders (forced-selling risk). Manual data only.",
+      "value": null,
+      "value_text": "n/a",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": null,
+        "FY25": null,
+        "FY26": null
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": {
+        "red": 0.25,
+        "green": 0.01,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "rule_of_thumb",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Pledges above a quarter of promoter holding create forced-selling risk in a drawdown.",
+        "centre": null
+      },
+      "reason": "no value for the as-of year",
+      "note": null,
+      "text": "Promoter pledge: n/a [no value for the as-of year]"
+    },
+    "internal_capital_generation": {
+      "name": "Internal capital generation",
+      "pillar": "capital_allocation",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "ROE x (1 - payout)",
+      "meaning": "Growth in equity a lender can fund from retained profit alone.",
+      "value": 0.07095,
+      "value_text": "7.1%",
+      "series": {
+        "FY17": null,
+        "FY18": 0.15113,
+        "FY19": 0.04735,
+        "FY20": -0.676483,
+        "FY21": -0.127256,
+        "FY22": 0.03184,
+        "FY23": 0.019776,
+        "FY24": 0.031016,
+        "FY25": 0.054374,
+        "FY26": 0.07095
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.011282,
+        "normalised_slope": 0.225637,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "rising"
+      },
+      "stability": {
+        "cv": 4.95845,
+        "sd": 0.247923,
+        "n": 9,
+        "score": null,
+        "label": "volatile",
+        "window": "FY18-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Internal capital generation: 7.1% [informational (neutral direction)]"
+    },
+    "growth_minus_icg": {
+      "name": "Asset growth - internal capital generation",
+      "pillar": "capital_allocation",
+      "role": "scored",
+      "unit": "pp",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "(Total assets_t / Total assets_t-1 - 1) - ROE x (1 - payout)",
+      "meaning": "Balance-sheet growth beyond what retained earnings can support: must be funded by new equity or by higher leverage.",
+      "value": 0.037719,
+      "value_text": "+3.8pp",
+      "series": {
+        "FY17": null,
+        "FY18": 0.301721,
+        "FY19": 0.171597,
+        "FY20": 0.353458,
+        "FY21": 0.188386,
+        "FY22": 0.13258,
+        "FY23": 0.095193,
+        "FY24": 0.113007,
+        "FY25": -0.010683,
+        "FY26": 0.037719
+      },
+      "level": {
+        "score": 54.093811,
+        "basis": "band",
+        "rag": "amber"
+      },
+      "trend": {
+        "slope_per_year": -0.02956,
+        "normalised_slope": -0.401831,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 99.96767,
+        "label": "improving"
+      },
+      "stability": {
+        "cv": 0.760786,
+        "sd": 0.116905,
+        "n": 9,
+        "score": 11.375889,
+        "label": "volatile",
+        "window": "FY18-FY26"
+      },
+      "composite": 59.154587,
+      "rag": "amber",
+      "band": {
+        "red": 0.1,
+        "green": 0.0,
+        "origin": "config/bands.yaml (family: bank_like)",
+        "source_type": "rule_of_thumb",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Balance-sheet growth 10pp+ above internal capital generation must be funded by dilution or by thinner capital.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Asset growth - internal capital generation: +3.8pp AMBER (level amber vs band (green <= +0.0pp, red >= +10.0pp); trend improving -3.0pp/yr; volatile (CV 0.76))"
+    },
+    "equity_to_assets": {
+      "name": "Equity / assets",
+      "pillar": "balance_sheet",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "Equity / Total assets",
+      "meaning": "Book capital cushion per rupee of assets (unweighted leverage; regulatory CRAR needs risk weights not in the export).",
+      "value": 0.108801,
+      "value_text": "10.9%",
+      "series": {
+        "FY17": 0.102481,
+        "FY18": 0.082421,
+        "FY19": 0.070597,
+        "FY20": 0.084144,
+        "FY21": 0.121122,
+        "FY22": 0.105779,
+        "FY23": 0.114633,
+        "FY24": 0.103738,
+        "FY25": 0.112781,
+        "FY26": 0.108801
+      },
+      "level": {
+        "score": 74.000436,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": {
+        "slope_per_year": 0.000419,
+        "normalised_slope": 0.003839,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 51.918709,
+        "label": "stable"
+      },
+      "stability": {
+        "cv": 0.161411,
+        "sd": 0.016246,
+        "n": 10,
+        "score": 63.054209,
+        "label": "moderate",
+        "window": "FY17-FY26"
+      },
+      "composite": 66.83807,
+      "rag": "green",
+      "band": {
+        "red": 0.06,
+        "green": 0.1,
+        "origin": "config/bands.yaml (family: bank_like)",
+        "source_type": "rule_of_thumb",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "RBI's Basel III leverage-ratio floor is 4% (D-SIBs) / 3.5% (others) of Tier-1 to exposure; book equity below 6% of assets leaves a thin cushion, 10%+ is well capitalised.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Equity / assets: 10.9% GREEN (level green vs band (red <= 6.0%, green >= 10.0%); trend stable +0.0pp/yr; moderate (CV 0.16))"
+    },
+    "funding_vs_equity_growth": {
+      "name": "Funding growth - equity growth",
+      "pillar": "balance_sheet",
+      "role": "scored",
+      "unit": "pp",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "(Borrowings_t/Borrowings_t-1 - 1) - (Equity_t/Equity_t-1 - 1)",
+      "meaning": "Deposits + borrowings growing faster than capital = rising leverage.",
+      "value": 0.00911,
+      "value_text": "+0.9pp",
+      "series": {
+        "FY17": null,
+        "FY18": 0.350196,
+        "FY19": 0.175102,
+        "FY20": -0.154759,
+        "FY21": -0.492352,
+        "FY22": 0.17095,
+        "FY23": -0.112771,
+        "FY24": 0.139546,
+        "FY25": -0.106831,
+        "FY26": 0.00911
+      },
+      "level": {
+        "score": 63.629942,
+        "basis": "band",
+        "rag": "amber"
+      },
+      "trend": {
+        "slope_per_year": -0.031774,
+        "normalised_slope": -1.588632,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 100.0,
+        "label": "improving"
+      },
+      "stability": {
+        "cv": 12.406094,
+        "sd": 0.248122,
+        "n": 9,
+        "score": 0.0,
+        "label": "volatile",
+        "window": "FY18-FY26"
+      },
+      "composite": 63.177965,
+      "rag": "green",
+      "band": {
+        "red": 0.1,
+        "green": 0.0,
+        "origin": "config/bands.yaml (family: bank_like)",
+        "source_type": "rule_of_thumb",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Deposits + borrowings growing 10pp a year faster than equity = rapidly rising leverage.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Funding growth - equity growth: +0.9pp GREEN (level amber vs band (green <= +0.0pp, red >= +10.0pp); trend improving -3.2pp/yr; volatile (CV 12.41))"
+    },
+    "opex_to_assets": {
+      "name": "Operating cost / average assets",
+      "pillar": "capital_efficiency",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "Total opex / average total assets",
+      "meaning": "Operating costs (incl. provisions; insurers: incl. benefits) per rupee of balance sheet.",
+      "value": 0.025989,
+      "value_text": "2.6%",
+      "series": {
+        "FY17": null,
+        "FY18": 0.025006,
+        "FY19": 0.034136,
+        "FY20": 0.122896,
+        "FY21": 0.056215,
+        "FY22": 0.027215,
+        "FY23": 0.030783,
+        "FY24": 0.029808,
+        "FY25": 0.027358,
+        "FY26": 0.025989
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": -0.000588,
+        "normalised_slope": -0.011755,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 55.850715,
+        "label": "stable"
+      },
+      "stability": {
+        "cv": 0.63484,
+        "sd": 0.031742,
+        "n": 9,
+        "score": 16.302882,
+        "label": "volatile",
+        "window": "FY18-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "no sourced band and fewer than 4 same-archetype peers: level not scored",
+      "note": null,
+      "text": "Operating cost / average assets: 2.6% [no sourced band and fewer than 4 same-archetype peers: level not scored]"
+    },
+    "credit_deposit_proxy": {
+      "name": "Other assets / (deposits + borrowings)",
+      "pillar": "capital_efficiency",
+      "role": "scored",
+      "unit": "ratio",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "Other assets / Borrowings (Screener: deposits + borrowings)",
+      "meaning": "Proxy for the credit-deposit ratio: advances and other assets per rupee of deposits + borrowings.",
+      "value": 0.986554,
+      "value_text": "0.99",
+      "series": {
+        "FY17": 0.905915,
+        "FY18": 0.882927,
+        "FY19": 0.865228,
+        "FY20": 0.97243,
+        "FY21": 1.006726,
+        "FY22": 0.98248,
+        "FY23": 0.935173,
+        "FY24": 0.90414,
+        "FY25": 0.943661,
+        "FY26": 0.986554
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.001664,
+        "normalised_slope": 0.001751,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "flat"
+      },
+      "stability": {
+        "cv": 0.051207,
+        "sd": 0.048059,
+        "n": 10,
+        "score": null,
+        "label": "stable",
+        "window": "FY17-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Other assets / (deposits + borrowings): 0.99 [informational (neutral direction)]"
+    },
+    "liquid_assets_ratio": {
+      "name": "Cash + investments / assets",
+      "pillar": "capital_efficiency",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "(Cash & bank + Investments) / Total assets",
+      "meaning": "Share of the balance sheet in cash and investments (liquidity buffer vs yield).",
+      "value": 0.222244,
+      "value_text": "22.2%",
+      "series": {
+        "FY17": 0.264735,
+        "FY18": 0.255143,
+        "FY19": 0.262895,
+        "FY20": 0.192728,
+        "FY21": 0.182488,
+        "FY22": 0.298848,
+        "FY23": 0.252287,
+        "FY24": 0.266108,
+        "FY25": 0.235749,
+        "FY26": 0.222244
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": -0.016975,
+        "normalised_slope": -0.066555,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "falling"
+      },
+      "stability": {
+        "cv": 0.146436,
+        "sd": 0.035631,
+        "n": 10,
+        "score": null,
+        "label": "stable",
+        "window": "FY17-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Cash + investments / assets: 22.2% [informational (neutral direction)]"
+    },
+    "revenue_cagr_3y": {
+      "name": "Revenue CAGR 3y",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "(Revenue_t / Revenue_t-3)^(1/3) - 1; n/m if either value <= 0",
+      "meaning": "Compound annual growth of revenue (Screener 'Sales'; banks: interest earned; insurers: premium + investment income) over 3 years.",
+      "value": 0.099902,
+      "value_text": "10.0%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": 0.166215,
+        "FY21": -0.003786,
+        "FY22": -0.137325,
+        "FY23": -0.044842,
+        "FY24": 0.112687,
+        "FY25": 0.175836,
+        "FY26": 0.099902
+      },
+      "level": {
+        "score": 74.082666,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": {
+        "slope_per_year": 0.069513,
+        "normalised_slope": 1.390262,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 100.0,
+        "label": "improving"
+      },
+      "stability": null,
+      "composite": 81.705411,
+      "rag": "green",
+      "band": {
+        "red": 0.04,
+        "green": 0.089,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "Growing slower than the 4% CPI target = shrinking in real terms (red); faster than India's nominal GDP (8.9% FY26) = gaining share of the economy (green). Inputs and sources in config/market.yaml (macro).",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Revenue CAGR 3y: 10.0% GREEN (level green vs band (red <= 4.0%, green >= 8.9%); trend improving +7.0pp/yr)"
+    },
+    "revenue_cagr_5y": {
+      "name": "Revenue CAGR 5y",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "(Revenue_t / Revenue_t-5)^(1/5) - 1; n/m if either value <= 0",
+      "meaning": "Compound annual growth of revenue (Screener 'Sales'; banks: interest earned; insurers: premium + investment income) over 5 years.",
+      "value": 0.085549,
+      "value_text": "8.6%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": 0.029759,
+        "FY23": 0.022937,
+        "FY24": -0.014011,
+        "FY25": 0.034847,
+        "FY26": 0.085549
+      },
+      "level": {
+        "score": 64.318814,
+        "basis": "band",
+        "rag": "amber"
+      },
+      "trend": {
+        "slope_per_year": 0.012349,
+        "normalised_slope": 0.246982,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 99.289365,
+        "label": "improving"
+      },
+      "stability": null,
+      "composite": 74.604271,
+      "rag": "green",
+      "band": {
+        "red": 0.04,
+        "green": 0.089,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "Growing slower than the 4% CPI target = shrinking in real terms (red); faster than India's nominal GDP (8.9% FY26) = gaining share of the economy (green). Inputs and sources in config/market.yaml (macro).",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Revenue CAGR 5y: 8.6% GREEN (level amber vs band (red <= 4.0%, green >= 8.9%); trend improving +1.2pp/yr)"
+    },
+    "revenue_cagr_10y": {
+      "name": "Revenue CAGR (full span, up to 10y)",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "point",
+      "equation": "(Revenue_t / Revenue_t-n)^(1/n) - 1, n = full available span <= 10; n/m if either value <= 0",
+      "meaning": "Compound annual growth of revenue (Screener 'Sales'; banks: interest earned; insurers: premium + investment income) over the longest available history (max 10 years; 9 with a 10-column export).",
+      "value": 0.070046,
+      "value_text": "7.0%",
+      "series": {},
+      "level": {
+        "score": 53.773008,
+        "basis": "band",
+        "rag": "amber"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 53.773008,
+      "rag": "amber",
+      "band": {
+        "red": 0.04,
+        "green": 0.089,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "Growing slower than the 4% CPI target = shrinking in real terms (red); faster than India's nominal GDP (8.9% FY26) = gaining share of the economy (green). Inputs and sources in config/market.yaml (macro).",
+        "centre": null
+      },
+      "reason": null,
+      "note": "CAGR over 9 years (FY17-FY26); export holds 10 annual points",
+      "text": "Revenue CAGR (full span, up to 10y): 7.0% AMBER (level amber vs band (red <= 4.0%, green >= 8.9%)) Note: CAGR over 9 years (FY17-FY26); export holds 10 annual points"
+    },
+    "pat_cagr_3y": {
+      "name": "PAT CAGR 3y",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "(PAT_t / PAT_t-3)^(1/3) - 1; n/m if either value <= 0",
+      "meaning": "Compound annual growth of core PAT (owners' net profit excluding estimated exceptional items) over 3 years.",
+      "value": 0.683639,
+      "value_text": "68.4%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": -0.146146,
+        "FY23": null,
+        "FY24": null,
+        "FY25": 0.319858,
+        "FY26": 0.683639
+      },
+      "level": {
+        "score": 100.0,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": {
+        "slope_per_year": 0.19542,
+        "normalised_slope": 0.683805,
+        "n": 3,
+        "window": "FY22-FY26",
+        "score": 99.999885,
+        "label": "improving"
+      },
+      "stability": null,
+      "composite": 99.999966,
+      "rag": "green",
+      "band": {
+        "red": 0.04,
+        "green": 0.089,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "Growing slower than the 4% CPI target = shrinking in real terms (red); faster than India's nominal GDP (8.9% FY26) = gaining share of the economy (green). Inputs and sources in config/market.yaml (macro).",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "PAT CAGR 3y: 68.4% GREEN (level green vs band (red <= 4.0%, green >= 8.9%); trend improving +19.5pp/yr)"
+    },
+    "pat_cagr_5y": {
+      "name": "PAT CAGR 5y",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "(PAT_t / PAT_t-5)^(1/5) - 1; n/m if either value <= 0",
+      "meaning": "Compound annual growth of core PAT (owners' net profit excluding estimated exceptional items) over 5 years.",
+      "value": null,
+      "value_text": "n/a",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": -0.204489,
+        "FY23": -0.295274,
+        "FY24": -0.055435,
+        "FY25": null,
+        "FY26": null
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.074527,
+        "normalised_slope": 0.402707,
+        "n": 3,
+        "window": "FY22-FY24",
+        "score": 99.968232,
+        "label": "improving"
+      },
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": {
+        "red": 0.04,
+        "green": 0.089,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "Growing slower than the 4% CPI target = shrinking in real terms (red); faster than India's nominal GDP (8.9% FY26) = gaining share of the economy (green). Inputs and sources in config/market.yaml (macro).",
+        "centre": null
+      },
+      "reason": "no value for the as-of year",
+      "note": null,
+      "text": "PAT CAGR 5y: n/a [no value for the as-of year]"
+    },
+    "pat_cagr_10y": {
+      "name": "PAT CAGR (full span, up to 10y)",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "point",
+      "equation": "(PAT_t / PAT_t-n)^(1/n) - 1, n = full available span <= 10; n/m if either value <= 0",
+      "meaning": "Compound annual growth of core PAT (owners' net profit excluding estimated exceptional items) over the longest available history (max 10 years; 9 with a 10-column export).",
+      "value": 0.005589,
+      "value_text": "0.6%",
+      "series": {},
+      "level": {
+        "score": 9.924814,
+        "basis": "band",
+        "rag": "red"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 9.924814,
+      "rag": "red",
+      "band": {
+        "red": 0.04,
+        "green": 0.089,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "Growing slower than the 4% CPI target = shrinking in real terms (red); faster than India's nominal GDP (8.9% FY26) = gaining share of the economy (green). Inputs and sources in config/market.yaml (macro).",
+        "centre": null
+      },
+      "reason": null,
+      "note": "CAGR over 9 years (FY17-FY26); export holds 10 annual points",
+      "text": "PAT CAGR (full span, up to 10y): 0.6% RED (level red vs band (red <= 4.0%, green >= 8.9%)) Note: CAGR over 9 years (FY17-FY26); export holds 10 annual points"
+    },
+    "eps_cagr_3y": {
+      "name": "EPS CAGR 3y",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "(EPS_t / EPS_t-3)^(1/3) - 1; n/m if either value <= 0",
+      "meaning": "Compound annual growth of EPS = core PAT / split-adjusted shares over 3 years.",
+      "value": 0.635319,
+      "value_text": "63.5%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": -0.613986,
+        "FY23": null,
+        "FY24": null,
+        "FY25": 0.224787,
+        "FY26": 0.635319
+      },
+      "level": {
+        "score": 100.0,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": {
+        "slope_per_year": 0.304772,
+        "normalised_slope": 3.714932,
+        "n": 3,
+        "window": "FY22-FY26",
+        "score": 100.0,
+        "label": "improving"
+      },
+      "stability": null,
+      "composite": 100.0,
+      "rag": "green",
+      "band": {
+        "red": 0.04,
+        "green": 0.089,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "Growing slower than the 4% CPI target = shrinking in real terms (red); faster than India's nominal GDP (8.9% FY26) = gaining share of the economy (green). Inputs and sources in config/market.yaml (macro).",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "EPS CAGR 3y: 63.5% GREEN (level green vs band (red <= 4.0%, green >= 8.9%); trend improving +30.5pp/yr)"
+    },
+    "eps_cagr_5y": {
+      "name": "EPS CAGR 5y",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "(EPS_t / EPS_t-5)^(1/5) - 1; n/m if either value <= 0",
+      "meaning": "Compound annual growth of EPS = core PAT / split-adjusted shares over 5 years.",
+      "value": null,
+      "value_text": "n/a",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": -0.507342,
+        "FY23": -0.574659,
+        "FY24": -0.429362,
+        "FY25": null,
+        "FY26": null
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.03899,
+        "normalised_slope": 0.077394,
+        "n": 3,
+        "window": "FY22-FY24",
+        "score": 82.46063,
+        "label": "improving"
+      },
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": {
+        "red": 0.04,
+        "green": 0.089,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "Growing slower than the 4% CPI target = shrinking in real terms (red); faster than India's nominal GDP (8.9% FY26) = gaining share of the economy (green). Inputs and sources in config/market.yaml (macro).",
+        "centre": null
+      },
+      "reason": "no value for the as-of year",
+      "note": null,
+      "text": "EPS CAGR 5y: n/a [no value for the as-of year]"
+    },
+    "eps_cagr_10y": {
+      "name": "EPS CAGR (full span, up to 10y)",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "point",
+      "equation": "(EPS_t / EPS_t-n)^(1/n) - 1, n = full available span <= 10; n/m if either value <= 0",
+      "meaning": "Compound annual growth of EPS = core PAT / split-adjusted shares over the longest available history (max 10 years; 9 with a 10-column export).",
+      "value": -0.248468,
+      "value_text": "-24.8%",
+      "series": {},
+      "level": {
+        "score": 0.0,
+        "basis": "band",
+        "rag": "red"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 0.0,
+      "rag": "red",
+      "band": {
+        "red": 0.04,
+        "green": 0.089,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "Growing slower than the 4% CPI target = shrinking in real terms (red); faster than India's nominal GDP (8.9% FY26) = gaining share of the economy (green). Inputs and sources in config/market.yaml (macro).",
+        "centre": null
+      },
+      "reason": null,
+      "note": "CAGR over 9 years (FY17-FY26); export holds 10 annual points",
+      "text": "EPS CAGR (full span, up to 10y): -24.8% RED (level red vs band (red <= 4.0%, green >= 8.9%)) Note: CAGR over 9 years (FY17-FY26); export holds 10 annual points"
+    },
+    "bvps_cagr_5y": {
+      "name": "Book value per share CAGR 5y",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "(BVPS_t / BVPS_t-5)^(1/5) - 1, BVPS = equity / adjusted shares",
+      "meaning": "Compounding of book value per share, the core growth measure for lenders and insurers.",
+      "value": 0.042716,
+      "value_text": "4.3%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": -0.325811,
+        "FY23": -0.338529,
+        "FY24": -0.339019,
+        "FY25": -0.024682,
+        "FY26": 0.042716
+      },
+      "level": {
+        "score": 35.180821,
+        "basis": "band",
+        "rag": "amber"
+      },
+      "trend": {
+        "slope_per_year": 0.10509,
+        "normalised_slope": 0.533275,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 99.997666,
+        "label": "improving"
+      },
+      "stability": null,
+      "composite": 54.244599,
+      "rag": "amber",
+      "band": {
+        "red": 0.04,
+        "green": 0.089,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "Growing slower than the 4% CPI target = shrinking in real terms (red); faster than India's nominal GDP (8.9% FY26) = gaining share of the economy (green). Inputs and sources in config/market.yaml (macro).",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Book value per share CAGR 5y: 4.3% AMBER (level amber vs band (red <= 4.0%, green >= 8.9%); trend improving +10.5pp/yr)"
+    },
+    "assets_cagr_3y": {
+      "name": "Total assets CAGR 3y",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "(Total assets_t / Total assets_t-3)^(1/3) - 1",
+      "meaning": "Balance-sheet growth (loan book + investments) for financials.",
+      "value": 0.098001,
+      "value_text": "9.8%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": 0.06233,
+        "FY21": -0.043301,
+        "FY22": -0.057785,
+        "FY23": 0.112706,
+        "FY24": 0.140956,
+        "FY25": 0.100077,
+        "FY26": 0.098001
+      },
+      "level": {
+        "score": 72.789899,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": {
+        "slope_per_year": 0.029894,
+        "normalised_slope": 0.379412,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 99.949389,
+        "label": "improving"
+      },
+      "stability": null,
+      "composite": 80.777984,
+      "rag": "green",
+      "band": {
+        "red": 0.04,
+        "green": 0.089,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "Growing slower than the 4% CPI target = shrinking in real terms (red); faster than India's nominal GDP (8.9% FY26) = gaining share of the economy (green). Inputs and sources in config/market.yaml (macro).",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Total assets CAGR 3y: 9.8% GREEN (level green vs band (red <= 4.0%, green >= 8.9%); trend improving +3.0pp/yr)"
+    },
+    "nii_cagr_3y": {
+      "name": "Net interest income CAGR 3y",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "(NII_t / NII_t-3)^(1/3) - 1, NII = interest earned - interest expended",
+      "meaning": "Growth of the spread business (interest earned - interest expended).",
+      "value": 0.072844,
+      "value_text": "7.3%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": 0.054233,
+        "FY21": -0.01357,
+        "FY22": -0.128711,
+        "FY23": 0.051668,
+        "FY24": 0.028367,
+        "FY25": 0.111834,
+        "FY26": 0.072844
+      },
+      "level": {
+        "score": 55.676239,
+        "basis": "band",
+        "rag": "amber"
+      },
+      "trend": {
+        "slope_per_year": 0.046328,
+        "normalised_slope": 0.926552,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 99.999999,
+        "label": "improving"
+      },
+      "stability": null,
+      "composite": 68.712639,
+      "rag": "green",
+      "band": {
+        "red": 0.04,
+        "green": 0.089,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "Growing slower than the 4% CPI target = shrinking in real terms (red); faster than India's nominal GDP (8.9% FY26) = gaining share of the economy (green). Inputs and sources in config/market.yaml (macro).",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Net interest income CAGR 3y: 7.3% GREEN (level amber vs band (red <= 4.0%, green >= 8.9%); trend improving +4.6pp/yr)"
+    },
+    "revenue_growth_volatility": {
+      "name": "Revenue growth volatility",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "ratio",
+      "direction": "lower",
+      "kind": "point",
+      "equation": "sd(g_t) / |mean(g_t)| over the last 10 annual growth rates (>= 4 needed); n/m if |mean| < 1%",
+      "meaning": "How erratic annual revenue growth is: standard deviation of yearly growth divided by its mean (lower = steadier).",
+      "value": 2.406948,
+      "value_text": "2.41",
+      "series": {},
+      "level": {
+        "score": 3.101723,
+        "basis": "band",
+        "rag": "red"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 3.101723,
+      "rag": "red",
+      "band": {
+        "red": 1.5,
+        "green": 0.5,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "rule_of_thumb",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "sd/mean of annual growth below 0.5 = steady compounding; above 1.5 = growth is mostly noise (cyclical or lumpy).",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Revenue growth volatility: 2.41 RED (level red vs band (green <= 0.50, red >= 1.50))"
+    },
+    "pat_growth_volatility": {
+      "name": "PAT growth volatility",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "ratio",
+      "direction": "lower",
+      "kind": "point",
+      "equation": "sd(g_t) / |mean(g_t)| of core PAT growth over the last 10 years (base year PAT > 0); n/m if |mean| < 1%",
+      "meaning": "How erratic annual core-profit growth is (sd / mean of yearly growth).",
+      "value": 3.160354,
+      "value_text": "3.16",
+      "series": {},
+      "level": {
+        "score": 0.0,
+        "basis": "band",
+        "rag": "red"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 0.0,
+      "rag": "red",
+      "band": {
+        "red": 1.5,
+        "green": 0.5,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "rule_of_thumb",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Same scale as revenue growth volatility.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "PAT growth volatility: 3.16 RED (level red vs band (green <= 0.50, red >= 1.50))"
+    },
+    "q_revenue_yoy": {
+      "name": "Latest quarter revenue YoY",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "point",
+      "equation": "Revenue_q / Revenue_q-4 - 1",
+      "meaning": "Revenue growth in the latest reported quarter versus the same quarter a year earlier.",
+      "value": 0.170636,
+      "value_text": "17.1%",
+      "series": {},
+      "level": {
+        "score": 100.0,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 100.0,
+      "rag": "green",
+      "band": {
+        "red": 0.04,
+        "green": 0.089,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "Growing slower than the 4% CPI target = shrinking in real terms (red); faster than India's nominal GDP (8.9% FY26) = gaining share of the economy (green). Inputs and sources in config/market.yaml (macro).",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Latest quarter revenue YoY: 17.1% GREEN (level green vs band (red <= 4.0%, green >= 8.9%))"
+    },
+    "q_pat_yoy": {
+      "name": "Latest quarter PAT YoY",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "point",
+      "equation": "PAT_q / PAT_q-4 - 1 (PAT_q-4 > 0)",
+      "meaning": "Reported net profit growth in the latest quarter versus a year earlier (n/m if the year-ago quarter was a loss).",
+      "value": 0.631889,
+      "value_text": "63.2%",
+      "series": {},
+      "level": {
+        "score": 100.0,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 100.0,
+      "rag": "green",
+      "band": {
+        "red": 0.04,
+        "green": 0.089,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "Growing slower than the 4% CPI target = shrinking in real terms (red); faster than India's nominal GDP (8.9% FY26) = gaining share of the economy (green). Inputs and sources in config/market.yaml (macro).",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Latest quarter PAT YoY: 63.2% GREEN (level green vs band (red <= 4.0%, green >= 8.9%))"
+    },
+    "q_revenue_yoy_trend": {
+      "name": "Quarterly YoY growth trend",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pp",
+      "direction": "higher",
+      "kind": "point",
+      "equation": "OLS slope of the last 4 values of (Revenue_q / Revenue_q-4 - 1), per quarter",
+      "meaning": "Is quarterly growth accelerating or decelerating? Slope of the last 4 quarterly YoY revenue growth prints.",
+      "value": 0.067325,
+      "value_text": "+6.7pp",
+      "series": {},
+      "level": {
+        "score": 100.0,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 100.0,
+      "rag": "green",
+      "band": {
+        "red": -0.01,
+        "green": 0.01,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "rule_of_thumb",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "YoY growth accelerating by >= 1pp per quarter = improving momentum; decelerating by >= 1pp per quarter = fading.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Quarterly YoY growth trend: +6.7pp GREEN (level green vs band (red <= -1.0pp, green >= +1.0pp))"
+    },
+    "pat_margin": {
+      "name": "PAT margin",
+      "pillar": "margins",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "core PAT / Revenue",
+      "meaning": "Owners' core net profit per rupee of revenue (net profit margin, NPM).",
+      "value": 0.116249,
+      "value_text": "11.6%",
+      "series": {
+        "FY17": 0.203342,
+        "FY18": 0.208856,
+        "FY19": 0.057699,
+        "FY20": -0.63076,
+        "FY21": -0.174105,
+        "FY22": 0.055947,
+        "FY23": 0.032412,
+        "FY24": 0.046555,
+        "FY25": 0.079126,
+        "FY26": 0.116249
+      },
+      "level": {
+        "score": 2.757564,
+        "basis": "band",
+        "rag": "red"
+      },
+      "trend": {
+        "slope_per_year": 0.016732,
+        "normalised_slope": 0.25329,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 99.373064,
+        "label": "improving"
+      },
+      "stability": {
+        "cv": 4.910712,
+        "sd": 0.245536,
+        "n": 10,
+        "score": 8.1e-05,
+        "label": "volatile",
+        "window": "FY17-FY26"
+      },
+      "composite": 26.497816,
+      "rag": "red",
+      "band": {
+        "red": 0.214735,
+        "green": 0.322103,
+        "origin": "config/sector_benchmarks.yaml (bank)",
+        "source_type": "external",
+        "source_url": "https://pages.stern.nyu.edu/~adamodar/pc/datasets/marginIndia.xls",
+        "as_of": "2026-01-05",
+        "rationale": "Damodaran India 'Net Margin' (Bank (Money Center)); amber zone = centre +/- max(20%, 0.02)",
+        "centre": 0.268419
+      },
+      "reason": null,
+      "note": null,
+      "text": "PAT margin: 11.6% RED (level red vs band (red <= 21.5%, green >= 32.2%); trend improving +1.7pp/yr; volatile (CV 4.91))"
+    },
+    "nii_to_assets": {
+      "name": "NII / average assets (NIM proxy)",
+      "pillar": "margins",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "(Interest earned - Interest expended) / average total assets",
+      "meaning": "Net interest margin on the whole balance sheet (RBI defines NIM as NII / average total assets).",
+      "value": 0.021823,
+      "value_text": "2.2%",
+      "series": {
+        "FY17": null,
+        "FY18": 0.029342,
+        "FY19": 0.028306,
+        "FY20": 0.021275,
+        "FY21": 0.027956,
+        "FY22": 0.02192,
+        "FY23": 0.023457,
+        "FY24": 0.021216,
+        "FY25": 0.021483,
+        "FY26": 0.021823
+      },
+      "level": {
+        "score": 18.625164,
+        "basis": "band",
+        "rag": "red"
+      },
+      "trend": {
+        "slope_per_year": -0.000217,
+        "normalised_slope": -0.00434,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 47.831423,
+        "label": "stable"
+      },
+      "stability": {
+        "cv": 0.068391,
+        "sd": 0.00342,
+        "n": 9,
+        "score": 82.250338,
+        "label": "stable",
+        "window": "FY18-FY26"
+      },
+      "composite": 35.470505,
+      "rag": "red",
+      "band": {
+        "red": 0.028,
+        "green": 0.042,
+        "origin": "config/bands.yaml (archetype: bank)",
+        "source_type": "external",
+        "source_url": "https://www.indiainfoline.com/blog/how-healthy-were-indian-banks-in-the-year-2024-25",
+        "as_of": "2025-06-30",
+        "rationale": "RBI FSR June 2025: SCB net interest margin 3.5% (private banks 4.1%, PSBs 3.0%); RBI defines NIM as NII / average total assets, matching this metric. Amber zone = 3.5% +/- 20%.",
+        "centre": 0.035
+      },
+      "reason": null,
+      "note": null,
+      "text": "NII / average assets (NIM proxy): 2.2% RED (level red vs band (red <= 2.8%, green >= 4.2%); trend stable -0.0pp/yr; stable (CV 0.07))"
+    },
+    "yield_on_assets": {
+      "name": "Revenue / average assets",
+      "pillar": "margins",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "Revenue / average total assets",
+      "meaning": "Gross yield of the balance sheet (banks: interest earned / assets; insurers: revenue / assets).",
+      "value": 0.067556,
+      "value_text": "6.8%",
+      "series": {
+        "FY17": null,
+        "FY18": 0.076846,
+        "FY19": 0.085456,
+        "FY20": 0.081579,
+        "FY21": 0.075417,
+        "FY22": 0.064234,
+        "FY23": 0.067387,
+        "FY24": 0.072498,
+        "FY25": 0.07446,
+        "FY26": 0.067556
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.001372,
+        "normalised_slope": 0.019815,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "flat"
+      },
+      "stability": {
+        "cv": 0.093442,
+        "sd": 0.006909,
+        "n": 9,
+        "score": null,
+        "label": "stable",
+        "window": "FY18-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Revenue / average assets: 6.8% [informational (neutral direction)]"
+    },
+    "cost_of_funds": {
+      "name": "Cost of funds",
+      "pillar": "margins",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "Interest expended / average (deposits + borrowings)",
+      "meaning": "Interest paid per rupee of deposits + borrowings.",
+      "value": 0.05521,
+      "value_text": "5.5%",
+      "series": {
+        "FY17": null,
+        "FY18": 0.054828,
+        "FY19": 0.064789,
+        "FY20": 0.069388,
+        "FY21": 0.056564,
+        "FY22": 0.050498,
+        "FY23": 0.052431,
+        "FY24": 0.060845,
+        "FY25": 0.062573,
+        "FY26": 0.05521
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.001957,
+        "normalised_slope": 0.034748,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 33.293184,
+        "label": "deteriorating"
+      },
+      "stability": {
+        "cv": 0.106121,
+        "sd": 0.006215,
+        "n": 9,
+        "score": 73.844901,
+        "label": "stable",
+        "window": "FY18-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "no sourced band and fewer than 4 same-archetype peers: level not scored",
+      "note": null,
+      "text": "Cost of funds: 5.5% [no sourced band and fewer than 4 same-archetype peers: level not scored]"
+    },
+    "cost_to_income": {
+      "name": "Cost (incl. provisions) / income",
+      "pillar": "margins",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "(Total opex incl. provisions + depreciation) / (NII + other income)",
+      "meaning": "Operating costs including provisions per rupee of net income (Screener does not separate provisions, so this is higher than the reported cost-to-income ratio).",
+      "value": 0.724302,
+      "value_text": "72.4%",
+      "series": {
+        "FY17": 0.495474,
+        "FY18": 0.523912,
+        "FY19": 0.837865,
+        "FY20": 2.111367,
+        "FY21": 1.451977,
+        "FY22": 0.855111,
+        "FY23": 0.916733,
+        "FY24": 0.885534,
+        "FY25": 0.786172,
+        "FY26": 0.724302
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": -0.039218,
+        "normalised_slope": -0.047048,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 71.929353,
+        "label": "improving"
+      },
+      "stability": {
+        "cv": 0.502907,
+        "sd": 0.48221,
+        "n": 10,
+        "score": 23.766882,
+        "label": "volatile",
+        "window": "FY17-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "no sourced band and fewer than 4 same-archetype peers: level not scored",
+      "note": null,
+      "text": "Cost (incl. provisions) / income: 72.4% [no sourced band and fewer than 4 same-archetype peers: level not scored]"
+    },
+    "other_income_share": {
+      "name": "Fee & other income share",
+      "pillar": "margins",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "Other income / (NII + other income)",
+      "meaning": "Share of net income from fees and other non-interest sources.",
+      "value": 0.420621,
+      "value_text": "42.1%",
+      "series": {
+        "FY17": 0.421095,
+        "FY18": 0.406156,
+        "FY19": 0.322714,
+        "FY20": 0.637657,
+        "FY21": 0.294917,
+        "FY22": 0.344085,
+        "FY23": 0.329476,
+        "FY24": 0.398628,
+        "FY25": 0.408351,
+        "FY26": 0.420621
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.023195,
+        "normalised_slope": 0.061001,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "rising"
+      },
+      "stability": {
+        "cv": 0.240408,
+        "sd": 0.095771,
+        "n": 10,
+        "score": null,
+        "label": "moderate",
+        "window": "FY17-FY26"
+      },
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Fee & other income share: 42.1% [informational (neutral direction)]"
+    },
+    "economic_profit": {
+      "name": "Economic profit",
+      "pillar": "root",
+      "role": "root",
+      "unit": "inr_cr",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "Non-financials: (ROIC - WACC) x average IC = NOPAT - WACC x average IC (defined even when IC <= 0); financials: (ROE - Ke) x average equity",
+      "meaning": "Rupees of value created (or destroyed) in the year after charging for all capital at its required return.",
+      "value": -4291.558979,
+      "value_text": "Rs -4,292 cr",
+      "series": {
+        "FY17": null,
+        "FY18": 465.853543,
+        "FY19": -2440.238114,
+        "FY20": -20262.239635,
+        "FY21": -7811.335107,
+        "FY22": -4204.609325,
+        "FY23": -5130.348231,
+        "FY24": -5247.556634,
+        "FY25": -4647.068411,
+        "FY26": -4291.558979
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 30.938051,
+        "normalised_slope": 0.006577,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 53.283591,
+        "label": "stable"
+      },
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "root metric (not scored)",
+      "note": null,
+      "text": "Economic profit: Rs -4,292 cr [root metric (not scored)]"
+    },
+    "pe": {
+      "name": "P/E",
+      "pillar": "valuation",
+      "role": "scored",
+      "unit": "x",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "Market cap / core PAT (current: TTM PAT when available)",
+      "meaning": "P/E multiple. Series = FY-end values; the last value is the current multiple (export price) in a latest run.",
+      "value": 11.337258,
+      "value_text": "11.34x",
+      "series": {
+        "FY17": 21.14023,
+        "FY18": 16.584764,
+        "FY19": 37.258976,
+        "FY20": null,
+        "FY21": null,
+        "FY22": 28.962596,
+        "FY23": 58.813261,
+        "FY24": 51.93085,
+        "FY25": 21.633328,
+        "FY26": 11.337258
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": "current = market cap / TTM from last 4 quarters PAT (reported quarterly PAT)",
+      "text": "P/E: 11.34x [informational (neutral direction)] Note: current = market cap / TTM from last 4 quarters PAT (reported quarterly PAT)"
+    },
+    "pe_percentile_10y": {
+      "name": "P/E percentile vs own history",
+      "pillar": "valuation",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "lower",
+      "kind": "point",
+      "equation": "(# historical FY-end P/E below current + 0.5 x # equal) / # historical values",
+      "meaning": "Where today's P/E sits within the company's own FY-end history (0% = cheapest ever, 100% = richest). Needs >= 5 years.",
+      "value": 0.0,
+      "value_text": "0.0%",
+      "series": {},
+      "level": {
+        "score": 99.019608,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 99.019608,
+      "rag": "green",
+      "band": {
+        "red": 0.67,
+        "green": 0.33,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "rule_of_thumb",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Bottom third of the company's own 10-year range = cheap versus itself; top third = rich versus itself.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "P/E percentile vs own history: 0.0% GREEN (level green vs band (green <= 33.0%, red >= 67.0%))"
+    },
+    "pb": {
+      "name": "P/B",
+      "pillar": "valuation",
+      "role": "scored",
+      "unit": "x",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "Market cap / book equity",
+      "meaning": "P/B multiple. Series = FY-end values; the last value is the current multiple (export price) in a latest run.",
+      "value": 0.929573,
+      "value_text": "0.93x",
+      "series": {
+        "FY17": 3.203595,
+        "FY18": 2.726219,
+        "FY19": 2.368605,
+        "FY20": 1.298729,
+        "FY21": 1.179471,
+        "FY22": 0.914498,
+        "FY23": 1.062817,
+        "FY24": 1.583234,
+        "FY25": 1.106482,
+        "FY26": 0.929573
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "P/B: 0.93x [informational (neutral direction)]"
+    },
+    "pb_percentile_10y": {
+      "name": "P/B percentile vs own history",
+      "pillar": "valuation",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "lower",
+      "kind": "point",
+      "equation": "(# historical FY-end P/B below current + 0.5 x # equal) / # historical values",
+      "meaning": "Where today's P/B sits within the company's own FY-end history (0% = cheapest ever, 100% = richest). Needs >= 5 years.",
+      "value": 0.1,
+      "value_text": "10.0%",
+      "series": {},
+      "level": {
+        "score": 89.215686,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 89.215686,
+      "rag": "green",
+      "band": {
+        "red": 0.67,
+        "green": 0.33,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "rule_of_thumb",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Bottom third of the company's own 10-year range = cheap versus itself; top third = rich versus itself.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "P/B percentile vs own history: 10.0% GREEN (level green vs band (green <= 33.0%, red >= 67.0%))"
+    },
+    "implied_growth_pb": {
+      "name": "P/B-implied growth",
+      "pillar": "valuation",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "neutral",
+      "kind": "point",
+      "equation": "g = (Ke x P/B - ROE) / (P/B - 1); n/m if |P/B - 1| < 0.05",
+      "meaning": "Perpetual growth implied by today's P/B for a lender/insurer (justified P/B solved for g) at its 3-year average ROE.",
+      "value": -1.340949,
+      "value_text": "-134.1%",
+      "series": {},
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "P/B-implied growth: -134.1% [informational (neutral direction)]"
+    },
+    "implied_pb_growth_minus_delivered": {
+      "name": "P/B-implied - delivered growth",
+      "pillar": "valuation",
+      "role": "scored",
+      "unit": "pp",
+      "direction": "lower",
+      "kind": "point",
+      "equation": "implied_growth_pb - BVPS CAGR 5y (PAT CAGR 5y if n/m)",
+      "meaning": "Growth the market prices in versus the book-value compounding actually delivered over 5 years.",
+      "value": -1.383665,
+      "value_text": "-138.4pp",
+      "series": {},
+      "level": {
+        "score": 100.0,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 100.0,
+      "rag": "green",
+      "band": {
+        "red": 0.05,
+        "green": 0.0,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "rule_of_thumb",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Same logic for lenders/insurers versus delivered book-value compounding.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "P/B-implied - delivered growth: -138.4pp GREEN (level green vs band (green <= +0.0pp, red >= +5.0pp))"
+    },
+    "justified_pb": {
+      "name": "Justified P/B",
+      "pillar": "valuation",
+      "role": "scored",
+      "unit": "x",
+      "direction": "neutral",
+      "kind": "point",
+      "equation": "(ROE - g) / (Ke - g); ROE = 3y avg, g = min(ROE x (1 - 3y avg payout), terminal g)",
+      "meaning": "P/B a single-stage residual-income model supports: (ROE - g) / (Ke - g) with sustainable ROE and growth.",
+      "value": 0.0,
+      "value_text": "0.00x",
+      "series": {},
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": "ROE 5.2%, g 5.2%, Ke 15.77%",
+      "text": "Justified P/B: 0.00x [informational (neutral direction)] Note: ROE 5.2%, g 5.2%, Ke 15.77%"
+    },
+    "pb_to_justified_pb": {
+      "name": "P/B / justified P/B",
+      "pillar": "valuation",
+      "role": "scored",
+      "unit": "x",
+      "direction": "lower",
+      "kind": "point",
+      "equation": "current P/B / justified P/B (justified > 0)",
+      "meaning": "Market P/B relative to what returns justify: above 1 = paying for more than current ROE supports.",
+      "value": null,
+      "value_text": "n/a",
+      "series": {},
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": {
+        "red": 1.5,
+        "green": 1.0,
+        "origin": "config/bands.yaml (generic)",
+        "source_type": "rule_of_thumb",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Paying 50%+ above the P/B that sustainable ROE justifies needs ROE to rise; at or below 1.0x the price is covered by current returns.",
+        "centre": null
+      },
+      "reason": "no value for the as-of year",
+      "note": null,
+      "text": "P/B / justified P/B: n/a [no value for the as-of year]"
+    }
+  },
+  "sector_references": {
+    "industries": [
+      "Bank (Money Center)"
+    ],
+    "as_of": "2026-01-05",
+    "ebitda_margin": 0.0,
+    "gross_margin": 0.999792,
+    "operating_margin": 0.0,
+    "net_margin": 0.268419,
+    "cogs_to_sales": 0.000208,
+    "sga_to_sales": 0.316169,
+    "lease_expense_to_sales": 0.014405,
+    "receivables_to_sales": 0.0,
+    "inventory_to_sales": 0.0,
+    "payables_to_sales": null,
+    "noncash_wc_to_sales": null,
+    "capex_to_depreciation": null,
+    "net_capex_to_sales": 0.027616,
+    "sales_to_invested_capital": 0.354752,
+    "roe": 0.128148,
+    "roc_after_tax": null,
+    "cost_of_equity_usd": 0.124988,
+    "cost_of_capital_usd": 0.098409,
+    "book_debt_to_capital": 0.468376,
+    "interest_coverage": null,
+    "debt_to_ebitda": null,
+    "trailing_pe": 14.802578,
+    "pbv": 1.806705,
+    "ev_to_invested_capital": 1.637973,
+    "ev_ebitda": null,
+    "dividend_payout": 0.176566,
+    "revenue_cagr_5y_hist": 0.232334,
+    "net_income_cagr_5y_hist": 0.352878,
+    "aggregate_tax_rate": 0.192993
+  },
+  "data_notes": [
+    {
+      "category": "source",
+      "fy": null,
+      "text": "Source file YESBANK.xlsx; sha256 a97a2aeb512bb819...; Screener template version 2.1. Only the 'Data Sheet' is read (display sheets are formulas without cached values)."
+    },
+    {
+      "category": "units",
+      "fy": null,
+      "text": "Units: Rs crore. Share counts in crore (Screener 'Adjusted Equity Shares in Cr'); prices in Rs."
+    },
+    {
+      "category": "source",
+      "fy": null,
+      "text": "Data Sheet has 2 formula cell(s) without cached values (e.g. 'Number of shares'); recomputed where needed."
+    },
+    {
+      "category": "missing",
+      "fy": null,
+      "text": "Blank line items are treated as zero (Screener leaves zero items blank; the P&L and balance-sheet identities hold on that basis). Blank price or share count = missing."
+    },
+    {
+      "category": "exceptional",
+      "fy": null,
+      "text": "Financial company: other income is core (fees, treasury), so no exceptional-item estimate is made."
+    },
+    {
+      "category": "minority",
+      "fy": null,
+      "text": "No material minority/associate residual: export is standalone or has no minorities."
+    },
+    {
+      "category": "semantics",
+      "fy": null,
+      "text": "Bank-like mapping: Sales = interest earned (NBFC: revenue from operations); Interest = interest expended; Borrowings = deposits + borrowings (NBFC: borrowings); Other Assets include advances/loans; Other Expenses include provisions & contingencies (credit costs are not separable in the export); CFO is driven by loan/deposit flows and is not an earnings-quality signal."
+    },
+    {
+      "category": "capex",
+      "fy": null,
+      "text": "Capex is not in the export. Proxy = change in net block + change in CWIP + depreciation (includes acquired fixed assets and Ind AS 116 right-of-use additions; impairments and disposals understate it). FCF = CFO - capex proxy."
+    },
+    {
+      "category": "shares",
+      "fy": null,
+      "text": "Per-share history is split/bonus/rights-adjusted by Screener (adjusted shares / reported shares: FY17 x5.00). EPS, BVPS, DPS and FY-end prices all use the adjusted basis, so ratios are unaffected; per-share levels are in today's share units (a unit look-ahead, not an information look-ahead)."
+    },
+    {
+      "category": "market",
+      "fy": null,
+      "text": "Current price and market cap are as of the export date, which the file does not record (latest quarter in file: 2026-09-30)."
+    },
+    {
+      "category": "quarterly",
+      "fy": null,
+      "text": "10 quarters from 2024-06-30 to 2026-09-30 (Q1FY25-Q2FY27). Quarterly profit is as reported (no exceptional-item estimate)."
+    }
+  ]
+}

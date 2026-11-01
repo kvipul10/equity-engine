@@ -1,0 +1,16 @@
+{
+  "ticker": "HINDUNILVR",
+  "company": "HINDUSTAN UNILEVER LTD",
+  "archetype": "fmcg",
+  "family": "non-financial",
+  "source_file": "HINDUNILVR.xlsx",
+  "sha256": "9892257d39995815dccc6e50d38b6c36f35492719fe204ee97764fb48b44de63",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-09-30",
+  "consolidated_inferred": true,
+  "asof": null
+}

@@ -1,0 +1,187 @@
+"""Command line interface.
+
+  python -m engine ingest [TICKER ...] [--all]
+  python -m engine analyse TICKER [--asof FY18|latest] [--beta 1.1] [--archetype fmcg] [--quiet]
+  python -m engine analyse-all [--asof FYxx]
+  python -m engine metrics [--markdown]
+  python -m engine rules [--markdown]
+  python -m engine build-benchmarks
+Global option: --root PATH (project root; default = repository root or $EQUITY_ENGINE_ROOT).
+"""
+from __future__ import annotations
+
+import argparse
+import sys
+import warnings
+from typing import List, Optional
+
+import pandas as pd
+
+from .config import Config, ConfigError
+from .paths import Paths
+
+
+def _cfg(args) -> Config:
+    return Config.load(Paths.default(args.root))
+
+
+def cmd_ingest(args) -> int:
+    from .standardise import load_standardised, write_processed
+
+    cfg = _cfg(args)
+    tickers = args.tickers or []
+    if args.all or not tickers:
+        tickers = sorted(p.stem for p in cfg.paths.raw_dir.glob("*.xlsx") if not p.name.startswith("~$"))
+    for t in tickers:
+        std = load_standardised(t, cfg)
+        out = cfg.paths.processed_dir / t
+        write_processed(std, out)
+        print(f"{t}: {std.meta['first_fy']}-{std.meta['last_fy']} ({std.meta['n_years']}y), {len(std.notes)} notes -> {out}")
+    return 0
+
+
+def _analyse_one(cfg: Config, ticker: str, asof: Optional[str], beta: Optional[float], archetype: Optional[str], peers=None,
+                 quiet: bool = False):
+    from .analysis import analyse
+    from .report import console_summary, out_dir_for, write_outputs
+    from .standardise import load_standardised, write_processed
+
+    std = load_standardised(ticker, cfg, archetype=archetype)
+    write_processed(std, cfg.paths.processed_dir / ticker)
+    rep = analyse(ticker, cfg, asof=asof, beta=beta, archetype=archetype, peers=peers)
+    out = out_dir_for(cfg.paths, ticker, rep)
+    files = write_outputs(rep, out)
+    if not quiet:
+        print(console_summary(rep))
+        print(f"Wrote {files['analysis']} and {files['metrics']}")
+    return rep, files
+
+
+def cmd_analyse(args) -> int:
+    cfg = _cfg(args)
+    asof = args.asof if args.asof is not None else cfg.universe_asof(args.ticker)
+    _analyse_one(cfg, args.ticker, asof, args.beta, args.archetype, quiet=args.quiet)
+    return 0
+
+
+def cmd_analyse_all(args) -> int:
+    from .analysis import PeerSet
+
+    cfg = _cfg(args)
+    if not cfg.universe:
+        print("data/universe.csv is empty or missing", file=sys.stderr)
+        return 1
+    peers = PeerSet(cfg)
+    rows = []
+    for t, row in cfg.universe.items():
+        asof = args.asof if args.asof is not None else row.get("asof")
+        try:
+            rep, files = _analyse_one(cfg, t, asof, None, None, peers=peers, quiet=True)
+        except Exception as e:  # keep going; report the failure
+            print(f"{t}: FAILED - {type(e).__name__}: {e}", file=sys.stderr)
+            rows.append({"ticker": t, "archetype": row.get("archetype"), "status": f"failed: {e}"})
+            continue
+        o = rep["overall"]
+        r = {"ticker": t, "archetype": row.get("archetype"), "role": row.get("role"), "asof": rep["asof"]["fy"],
+             "mode": rep["asof"]["mode"], "overall_score": o["score"], "overall_rag": o["rag"], "coverage": o["coverage"],
+             "root_verdict": rep["root"]["verdict"], "economic_profit_cr": rep["root"]["economic_profit"],
+             "flags_high": rep["flags"]["counts"]["high"], "flags_medium": rep["flags"]["counts"]["medium"],
+             "flags_low": rep["flags"]["counts"]["low"], "status": "ok"}
+        for p, pv in rep["pillars"].items():
+            r[f"{p}_score"] = pv["score"]
+            r[f"{p}_rag"] = pv["rag"]
+        rows.append(r)
+        sc = f"{o['score']:.0f}" if o["score"] is not None else "--"
+        print(f"{t:<12} {rep['asof']['fy']:<5} {(o['rag'] or 'n/a').upper():<6} {sc:>3}  {rep['root']['verdict']:<15} "
+              f"flags H/M/L {rep['flags']['counts']['high']}/{rep['flags']['counts']['medium']}/{rep['flags']['counts']['low']}  -> {files['analysis'].parent}")
+    out = cfg.paths.reports_dir / "universe_summary.csv"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(rows).to_csv(out, index=False, float_format="%.4f")
+    print(f"Wrote {out}")
+    return 0 if all(r.get("status") == "ok" for r in rows) else 2
+
+
+def cmd_metrics(args) -> int:
+    from .registry import load_all, to_markdown
+
+    reg = load_all()
+    if args.markdown:
+        cfg_paths = Paths.default(args.root)
+        out = cfg_paths.root / "docs" / "metrics.md"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(to_markdown())
+        print(f"Wrote {out} ({len(reg)} metrics)")
+        return 0
+    for m in reg.values():
+        print(f"{m.id:<34} {m.pillar:<20} {m.unit:<7} {m.direction:<8} {','.join(m.applies):<10} {m.role:<9} {m.equation[:80]}")
+    print(f"{len(reg)} metrics")
+    return 0
+
+
+def cmd_rules(args) -> int:
+    from .flags import validate_rules
+
+    cfg = _cfg(args)
+    validate_rules(cfg.flags)
+    if args.markdown:
+        lines = ["# Red-flag rules", "", "Generated from `config/flags.yaml` by `python -m engine rules --markdown`.", "",
+                 "| id | pillar | severity | applies | name | condition |", "|---|---|---|---|---|---|"]
+        for r in cfg.flags:
+            cond = r["condition"].replace("|", "\\|")
+            lines.append(f"| {r['id']} | {r['pillar']} | {r['severity']} | {', '.join(r['applies'])} | {r['name']} | `{cond}` |")
+        out = cfg.paths.root / "docs" / "flags.md"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text("\n".join(lines) + "\n")
+        print(f"Wrote {out} ({len(cfg.flags)} rules)")
+        return 0
+    for r in cfg.flags:
+        print(f"{r['id']:<4} {r['pillar']:<20} {r['severity']:<7} {','.join(r['applies']):<8} {r['name']}")
+    print(f"{len(cfg.flags)} rules")
+    return 0
+
+
+def cmd_build_benchmarks(args) -> int:
+    from .benchmarks import write
+
+    p = write(Paths.default(args.root).root)
+    print(f"Wrote {p}")
+    return 0
+
+
+def build_parser() -> argparse.ArgumentParser:
+    ap = argparse.ArgumentParser(prog="python -m engine", description="Equity diagnostic engine (Screener.in exports, offline).")
+    ap.add_argument("--root", help="project root (default: repository root or $EQUITY_ENGINE_ROOT)")
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    p = sub.add_parser("ingest", help="parse + standardise raw exports into data/processed/<TICKER>/")
+    p.add_argument("tickers", nargs="*")
+    p.add_argument("--all", action="store_true")
+    p.set_defaults(fn=cmd_ingest)
+    p = sub.add_parser("analyse", help="analyse one company -> reports/<TICKER>/analysis.json + metrics.csv")
+    p.add_argument("ticker")
+    p.add_argument("--asof", help="fiscal year, e.g. FY18 (default: universe.csv asof; 'latest' = newest data)")
+    p.add_argument("--beta", type=float, help="override the levered beta")
+    p.add_argument("--archetype", help="override the archetype from universe.csv")
+    p.add_argument("--quiet", action="store_true")
+    p.set_defaults(fn=cmd_analyse)
+    p = sub.add_parser("analyse-all", help="analyse every company in data/universe.csv")
+    p.add_argument("--asof", help="override every row's asof")
+    p.set_defaults(fn=cmd_analyse_all)
+    p = sub.add_parser("metrics", help="list the metric registry")
+    p.add_argument("--markdown", action="store_true", help="write docs/metrics.md")
+    p.set_defaults(fn=cmd_metrics)
+    p = sub.add_parser("rules", help="list / validate red-flag rules")
+    p.add_argument("--markdown", action="store_true", help="write docs/flags.md")
+    p.set_defaults(fn=cmd_rules)
+    p = sub.add_parser("build-benchmarks", help="rebuild config/sector_benchmarks.yaml from data/external/damodaran/*.xls")
+    p.set_defaults(fn=cmd_build_benchmarks)
+    return ap
+
+
+def main(argv: Optional[List[str]] = None) -> int:
+    warnings.filterwarnings("ignore", category=RuntimeWarning)
+    args = build_parser().parse_args(argv)
+    try:
+        return int(args.fn(args) or 0)
+    except (ConfigError, FileNotFoundError, ValueError) as e:
+        print(f"error: {e}", file=sys.stderr)
+        return 1

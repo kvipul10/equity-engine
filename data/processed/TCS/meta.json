@@ -1,0 +1,16 @@
+{
+  "ticker": "TCS",
+  "company": "TATA CONSULTANCY SERVICES LTD",
+  "archetype": "it_services",
+  "family": "non-financial",
+  "source_file": "TCS.xlsx",
+  "sha256": "c5f7305220df3947d342213e73496b126d3e77965b62c7357e1619455bc86ad0",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-09-30",
+  "consolidated_inferred": true,
+  "asof": null
+}
