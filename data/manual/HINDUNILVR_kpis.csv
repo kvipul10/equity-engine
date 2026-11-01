@@ -1,0 +1,9 @@
+metric,fiscal_year,value,unit,source_url,source_date,verified
+ad_promo_cr,FY24,6489,Rs cr (consolidated),https://www.exchange4media.com/marketing-news/hul-trims-ad-spends-in-fy25-45-to-rs-6199-cr-142897.html,2025-04,N
+ad_promo_cr,FY25,6199,Rs cr (consolidated),https://www.exchange4media.com/marketing-news/hul-trims-ad-spends-in-fy25-45-to-rs-6199-cr-142897.html,2025-04,N
+ad_promo_cr,FY26,6261,Rs cr (consolidated; continuing operations ex ice cream),https://marketingmind.in/hul-reports-fy-twenty-six-adex-at-rs-six-thousand-two-hundred-and-sixty-one-cr-nearly-four-point-five-percent-yoy/,2026 (FY26 results coverage),N
+volume_growth_pct,FY22,3,% (underlying volume growth),https://www.hul.co.in/news/press-releases/2022/results-for-quarter-full-year-ended-31st-march-2022/,2022-04-28,N
+volume_growth_pct,FY23,5,% (underlying volume growth),https://www.hul.co.in/news/press-releases/2023/march-quarter-fy-2023-results/,2023-04-27,N
+volume_growth_pct,FY24,2,% (underlying volume growth),https://www.hul.co.in/files/1167108a-d524-4489-af5e-5114ff741569/hul-earnings-apr24-2024-v2-website-upload.pdf,2024-04-24,N
+volume_growth_pct,FY25,2,% (underlying volume growth),https://www.hul.co.in/news/press-releases/2025/financial-results-for-march-quarter-and-financial-year-2025/,2025-04-24,N
+volume_growth_pct,FY26,4,% (underlying volume growth),https://www.hul.co.in/news/press-releases/2026/march-quarter-and-financial-year-2026-results/,2026-04-30,N
