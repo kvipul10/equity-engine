@@ -135,10 +135,10 @@
     "text": "Destroys value: ROIC 6.3% vs WACC 15.3% in FY26 -> economic profit Rs -1,696 cr. Economic profit was positive in 0 of 9 years; trend improving."
   },
   "overall": {
-    "score": 52.749938,
+    "score": 54.739541,
     "rag": "amber",
     "coverage": 1.0,
-    "high_flags": 2,
+    "high_flags": 1,
     "capped_by_flags": false,
     "weights_basis": "sector:real_estate"
   },
@@ -287,8 +287,8 @@
       ]
     },
     "cash_quality": {
-      "score": 68.326647,
-      "rag": "amber",
+      "score": 69.102643,
+      "rag": "green",
       "weight": 25.0,
       "n_scored": 9,
       "n_metrics": 10,
@@ -298,11 +298,9 @@
         "red": 1,
         "n/a": 1
       },
-      "capped_by_flags": [
-        "RE01"
-      ],
+      "capped_by_flags": [],
       "name": "5 Cash and earnings quality",
-      "summary": "5 Cash and earnings quality: AMBER (68/100, 9 scored metrics). Strongest: CFO / collections 0.47 (green), Exceptional items frequency (5y) 0 (green). Weakest: Collections / pre-sales 0.67 (red), FCF / PAT (5y cumulative) 1.28 (green). Flags: RE01.",
+      "summary": "5 Cash and earnings quality: GREEN (69/100, 9 scored metrics). Strongest: CFO / collections 0.47 (green), Exceptional items frequency (5y) 0 (green). Weakest: Collections / average pre-sales (3y) 0.72 (red), FCF / PAT (5y cumulative) 1.28 (green).",
       "metrics": [
         "cfo_to_ebitda",
         "fcf_to_pat",
@@ -320,28 +318,27 @@
         "beneish_lvgi",
         "beneish_tata",
         "collections_to_presales",
+        "collections_to_presales_3y",
         "cfo_to_collections",
         "cfo_to_presales"
       ],
-      "flags_triggered": [
-        "RE01"
-      ]
+      "flags_triggered": []
     },
     "balance_sheet": {
-      "score": 81.196895,
+      "score": 82.978784,
       "rag": "green",
       "weight": 15.0,
-      "n_scored": 8,
+      "n_scored": 7,
       "n_metrics": 8,
       "rag_counts": {
         "green": 7,
-        "amber": 1,
+        "amber": 0,
         "red": 0,
         "n/a": 0
       },
       "capped_by_flags": [],
       "name": "6 Balance sheet",
-      "summary": "6 Balance sheet: GREEN (81/100, 8 scored metrics). Strongest: Net debt / pre-sales -0.37x (green), Interest cover 15.73x (green). Weakest: Current ratio (Screener proxy) 1.72x (amber), Debt growth - EBITDA growth -61.2pp (green).",
+      "summary": "6 Balance sheet: GREEN (83/100, 7 scored metrics). Strongest: Net debt / pre-sales -0.37x (green), Interest cover 15.73x (green). Weakest: Current ratio (Screener proxy) 2.50x (green), Net debt / equity -0.16x (green).",
       "metrics": [
         "net_debt_to_ebitda",
         "net_debt_to_equity",
@@ -359,20 +356,20 @@
       "flags_triggered": []
     },
     "capital_allocation": {
-      "score": 63.937465,
+      "score": 70.851903,
       "rag": "green",
       "weight": 5.0,
       "n_scored": 3,
       "n_metrics": 5,
       "rag_counts": {
-        "green": 1,
-        "amber": 2,
+        "green": 2,
+        "amber": 1,
         "red": 0,
         "n/a": 2
       },
       "capped_by_flags": [],
       "name": "7 Capital allocation",
-      "summary": "7 Capital allocation: GREEN (64/100, 3 scored metrics). Strongest: Dividends / FCF 0.36 (green), Share count change 0.0% (amber). Weakest: ROIC change after acquisition spend +0.3pp (amber), Share count change 0.0% (amber).",
+      "summary": "7 Capital allocation: GREEN (71/100, 3 scored metrics). Strongest: Dividends / FCF 0.36 (green), ROIC change after acquisition spend +0.3pp (green). Weakest: Share count change 0.0% (amber), ROIC change after acquisition spend +0.3pp (green).",
       "metrics": [
         "reinvestment_rate",
         "payout_ratio",
@@ -381,6 +378,7 @@
         "shareholder_yield",
         "dividend_to_fcf",
         "non_capex_investing_3y",
+        "acquisition_spend_3y",
         "acquisition_roic_delta_3y",
         "promoter_holding",
         "promoter_holding_change_3y",
@@ -389,20 +387,20 @@
       "flags_triggered": []
     },
     "valuation": {
-      "score": 11.82598,
+      "score": 23.651961,
       "rag": "red",
       "weight": 10.0,
-      "n_scored": 7,
-      "n_metrics": 7,
+      "n_scored": 4,
+      "n_metrics": 5,
       "rag_counts": {
         "green": 1,
         "amber": 0,
-        "red": 6,
-        "n/a": 0
+        "red": 3,
+        "n/a": 1
       },
       "capped_by_flags": [],
       "name": "8 Valuation",
-      "summary": "8 Valuation: RED (12/100, 7 scored metrics). Strongest: P/E percentile vs own history 37.5% (green), P/B percentile vs own history 80.0% (red). Weakest: Implied - delivered growth +56.5pp (red), P/B / justified P/B 9.77x (red). Flags: V01, V03, V04.",
+      "summary": "8 Valuation: RED (24/100, 4 scored metrics). Strongest: P/E percentile vs own history 37.5% (green), P/B percentile vs own history 80.0% (red). Weakest: EV/EBITDA percentile vs own history 100.0% (red), EV/Sales percentile vs own history 90.0% (red).",
       "metrics": [
         "pe",
         "pe_percentile_10y",
@@ -414,16 +412,9 @@
         "ev_sales_percentile_10y",
         "implied_growth_reverse_dcf",
         "implied_minus_delivered_growth",
-        "justified_pb",
-        "pb_to_justified_pb",
-        "ev_ic",
-        "ev_ic_to_roic_wacc"
+        "ev_ic"
       ],
-      "flags_triggered": [
-        "V01",
-        "V03",
-        "V04"
-      ]
+      "flags_triggered": []
     }
   },
   "dupont": {
@@ -2831,22 +2822,6 @@
         ]
       },
       {
-        "id": "RE01",
-        "name": "Bookings not converting to cash",
-        "pillar": "cash_quality",
-        "severity": "high",
-        "origin": "config/sectors/real_estate.yaml",
-        "status": "triggered",
-        "values": {
-          "r": 0.671052
-        },
-        "text": "Collections were only 67.1% of the year's pre-sales: bookings are not turning into cash (stretched buyers, slow construction or cancellations).",
-        "condition": "m('collections_to_presales') < 0.70",
-        "applies": [
-          "real_estate"
-        ]
-      },
-      {
         "id": "G01",
         "name": "Profit growth far ahead of revenue growth",
         "pillar": "growth",
@@ -2899,41 +2874,6 @@
         ]
       },
       {
-        "id": "V01",
-        "name": "Priced for acceleration",
-        "pillar": "valuation",
-        "severity": "medium",
-        "origin": "config/flags.yaml",
-        "status": "triggered",
-        "values": {
-          "imp": 0.647685,
-          "gap": 0.565207
-        },
-        "text": "Today's EV implies 64.8% a year FCF growth for 10 years, +56.5pp above the growth delivered over the last 5 years: the price needs an acceleration that has not happened yet.",
-        "condition": "m('implied_minus_delivered_growth') > 0.05",
-        "applies": [
-          "NF"
-        ]
-      },
-      {
-        "id": "V03",
-        "name": "P/B well above what returns justify",
-        "pillar": "valuation",
-        "severity": "medium",
-        "origin": "config/flags.yaml",
-        "status": "triggered",
-        "values": {
-          "pb": 3.764405,
-          "j": 0.385319,
-          "r": 9.769577
-        },
-        "text": "P/B of 3.8x is 9.8x the 0.4x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise.",
-        "condition": "m('pb_to_justified_pb') > 1.5",
-        "applies": [
-          "ALL"
-        ]
-      },
-      {
         "id": "G04",
         "name": "Erratic revenue growth",
         "pillar": "growth",
@@ -2981,23 +2921,6 @@
         "applies": [
           "NF"
         ]
-      },
-      {
-        "id": "V04",
-        "name": "EV/IC rich relative to ROIC/WACC",
-        "pillar": "valuation",
-        "severity": "low",
-        "origin": "config/flags.yaml",
-        "status": "triggered",
-        "values": {
-          "r": 21.315836,
-          "evic": 8.69288
-        },
-        "text": "EV/IC is 8.7x, 21.3x what current ROIC/WACC would support in steady state.",
-        "condition": "m('ev_ic_to_roic_wacc') > 1.5",
-        "applies": [
-          "NF"
-        ]
       }
     ],
     "clear": [
@@ -3025,6 +2948,7 @@
       "A05",
       "A07",
       "V02",
+      "RE01",
       "RE03",
       "RE04"
     ],
@@ -3090,15 +3014,25 @@
         "missing": "promoter_holding_change_3y FY26"
       },
       {
+        "id": "V01",
+        "name": "Priced for acceleration",
+        "missing": "implied_minus_delivered_growth FY26"
+      },
+      {
+        "id": "V04",
+        "name": "EV/IC rich relative to ROIC/WACC",
+        "missing": "ev_ic_to_roic_wacc (not available for this company)"
+      },
+      {
         "id": "RE02",
         "name": "Inventory piling up",
         "missing": "inventory_months FY26 [n/a in FY26: missing unsold_inventory_cr FY26 (manual KPI)]"
       }
     ],
     "counts": {
-      "high": 2,
-      "medium": 5,
-      "low": 4
+      "high": 1,
+      "medium": 3,
+      "low": 3
     }
   },
   "metrics": {
@@ -4176,6 +4110,48 @@
       "note": null,
       "text": "Non-capex investing (3y, % of IC): 22.9% [informational (neutral direction)]"
     },
+    "acquisition_spend_3y": {
+      "name": "Acquisition-like spend (3y, % of IC)",
+      "pillar": "capital_allocation",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "sum3(max(0, -CFI - capex proxy - (change in cash + investments - net cash flow))) / IC_t-3",
+      "formula": null,
+      "origin": "engine",
+      "meaning": "Investing outflows beyond capex that did not end up as cash or investments on the balance sheet (stakes and businesses bought), over 3 years, relative to opening invested capital. Treasury moves are netted out.",
+      "value": 0.134444,
+      "value_text": "13.4%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": 0.035865,
+        "FY21": 0.058543,
+        "FY22": 0.0,
+        "FY23": 0.0,
+        "FY24": 0.033071,
+        "FY25": 0.130598,
+        "FY26": 0.134444
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.039949,
+        "normalised_slope": 0.670024,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "rising"
+      },
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Acquisition-like spend (3y, % of IC): 13.4% [informational (neutral direction)]"
+    },
     "acquisition_roic_delta_3y": {
       "name": "ROIC change after acquisition spend",
       "pillar": "capital_allocation",
@@ -4183,10 +4159,10 @@
       "unit": "pp",
       "direction": "higher",
       "kind": "annual",
-      "equation": "ROIC_t - ROIC_t-3 if non_capex_investing_3y > 10%, else n/a",
+      "equation": "ROIC_t - ROIC_t-3 if acquisition_spend_3y > 10%, else n/a",
       "formula": null,
       "origin": "engine",
-      "meaning": "When a company spent materially beyond capex (> 10% of IC over 3 years), did ROIC subsequently rise or fall?",
+      "meaning": "When a company spent materially on acquisitions (> 10% of IC over 3 years, treasury moves excluded), did ROIC subsequently rise or fall?",
       "value": 0.003475,
       "value_text": "+0.3pp",
       "series": {
@@ -4197,7 +4173,7 @@
         "FY21": null,
         "FY22": null,
         "FY23": null,
-        "FY24": 0.039943,
+        "FY24": null,
         "FY25": 0.039723,
         "FY26": 0.003475
       },
@@ -4206,17 +4182,10 @@
         "basis": "band",
         "rag": "green"
       },
-      "trend": {
-        "slope_per_year": -0.018234,
-        "normalised_slope": -0.657949,
-        "n": 3,
-        "window": "FY24-FY26",
-        "score": 0.000193,
-        "label": "deteriorating"
-      },
+      "trend": null,
       "stability": null,
-      "composite": 49.784144,
-      "rag": "amber",
+      "composite": 70.527457,
+      "rag": "green",
       "band": {
         "red": -0.03,
         "green": 0.0,
@@ -4229,7 +4198,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "ROIC change after acquisition spend: +0.3pp AMBER (level green vs indicative band (red <= -3.0pp, green >= +0.0pp); trend deteriorating -1.8pp/yr)"
+      "text": "ROIC change after acquisition spend: +0.3pp GREEN (level green vs indicative band (red <= -3.0pp, green >= +0.0pp))"
     },
     "promoter_holding": {
       "name": "Promoter holding",
@@ -4547,47 +4516,47 @@
       "unit": "x",
       "direction": "higher",
       "kind": "annual",
-      "equation": "Other assets / Other liabilities",
+      "equation": "(Other assets + Investments) / Other liabilities",
       "formula": null,
       "origin": "engine",
-      "meaning": "Short-term liquidity proxy: the export has no current/non-current split, so other assets / other liabilities is used (Screener's own working-capital split). Excludes short-term debt (inside Borrowings).",
-      "value": 1.715595,
-      "value_text": "1.72x",
+      "meaning": "Short-term liquidity proxy: the export has no current/non-current split, so (other assets + investments) / other liabilities is used. Investments are included because Indian companies hold treasury mainly in liquid funds and bonds, which Screener reports under Investments, not Cash. Excludes short-term debt (inside Borrowings).",
+      "value": 2.499121,
+      "value_text": "2.50x",
       "series": {
-        "FY17": 3.728384,
-        "FY18": 4.051419,
-        "FY19": 2.490064,
-        "FY20": 2.402262,
-        "FY21": 2.557352,
-        "FY22": 2.48937,
-        "FY23": 2.445268,
-        "FY24": 2.362869,
-        "FY25": 1.995871,
-        "FY26": 1.715595
+        "FY17": 3.847182,
+        "FY18": 6.727864,
+        "FY19": 3.829329,
+        "FY20": 3.793878,
+        "FY21": 4.311247,
+        "FY22": 4.351365,
+        "FY23": 4.131841,
+        "FY24": 3.723132,
+        "FY25": 2.973696,
+        "FY26": 2.499121
       },
       "level": {
-        "score": 81.039685,
+        "score": 100.0,
         "basis": "band",
         "rag": "green"
       },
       "trend": {
-        "slope_per_year": -0.199695,
-        "normalised_slope": -0.090696,
+        "slope_per_year": -0.486263,
+        "normalised_slope": -0.137524,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 14.016426,
+        "score": 6.005899,
         "label": "deteriorating"
       },
       "stability": {
-        "cv": 0.27444,
-        "sd": 0.720088,
+        "cv": 0.276994,
+        "sd": 1.113202,
         "n": 10,
-        "score": 45.652387,
+        "score": 45.320467,
         "label": "moderate",
         "window": "FY17-FY26"
       },
-      "composite": 58.975776,
-      "rag": "amber",
+      "composite": 68.299545,
+      "rag": "green",
       "band": {
         "red": 1.0,
         "green": 1.5,
@@ -4600,32 +4569,32 @@
       },
       "reason": null,
       "note": null,
-      "text": "Current ratio (Screener proxy): 1.72x AMBER (level green vs indicative band (red <= 1.00x, green >= 1.50x); trend deteriorating -0.20x/yr; moderate (CV 0.27))"
+      "text": "Current ratio (Screener proxy): 2.50x GREEN (level green vs indicative band (red <= 1.00x, green >= 1.50x); trend deteriorating -0.49x/yr; moderate (CV 0.28))"
     },
     "cash_to_st_borrowings": {
-      "name": "Cash / short-term borrowings",
+      "name": "Cash and investments / short-term borrowings",
       "pillar": "balance_sheet",
       "role": "scored",
       "unit": "x",
       "direction": "higher",
       "kind": "annual",
-      "equation": "Cash & bank / short-term borrowings (manual) or / Borrowings; = 99 when there is no debt",
+      "equation": "(Cash & bank + Investments) / short-term borrowings (manual) or / Borrowings; = 99 when there is no debt",
       "formula": null,
       "origin": "engine",
-      "meaning": "Cash cover for debt falling due soon. Uses manual short_term_borrowings when supplied, otherwise total borrowings (conservative: treats all debt as short-term).",
-      "value": 25.324136,
-      "value_text": "25.32x",
+      "meaning": "Liquid cover for debt falling due soon: cash plus investments (treasury is mostly held in liquid funds and bonds, reported under Investments). Uses manual short_term_borrowings when supplied, otherwise total borrowings (conservative: treats all debt as short-term).",
+      "value": 96.239138,
+      "value_text": "96.24x",
       "series": {
-        "FY17": 0.140364,
-        "FY18": 0.130236,
-        "FY19": 0.281921,
-        "FY20": 0.298726,
-        "FY21": 0.20432,
-        "FY22": 0.222778,
-        "FY23": 0.682282,
-        "FY24": 0.907008,
-        "FY25": 1.057364,
-        "FY26": 25.324136
+        "FY17": 0.181774,
+        "FY18": 1.321236,
+        "FY19": 1.50153,
+        "FY20": 2.590092,
+        "FY21": 3.071966,
+        "FY22": 4.952631,
+        "FY23": 6.525469,
+        "FY24": 5.072973,
+        "FY25": 6.257709,
+        "FY26": 96.239138
       },
       "level": {
         "score": 100.0,
@@ -4633,22 +4602,22 @@
         "rag": "green"
       },
       "trend": {
-        "slope_per_year": 5.05778,
-        "normalised_slope": 0.896974,
+        "slope_per_year": 18.230525,
+        "normalised_slope": 0.76568,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 99.999998,
+        "score": 99.999978,
         "label": "improving"
       },
       "stability": {
-        "cv": 2.693166,
-        "sd": 7.877278,
+        "cv": 2.302574,
+        "sd": 29.407208,
         "n": 10,
-        "score": 0.045521,
+        "score": 0.138954,
         "label": "volatile",
         "window": "FY17-FY26"
       },
-      "composite": 85.006828,
+      "composite": 85.020838,
       "rag": "green",
       "band": {
         "red": 0.2,
@@ -4662,7 +4631,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Cash / short-term borrowings: 25.32x GREEN (level green vs indicative band (red <= 0.20x, green >= 1.00x); trend improving 5.06x/yr; volatile (CV 2.69))"
+      "text": "Cash and investments / short-term borrowings: 96.24x GREEN (level green vs indicative band (red <= 0.20x, green >= 1.00x); trend improving 18.23x/yr; volatile (CV 2.30))"
     },
     "debt_vs_ebitda_growth": {
       "name": "Debt growth - EBITDA growth",
@@ -4689,11 +4658,7 @@
         "FY25": -0.144118,
         "FY26": -0.612376
       },
-      "level": {
-        "score": 100.0,
-        "basis": "band",
-        "rag": "green"
-      },
+      "level": null,
       "trend": {
         "slope_per_year": -0.001779,
         "normalised_slope": -0.006796,
@@ -4710,8 +4675,8 @@
         "label": "volatile",
         "window": "FY18-FY26"
       },
-      "composite": 73.606728,
-      "rag": "green",
+      "composite": null,
+      "rag": null,
       "band": {
         "red": 0.1,
         "green": 0.0,
@@ -4722,9 +4687,9 @@
         "rationale": "Debt growing 10pp a year faster than EBITDA erodes coverage quickly.",
         "centre": null
       },
-      "reason": null,
+      "reason": "debt is immaterial (net debt below 0.5x EBITDA): growth in leases or working-capital lines carries no credit risk (net_debt_to_ebitda -5.14 < 0.5)",
       "note": null,
-      "text": "Debt growth - EBITDA growth: -61.2pp GREEN (level green vs indicative band (green <= +0.0pp, red >= +10.0pp); trend stable -0.2pp/yr; volatile (CV 1.42))"
+      "text": "Debt growth - EBITDA growth: -61.2pp [debt is immaterial (net debt below 0.5x EBITDA): growth in leases or working-capital lines carries no credit risk (net_debt_to_ebitda -5.14 < 0.5)]"
     },
     "altman_x1": {
       "name": "Altman Z'' X1",
@@ -8093,12 +8058,12 @@
       "unit": "pct",
       "direction": "neutral",
       "kind": "point",
-      "equation": "solve g: EV = sum_{t=1..10} F0(1+g)^t/(1+WACC)^t + F10(1+gT)/((WACC-gT)(1+WACC)^10), F0 = NOPAT0 x (1 - gT/RONIC), RONIC = 3y avg ROIC (capped at 100%)",
+      "equation": "solve g: EV = sum_{t=1..10} F0(1+g)^t/(1+WACC)^t + F10(1+gT)/((WACC-gT)(1+WACC)^10), F0 = NOPAT0 x (1 - gT/RONIC), RONIC = 3y avg ROIC (capped at 100%); n/m if RONIC <= WACC",
       "formula": null,
       "origin": "engine",
       "meaning": "Annual free-cash-flow growth for the next 10 years that today's enterprise value implies, starting from the steady-state FCF the business generates at its 3-year average ROIC, then growing at the terminal rate.",
-      "value": 0.647685,
-      "value_text": "64.8%",
+      "value": null,
+      "value_text": "n/a",
       "series": {},
       "level": null,
       "trend": null,
@@ -8107,8 +8072,8 @@
       "rag": "n/a",
       "band": null,
       "reason": "informational (neutral direction)",
-      "note": "solved; EV 142,047 cr, NOPAT 1,168 cr, base FCF 275 cr, WACC 15.35%, RONIC 7.9%, terminal g 6.0%, 10y",
-      "text": "Reverse-DCF implied FCF growth (10y): 64.8% [informational (neutral direction)] Note: solved; EV 142,047 cr, NOPAT 1,168 cr, base FCF 275 cr, WACC 15.35%, RONIC 7.9%, terminal g 6.0%, 10y"
+      "note": "n/m: ROIC 7.9% <= WACC 15.35%: growth at these returns adds no value, so the price implies rising returns (see P/B and EV/IC versus justified)",
+      "text": "Reverse-DCF implied FCF growth (10y): n/a [informational (neutral direction)] Note: n/m: ROIC 7.9% <= WACC 15.35%: growth at these returns adds no value, so the price implies rising returns (see P/B and EV/IC versus justified)"
     },
     "implied_minus_delivered_growth": {
       "name": "Implied - delivered growth",
@@ -8121,18 +8086,14 @@
       "formula": null,
       "origin": "engine",
       "meaning": "How much faster the market expects NOPAT to grow than it did over the last 5 years (positive = priced for acceleration).",
-      "value": 0.565207,
-      "value_text": "+56.5pp",
+      "value": null,
+      "value_text": "n/a",
       "series": {},
-      "level": {
-        "score": 0.0,
-        "basis": "band",
-        "rag": "red"
-      },
+      "level": null,
       "trend": null,
       "stability": null,
-      "composite": 0.0,
-      "rag": "red",
+      "composite": null,
+      "rag": "n/a",
       "band": {
         "red": 0.05,
         "green": 0.0,
@@ -8143,70 +8104,9 @@
         "rationale": "Price requiring 5pp+ faster growth than delivered over the last 5 years = expectations risk; at or below delivered = undemanding.",
         "centre": null
       },
-      "reason": null,
+      "reason": "no value for the as-of year",
       "note": null,
-      "text": "Implied - delivered growth: +56.5pp RED (level red vs indicative band (green <= +0.0pp, red >= +5.0pp))"
-    },
-    "justified_pb": {
-      "name": "Justified P/B",
-      "pillar": "valuation",
-      "role": "scored",
-      "unit": "x",
-      "direction": "neutral",
-      "kind": "point",
-      "equation": "(ROE - g) / (Ke - g); ROE = 3y avg, g = min(ROE x (1 - 3y avg payout), terminal g)",
-      "formula": null,
-      "origin": "engine",
-      "meaning": "P/B a single-stage residual-income model supports: (ROE - g) / (Ke - g) with sustainable ROE and growth.",
-      "value": 0.385319,
-      "value_text": "0.39x",
-      "series": {},
-      "level": null,
-      "trend": null,
-      "stability": null,
-      "composite": null,
-      "rag": "n/a",
-      "band": null,
-      "reason": "informational (neutral direction)",
-      "note": "ROE 9.3%, g 5.4%, Ke 15.37%",
-      "text": "Justified P/B: 0.39x [informational (neutral direction)] Note: ROE 9.3%, g 5.4%, Ke 15.37%"
-    },
-    "pb_to_justified_pb": {
-      "name": "P/B / justified P/B",
-      "pillar": "valuation",
-      "role": "scored",
-      "unit": "x",
-      "direction": "lower",
-      "kind": "point",
-      "equation": "current P/B / justified P/B (justified > 0)",
-      "formula": null,
-      "origin": "engine",
-      "meaning": "Market P/B relative to what returns justify: above 1 = paying for more than current ROE supports.",
-      "value": 9.769577,
-      "value_text": "9.77x",
-      "series": {},
-      "level": {
-        "score": 0.0,
-        "basis": "band",
-        "rag": "red"
-      },
-      "trend": null,
-      "stability": null,
-      "composite": 0.0,
-      "rag": "red",
-      "band": {
-        "red": 1.5,
-        "green": 1.0,
-        "origin": "config/bands.yaml (generic)",
-        "source_type": "indicative",
-        "source_url": null,
-        "as_of": "2026-11-01",
-        "rationale": "Paying 50%+ above the P/B that sustainable ROE justifies needs ROE to rise; at or below 1.0x the price is covered by current returns.",
-        "centre": null
-      },
-      "reason": null,
-      "note": null,
-      "text": "P/B / justified P/B: 9.77x RED (level red vs indicative band (green <= 1.00x, red >= 1.50x))"
+      "text": "Implied - delivered growth: n/a [no value for the as-of year]"
     },
     "ev_ic": {
       "name": "EV / invested capital",
@@ -8231,43 +8131,6 @@
       "reason": "informational (neutral direction)",
       "note": null,
       "text": "EV / invested capital: 8.69x [informational (neutral direction)]"
-    },
-    "ev_ic_to_roic_wacc": {
-      "name": "(EV/IC) / (ROIC/WACC)",
-      "pillar": "valuation",
-      "role": "scored",
-      "unit": "x",
-      "direction": "lower",
-      "kind": "point",
-      "equation": "(EV / IC) / (ROIC / WACC), ROIC = latest, WACC = current",
-      "formula": null,
-      "origin": "engine",
-      "meaning": "In a no-growth steady state EV/IC = ROIC/WACC. Above 1 = the market pays for growth or improvement beyond today's returns; below 1 = priced for decline.",
-      "value": 21.315836,
-      "value_text": "21.32x",
-      "series": {},
-      "level": {
-        "score": 0.0,
-        "basis": "band",
-        "rag": "red"
-      },
-      "trend": null,
-      "stability": null,
-      "composite": 0.0,
-      "rag": "red",
-      "band": {
-        "red": 1.5,
-        "green": 1.0,
-        "origin": "config/bands.yaml (generic)",
-        "source_type": "indicative",
-        "source_url": null,
-        "as_of": "2026-11-01",
-        "rationale": "In steady state EV/IC = ROIC/WACC; 50%+ above that requires growth or rising returns to be justified.",
-        "centre": null
-      },
-      "reason": null,
-      "note": null,
-      "text": "(EV/IC) / (ROIC/WACC): 21.32x RED (level red vs indicative band (green <= 1.00x, red >= 1.50x))"
     },
     "presales_growth": {
       "name": "Pre-sales growth",
@@ -8357,12 +8220,12 @@
       "pillar": "cash_quality",
       "role": "scored",
       "unit": "ratio",
-      "direction": "higher",
+      "direction": "neutral",
       "kind": "annual",
       "equation": "Collections / pre-sales",
       "formula": "kpi('collections_cr') / kpi('presales_cr')",
       "origin": "config/sectors/real_estate.yaml",
-      "meaning": "Whether bookings are turning into cash.",
+      "meaning": "Whether bookings are turning into cash (one year; context).",
       "value": 0.671052,
       "value_text": "0.67",
       "series": {
@@ -8377,14 +8240,49 @@
         "FY25": 0.554728,
         "FY26": 0.671052
       },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Collections / pre-sales: 0.67 [informational (neutral direction)]"
+    },
+    "collections_to_presales_3y": {
+      "name": "Collections / average pre-sales (3y)",
+      "pillar": "cash_quality",
+      "role": "scored",
+      "unit": "ratio",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "Collections / average pre-sales of the last 3 years (>= 2 needed)",
+      "formula": "kpi('collections_cr') / mean_last('kpi:presales_cr', 3, 2)",
+      "origin": "config/sectors/real_estate.yaml",
+      "meaning": "Whether bookings are turning into cash, allowing for construction-linked payment plans.",
+      "value": 0.722268,
+      "value_text": "0.72",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": 0.580172,
+        "FY25": 0.691729,
+        "FY26": 0.722268
+      },
       "level": {
-        "score": 28.508663,
+        "score": 37.044623,
         "basis": "band",
-        "rag": "red"
+        "rag": "amber"
       },
       "trend": null,
       "stability": null,
-      "composite": 28.508663,
+      "composite": 37.044623,
       "rag": "red",
       "band": {
         "red": 0.7,
@@ -8393,12 +8291,12 @@
         "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
-        "rationale": "Healthy developers collect 85-100% of a year's bookings value within the cycle; under 70% means bookings are not converting.",
+        "rationale": "Same thresholds as collections / pre-sales, on the 3-year average of bookings so that a launch-heavy year (collections lag bookings under construction-linked plans) is not read as non-conversion.",
         "centre": null
       },
       "reason": null,
       "note": null,
-      "text": "Collections / pre-sales: 0.67 RED (level red vs indicative band (red <= 0.70, green >= 0.90))"
+      "text": "Collections / average pre-sales (3y): 0.72 RED (level amber vs indicative band (red <= 0.70, green >= 0.90))"
     },
     "cfo_to_collections": {
       "name": "CFO / collections",
@@ -8672,6 +8570,11 @@
         "reason": "Customer receivables depend on milestone billing, not credit terms"
       },
       {
+        "id": "ev_ic_to_roic_wacc",
+        "name": "EV/IC / justified EV/IC",
+        "reason": "Invested capital carries land at historical cost, so the steady-state EV/IC test understates what the land bank supports (Session 4)"
+      },
+      {
         "id": "fixed_asset_turnover",
         "name": "Fixed-asset turnover",
         "reason": "Development assets sit in inventory, not net block"
@@ -8682,6 +8585,11 @@
         "reason": "As asset turnover"
       },
       {
+        "id": "justified_pb",
+        "name": "Justified P/B",
+        "reason": "Land is carried at historical cost and profit is booked on completion, so book value and ROE understate the land bank; developers are valued on NAV (Session 4)"
+      },
+      {
         "id": "nwc_days",
         "name": "Net working capital days",
         "reason": "Working capital is the project book itself"
@@ -8690,6 +8598,11 @@
         "id": "operating_cycle",
         "name": "Operating cycle",
         "reason": "Project cycles span years; inventory months replaces it"
+      },
+      {
+        "id": "pb_to_justified_pb",
+        "name": "P/B / justified P/B",
+        "reason": "As justified P/B"
       },
       {
         "id": "receivables_vs_revenue_growth",
@@ -8787,36 +8700,30 @@
       "cfo_to_collections",
       "cfo_to_ebitda",
       "cfo_to_pat_5y",
-      "collections_to_presales",
+      "collections_to_presales_3y",
       "current_ratio_proxy",
       "cwip_to_net_block",
-      "debt_vs_ebitda_growth",
       "dividend_to_fcf",
       "ebitda_margin_sd_10y",
       "ev_ebitda_percentile_10y",
-      "ev_ic_to_roic_wacc",
       "ev_sales_percentile_10y",
       "exceptional_frequency_5y",
       "exceptional_size_5y",
       "fcf_to_pat",
       "fcf_to_pat_5y",
-      "implied_minus_delivered_growth",
       "net_debt_to_equity",
       "net_debt_to_presales",
       "organic_capital_share_3y",
       "other_income_to_pbt",
       "pat_growth_volatility",
       "pb_percentile_10y",
-      "pb_to_justified_pb",
       "pe_percentile_10y",
       "q_ebitda_margin_yoy_change",
       "q_revenue_yoy_trend",
       "revenue_growth_volatility",
       "share_count_change"
     ],
-    "sector_flags_triggered": [
-      "RE01"
-    ],
+    "sector_flags_triggered": [],
     "constants": {}
   },
   "manual_kpis": {
@@ -8930,6 +8837,11 @@
       "text": "Estimated exceptional item 9,134 (pre-tax, gain): other income 145.0% of sales vs normal 8.8% (median of other years). Core profit excludes it (tax effect at statutory rate). Override via data/manual (exceptional_items)."
     },
     {
+      "category": "exceptional",
+      "fy": null,
+      "text": "Effective tax rate departs from its own norm in 3 years (FY20, FY25, FY26): too erratic to normalise; reported tax kept."
+    },
+    {
       "category": "minority",
       "fy": null,
       "text": "Net profit differs from PBT - tax in 10 of 10 years (latest 1,793): minority interest (negative) and share of associates/JVs (positive) sit between PBT and net profit, so the export is consolidated and net profit is the owners' share. Equity excludes minority interest (Screener includes NCI in Other Liabilities); ROIC/ROCE capital therefore omits NCI unless data/manual supplies minority_interest."
@@ -8971,7 +8883,7 @@
     }
   ],
   "findings": {
-    "verdict": "DLF LTD destroys value: ROIC 6.3% vs WACC 15.3% in FY26. Overall AMBER (53/100); strongest pillar 6 Balance sheet, weakest 8 Valuation; 2 high-severity flags.",
+    "verdict": "DLF LTD destroys value: ROIC 6.3% vs WACC 15.3% in FY26. Overall AMBER (55/100); strongest pillar 6 Balance sheet, weakest 8 Valuation; 1 high-severity flag.",
     "strengths": [
       {
         "kind": "metric",
@@ -9087,20 +8999,6 @@
       },
       {
         "kind": "flag",
-        "id": "RE01",
-        "pillar": "cash_quality",
-        "severity_label": "high",
-        "severity": 1.0,
-        "confidence": 0.8,
-        "score": 0.8,
-        "name": "Bookings not converting to cash",
-        "covers": [
-          "collections_to_presales"
-        ],
-        "text": "RE01 Bookings not converting to cash: Collections were only 67.1% of the year's pre-sales: bookings are not turning into cash (stretched buyers, slow construction or cancellations)."
-      },
-      {
-        "kind": "flag",
         "id": "G01",
         "pillar": "growth",
         "severity_label": "medium",
@@ -9144,18 +9042,39 @@
         "text": "M02 Profits leaning on other income: Other income is 62.2% of PBT (Rs 1,825 cr, of which an estimated Rs 0 cr is exceptional). Operating profit alone would show a weaker business; check treasury income sustainability and one-offs."
       },
       {
-        "kind": "flag",
-        "id": "V01",
-        "pillar": "valuation",
-        "severity_label": "medium",
-        "severity": 0.6,
+        "kind": "metric",
+        "id": "ebitda_margin",
+        "pillar": "margins",
+        "rag": "red",
+        "severity": 0.150828,
         "confidence": 1.0,
-        "score": 0.6,
-        "name": "Priced for acceleration",
-        "covers": [
-          "implied_minus_delivered_growth"
-        ],
-        "text": "V01 Priced for acceleration: Today's EV implies 64.8% a year FCF growth for 10 years, +56.5pp above the growth delivered over the last 5 years: the price needs an acceleration that has not happened yet."
+        "score": 0.150828,
+        "name": "EBITDA margin",
+        "number": "17.7%",
+        "context": "RED vs band: red ≤ 23.6%, green ≥ 35.4%",
+        "trend": "deteriorating −3.0 pts/yr over FY22-FY26",
+        "chain": "−12.6 pts over 3y; 114% from other expenses % of sales, partly offset by the other drivers; other expenses % of sales rose 60.1% → 74.5%",
+        "chain_source": {
+          "tree": "roe_dupont",
+          "window": "3y"
+        },
+        "text": "EBITDA margin: 17.7% (RED vs band: red ≤ 23.6%, green ≥ 35.4%); deteriorating −3.0 pts/yr over FY22-FY26; −12.6 pts over 3y; 114% from other expenses % of sales, partly offset by the other drivers; other expenses % of sales rose 60.1% → 74.5%"
+      },
+      {
+        "kind": "metric",
+        "id": "ev_ebitda_percentile_10y",
+        "pillar": "valuation",
+        "rag": "red",
+        "severity": 0.392157,
+        "confidence": 0.36,
+        "score": 0.141176,
+        "name": "EV/EBITDA percentile vs own history",
+        "number": "100.0%",
+        "context": "RED vs band: red ≥ 67.0%, green ≤ 33.0%, indicative",
+        "trend": "",
+        "chain": null,
+        "chain_source": null,
+        "text": "EV/EBITDA percentile vs own history: 100.0% (RED vs band: red ≥ 67.0%, green ≤ 33.0%, indicative)"
       }
     ],
     "watch": [
@@ -9243,18 +9162,20 @@
         "text": "Return on capital employed: 6.8% (RED vs band: red ≤ 20.5%, green ≥ 27.2%); improving +0.6 pts/yr over FY22-FY26"
       },
       {
-        "kind": "flag",
-        "id": "G04",
-        "pillar": "growth",
-        "severity_label": "low",
-        "severity": 0.3,
-        "confidence": 1.0,
-        "score": 0.3,
-        "name": "Erratic revenue growth",
-        "covers": [
-          "revenue_growth_volatility"
-        ],
-        "text": "G04 Erratic revenue growth: Annual revenue growth has a standard deviation 12.49x its mean over the last decade: growth is lumpy or cyclical, so trailing CAGRs are a poor guide to the future."
+        "kind": "metric",
+        "id": "current_ratio_proxy",
+        "pillar": "balance_sheet",
+        "rag": "green",
+        "severity": 0.527929,
+        "confidence": 0.6,
+        "score": 0.316758,
+        "name": "Current ratio (Screener proxy)",
+        "number": "2.50x",
+        "context": "GREEN vs band: red ≤ 1.00x, green ≥ 1.50x, indicative",
+        "trend": "deteriorating −0.49x/yr over FY22-FY26",
+        "chain": null,
+        "chain_source": null,
+        "text": "Current ratio (Screener proxy): 2.50x (GREEN vs band: red ≤ 1.00x, green ≥ 1.50x, indicative); deteriorating −0.49x/yr over FY22-FY26"
       }
     ],
     "bull": [
@@ -9285,16 +9206,16 @@
         "text": "R01 ROIC below WACC for three years: ROIC has been below WACC for 3 consecutive years (latest ROIC 6.3%, spread -9.1pp): the business is destroying value on the capital it employs, and growth makes this worse. [R01]"
       },
       {
-        "ref": "RE01",
-        "text": "RE01 Bookings not converting to cash: Collections were only 67.1% of the year's pre-sales: bookings are not turning into cash (stretched buyers, slow construction or cancellations). [RE01]"
-      },
-      {
         "ref": "G01",
         "text": "G01 Profit growth far ahead of revenue growth: Core PAT compounded at 29.4% a year over 3 years while revenue grew 12.9%. Growth driven by margin expansion or lower costs rarely compounds for long; check whether the margin gain is structural or cyclical. [G01]"
       },
       {
         "ref": "G05",
         "text": "G05 Quarterly growth decelerating: Year-on-year revenue growth has slowed by -17.7pp per quarter over the last four quarters and the latest quarter grew only -23.3%. [G05]"
+      },
+      {
+        "ref": "M02",
+        "text": "M02 Profits leaning on other income: Other income is 62.2% of PBT (Rs 1,825 cr, of which an estimated Rs 0 cr is exceptional). Operating profit alone would show a weaker business; check treasury income sustainability and one-offs. [M02]"
       },
       {
         "ref": "economic_profit",
@@ -9400,6 +9321,16 @@
           "missing": "promoter_holding_change_3y FY26"
         },
         {
+          "id": "V01",
+          "name": "Priced for acceleration",
+          "missing": "implied_minus_delivered_growth FY26"
+        },
+        {
+          "id": "V04",
+          "name": "EV/IC rich relative to ROIC/WACC",
+          "missing": "ev_ic_to_roic_wacc (not available for this company)"
+        },
+        {
           "id": "RE02",
           "name": "Inventory piling up",
           "missing": "inventory_months FY26 [n/a in FY26: missing unsold_inventory_cr FY26 (manual KPI)]"
@@ -9410,9 +9341,12 @@
         "total": 8,
         "text": "8 of 8 manual KPI values (100%) are verified = N: taken from the cited page, not checked in the primary document."
       },
-      "not_scored": [],
+      "not_scored": [
+        "1 metric computed but not scored: debt is immaterial (net debt below 0.5x EBITDA): growth in leases or working-capital lines carries no credit risk (net_debt_to_ebitda -5.14 < 0.5)."
+      ],
       "estimates": [
         "Estimated exceptional item 9,134 (pre-tax, gain): other income 145.0% of sales vs normal 8.8% (median of other years). Core profit excludes it (tax effect at statutory rate). Override via data/manual (exceptional_items).",
+        "Effective tax rate departs from its own norm in 3 years (FY20, FY25, FY26): too erratic to normalise; reported tax kept.",
         "Net profit differs from PBT - tax in 10 of 10 years (latest 1,793): minority interest (negative) and share of associates/JVs (positive) sit between PBT and net profit, so the export is consolidated and net profit is the owners' share. Equity excludes minority interest (Screener includes NCI in Other Liabilities); ROIC/ROCE capital therefore omits NCI unless data/manual supplies minority_interest.",
         "Capex is not in the export. Proxy = change in net block + change in CWIP + depreciation (includes acquired fixed assets and Ind AS 116 right-of-use additions; impairments and disposals understate it). FCF = CFO - capex proxy.",
         "Ind AS 116 adoption year FY20: no visible step in depreciation/opex/interest ratios."

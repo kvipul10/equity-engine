@@ -271,18 +271,19 @@
       "rag": "green",
       "weight": 15.0,
       "n_scored": 3,
-      "n_metrics": 6,
+      "n_metrics": 7,
       "rag_counts": {
         "green": 3,
         "amber": 0,
         "red": 0,
-        "n/a": 3
+        "n/a": 4
       },
       "capped_by_flags": [],
       "name": "5 Cash and earnings quality (asset quality)",
       "summary": "5 Cash and earnings quality: GREEN (79/100, 3 scored metrics). Strongest: Provisions / pre-provision profit 6.5% (green), Credit cost 0.4% (green). Weakest: Net NPA ratio 0.3% (green), Credit cost 0.4% (green).",
       "metrics": [
         "credit_cost",
+        "npa_divergence_share",
         "gnpa_ratio",
         "nnpa_ratio",
         "pcr",
@@ -1220,8 +1221,8 @@
           "j": 1.185283,
           "r": 2.332866
         },
-        "text": "P/B of 2.8x is 2.3x the 1.2x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise.",
-        "condition": "m('pb_to_justified_pb') > 1.5",
+        "text": "P/B of 2.8x is 2.3x the 1.2x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise.",
+        "condition": "m('pb_to_justified_pb') > 1.5 and first_of(m('implied_minus_delivered_growth'), 1.0) > 0",
         "applies": [
           "ALL"
         ]
@@ -1274,6 +1275,11 @@
         "id": "BK06",
         "name": "Low-cost deposits slipping",
         "missing": "casa_ratio FY26 [n/a in FY26: missing casa_pct FY26 (manual KPI)]"
+      },
+      {
+        "id": "BK09",
+        "name": "Regulator found unreported bad loans (NPA divergence)",
+        "missing": "npa_divergence_share FY26 [n/a in FY26: missing kpi:npa_divergence_cr: 0 of 1 years available]"
       }
     ],
     "counts": {
@@ -4312,6 +4318,50 @@
       "note": null,
       "text": "Credit cost: 0.4% GREEN (level green vs indicative band (green <= 0.8%, red >= 2.0%))"
     },
+    "npa_divergence_share": {
+      "name": "NPA divergence / reported GNPA",
+      "pillar": "cash_quality",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "max over 3 years of RBI-assessed NPA divergence / (GNPA ratio x advances)",
+      "formula": "max_last('kpi:npa_divergence_cr', 3, 1) / (kpi('gnpa_pct') * kpi('advances_cr'))",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "Bad loans the regulator found that the bank had not reported: when material, reported asset quality cannot be trusted.",
+      "value": null,
+      "value_text": "n/a",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": null,
+        "FY25": null,
+        "FY26": null
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": {
+        "red": 0.15,
+        "green": 0.0,
+        "origin": "config/sectors/bank.yaml",
+        "source_type": "indicative",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "RBI requires disclosure when divergence exceeds 15% of the reported incremental GNPA (April-2017 circular); any divergence means the regulator disagreed with the bank's classification.",
+        "centre": null
+      },
+      "reason": "no value for the as-of year",
+      "note": "n/a in FY26: missing kpi:npa_divergence_cr: 0 of 1 years available",
+      "text": "NPA divergence / reported GNPA: n/a [no value for the as-of year] Note: n/a in FY26: missing kpi:npa_divergence_cr: 0 of 1 years available"
+    },
     "gnpa_ratio": {
       "name": "Gross NPA ratio",
       "pillar": "cash_quality",
@@ -5030,7 +5080,11 @@
         "YESBANK": 0.105115
       },
       "deposit_growth": {
+        "HDFCBANK": 0.143857,
         "YESBANK": 0.121204
+      },
+      "nim_reported": {
+        "HDFCBANK": 0.0338
       },
       "gnpa_ratio": {
         "HDFCBANK": 0.0115,
@@ -5115,7 +5169,7 @@
         "id": "non_financial_metrics",
         "applies": "NF",
         "reason": "Banks have no EBITDA, gross margin, capex cycle or working-capital days: interest is the raw material and loans are the inventory",
-        "n_metrics": 84
+        "n_metrics": 85
       }
     ],
     "manual_kpis": [
@@ -5231,6 +5285,14 @@
           "FY26"
         ],
         "present_asof": true
+      },
+      {
+        "id": "npa_divergence_cr",
+        "unit": "Rs cr",
+        "required": false,
+        "description": "RBI-assessed divergence in gross NPAs for the fiscal year (disclosure required by the April-2017 RBI circular when material)",
+        "years_present": [],
+        "present_asof": false
       },
       {
         "id": "cet1_pct",
@@ -5772,9 +5834,10 @@
         "score": 0.6,
         "name": "P/B well above what returns justify",
         "covers": [
+          "implied_minus_delivered_growth",
           "pb_to_justified_pb"
         ],
-        "text": "V03 P/B well above what returns justify: P/B of 2.8x is 2.3x the 1.2x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+        "text": "V03 P/B well above what returns justify: P/B of 2.8x is 2.3x the 1.2x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
       },
       {
         "kind": "metric",
@@ -5876,7 +5939,7 @@
     "bear": [
       {
         "ref": "V03",
-        "text": "V03 P/B well above what returns justify: P/B of 2.8x is 2.3x the 1.2x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise. [V03]"
+        "text": "V03 P/B well above what returns justify: P/B of 2.8x is 2.3x the 1.2x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise. [V03]"
       },
       {
         "ref": "cost_to_income_bank",
@@ -5941,16 +6004,18 @@
             "FY25"
           ],
           "metrics": [
-            "gnpa_ratio"
+            "gnpa_ratio",
+            "npa_divergence_share"
           ],
           "flags": [
-            "BK01"
+            "BK01",
+            "BK09"
           ],
           "trees": [],
           "lines": [
             "gnpa_pct (Gross NPA ratio at 31 March (as reported)) is missing at FY26; present for FY22, FY23, FY24, FY25.",
-            "1 metric cannot be computed: Gross NPA ratio.",
-            "Red-flag rules that cannot be checked: BK01."
+            "2 metrics cannot be computed: Gross NPA ratio, NPA divergence / reported GNPA.",
+            "Red-flag rules that cannot be checked: BK01, BK09."
           ]
         },
         {
@@ -5999,6 +6064,24 @@
           "lines": [
             "nim_pct (Net interest margin for the year as reported (bank's own definition)) is missing at FY26.",
             "1 metric cannot be computed: Net interest margin (reported)."
+          ]
+        },
+        {
+          "kpi": "npa_divergence_cr",
+          "required": false,
+          "description": "RBI-assessed divergence in gross NPAs for the fiscal year (disclosure required by the April-2017 RBI circular when material)",
+          "years_present": [],
+          "metrics": [
+            "npa_divergence_share"
+          ],
+          "flags": [
+            "BK09"
+          ],
+          "trees": [],
+          "lines": [
+            "npa_divergence_cr (RBI-assessed divergence in gross NPAs for the fiscal year (disclosure required by the April-2017 RBI circular when material)) is missing at FY26.",
+            "1 metric cannot be computed: NPA divergence / reported GNPA.",
+            "Red-flag rules that cannot be checked: BK09."
           ]
         },
         {
@@ -6059,6 +6142,11 @@
           "id": "BK06",
           "name": "Low-cost deposits slipping",
           "missing": "casa_ratio FY26 [n/a in FY26: missing casa_pct FY26 (manual KPI)]"
+        },
+        {
+          "id": "BK09",
+          "name": "Regulator found unreported bad loans (NPA divergence)",
+          "missing": "npa_divergence_share FY26 [n/a in FY26: missing kpi:npa_divergence_cr: 0 of 1 years available]"
         }
       ],
       "unverified": {

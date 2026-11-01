@@ -18,6 +18,7 @@
 
 ## exceptional
 - Financial company: other income is core (fees, treasury), so no exceptional-item estimate is made.
+- One-off tax normalisation is off for insurance: Life insurance profits are taxed at 12.5% under section 115B (shareholders' surplus is disputed between that and normal rates), and policyholders' surplus transfers move between accounts, so the effective tax rate on accounting PBT has no stable normal to restore. Reported tax kept.
 
 ## minority
 - No material minority/associate residual: export is standalone or has no minorities.

@@ -135,7 +135,7 @@
     "text": "Creates value: ROIC 78.0% vs WACC 12.5% in FY26 -> economic profit Rs 42,376 cr. Economic profit was positive in 9 of 9 years; trend improving."
   },
   "overall": {
-    "score": 67.667667,
+    "score": 69.306396,
     "rag": "green",
     "coverage": 1.0,
     "high_flags": 0,
@@ -231,7 +231,7 @@
       },
       "capped_by_flags": [],
       "name": "3 Capital efficiency",
-      "summary": "3 Capital efficiency: AMBER (53/100, 6 scored metrics). Strongest: Invested-capital turnover 4.13x (green), Attrition (LTM) 13.7% (green). Weakest: DSO incl. unbilled 117 days (red), Receivable days (DSO) 93 days (amber). Flags: C01, IT04.",
+      "summary": "3 Capital efficiency: AMBER (53/100, 6 scored metrics). Strongest: Invested-capital turnover 4.13x (green), Attrition (LTM) 13.7% (green). Weakest: DSO incl. unbilled 117 days (red), Receivable days (DSO) 93 days (amber). Flags: C01, IT01, IT04.",
       "metrics": [
         "asset_turnover",
         "fixed_asset_turnover",
@@ -256,6 +256,7 @@
       ],
       "flags_triggered": [
         "C01",
+        "IT01",
         "IT04"
       ]
     },
@@ -329,20 +330,20 @@
       "flags_triggered": []
     },
     "balance_sheet": {
-      "score": 67.933847,
+      "score": 76.723265,
       "rag": "green",
       "weight": 10.0,
-      "n_scored": 7,
+      "n_scored": 6,
       "n_metrics": 7,
       "rag_counts": {
-        "green": 5,
-        "amber": 1,
-        "red": 1,
+        "green": 6,
+        "amber": 0,
+        "red": 0,
         "n/a": 0
       },
       "capped_by_flags": [],
       "name": "6 Balance sheet",
-      "summary": "6 Balance sheet: GREEN (68/100, 7 scored metrics). Strongest: Altman Z''-EM (India-adapted) 11.21 (green), Net debt / EBITDA -0.02x (green). Weakest: Debt growth - EBITDA growth +12.7pp (red), Cash / short-term borrowings 1.14x (amber).",
+      "summary": "6 Balance sheet: GREEN (77/100, 6 scored metrics). Strongest: Altman Z''-EM (India-adapted) 11.21 (green), Net debt / EBITDA -0.02x (green). Weakest: Cash and investments / short-term borrowings 4.16x (green), Net debt / equity -0.02x (green).",
       "metrics": [
         "net_debt_to_ebitda",
         "net_debt_to_equity",
@@ -381,6 +382,7 @@
         "shareholder_yield",
         "dividend_to_fcf",
         "non_capex_investing_3y",
+        "acquisition_spend_3y",
         "acquisition_roic_delta_3y",
         "promoter_holding",
         "promoter_holding_change_3y",
@@ -389,20 +391,20 @@
       "flags_triggered": []
     },
     "valuation": {
-      "score": 65.274967,
+      "score": 72.872844,
       "rag": "green",
       "weight": 10.0,
       "n_scored": 7,
       "n_metrics": 7,
       "rag_counts": {
-        "green": 4,
+        "green": 5,
         "amber": 2,
-        "red": 1,
+        "red": 0,
         "n/a": 0
       },
       "capped_by_flags": [],
       "name": "8 Valuation",
-      "summary": "8 Valuation: GREEN (65/100, 7 scored metrics). Strongest: P/E percentile vs own history 10.0% (green), EV/EBITDA percentile vs own history 10.0% (green). Weakest: (EV/IC) / (ROIC/WACC) 1.94x (red), P/B percentile vs own history 50.0% (amber). Flags: V04.",
+      "summary": "8 Valuation: GREEN (73/100, 7 scored metrics). Strongest: P/E percentile vs own history 10.0% (green), EV/EBITDA percentile vs own history 10.0% (green). Weakest: P/B percentile vs own history 50.0% (amber), P/B / justified P/B 1.20x (amber).",
       "metrics": [
         "pe",
         "pe_percentile_10y",
@@ -419,9 +421,7 @@
         "ev_ic",
         "ev_ic_to_roic_wacc"
       ],
-      "flags_triggered": [
-        "V04"
-      ]
+      "flags_triggered": []
     }
   },
   "dupont": {
@@ -2724,6 +2724,23 @@
         ]
       },
       {
+        "id": "IT01",
+        "name": "Attrition high or rising",
+        "pillar": "capital_efficiency",
+        "severity": "medium",
+        "origin": "config/sectors/it_services.yaml",
+        "status": "triggered",
+        "values": {
+          "a": 0.137,
+          "d": 0.012
+        },
+        "text": "LTM attrition is 13.7% (+1.2pp over 2 years): replacement hiring and wage resets will pressure margins.",
+        "condition": "m('attrition') > 0.20 or (rising('attrition', 2) and m('attrition') > 0.12)",
+        "applies": [
+          "it_services"
+        ]
+      },
+      {
         "id": "IT03",
         "name": "Weak constant-currency growth",
         "pillar": "growth",
@@ -2754,23 +2771,6 @@
         "condition": "rising('dso_incl_unbilled', 2) and chg('dso_incl_unbilled', 2) > 5",
         "applies": [
           "it_services"
-        ]
-      },
-      {
-        "id": "V04",
-        "name": "EV/IC rich relative to ROIC/WACC",
-        "pillar": "valuation",
-        "severity": "low",
-        "origin": "config/flags.yaml",
-        "status": "triggered",
-        "values": {
-          "r": 1.941295,
-          "evic": 12.144158
-        },
-        "text": "EV/IC is 12.1x, 1.9x what current ROIC/WACC would support in steady state.",
-        "condition": "m('ev_ic_to_roic_wacc') > 1.5",
-        "applies": [
-          "NF"
         ]
       }
     ],
@@ -2814,7 +2814,7 @@
       "V01",
       "V02",
       "V03",
-      "IT01",
+      "V04",
       "IT05"
     ],
     "not_evaluable": [
@@ -2851,8 +2851,8 @@
     ],
     "counts": {
       "high": 0,
-      "medium": 3,
-      "low": 1
+      "medium": 4,
+      "low": 0
     }
   },
   "metrics": {
@@ -3948,6 +3948,48 @@
       "note": null,
       "text": "Non-capex investing (3y, % of IC): -40.3% [informational (neutral direction)]"
     },
+    "acquisition_spend_3y": {
+      "name": "Acquisition-like spend (3y, % of IC)",
+      "pillar": "capital_allocation",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "sum3(max(0, -CFI - capex proxy - (change in cash + investments - net cash flow))) / IC_t-3",
+      "formula": null,
+      "origin": "engine",
+      "meaning": "Investing outflows beyond capex that did not end up as cash or investments on the balance sheet (stakes and businesses bought), over 3 years, relative to opening invested capital. Treasury moves are netted out.",
+      "value": 0.0,
+      "value_text": "0.0%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": 0.0,
+        "FY21": 0.0,
+        "FY22": 0.0,
+        "FY23": 0.0,
+        "FY24": 0.0,
+        "FY25": 0.0,
+        "FY26": 0.0
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.0,
+        "normalised_slope": 0.0,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "flat"
+      },
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Acquisition-like spend (3y, % of IC): 0.0% [informational (neutral direction)]"
+    },
     "acquisition_roic_delta_3y": {
       "name": "ROIC change after acquisition spend",
       "pillar": "capital_allocation",
@@ -3955,10 +3997,10 @@
       "unit": "pp",
       "direction": "higher",
       "kind": "annual",
-      "equation": "ROIC_t - ROIC_t-3 if non_capex_investing_3y > 10%, else n/a",
+      "equation": "ROIC_t - ROIC_t-3 if acquisition_spend_3y > 10%, else n/a",
       "formula": null,
       "origin": "engine",
-      "meaning": "When a company spent materially beyond capex (> 10% of IC over 3 years), did ROIC subsequently rise or fall?",
+      "meaning": "When a company spent materially on acquisitions (> 10% of IC over 3 years, treasury moves excluded), did ROIC subsequently rise or fall?",
       "value": null,
       "value_text": "n/a",
       "series": {
@@ -4308,46 +4350,46 @@
       "unit": "x",
       "direction": "higher",
       "kind": "annual",
-      "equation": "Other assets / Other liabilities",
+      "equation": "(Other assets + Investments) / Other liabilities",
       "formula": null,
       "origin": "engine",
-      "meaning": "Short-term liquidity proxy: the export has no current/non-current split, so other assets / other liabilities is used (Screener's own working-capital split). Excludes short-term debt (inside Borrowings).",
-      "value": 1.806574,
-      "value_text": "1.81x",
+      "meaning": "Short-term liquidity proxy: the export has no current/non-current split, so (other assets + investments) / other liabilities is used. Investments are included because Indian companies hold treasury mainly in liquid funds and bonds, which Screener reports under Investments, not Cash. Excludes short-term debt (inside Borrowings).",
+      "value": 2.349132,
+      "value_text": "2.35x",
       "series": {
-        "FY17": 2.976058,
-        "FY18": 2.828566,
-        "FY19": 2.923708,
-        "FY20": 2.585151,
-        "FY21": 2.199754,
-        "FY22": 2.000045,
-        "FY23": 1.876036,
-        "FY24": 1.970572,
-        "FY25": 1.891452,
-        "FY26": 1.806574
+        "FY17": 5.627985,
+        "FY18": 4.651663,
+        "FY19": 4.126102,
+        "FY20": 3.532289,
+        "FY21": 3.021055,
+        "FY22": 2.693406,
+        "FY23": 2.70655,
+        "FY24": 2.646906,
+        "FY25": 2.459588,
+        "FY26": 2.349132
       },
       "level": {
-        "score": 87.10491,
+        "score": 100.0,
         "basis": "band",
         "rag": "green"
       },
       "trend": {
-        "slope_per_year": -0.037153,
-        "normalised_slope": -0.019463,
+        "slope_per_year": -0.093551,
+        "normalised_slope": -0.036385,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 40.389738,
-        "label": "stable"
+        "score": 32.569774,
+        "label": "deteriorating"
       },
       "stability": {
-        "cv": 0.204704,
-        "sd": 0.472005,
+        "cv": 0.323227,
+        "sd": 1.092981,
         "n": 10,
-        "score": 55.717924,
+        "score": 39.712466,
         "label": "moderate",
         "window": "FY17-FY26"
       },
-      "composite": 70.718069,
+      "composite": 74.099313,
       "rag": "green",
       "band": {
         "red": 1.0,
@@ -4361,56 +4403,56 @@
       },
       "reason": null,
       "note": null,
-      "text": "Current ratio (Screener proxy): 1.81x GREEN (level green vs indicative band (red <= 1.00x, green >= 1.50x); trend stable -0.04x/yr; moderate (CV 0.20))"
+      "text": "Current ratio (Screener proxy): 2.35x GREEN (level green vs indicative band (red <= 1.00x, green >= 1.50x); trend deteriorating -0.09x/yr; moderate (CV 0.32))"
     },
     "cash_to_st_borrowings": {
-      "name": "Cash / short-term borrowings",
+      "name": "Cash and investments / short-term borrowings",
       "pillar": "balance_sheet",
       "role": "scored",
       "unit": "x",
       "direction": "higher",
       "kind": "annual",
-      "equation": "Cash & bank / short-term borrowings (manual) or / Borrowings; = 99 when there is no debt",
+      "equation": "(Cash & bank + Investments) / short-term borrowings (manual) or / Borrowings; = 99 when there is no debt",
       "formula": null,
       "origin": "engine",
-      "meaning": "Cash cover for debt falling due soon. Uses manual short_term_borrowings when supplied, otherwise total borrowings (conservative: treats all debt as short-term).",
-      "value": 1.144022,
-      "value_text": "1.14x",
+      "meaning": "Liquid cover for debt falling due soon: cash plus investments (treasury is mostly held in liquid funds and bonds, reported under Investments). Uses manual short_term_borrowings when supplied, otherwise total borrowings (conservative: treats all debt as short-term).",
+      "value": 4.156341,
+      "value_text": "4.16x",
       "series": {
-        "FY17": 14.356401,
-        "FY18": 28.991903,
+        "FY17": 99.0,
+        "FY18": 99.0,
         "FY19": 99.0,
-        "FY20": 1.18253,
-        "FY21": 1.196793,
-        "FY22": 2.330647,
-        "FY23": 1.434964,
-        "FY24": 1.656402,
-        "FY25": 1.646401,
-        "FY26": 1.144022
+        "FY20": 4.4069,
+        "FY21": 4.964978,
+        "FY22": 6.229982,
+        "FY23": 6.268861,
+        "FY24": 5.616257,
+        "FY25": 4.94325,
+        "FY26": 4.156341
       },
       "level": {
-        "score": 72.667582,
+        "score": 100.0,
         "basis": "band",
         "rag": "green"
       },
       "trend": {
-        "slope_per_year": -0.216181,
-        "normalised_slope": -0.131618,
+        "slope_per_year": -0.547289,
+        "normalised_slope": -0.10055,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 6.708429,
+        "score": 11.805213,
         "label": "deteriorating"
       },
       "stability": {
-        "cv": 2.012433,
-        "sd": 30.778158,
+        "cv": 1.358028,
+        "sd": 45.301995,
         "n": 10,
-        "score": 0.318339,
+        "score": 2.064917,
         "label": "volatile",
         "window": "FY17-FY26"
       },
-      "composite": 45.325408,
-      "rag": "amber",
+      "composite": 63.261041,
+      "rag": "green",
       "band": {
         "red": 0.2,
         "green": 1.0,
@@ -4423,7 +4465,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Cash / short-term borrowings: 1.14x AMBER (level green vs indicative band (red <= 0.20x, green >= 1.00x); trend deteriorating -0.22x/yr; volatile (CV 2.01))"
+      "text": "Cash and investments / short-term borrowings: 4.16x GREEN (level green vs indicative band (red <= 0.20x, green >= 1.00x); trend deteriorating -0.55x/yr; volatile (CV 1.36))"
     },
     "debt_vs_ebitda_growth": {
       "name": "Debt growth - EBITDA growth",
@@ -4450,11 +4492,7 @@
         "FY25": 0.122541,
         "FY26": 0.127299
       },
-      "level": {
-        "score": 24.233729,
-        "basis": "band",
-        "rag": "red"
-      },
+      "level": null,
       "trend": {
         "slope_per_year": 0.078452,
         "normalised_slope": 3.922624,
@@ -4471,8 +4509,8 @@
         "label": "volatile",
         "window": "FY21-FY26"
       },
-      "composite": 14.540677,
-      "rag": "red",
+      "composite": null,
+      "rag": null,
       "band": {
         "red": 0.1,
         "green": 0.0,
@@ -4483,9 +4521,9 @@
         "rationale": "Debt growing 10pp a year faster than EBITDA erodes coverage quickly.",
         "centre": null
       },
-      "reason": null,
+      "reason": "debt is immaterial (net debt below 0.5x EBITDA): growth in leases or working-capital lines carries no credit risk (net_debt_to_ebitda -0.02 < 0.5)",
       "note": null,
-      "text": "Debt growth - EBITDA growth: +12.7pp RED (level red vs indicative band (green <= +0.0pp, red >= +10.0pp); trend deteriorating +7.8pp/yr; volatile (CV 3.65))"
+      "text": "Debt growth - EBITDA growth: +12.7pp [debt is immaterial (net debt below 0.5x EBITDA): growth in leases or working-capital lines carries no credit risk (net_debt_to_ebitda -0.02 < 0.5)]"
     },
     "altman_x1": {
       "name": "Altman Z'' X1",
@@ -8311,7 +8349,7 @@
       "unit": "pct",
       "direction": "neutral",
       "kind": "point",
-      "equation": "solve g: EV = sum_{t=1..10} F0(1+g)^t/(1+WACC)^t + F10(1+gT)/((WACC-gT)(1+WACC)^10), F0 = NOPAT0 x (1 - gT/RONIC), RONIC = 3y avg ROIC (capped at 100%)",
+      "equation": "solve g: EV = sum_{t=1..10} F0(1+g)^t/(1+WACC)^t + F10(1+gT)/((WACC-gT)(1+WACC)^10), F0 = NOPAT0 x (1 - gT/RONIC), RONIC = 3y avg ROIC (capped at 100%); n/m if RONIC <= WACC",
       "formula": null,
       "origin": "engine",
       "meaning": "Annual free-cash-flow growth for the next 10 years that today's enterprise value implies, starting from the steady-state FCF the business generates at its 3-year average ROIC, then growing at the terminal rate.",
@@ -8451,28 +8489,28 @@
       "text": "EV / invested capital: 12.14x [informational (neutral direction)]"
     },
     "ev_ic_to_roic_wacc": {
-      "name": "(EV/IC) / (ROIC/WACC)",
+      "name": "EV/IC / justified EV/IC",
       "pillar": "valuation",
       "role": "scored",
       "unit": "x",
       "direction": "lower",
       "kind": "point",
-      "equation": "(EV / IC) / (ROIC / WACC), ROIC = latest, WACC = current",
+      "equation": "(EV / IC) / ((ROIC - g) / (WACC - g)); ROIC = 3y avg, g = min(ROIC x 3y avg reinvestment rate, terminal g)",
       "formula": null,
       "origin": "engine",
-      "meaning": "In a no-growth steady state EV/IC = ROIC/WACC. Above 1 = the market pays for growth or improvement beyond today's returns; below 1 = priced for decline.",
-      "value": 1.941295,
-      "value_text": "1.94x",
+      "meaning": "Market EV/IC relative to the steady-state EV/IC that current returns support with sustainable growth ((ROIC - g)/(WACC - g), the value-driver formula; = ROIC/WACC when g = 0). Above 1 = paying for growth or rising returns beyond the steady state; below 1 = priced for decline.",
+      "value": 1.02955,
+      "value_text": "1.03x",
       "series": {},
       "level": {
-        "score": 3.913659,
+        "score": 64.696674,
         "basis": "band",
-        "rag": "red"
+        "rag": "amber"
       },
       "trend": null,
       "stability": null,
-      "composite": 3.913659,
-      "rag": "red",
+      "composite": 64.696674,
+      "rag": "green",
       "band": {
         "red": 1.5,
         "green": 1.0,
@@ -8484,8 +8522,8 @@
         "centre": null
       },
       "reason": null,
-      "note": null,
-      "text": "(EV/IC) / (ROIC/WACC): 1.94x RED (level red vs indicative band (green <= 1.00x, red >= 1.50x))"
+      "note": "justified EV/IC 11.80x = (ROIC 82.3% - g 6.0%) / (WACC 12.47% - g)",
+      "text": "EV/IC / justified EV/IC: 1.03x GREEN (level amber vs indicative band (green <= 1.00x, red >= 1.50x)) Note: justified EV/IC 11.80x = (ROIC 82.3% - g 6.0%) / (WACC 12.47% - g)"
     },
     "cc_growth": {
       "name": "Constant-currency growth",
@@ -8898,6 +8936,9 @@
       "non_capex_investing_3y": {
         "INFY": -0.302834
       },
+      "acquisition_spend_3y": {
+        "INFY": 0.0
+      },
       "net_debt_to_ebitda": {
         "INFY": -0.308065
       },
@@ -8908,10 +8949,10 @@
         "INFY": 97.141827
       },
       "current_ratio_proxy": {
-        "INFY": 1.877382
+        "INFY": 2.296058
       },
       "cash_to_st_borrowings": {
-        "INFY": 2.419464
+        "INFY": 4.803945
       },
       "debt_vs_ebitda_growth": {
         "INFY": 0.03777
@@ -9163,7 +9204,7 @@
         "INFY": 7.696734
       },
       "ev_ic_to_roic_wacc": {
-        "INFY": 1.982565
+        "INFY": 1.560505
       },
       "cc_growth": {
         "INFY": 0.031
@@ -9382,7 +9423,6 @@
       "cfo_to_pat_5y",
       "current_ratio_proxy",
       "cwip_to_net_block",
-      "debt_vs_ebitda_growth",
       "dividend_to_fcf",
       "dso_incl_unbilled",
       "ebitda_margin_sd_10y",
@@ -9409,6 +9449,7 @@
       "share_count_change"
     ],
     "sector_flags_triggered": [
+      "IT01",
       "IT03",
       "IT04"
     ],
@@ -9749,7 +9790,7 @@
     }
   ],
   "findings": {
-    "verdict": "TATA CONSULTANCY SERVICES LTD creates value: ROIC 78.0% vs WACC 12.5% in FY26. Overall GREEN (68/100); strongest pillar 4 Returns, weakest 7 Capital allocation.",
+    "verdict": "TATA CONSULTANCY SERVICES LTD creates value: ROIC 78.0% vs WACC 12.5% in FY26. Overall GREEN (69/100); strongest pillar 4 Returns, weakest 7 Capital allocation.",
     "strengths": [
       {
         "kind": "metric",
@@ -9874,6 +9915,20 @@
       },
       {
         "kind": "flag",
+        "id": "IT01",
+        "pillar": "capital_efficiency",
+        "severity_label": "medium",
+        "severity": 0.6,
+        "confidence": 0.8,
+        "score": 0.48,
+        "name": "Attrition high or rising",
+        "covers": [
+          "attrition"
+        ],
+        "text": "IT01 Attrition high or rising: LTM attrition is 13.7% (+1.2pp over 2 years): replacement hiring and wage resets will pressure margins."
+      },
+      {
+        "kind": "flag",
         "id": "IT03",
         "pillar": "growth",
         "severity_label": "medium",
@@ -9885,36 +9940,6 @@
           "cc_growth"
         ],
         "text": "IT03 Weak constant-currency growth: Constant-currency growth is -2.4%."
-      },
-      {
-        "kind": "flag",
-        "id": "IT04",
-        "pillar": "capital_efficiency",
-        "severity_label": "medium",
-        "severity": 0.6,
-        "confidence": 0.8,
-        "score": 0.48,
-        "name": "Unbilled and receivable days rising",
-        "covers": [
-          "dso_incl_unbilled"
-        ],
-        "text": "IT04 Unbilled and receivable days rising: DSO including unbilled rose from 104 days to 117 days over 2 years: revenue is running ahead of billing and collection."
-      },
-      {
-        "kind": "metric",
-        "id": "debt_vs_ebitda_growth",
-        "pillar": "balance_sheet",
-        "rag": "red",
-        "severity": 0.354593,
-        "confidence": 0.6,
-        "score": 0.212756,
-        "name": "Debt growth - EBITDA growth",
-        "number": "+12.7pp",
-        "context": "RED vs band: red ≥ +10.0pp, green ≤ +0.0pp, indicative",
-        "trend": "deteriorating +7.8 pts/yr over FY22-FY26",
-        "chain": null,
-        "chain_source": null,
-        "text": "Debt growth - EBITDA growth: +12.7pp (RED vs band: red ≥ +10.0pp, green ≤ +0.0pp, indicative); deteriorating +7.8 pts/yr over FY22-FY26"
       },
       {
         "kind": "metric",
@@ -9934,19 +9959,19 @@
       },
       {
         "kind": "metric",
-        "id": "ev_ic_to_roic_wacc",
-        "pillar": "valuation",
+        "id": "q_ebitda_margin_yoy_change",
+        "pillar": "margins",
         "rag": "red",
-        "severity": 0.460863,
+        "severity": 0.403709,
         "confidence": 0.36,
-        "score": 0.165911,
-        "name": "(EV/IC) / (ROIC/WACC)",
-        "number": "1.94x",
-        "context": "RED vs band: red ≥ 1.50x, green ≤ 1.00x, indicative",
+        "score": 0.145335,
+        "name": "Latest quarter EBITDA margin change YoY",
+        "number": "−1.6pp",
+        "context": "RED vs band: red ≤ −1.0pp, green ≥ +1.0pp, indicative",
         "trend": "",
         "chain": null,
         "chain_source": null,
-        "text": "(EV/IC) / (ROIC/WACC): 1.94x (RED vs band: red ≥ 1.50x, green ≤ 1.00x, indicative)"
+        "text": "Latest quarter EBITDA margin change YoY: −1.6pp (RED vs band: red ≤ −1.0pp, green ≥ +1.0pp, indicative)"
       }
     ],
     "watch": [
@@ -9983,20 +10008,6 @@
         "text": "Exceptional items frequency (5y): 1 (AMBER vs band: red ≥ 3, green ≤ 1, indicative); deteriorating +0.2/yr over FY22-FY26"
       },
       {
-        "kind": "flag",
-        "id": "V04",
-        "pillar": "valuation",
-        "severity_label": "low",
-        "severity": 0.3,
-        "confidence": 1.0,
-        "score": 0.3,
-        "name": "EV/IC rich relative to ROIC/WACC",
-        "covers": [
-          "ev_ic_to_roic_wacc"
-        ],
-        "text": "V04 EV/IC rich relative to ROIC/WACC: EV/IC is 12.1x, 1.9x what current ROIC/WACC would support in steady state."
-      },
-      {
         "kind": "metric",
         "id": "exceptional_size_5y",
         "pillar": "cash_quality",
@@ -10016,17 +10027,17 @@
         "kind": "metric",
         "id": "cash_to_st_borrowings",
         "pillar": "balance_sheet",
-        "rag": "amber",
-        "severity": 0.432916,
+        "rag": "green",
+        "severity": 0.381948,
         "confidence": 0.6,
-        "score": 0.259749,
-        "name": "Cash / short-term borrowings",
-        "number": "1.14x",
-        "context": "AMBER vs band: red ≤ 0.20x, green ≥ 1.00x, indicative",
-        "trend": "deteriorating −0.22x/yr over FY22-FY26",
+        "score": 0.229169,
+        "name": "Cash and investments / short-term borrowings",
+        "number": "4.16x",
+        "context": "GREEN vs band: red ≤ 0.20x, green ≥ 1.00x, indicative",
+        "trend": "deteriorating −0.55x/yr over FY22-FY26",
         "chain": null,
         "chain_source": null,
-        "text": "Cash / short-term borrowings: 1.14x (AMBER vs band: red ≤ 0.20x, green ≥ 1.00x, indicative); deteriorating −0.22x/yr over FY22-FY26"
+        "text": "Cash and investments / short-term borrowings: 4.16x (GREEN vs band: red ≤ 0.20x, green ≥ 1.00x, indicative); deteriorating −0.55x/yr over FY22-FY26"
       },
       {
         "kind": "metric",
@@ -10043,6 +10054,22 @@
         "chain": null,
         "chain_source": null,
         "text": "CWIP / net block: 8.5% (AMBER vs band: red ≥ 30.0%, green ≤ 10.0%, indicative); deteriorating +0.6 pts/yr over FY22-FY26"
+      },
+      {
+        "kind": "metric",
+        "id": "dso",
+        "pillar": "capital_efficiency",
+        "rag": "amber",
+        "severity": 0.169179,
+        "confidence": 1.0,
+        "score": 0.169179,
+        "name": "Receivable days (DSO)",
+        "number": "93 days",
+        "context": "AMBER vs band: red ≥ 107 days, green ≤ 71 days",
+        "trend": "deteriorating +3 days/yr over FY22-FY26",
+        "chain": null,
+        "chain_source": null,
+        "text": "Receivable days (DSO): 93 days (AMBER vs band: red ≥ 107 days, green ≤ 71 days); deteriorating +3 days/yr over FY22-FY26"
       }
     ],
     "bull": [
@@ -10085,16 +10112,16 @@
         "text": "C01 Receivable days up three years running: Receivable days rose in each of the last 3 years, from 81 days to 93 days: customers are paying slower, credit terms have loosened, or revenue is being recognised early. [C01]"
       },
       {
+        "ref": "IT01",
+        "text": "IT01 Attrition high or rising: LTM attrition is 13.7% (+1.2pp over 2 years): replacement hiring and wage resets will pressure margins. [IT01]"
+      },
+      {
         "ref": "IT03",
         "text": "IT03 Weak constant-currency growth: Constant-currency growth is -2.4%. [IT03]"
       },
       {
-        "ref": "IT04",
-        "text": "IT04 Unbilled and receivable days rising: DSO including unbilled rose from 104 days to 117 days over 2 years: revenue is running ahead of billing and collection. [IT04]"
-      },
-      {
-        "ref": "debt_vs_ebitda_growth",
-        "text": "Debt growth - EBITDA growth: +12.7pp (RED vs band: red ≥ +10.0pp, green ≤ +0.0pp, indicative); deteriorating +7.8 pts/yr over FY22-FY26 [debt_vs_ebitda_growth]"
+        "ref": "revenue_cagr_3y",
+        "text": "Revenue CAGR 3y: 5.8% (RED vs band: red ≤ 4.0%, green ≥ 8.9%); deteriorating −1.0 pts/yr over FY22-FY26 [revenue_cagr_3y]"
       },
       {
         "ref": "pb",
@@ -10173,7 +10200,9 @@
         "total": 28,
         "text": "28 of 28 manual KPI values (100%) are verified = N: taken from the cited page, not checked in the primary document."
       },
-      "not_scored": [],
+      "not_scored": [
+        "1 metric computed but not scored: debt is immaterial (net debt below 0.5x EBITDA): growth in leases or working-capital lines carries no credit risk (net_debt_to_ebitda -0.02 < 0.5)."
+      ],
       "estimates": [
         "Estimated exceptional item -5,719 (pre-tax, loss): other income -0.0% of sales vs normal 2.1% (median of other years). Core profit excludes it (tax effect at statutory rate). Override via data/manual (exceptional_items).",
         "Net profit differs from PBT - tax in 10 of 10 years (latest -244): minority interest (negative) and share of associates/JVs (positive) sit between PBT and net profit, so the export is consolidated and net profit is the owners' share. Equity excludes minority interest (Screener includes NCI in Other Liabilities); ROIC/ROCE capital therefore omits NCI unless data/manual supplies minority_interest.",

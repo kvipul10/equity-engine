@@ -117,9 +117,9 @@
       "FY17": null,
       "FY18": -1111.807754,
       "FY19": -2558.382573,
-      "FY20": -350.041665,
+      "FY20": -2340.975697,
       "FY21": -715.666612,
-      "FY22": 778.74941,
+      "FY22": -690.460446,
       "FY23": -1849.047446,
       "FY24": -326.425186,
       "FY25": -2724.485944,
@@ -130,12 +130,12 @@
     "hurdle_metric": "WACC",
     "hurdle": 0.126931,
     "verdict": "destroys value",
-    "positive_years": 1,
+    "positive_years": 0,
     "years": 9,
-    "text": "Destroys value: ROIC 10.3% vs WACC 12.7% in FY26 -> economic profit Rs -2,177 cr. Economic profit was positive in 1 of 9 years; trend deteriorating."
+    "text": "Destroys value: ROIC 10.3% vs WACC 12.7% in FY26 -> economic profit Rs -2,177 cr. Economic profit was positive in 0 of 9 years; trend deteriorating."
   },
   "overall": {
-    "score": 49.766616,
+    "score": 51.230964,
     "rag": "amber",
     "coverage": 1.0,
     "high_flags": 1,
@@ -144,7 +144,7 @@
   },
   "pillars": {
     "growth": {
-      "score": 76.0378,
+      "score": 76.157176,
       "rag": "green",
       "weight": 15.0,
       "n_scored": 16,
@@ -179,7 +179,7 @@
       "flags_triggered": []
     },
     "margins": {
-      "score": 57.699851,
+      "score": 58.587775,
       "rag": "amber",
       "weight": 15.0,
       "n_scored": 8,
@@ -192,7 +192,7 @@
       },
       "capped_by_flags": [],
       "name": "2 Margins",
-      "summary": "2 Margins: AMBER (58/100, 8 scored metrics). Strongest: Other income / PBT 4.0% (green), EBITDA margin 19.2% (amber). Weakest: EBIT margin 14.5% (amber), Gross margin 51.5% (amber). Flags: M03.",
+      "summary": "2 Margins: AMBER (59/100, 8 scored metrics). Strongest: Other income / PBT 4.0% (green), EBITDA margin 19.2% (amber). Weakest: EBIT margin 14.5% (amber), Gross margin 51.5% (amber). Flags: M03.",
       "metrics": [
         "gross_margin",
         "ebitda_margin",
@@ -257,7 +257,7 @@
       "flags_triggered": []
     },
     "returns": {
-      "score": 19.91964,
+      "score": 24.109576,
       "rag": "red",
       "weight": 20.0,
       "n_scored": 5,
@@ -270,7 +270,7 @@
       },
       "capped_by_flags": [],
       "name": "4 Returns",
-      "summary": "4 Returns: RED (20/100, 5 scored metrics). Strongest: Return on capital employed 13.1% (red), Return on invested capital 10.3% (red). Weakest: ROIC - WACC -2.4pp (red), Incremental ROIC 3y 11.6% (red). Flags: R01, R03.",
+      "summary": "4 Returns: RED (24/100, 5 scored metrics). Strongest: Return on equity 11.1% (red), Return on invested capital 10.3% (red). Weakest: ROIC - WACC -2.4pp (red), Incremental ROIC 3y 11.6% (red). Flags: R01, R03.",
       "metrics": [
         "roe",
         "roa",
@@ -294,7 +294,7 @@
       ]
     },
     "cash_quality": {
-      "score": 61.2337,
+      "score": 60.381547,
       "rag": "green",
       "weight": 15.0,
       "n_scored": 9,
@@ -307,7 +307,7 @@
       },
       "capped_by_flags": [],
       "name": "5 Cash and earnings quality",
-      "summary": "5 Cash and earnings quality: GREEN (61/100, 9 scored metrics). Strongest: Beneish M-score (Screener proxies) -2.65 (green), Receivables growth - revenue growth -14.2pp (green). Weakest: FCF / PAT (5y cumulative) -0.37 (red), FCF / PAT 0.48 (red).",
+      "summary": "5 Cash and earnings quality: GREEN (60/100, 9 scored metrics). Strongest: Beneish M-score (Screener proxies) -2.65 (green), Receivables growth - revenue growth -14.2pp (green). Weakest: FCF / PAT (5y cumulative) -0.39 (red), FCF / PAT 0.48 (red).",
       "metrics": [
         "cfo_to_ebitda",
         "fcf_to_pat",
@@ -330,20 +330,20 @@
       "flags_triggered": []
     },
     "balance_sheet": {
-      "score": 56.426171,
+      "score": 55.556605,
       "rag": "amber",
       "weight": 10.0,
       "n_scored": 8,
       "n_metrics": 8,
       "rag_counts": {
         "green": 5,
-        "amber": 2,
-        "red": 1,
+        "amber": 1,
+        "red": 2,
         "n/a": 0
       },
       "capped_by_flags": [],
       "name": "6 Balance sheet",
-      "summary": "6 Balance sheet: AMBER (56/100, 8 scored metrics). Strongest: Net debt / EBITDA at cycle trough 1.79x (green), Interest cover 6.84x (green). Weakest: Current ratio (Screener proxy) 0.66x (red), Cash / short-term borrowings 0.06x (amber). Flags: B04.",
+      "summary": "6 Balance sheet: AMBER (56/100, 8 scored metrics). Strongest: Net debt / EBITDA at cycle trough 1.79x (green), Interest cover 6.84x (green). Weakest: Current ratio (Screener proxy) 0.83x (red), Cash and investments / short-term borrowings 0.34x (red).",
       "metrics": [
         "net_debt_to_ebitda",
         "net_debt_to_equity",
@@ -358,9 +358,7 @@
         "altman_z_india",
         "leverage_at_trough"
       ],
-      "flags_triggered": [
-        "B04"
-      ]
+      "flags_triggered": []
     },
     "capital_allocation": {
       "score": 26.552421,
@@ -385,6 +383,7 @@
         "shareholder_yield",
         "dividend_to_fcf",
         "non_capex_investing_3y",
+        "acquisition_spend_3y",
         "acquisition_roic_delta_3y",
         "promoter_holding",
         "promoter_holding_change_3y",
@@ -396,20 +395,20 @@
       ]
     },
     "valuation": {
-      "score": 29.901961,
+      "score": 36.802413,
       "rag": "red",
       "weight": 10.0,
-      "n_scored": 7,
+      "n_scored": 6,
       "n_metrics": 7,
       "rag_counts": {
         "green": 2,
         "amber": 2,
-        "red": 3,
-        "n/a": 0
+        "red": 2,
+        "n/a": 1
       },
       "capped_by_flags": [],
       "name": "8 Valuation",
-      "summary": "8 Valuation: RED (30/100, 7 scored metrics). Strongest: P/E percentile vs own history 30.0% (green), EV/Sales percentile vs own history 30.0% (green). Weakest: Implied - delivered growth +20.4pp (red), P/B / justified P/B 6.04x (red). Flags: V01, V03, V04.",
+      "summary": "8 Valuation: RED (37/100, 6 scored metrics). Strongest: P/E percentile vs own history 30.0% (green), EV/Sales percentile vs own history 30.0% (green). Weakest: P/B / justified P/B 6.04x (red), EV/IC / justified EV/IC 5.46x (red). Flags: V03, V04.",
       "metrics": [
         "pe",
         "pe_percentile_10y",
@@ -427,7 +426,6 @@
         "ev_ic_to_roic_wacc"
       ],
       "flags_triggered": [
-        "V01",
         "V03",
         "V04"
       ]
@@ -436,8 +434,8 @@
   "dupont": {
     "three_step": {
       "FY22": {
-        "roe": 0.155254,
-        "pat_margin": 0.139629,
+        "roe": 0.125168,
+        "pat_margin": 0.11257,
         "asset_turnover": 0.618854,
         "equity_multiplier": 1.796722
       },
@@ -468,9 +466,9 @@
     },
     "five_step": {
       "FY22": {
-        "roe": 0.155254,
-        "attributable_factor": 1.00137,
-        "tax_burden": 0.860392,
+        "roe": 0.125168,
+        "attributable_factor": 1.0017,
+        "tax_burden": 0.693429,
         "interest_burden": 0.900232,
         "ebit_margin": 0.180024,
         "asset_turnover": 0.618854,
@@ -2835,23 +2833,6 @@
         ]
       },
       {
-        "id": "B04",
-        "name": "Liquidity squeeze",
-        "pillar": "balance_sheet",
-        "severity": "medium",
-        "origin": "config/flags.yaml",
-        "status": "triggered",
-        "values": {
-          "cr": 0.66053,
-          "cash": 0.058276
-        },
-        "text": "Other assets cover other liabilities only 0.7x and cash covers debt 0.1x: short-term obligations depend on refinancing.",
-        "condition": "m('current_ratio_proxy') < 1.0 and m('cash_to_st_borrowings') < 0.2",
-        "applies": [
-          "NF"
-        ]
-      },
-      {
         "id": "M03",
         "name": "Materials cost creeping up",
         "pillar": "margins",
@@ -2886,23 +2867,6 @@
         ]
       },
       {
-        "id": "V01",
-        "name": "Priced for acceleration",
-        "pillar": "valuation",
-        "severity": "medium",
-        "origin": "config/flags.yaml",
-        "status": "triggered",
-        "values": {
-          "imp": 0.293069,
-          "gap": 0.204302
-        },
-        "text": "Today's EV implies 29.3% a year FCF growth for 10 years, +20.4pp above the growth delivered over the last 5 years: the price needs an acceleration that has not happened yet.",
-        "condition": "m('implied_minus_delivered_growth') > 0.05",
-        "applies": [
-          "NF"
-        ]
-      },
-      {
         "id": "V03",
         "name": "P/B well above what returns justify",
         "pillar": "valuation",
@@ -2914,8 +2878,8 @@
           "j": 0.702788,
           "r": 6.044057
         },
-        "text": "P/B of 4.2x is 6.0x the 0.7x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise.",
-        "condition": "m('pb_to_justified_pb') > 1.5",
+        "text": "P/B of 4.2x is 6.0x the 0.7x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise.",
+        "condition": "m('pb_to_justified_pb') > 1.5 and first_of(m('implied_minus_delivered_growth'), 1.0) > 0",
         "applies": [
           "ALL"
         ]
@@ -2928,11 +2892,11 @@
         "origin": "config/flags.yaml",
         "status": "triggered",
         "values": {
-          "r": 4.568155,
+          "r": 5.463304,
           "evic": 3.697417
         },
-        "text": "EV/IC is 3.7x, 4.6x what current ROIC/WACC would support in steady state.",
-        "condition": "m('ev_ic_to_roic_wacc') > 1.5",
+        "text": "EV/IC is 3.7x, 5.5x the (ROIC - g)/(WACC - g) that current returns support at sustainable growth, and the market prices more growth than the company has delivered.",
+        "condition": "m('ev_ic_to_roic_wacc') > 1.5 and first_of(m('implied_minus_delivered_growth'), 1.0) > 0",
         "applies": [
           "NF"
         ]
@@ -2969,12 +2933,14 @@
       "B01",
       "B02",
       "B03",
+      "B04",
       "B05",
       "A01",
       "A07",
       "V02",
       "CY01",
-      "CY03"
+      "CY03",
+      "CY04"
     ],
     "not_evaluable": [
       {
@@ -2998,19 +2964,19 @@
         "missing": "acquisition_roic_delta_3y FY26"
       },
       {
+        "id": "V01",
+        "name": "Priced for acceleration",
+        "missing": "implied_minus_delivered_growth FY26"
+      },
+      {
         "id": "CY02",
         "name": "Expanding at the top of the cycle",
         "missing": "peak_cycle_capex FY26"
-      },
-      {
-        "id": "CY04",
-        "name": "Unit margins far below the cycle average",
-        "missing": "ebitda_per_tonne_vs_avg FY26 [n/a in FY26: missing ebitda_per_tonne: 2 of 3 years available]"
       }
     ],
     "counts": {
       "high": 1,
-      "medium": 6,
+      "medium": 4,
       "low": 1
     }
   },
@@ -3032,9 +2998,9 @@
         "FY17": null,
         "FY18": 0.087533,
         "FY19": 0.079941,
-        "FY20": 0.158124,
+        "FY20": 0.099055,
         "FY21": 0.131295,
-        "FY22": 0.155254,
+        "FY22": 0.125168,
         "FY23": 0.096678,
         "FY24": 0.122303,
         "FY25": 0.092246,
@@ -3046,22 +3012,22 @@
         "rag": "red"
       },
       "trend": {
-        "slope_per_year": -0.009324,
-        "normalised_slope": -0.080755,
+        "slope_per_year": -0.003307,
+        "normalised_slope": -0.030216,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 16.58829,
+        "score": 35.335728,
         "label": "deteriorating"
       },
       "stability": {
-        "cv": 0.250954,
-        "sd": 0.028838,
+        "cv": 0.172735,
+        "sd": 0.018139,
         "n": 9,
-        "score": 48.820892,
+        "score": 61.046786,
         "label": "moderate",
         "window": "FY18-FY26"
       },
-      "composite": 23.048717,
+      "composite": 29.569461,
       "rag": "red",
       "band": {
         "red": 0.131902,
@@ -3075,7 +3041,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Return on equity: 11.1% RED (level red vs band (red <= 13.2%, green >= 18.2%); trend deteriorating -0.9pp/yr; moderate (CV 0.25))"
+      "text": "Return on equity: 11.1% RED (level red vs band (red <= 13.2%, green >= 18.2%); trend deteriorating -0.3pp/yr; moderate (CV 0.17))"
     },
     "roa": {
       "name": "Return on assets",
@@ -3094,9 +3060,9 @@
         "FY17": null,
         "FY18": 0.044734,
         "FY19": 0.035963,
-        "FY20": 0.073909,
+        "FY20": 0.046299,
         "FY21": 0.066063,
-        "FY22": 0.08641,
+        "FY22": 0.069665,
         "FY23": 0.05781,
         "FY24": 0.072901,
         "FY25": 0.051522,
@@ -3104,18 +3070,18 @@
       },
       "level": null,
       "trend": {
-        "slope_per_year": -0.006031,
-        "normalised_slope": -0.091928,
+        "slope_per_year": -0.002682,
+        "normalised_slope": -0.043081,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 13.722102,
+        "score": 29.700053,
         "label": "deteriorating"
       },
       "stability": {
-        "cv": 0.257622,
-        "sd": 0.015707,
+        "cv": 0.221357,
+        "sd": 0.012405,
         "n": 9,
-        "score": 47.899642,
+        "score": 53.128961,
         "label": "moderate",
         "window": "FY18-FY26"
       },
@@ -3205,9 +3171,9 @@
         "FY17": null,
         "FY18": 0.090305,
         "FY19": 0.070872,
-        "FY20": 0.117515,
+        "FY20": 0.081649,
         "FY21": 0.112837,
-        "FY22": 0.141851,
+        "FY22": 0.114324,
         "FY23": 0.094473,
         "FY24": 0.1223,
         "FY25": 0.090916,
@@ -3219,22 +3185,22 @@
         "rag": "red"
       },
       "trend": {
-        "slope_per_year": -0.00817,
-        "normalised_slope": -0.073964,
+        "slope_per_year": -0.002665,
+        "normalised_slope": -0.025391,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 18.553527,
-        "label": "deteriorating"
+        "score": 37.570467,
+        "label": "stable"
       },
       "stability": {
-        "cv": 0.20143,
-        "sd": 0.021124,
+        "cv": 0.170463,
+        "sd": 0.016676,
         "n": 9,
-        "score": 56.241515,
+        "score": 61.444419,
         "label": "moderate",
         "window": "FY18-FY26"
       },
-      "composite": 23.393014,
+      "composite": 28.927685,
       "rag": "red",
       "band": {
         "red": 0.126981,
@@ -3248,7 +3214,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Return on invested capital: 10.3% RED (level red vs band (red <= 12.7%, green >= 17.7%); trend deteriorating -0.8pp/yr; moderate (CV 0.20))"
+      "text": "Return on invested capital: 10.3% RED (level red vs band (red <= 12.7%, green >= 17.7%); trend stable -0.3pp/yr; moderate (CV 0.17))"
     },
     "roic_wacc_spread": {
       "name": "ROIC - WACC",
@@ -3267,9 +3233,9 @@
         "FY17": null,
         "FY18": -0.034678,
         "FY19": -0.05351,
-        "FY20": -0.006306,
+        "FY20": -0.042172,
         "FY21": -0.013339,
-        "FY22": 0.01459,
+        "FY22": -0.012936,
         "FY23": -0.033026,
         "FY24": -0.005462,
         "FY25": -0.036187,
@@ -3281,22 +3247,22 @@
         "rag": "red"
       },
       "trend": {
-        "slope_per_year": -0.008065,
-        "normalised_slope": -0.403251,
+        "slope_per_year": -0.00256,
+        "normalised_slope": -0.11451,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 0.031425,
+        "score": 9.193743,
         "label": "deteriorating"
       },
       "stability": {
-        "cv": 0.967541,
-        "sd": 0.020649,
+        "cv": 0.55028,
+        "sd": 0.01562,
         "n": 9,
-        "score": 6.301378,
+        "score": 20.75822,
         "label": "volatile",
         "window": "FY18-FY26"
       },
-      "composite": 11.291434,
+      "composite": 15.75054,
       "rag": "red",
       "band": {
         "red": 0.0,
@@ -3310,7 +3276,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "ROIC - WACC: -2.4pp RED (level red vs band (red <= +0.0pp, green >= +5.0pp); trend deteriorating -0.8pp/yr; volatile (CV 0.97))"
+      "text": "ROIC - WACC: -2.4pp RED (level red vs band (red <= +0.0pp, green >= +5.0pp); trend deteriorating -0.3pp/yr; volatile (CV 0.55))"
     },
     "incremental_roic_3y": {
       "name": "Incremental ROIC 3y",
@@ -3331,10 +3297,10 @@
         "FY19": null,
         "FY20": null,
         "FY21": 0.146296,
-        "FY22": 0.751901,
+        "FY22": 0.487785,
         "FY23": null,
         "FY24": 0.205319,
-        "FY25": -0.033135,
+        "FY25": 0.033907,
         "FY26": 0.1164
       },
       "level": {
@@ -3343,22 +3309,22 @@
         "rag": "red"
       },
       "trend": {
-        "slope_per_year": -0.178772,
-        "normalised_slope": -0.687265,
+        "slope_per_year": -0.10511,
+        "normalised_slope": -0.498501,
         "n": 4,
         "window": "FY22-FY26",
-        "score": 0.000107,
+        "score": 0.004678,
         "label": "deteriorating"
       },
       "stability": {
-        "cv": 1.267202,
-        "sd": 0.300778,
+        "cv": 0.876079,
+        "sd": 0.173412,
         "n": 5,
-        "score": 2.676724,
+        "score": 8.183231,
         "label": "volatile",
         "window": "FY21-FY26"
       },
-      "composite": 16.16903,
+      "composite": 16.996148,
       "rag": "red",
       "band": {
         "red": 0.126981,
@@ -3372,7 +3338,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Incremental ROIC 3y: 11.6% RED (level red vs band (red <= 12.7%, green >= 17.7%); trend deteriorating -17.9pp/yr; volatile (CV 1.27))"
+      "text": "Incremental ROIC 3y: 11.6% RED (level red vs band (red <= 12.7%, green >= 17.7%); trend deteriorating -10.5pp/yr; volatile (CV 0.88))"
     },
     "attributable_factor": {
       "name": "Attributable-profit factor",
@@ -3391,9 +3357,9 @@
         "FY17": 1.00059,
         "FY18": 0.998971,
         "FY19": 1.001304,
-        "FY20": 1.000762,
+        "FY20": 1.001216,
         "FY21": 1.000229,
-        "FY22": 1.00137,
+        "FY22": 1.0017,
         "FY23": 0.998139,
         "FY24": 1.000148,
         "FY25": 0.999912,
@@ -3401,16 +3367,16 @@
       },
       "level": null,
       "trend": {
-        "slope_per_year": -0.000651,
-        "normalised_slope": -0.000652,
+        "slope_per_year": -0.000717,
+        "normalised_slope": -0.000718,
         "n": 5,
         "window": "FY22-FY26",
         "score": null,
         "label": "flat"
       },
       "stability": {
-        "cv": 0.001359,
-        "sd": 0.001359,
+        "cv": 0.001441,
+        "sd": 0.001441,
         "n": 10,
         "score": null,
         "label": "stable",
@@ -3440,9 +3406,9 @@
         "FY17": 0.694797,
         "FY18": 0.673779,
         "FY19": 0.692061,
-        "FY20": 1.109626,
+        "FY20": 0.694797,
         "FY21": 0.682684,
-        "FY22": 0.860392,
+        "FY22": 0.693429,
         "FY23": 0.684092,
         "FY24": 0.743345,
         "FY25": 0.802276,
@@ -3450,19 +3416,19 @@
       },
       "level": null,
       "trend": {
-        "slope_per_year": -0.010389,
-        "normalised_slope": -0.013529,
+        "slope_per_year": 0.023004,
+        "normalised_slope": 0.031319,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 43.276362,
-        "label": "stable"
+        "score": 65.166739,
+        "label": "improving"
       },
       "stability": {
-        "cv": 0.17424,
-        "sd": 0.134032,
+        "cv": 0.057323,
+        "sd": 0.04076,
         "n": 10,
-        "score": 60.784974,
-        "label": "moderate",
+        "score": 84.892951,
+        "label": "stable",
         "window": "FY17-FY26"
       },
       "composite": null,
@@ -3685,9 +3651,9 @@
         "FY17": 0.694797,
         "FY18": 0.673779,
         "FY19": 0.692061,
-        "FY20": 1.0,
+        "FY20": 0.694797,
         "FY21": 0.682684,
-        "FY22": 0.860392,
+        "FY22": 0.693429,
         "FY23": 0.684092,
         "FY24": 0.743345,
         "FY25": 0.802276,
@@ -3695,18 +3661,18 @@
       },
       "level": null,
       "trend": {
-        "slope_per_year": -0.010389,
-        "normalised_slope": -0.013529,
+        "slope_per_year": 0.023004,
+        "normalised_slope": 0.031319,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 43.276362,
-        "label": "stable"
+        "score": 65.166739,
+        "label": "improving"
       },
       "stability": {
-        "cv": 0.137521,
-        "sd": 0.104279,
+        "cv": 0.057323,
+        "sd": 0.04076,
         "n": 10,
-        "score": 67.508396,
+        "score": 84.892951,
         "label": "stable",
         "window": "FY17-FY26"
       },
@@ -3734,9 +3700,9 @@
         "FY17": 0.105802,
         "FY18": 0.093461,
         "FY19": 0.081724,
-        "FY20": 0.153743,
+        "FY20": 0.10682,
         "FY21": 0.135354,
-        "FY22": 0.143941,
+        "FY22": 0.116008,
         "FY23": 0.083639,
         "FY24": 0.103084,
         "FY25": 0.090119,
@@ -3744,18 +3710,18 @@
       },
       "level": null,
       "trend": {
-        "slope_per_year": -0.007212,
-        "normalised_slope": -0.068629,
+        "slope_per_year": -0.001625,
+        "normalised_slope": -0.016335,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 20.220465,
-        "label": "deteriorating"
+        "score": 41.904191,
+        "label": "stable"
       },
       "stability": {
-        "cv": 0.234974,
-        "sd": 0.025742,
+        "cv": 0.157199,
+        "sd": 0.016045,
         "n": 10,
-        "score": 51.101612,
+        "score": 63.817629,
         "label": "moderate",
         "window": "FY17-FY26"
       },
@@ -3783,9 +3749,9 @@
         "FY17": null,
         "FY18": 5.618883,
         "FY19": 4.495007,
-        "FY20": 0.025674,
+        "FY20": 0.036952,
         "FY21": -0.64186,
-        "FY22": 0.439924,
+        "FY22": 0.545848,
         "FY23": 0.358576,
         "FY24": 0.77468,
         "FY25": 3.707965,
@@ -3793,16 +3759,16 @@
       },
       "level": null,
       "trend": {
-        "slope_per_year": 0.33928,
-        "normalised_slope": 0.295397,
+        "slope_per_year": 0.318095,
+        "normalised_slope": 0.271937,
         "n": 5,
         "window": "FY22-FY26",
         "score": null,
         "label": "rising"
       },
       "stability": {
-        "cv": 1.341203,
-        "sd": 2.271175,
+        "cv": 1.326229,
+        "sd": 2.263089,
         "n": 9,
         "score": null,
         "label": "volatile",
@@ -3832,9 +3798,9 @@
         "FY17": 0.114845,
         "FY18": 0.129756,
         "FY19": 0.131408,
-        "FY20": 0.065196,
+        "FY20": 0.104074,
         "FY21": 0.195493,
-        "FY22": 0.149361,
+        "FY22": 0.185262,
         "FY23": 0.216633,
         "FY24": 0.288484,
         "FY25": 0.378163,
@@ -3842,16 +3808,16 @@
       },
       "level": null,
       "trend": {
-        "slope_per_year": 0.159502,
-        "normalised_slope": 0.42002,
+        "slope_per_year": 0.152322,
+        "normalised_slope": 0.393668,
         "n": 5,
         "window": "FY22-FY26",
         "score": null,
         "label": "rising"
       },
       "stability": {
-        "cv": 0.922652,
-        "sd": 0.233934,
+        "cv": 0.877941,
+        "sd": 0.229163,
         "n": 10,
         "score": null,
         "label": "volatile",
@@ -4107,6 +4073,48 @@
       "note": null,
       "text": "Non-capex investing (3y, % of IC): -38.0% [informational (neutral direction)]"
     },
+    "acquisition_spend_3y": {
+      "name": "Acquisition-like spend (3y, % of IC)",
+      "pillar": "capital_allocation",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "sum3(max(0, -CFI - capex proxy - (change in cash + investments - net cash flow))) / IC_t-3",
+      "formula": null,
+      "origin": "engine",
+      "meaning": "Investing outflows beyond capex that did not end up as cash or investments on the balance sheet (stakes and businesses bought), over 3 years, relative to opening invested capital. Treasury moves are netted out.",
+      "value": 0.0,
+      "value_text": "0.0%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": 0.0,
+        "FY21": 0.0,
+        "FY22": 0.0,
+        "FY23": 0.0,
+        "FY24": 0.0,
+        "FY25": 0.0,
+        "FY26": 0.0
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.0,
+        "normalised_slope": 0.0,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "flat"
+      },
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Acquisition-like spend (3y, % of IC): 0.0% [informational (neutral direction)]"
+    },
     "acquisition_roic_delta_3y": {
       "name": "ROIC change after acquisition spend",
       "pillar": "capital_allocation",
@@ -4114,10 +4122,10 @@
       "unit": "pp",
       "direction": "higher",
       "kind": "annual",
-      "equation": "ROIC_t - ROIC_t-3 if non_capex_investing_3y > 10%, else n/a",
+      "equation": "ROIC_t - ROIC_t-3 if acquisition_spend_3y > 10%, else n/a",
       "formula": null,
       "origin": "engine",
-      "meaning": "When a company spent materially beyond capex (> 10% of IC over 3 years), did ROIC subsequently rise or fall?",
+      "meaning": "When a company spent materially on acquisitions (> 10% of IC over 3 years, treasury moves excluded), did ROIC subsequently rise or fall?",
       "value": null,
       "value_text": "n/a",
       "series": {
@@ -4467,46 +4475,46 @@
       "unit": "x",
       "direction": "higher",
       "kind": "annual",
-      "equation": "Other assets / Other liabilities",
+      "equation": "(Other assets + Investments) / Other liabilities",
       "formula": null,
       "origin": "engine",
-      "meaning": "Short-term liquidity proxy: the export has no current/non-current split, so other assets / other liabilities is used (Screener's own working-capital split). Excludes short-term debt (inside Borrowings).",
-      "value": 0.66053,
-      "value_text": "0.66x",
+      "meaning": "Short-term liquidity proxy: the export has no current/non-current split, so (other assets + investments) / other liabilities is used. Investments are included because Indian companies hold treasury mainly in liquid funds and bonds, which Screener reports under Investments, not Cash. Excludes short-term debt (inside Borrowings).",
+      "value": 0.825163,
+      "value_text": "0.83x",
       "series": {
-        "FY17": 0.930496,
-        "FY18": 0.92801,
-        "FY19": 0.906432,
-        "FY20": 0.887091,
-        "FY21": 0.833237,
-        "FY22": 0.779234,
-        "FY23": 0.787136,
-        "FY24": 0.783749,
-        "FY25": 0.712905,
-        "FY26": 0.66053
+        "FY17": 1.646615,
+        "FY18": 1.410903,
+        "FY19": 1.073961,
+        "FY20": 1.232765,
+        "FY21": 1.433668,
+        "FY22": 1.066214,
+        "FY23": 1.067808,
+        "FY24": 1.06657,
+        "FY25": 0.845724,
+        "FY26": 0.825163
       },
       "level": {
-        "score": 10.702006,
+        "score": 21.677565,
         "basis": "band",
         "rag": "red"
       },
       "trend": {
-        "slope_per_year": -0.031164,
-        "normalised_slope": -0.031164,
+        "slope_per_year": -0.070418,
+        "normalised_slope": -0.070418,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 34.903649,
+        "score": 19.649129,
         "label": "deteriorating"
       },
       "stability": {
-        "cv": 0.092479,
-        "sd": 0.092479,
+        "cv": 0.225601,
+        "sd": 0.263263,
         "n": 10,
-        "score": 76.78013,
-        "label": "stable",
+        "score": 52.488577,
+        "label": "moderate",
         "window": "FY17-FY26"
       },
-      "composite": 26.664135,
+      "composite": 25.792108,
       "rag": "red",
       "band": {
         "red": 1.0,
@@ -4520,56 +4528,56 @@
       },
       "reason": null,
       "note": null,
-      "text": "Current ratio (Screener proxy): 0.66x RED (level red vs indicative band (red <= 1.00x, green >= 1.50x); trend deteriorating -0.03x/yr; stable (CV 0.09))"
+      "text": "Current ratio (Screener proxy): 0.83x RED (level red vs indicative band (red <= 1.00x, green >= 1.50x); trend deteriorating -0.07x/yr; moderate (CV 0.23))"
     },
     "cash_to_st_borrowings": {
-      "name": "Cash / short-term borrowings",
+      "name": "Cash and investments / short-term borrowings",
       "pillar": "balance_sheet",
       "role": "scored",
       "unit": "x",
       "direction": "higher",
       "kind": "annual",
-      "equation": "Cash & bank / short-term borrowings (manual) or / Borrowings; = 99 when there is no debt",
+      "equation": "(Cash & bank + Investments) / short-term borrowings (manual) or / Borrowings; = 99 when there is no debt",
       "formula": null,
       "origin": "engine",
-      "meaning": "Cash cover for debt falling due soon. Uses manual short_term_borrowings when supplied, otherwise total borrowings (conservative: treats all debt as short-term).",
-      "value": 0.058276,
-      "value_text": "0.06x",
+      "meaning": "Liquid cover for debt falling due soon: cash plus investments (treasury is mostly held in liquid funds and bonds, reported under Investments). Uses manual short_term_borrowings when supplied, otherwise total borrowings (conservative: treats all debt as short-term).",
+      "value": 0.341984,
+      "value_text": "0.34x",
       "series": {
-        "FY17": 0.265359,
-        "FY18": 0.011246,
-        "FY19": 0.029194,
-        "FY20": 0.023455,
-        "FY21": 0.092431,
-        "FY22": 0.031789,
-        "FY23": 0.103962,
-        "FY24": 0.068685,
-        "FY25": 0.069426,
-        "FY26": 0.058276
+        "FY17": 1.054847,
+        "FY18": 0.290858,
+        "FY19": 0.144493,
+        "FY20": 0.281012,
+        "FY21": 0.653133,
+        "FY22": 0.592536,
+        "FY23": 0.763858,
+        "FY24": 0.79209,
+        "FY25": 0.283368,
+        "FY26": 0.341984
       },
       "level": {
-        "score": 27.428164,
+        "score": 39.249332,
         "basis": "band",
-        "rag": "red"
+        "rag": "amber"
       },
       "trend": {
-        "slope_per_year": 0.001844,
-        "normalised_slope": 0.001844,
+        "slope_per_year": -0.098159,
+        "normalised_slope": -0.098159,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 50.921748,
-        "label": "stable"
+        "score": 12.312236,
+        "label": "deteriorating"
       },
       "stability": {
-        "cv": 0.073345,
-        "sd": 0.073345,
+        "cv": 0.294554,
+        "sd": 0.294554,
         "n": 10,
-        "score": 81.094368,
-        "label": "stable",
+        "score": 43.102783,
+        "label": "moderate",
         "window": "FY17-FY26"
       },
-      "composite": 41.35149,
-      "rag": "amber",
+      "composite": 33.093076,
+      "rag": "red",
       "band": {
         "red": 0.2,
         "green": 1.0,
@@ -4582,7 +4590,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Cash / short-term borrowings: 0.06x AMBER (level red vs indicative band (red <= 0.20x, green >= 1.00x); trend stable 0.00x/yr; stable (CV 0.07))"
+      "text": "Cash and investments / short-term borrowings: 0.34x RED (level amber vs indicative band (red <= 0.20x, green >= 1.00x); trend deteriorating -0.10x/yr; moderate (CV 0.29))"
     },
     "debt_vs_ebitda_growth": {
       "name": "Debt growth - EBITDA growth",
@@ -4983,9 +4991,9 @@
         "FY17": null,
         "FY18": -5.562801,
         "FY19": -5.436237,
-        "FY20": 1.038556,
+        "FY20": 1.657873,
         "FY21": 1.971858,
-        "FY22": 0.4622,
+        "FY22": 0.573299,
         "FY23": 0.559517,
         "FY24": 0.240234,
         "FY25": -4.048799,
@@ -4997,22 +5005,22 @@
         "rag": "amber"
       },
       "trend": {
-        "slope_per_year": -0.456917,
-        "normalised_slope": -0.991111,
+        "slope_per_year": -0.479137,
+        "normalised_slope": -1.091937,
         "n": 5,
         "window": "FY22-FY26",
         "score": 0.0,
         "label": "deteriorating"
       },
       "stability": {
-        "cv": 2.602854,
-        "sd": 2.976999,
+        "cv": 2.867975,
+        "sd": 3.047472,
         "n": 9,
-        "score": 0.058921,
+        "score": 0.027625,
         "label": "volatile",
         "window": "FY18-FY26"
       },
-      "composite": 29.401292,
+      "composite": 29.396598,
       "rag": "red",
       "band": {
         "red": 0.2,
@@ -5026,7 +5034,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "FCF / PAT: 0.48 RED (level amber vs indicative band (red <= 0.20, green >= 0.80); trend deteriorating -0.46/yr; volatile (CV 2.60))"
+      "text": "FCF / PAT: 0.48 RED (level amber vs indicative band (red <= 0.20, green >= 0.80); trend deteriorating -0.48/yr; volatile (CV 2.87))"
     },
     "fcf_to_pat_5y": {
       "name": "FCF / PAT (5y cumulative)",
@@ -5039,19 +5047,19 @@
       "formula": null,
       "origin": "engine",
       "meaning": "Free cash flow conversion over a full cycle (5 years), smoothing lumpy capex.",
-      "value": -0.374989,
-      "value_text": "-0.37",
+      "value": -0.391567,
+      "value_text": "-0.39",
       "series": {
         "FY17": null,
         "FY18": null,
         "FY19": null,
         "FY20": null,
         "FY21": null,
-        "FY22": -0.227846,
-        "FY23": 0.380769,
-        "FY24": 0.805062,
-        "FY25": -0.186571,
-        "FY26": -0.374989
+        "FY22": -0.269352,
+        "FY23": 0.441355,
+        "FY24": 0.911374,
+        "FY25": -0.195575,
+        "FY26": -0.391567
       },
       "level": {
         "score": 0.0,
@@ -5059,22 +5067,22 @@
         "rag": "red"
       },
       "trend": {
-        "slope_per_year": -0.086163,
-        "normalised_slope": -0.430813,
+        "slope_per_year": -0.088136,
+        "normalised_slope": -0.440679,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 0.01811,
+        "score": 0.014868,
         "label": "deteriorating"
       },
       "stability": {
-        "cv": 2.486237,
-        "sd": 0.497247,
+        "cv": 2.784187,
+        "sd": 0.556837,
         "n": 5,
-        "score": 0.082219,
+        "score": 0.035097,
         "label": "volatile",
         "window": "FY22-FY26"
       },
-      "composite": 0.01686,
+      "composite": 0.008981,
       "rag": "red",
       "band": {
         "red": 0.3,
@@ -5088,7 +5096,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "FCF / PAT (5y cumulative): -0.37 RED (level red vs indicative band (red <= 0.30, green >= 0.70); trend deteriorating -0.09/yr; volatile (CV 2.49))"
+      "text": "FCF / PAT (5y cumulative): -0.39 RED (level red vs indicative band (red <= 0.30, green >= 0.70); trend deteriorating -0.09/yr; volatile (CV 2.78))"
     },
     "cfo_to_pat_5y": {
       "name": "CFO / PAT (5y cumulative)",
@@ -5101,19 +5109,19 @@
       "formula": null,
       "origin": "engine",
       "meaning": "Operating cash flow conversion of profits over 5 years: below 60% means profits are not turning into cash.",
-      "value": 1.643124,
-      "value_text": "1.64",
+      "value": 1.715762,
+      "value_text": "1.72",
       "series": {
         "FY17": null,
         "FY18": null,
         "FY19": null,
         "FY20": null,
-        "FY21": 1.991945,
-        "FY22": 1.750876,
-        "FY23": 1.758758,
-        "FY24": 1.655875,
-        "FY25": 1.695693,
-        "FY26": 1.643124
+        "FY21": 2.258201,
+        "FY22": 2.069824,
+        "FY23": 2.038599,
+        "FY24": 1.874541,
+        "FY25": 1.777524,
+        "FY26": 1.715762
       },
       "level": {
         "score": 100.0,
@@ -5121,22 +5129,22 @@
         "rag": "green"
       },
       "trend": {
-        "slope_per_year": -0.027857,
-        "normalised_slope": -0.016378,
+        "slope_per_year": -0.09692,
+        "normalised_slope": -0.051138,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 41.883387,
-        "label": "stable"
+        "score": 26.448902,
+        "label": "deteriorating"
       },
       "stability": {
-        "cv": 0.073135,
-        "sd": 0.12794,
+        "cv": 0.104114,
+        "sd": 0.203621,
         "n": 6,
-        "score": 81.143054,
+        "score": 74.269514,
         "label": "stable",
         "window": "FY21-FY26"
       },
-      "composite": 82.642305,
+      "composite": 77.752652,
       "rag": "green",
       "band": {
         "red": 0.6,
@@ -5150,7 +5158,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "CFO / PAT (5y cumulative): 1.64 GREEN (level green vs indicative band (red <= 0.60, green >= 0.90); trend stable -0.03/yr; stable (CV 0.07))"
+      "text": "CFO / PAT (5y cumulative): 1.72 GREEN (level green vs indicative band (red <= 0.60, green >= 0.90); trend deteriorating -0.10/yr; stable (CV 0.10))"
     },
     "accruals_ratio": {
       "name": "Accruals ratio",
@@ -7199,12 +7207,12 @@
         "FY17": null,
         "FY18": null,
         "FY19": null,
-        "FY20": 0.340315,
+        "FY20": 0.146832,
         "FY21": 0.349648,
-        "FY22": 0.451115,
-        "FY23": -0.041758,
+        "FY22": 0.350572,
+        "FY23": 0.119908,
         "FY24": 0.0864,
-        "FY25": -0.063142,
+        "FY25": 0.006602,
         "FY26": 0.172645
       },
       "level": {
@@ -7213,15 +7221,15 @@
         "rag": "green"
       },
       "trend": {
-        "slope_per_year": -0.057832,
-        "normalised_slope": -0.477747,
+        "slope_per_year": -0.046916,
+        "normalised_slope": -0.318668,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 0.007085,
+        "score": 0.170352,
         "label": "deteriorating"
       },
       "stability": null,
-      "composite": 70.590319,
+      "composite": 70.638339,
       "rag": "green",
       "band": {
         "red": 0.04,
@@ -7235,7 +7243,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "PAT CAGR 3y: 17.3% GREEN (level green vs band (red <= 4.0%, green >= 8.9%); trend deteriorating -5.8pp/yr)"
+      "text": "PAT CAGR 3y: 17.3% GREEN (level green vs band (red <= 4.0%, green >= 8.9%); trend deteriorating -4.7pp/yr)"
     },
     "pat_cagr_5y": {
       "name": "PAT CAGR 5y",
@@ -7256,10 +7264,10 @@
         "FY19": null,
         "FY20": null,
         "FY21": null,
-        "FY22": 0.251703,
+        "FY22": 0.198922,
         "FY23": 0.179078,
         "FY24": 0.238547,
-        "FY25": 0.009675,
+        "FY25": 0.108679,
         "FY26": 0.083703
       },
       "level": {
@@ -7268,15 +7276,15 @@
         "rag": "amber"
       },
       "trend": {
-        "slope_per_year": -0.05054,
-        "normalised_slope": -0.331323,
+        "slope_per_year": -0.030084,
+        "normalised_slope": -0.185948,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 0.13231,
+        "score": 2.368447,
         "label": "deteriorating"
       },
       "stability": null,
-      "composite": 44.554089,
+      "composite": 45.211776,
       "rag": "amber",
       "band": {
         "red": 0.04,
@@ -7290,7 +7298,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "PAT CAGR 5y: 8.4% AMBER (level amber vs band (red <= 4.0%, green >= 8.9%); trend deteriorating -5.1pp/yr)"
+      "text": "PAT CAGR 5y: 8.4% AMBER (level amber vs band (red <= 4.0%, green >= 8.9%); trend deteriorating -3.0pp/yr)"
     },
     "pat_cagr_10y": {
       "name": "PAT CAGR (full span, up to 10y)",
@@ -7346,12 +7354,12 @@
         "FY17": null,
         "FY18": null,
         "FY19": null,
-        "FY20": 0.318122,
+        "FY20": 0.127843,
         "FY21": 0.327308,
-        "FY22": 0.427095,
-        "FY23": -0.041869,
+        "FY22": 0.328217,
+        "FY23": 0.119778,
         "FY24": 0.0864,
-        "FY25": -0.069543,
+        "FY25": -0.000276,
         "FY26": 0.164632
       },
       "level": {
@@ -7360,15 +7368,15 @@
         "rag": "green"
       },
       "trend": {
-        "slope_per_year": -0.05526,
-        "normalised_slope": -0.487546,
+        "slope_per_year": -0.044722,
+        "normalised_slope": -0.320017,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 0.005824,
+        "score": 0.165825,
         "label": "deteriorating"
       },
       "stability": null,
-      "composite": 70.589948,
+      "composite": 70.637007,
       "rag": "green",
       "band": {
         "red": 0.04,
@@ -7382,7 +7390,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "EPS CAGR 3y: 16.5% GREEN (level green vs band (red <= 4.0%, green >= 8.9%); trend deteriorating -5.5pp/yr)"
+      "text": "EPS CAGR 3y: 16.5% GREEN (level green vs band (red <= 4.0%, green >= 8.9%); trend deteriorating -4.5pp/yr)"
     },
     "eps_cagr_5y": {
       "name": "EPS CAGR 5y",
@@ -7403,10 +7411,10 @@
         "FY19": null,
         "FY20": null,
         "FY21": null,
-        "FY22": 0.23914,
+        "FY22": 0.186889,
         "FY23": 0.167329,
         "FY24": 0.226205,
-        "FY25": 0.00546,
+        "FY25": 0.104051,
         "FY26": 0.079254
       },
       "level": {
@@ -7415,15 +7423,15 @@
         "rag": "amber"
       },
       "trend": {
-        "slope_per_year": -0.048164,
-        "normalised_slope": -0.335691,
+        "slope_per_year": -0.027855,
+        "normalised_slope": -0.182362,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 0.121254,
+        "score": 2.540119,
         "label": "deteriorating"
       },
       "stability": null,
-      "composite": 42.414389,
+      "composite": 43.12582,
       "rag": "amber",
       "band": {
         "red": 0.04,
@@ -7437,7 +7445,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "EPS CAGR 5y: 7.9% AMBER (level amber vs band (red <= 4.0%, green >= 8.9%); trend deteriorating -4.8pp/yr)"
+      "text": "EPS CAGR 5y: 7.9% AMBER (level amber vs band (red <= 4.0%, green >= 8.9%); trend deteriorating -2.8pp/yr)"
     },
     "eps_cagr_10y": {
       "name": "EPS CAGR (full span, up to 10y)",
@@ -7845,9 +7853,9 @@
         "FY17": 0.094197,
         "FY18": 0.071732,
         "FY19": 0.057969,
-        "FY20": 0.135642,
+        "FY20": 0.084971,
         "FY21": 0.122147,
-        "FY22": 0.139629,
+        "FY22": 0.11257,
         "FY23": 0.080075,
         "FY24": 0.09879,
         "FY25": 0.079509,
@@ -7859,22 +7867,22 @@
         "rag": "green"
       },
       "trend": {
-        "slope_per_year": -0.009531,
-        "normalised_slope": -0.097208,
+        "slope_per_year": -0.00412,
+        "normalised_slope": -0.04447,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 12.519211,
+        "score": 29.123513,
         "label": "deteriorating"
       },
       "stability": {
-        "cv": 0.281353,
-        "sd": 0.027346,
+        "cv": 0.211953,
+        "sd": 0.018953,
         "n": 10,
-        "score": 44.759519,
+        "score": 54.575802,
         "label": "moderate",
         "window": "FY17-FY26"
       },
-      "composite": 53.82578,
+      "composite": 59.449298,
       "rag": "amber",
       "band": {
         "red": 0.044291,
@@ -7888,7 +7896,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "PAT margin: 9.2% AMBER (level green vs band (red <= 4.4%, green >= 8.4%); trend deteriorating -1.0pp/yr; moderate (CV 0.28))"
+      "text": "PAT margin: 9.2% AMBER (level green vs band (red <= 4.4%, green >= 8.4%); trend deteriorating -0.4pp/yr; moderate (CV 0.21))"
     },
     "materials_pct": {
       "name": "Materials % of sales",
@@ -8386,9 +8394,9 @@
         "FY17": null,
         "FY18": -1111.807754,
         "FY19": -2558.382573,
-        "FY20": -350.041665,
+        "FY20": -2340.975697,
         "FY21": -715.666612,
-        "FY22": 778.74941,
+        "FY22": -690.460446,
         "FY23": -1849.047446,
         "FY24": -326.425186,
         "FY25": -2724.485944,
@@ -8396,11 +8404,11 @@
       },
       "level": null,
       "trend": {
-        "slope_per_year": -678.632071,
-        "normalised_slope": -0.538776,
+        "slope_per_year": -384.7901,
+        "normalised_slope": -0.247705,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 0.00209,
+        "score": 0.700504,
         "label": "deteriorating"
       },
       "stability": null,
@@ -8428,9 +8436,9 @@
         "FY17": 45.761388,
         "FY18": 48.811297,
         "FY19": 45.680979,
-        "FY20": 16.271441,
+        "FY20": 25.97451,
         "FY21": 35.607003,
-        "FY22": 25.953207,
+        "FY22": 32.191591,
         "FY23": 43.454425,
         "FY24": 40.17958,
         "FY25": 56.164971,
@@ -8706,12 +8714,12 @@
       "unit": "pct",
       "direction": "neutral",
       "kind": "point",
-      "equation": "solve g: EV = sum_{t=1..10} F0(1+g)^t/(1+WACC)^t + F10(1+gT)/((WACC-gT)(1+WACC)^10), F0 = NOPAT0 x (1 - gT/RONIC), RONIC = 3y avg ROIC (capped at 100%)",
+      "equation": "solve g: EV = sum_{t=1..10} F0(1+g)^t/(1+WACC)^t + F10(1+gT)/((WACC-gT)(1+WACC)^10), F0 = NOPAT0 x (1 - gT/RONIC), RONIC = 3y avg ROIC (capped at 100%); n/m if RONIC <= WACC",
       "formula": null,
       "origin": "engine",
       "meaning": "Annual free-cash-flow growth for the next 10 years that today's enterprise value implies, starting from the steady-state FCF the business generates at its 3-year average ROIC, then growing at the terminal rate.",
-      "value": 0.293069,
-      "value_text": "29.3%",
+      "value": null,
+      "value_text": "n/a",
       "series": {},
       "level": null,
       "trend": null,
@@ -8720,8 +8728,8 @@
       "rag": "n/a",
       "band": null,
       "reason": "informational (neutral direction)",
-      "note": "solved; EV 341,104 cr, NOPAT 9,262 cr, base FCF 3,986 cr, WACC 12.70%, RONIC 10.5%, terminal g 6.0%, 10y",
-      "text": "Reverse-DCF implied FCF growth (10y): 29.3% [informational (neutral direction)] Note: solved; EV 341,104 cr, NOPAT 9,262 cr, base FCF 3,986 cr, WACC 12.70%, RONIC 10.5%, terminal g 6.0%, 10y"
+      "note": "n/m: ROIC 10.5% <= WACC 12.70%: growth at these returns adds no value, so the price implies rising returns (see P/B and EV/IC versus justified)",
+      "text": "Reverse-DCF implied FCF growth (10y): n/a [informational (neutral direction)] Note: n/m: ROIC 10.5% <= WACC 12.70%: growth at these returns adds no value, so the price implies rising returns (see P/B and EV/IC versus justified)"
     },
     "implied_minus_delivered_growth": {
       "name": "Implied - delivered growth",
@@ -8734,18 +8742,14 @@
       "formula": null,
       "origin": "engine",
       "meaning": "How much faster the market expects NOPAT to grow than it did over the last 5 years (positive = priced for acceleration).",
-      "value": 0.204302,
-      "value_text": "+20.4pp",
+      "value": null,
+      "value_text": "n/a",
       "series": {},
-      "level": {
-        "score": 0.0,
-        "basis": "band",
-        "rag": "red"
-      },
+      "level": null,
       "trend": null,
       "stability": null,
-      "composite": 0.0,
-      "rag": "red",
+      "composite": null,
+      "rag": "n/a",
       "band": {
         "red": 0.05,
         "green": 0.0,
@@ -8756,9 +8760,9 @@
         "rationale": "Price requiring 5pp+ faster growth than delivered over the last 5 years = expectations risk; at or below delivered = undemanding.",
         "centre": null
       },
-      "reason": null,
+      "reason": "no value for the as-of year",
       "note": null,
-      "text": "Implied - delivered growth: +20.4pp RED (level red vs indicative band (green <= +0.0pp, red >= +5.0pp))"
+      "text": "Implied - delivered growth: n/a [no value for the as-of year]"
     },
     "justified_pb": {
       "name": "Justified P/B",
@@ -8846,18 +8850,18 @@
       "text": "EV / invested capital: 3.70x [informational (neutral direction)]"
     },
     "ev_ic_to_roic_wacc": {
-      "name": "(EV/IC) / (ROIC/WACC)",
+      "name": "EV/IC / justified EV/IC",
       "pillar": "valuation",
       "role": "scored",
       "unit": "x",
       "direction": "lower",
       "kind": "point",
-      "equation": "(EV / IC) / (ROIC / WACC), ROIC = latest, WACC = current",
+      "equation": "(EV / IC) / ((ROIC - g) / (WACC - g)); ROIC = 3y avg, g = min(ROIC x 3y avg reinvestment rate, terminal g)",
       "formula": null,
       "origin": "engine",
-      "meaning": "In a no-growth steady state EV/IC = ROIC/WACC. Above 1 = the market pays for growth or improvement beyond today's returns; below 1 = priced for decline.",
-      "value": 4.568155,
-      "value_text": "4.57x",
+      "meaning": "Market EV/IC relative to the steady-state EV/IC that current returns support with sustainable growth ((ROIC - g)/(WACC - g), the value-driver formula; = ROIC/WACC when g = 0). Above 1 = paying for growth or rising returns beyond the steady state; below 1 = priced for decline.",
+      "value": 5.463304,
+      "value_text": "5.46x",
       "series": {},
       "level": {
         "score": 0.0,
@@ -8879,8 +8883,8 @@
         "centre": null
       },
       "reason": null,
-      "note": null,
-      "text": "(EV/IC) / (ROIC/WACC): 4.57x RED (level red vs indicative band (green <= 1.00x, red >= 1.50x))"
+      "note": "justified EV/IC 0.68x = (ROIC 10.5% - g 6.0%) / (WACC 12.70% - g)",
+      "text": "EV/IC / justified EV/IC: 5.46x RED (level red vs indicative band (green <= 1.00x, red >= 1.50x)) Note: justified EV/IC 0.68x = (ROIC 10.5% - g 6.0%) / (WACC 12.70% - g)"
     },
     "ebitda_margin_10y_avg": {
       "name": "EBITDA margin, through-cycle (10y avg)",
@@ -8951,7 +8955,7 @@
         "FY21": null,
         "FY22": null,
         "FY23": null,
-        "FY24": null,
+        "FY24": 1090.635294,
         "FY25": 923.719355,
         "FY26": 1102.39222
       },
@@ -8989,8 +8993,8 @@
       "formula": "m('ebitda_per_tonne') / mean_last('ebitda_per_tonne', 10, 3) - 1",
       "origin": "config/sectors/_cyclical.yaml",
       "meaning": "Where unit margins sit in the cycle (+ = above average).",
-      "value": null,
-      "value_text": "n/a",
+      "value": 0.061099,
+      "value_text": "6.1%",
       "series": {},
       "level": null,
       "trend": null,
@@ -8999,8 +9003,8 @@
       "rag": "n/a",
       "band": null,
       "reason": "informational (neutral direction)",
-      "note": "n/a in FY26: missing ebitda_per_tonne: 2 of 3 years available",
-      "text": "EBITDA/t vs through-cycle average: n/a [informational (neutral direction)] Note: n/a in FY26: missing ebitda_per_tonne: 2 of 3 years available"
+      "note": null,
+      "text": "EBITDA/t vs through-cycle average: 6.1% [informational (neutral direction)]"
     },
     "capacity_utilisation": {
       "name": "Capacity utilisation",
@@ -9023,7 +9027,7 @@
         "FY21": null,
         "FY22": null,
         "FY23": null,
-        "FY24": null,
+        "FY24": 0.854271,
         "FY25": 0.811022,
         "FY26": 0.782479
       },
@@ -9218,6 +9222,7 @@
         "required": true,
         "description": "Sales volume (deliveries) for the year in million tonnes",
         "years_present": [
+          "FY24",
           "FY25",
           "FY26"
         ],
@@ -9247,7 +9252,7 @@
     ],
     "required_kpis_present_asof": "2/2",
     "missing_required_asof": [],
-    "kpi_values": 6,
+    "kpi_values": 7,
     "kpi_verified_share": 0.0,
     "indicative_bands_used": [
       "capacity_utilisation",
@@ -9267,7 +9272,6 @@
       "exceptional_size_5y",
       "fcf_to_pat",
       "fcf_to_pat_5y",
-      "implied_minus_delivered_growth",
       "net_debt_to_equity",
       "organic_capital_share_3y",
       "other_income_to_pbt",
@@ -9322,9 +9326,17 @@
       }
     },
     "sales_volume_mt": {
-      "unit": "mt (consolidated sales volume)",
+      "unit": "mt",
       "description": "Sales volume (deliveries) for the year in million tonnes",
       "values": {
+        "FY24": {
+          "value": 119.0,
+          "raw_value": "119.0",
+          "unit": "mt",
+          "source_url": "https://www.ultratechcement.com/content/dam/ultratechcementwebsite/pdf/financials/investor-update/Ultratech%20Corporate%20Dossier%20Q4%20FY25.pdf",
+          "source_date": "2025-04-28",
+          "verified": "N"
+        },
         "FY25": {
           "value": 135.83,
           "raw_value": "135.83",
@@ -9371,6 +9383,16 @@
       "text": "Estimated exceptional item 434 (pre-tax, gain): other income 2.6% of sales vs normal 0.8% (median of other years). Core profit excludes it (tax effect at statutory rate). Override via data/manual (exceptional_items)."
     },
     {
+      "category": "exceptional",
+      "fy": "FY20",
+      "text": "Tax rate -11% vs normal 31% on core PBT 5,183: write-back or deferred-tax credit of 2,150 treated as one-off; core PAT reduced accordingly."
+    },
+    {
+      "category": "exceptional",
+      "fy": "FY22",
+      "text": "Tax rate 14% vs normal 31% on core PBT 8,524: write-back or deferred-tax credit of 1,423 treated as one-off; core PAT reduced accordingly."
+    },
+    {
       "category": "minority",
       "fy": null,
       "text": "Net profit differs from PBT - tax in 10 of 10 years (latest -22.71): minority interest (negative) and share of associates/JVs (positive) sit between PBT and net profit, so the export is consolidated and net profit is the owners' share. Equity excludes minority interest (Screener includes NCI in Other Liabilities); ROIC/ROCE capital therefore omits NCI unless data/manual supplies minority_interest."
@@ -9408,11 +9430,11 @@
     {
       "category": "manual",
       "fy": null,
-      "text": "6 manual KPI values: 0 verified against the primary document (Y), 6 from secondary sources (N). Provenance is in analysis.json (manual_kpis)."
+      "text": "7 manual KPI values: 0 verified against the primary document (Y), 7 from secondary sources (N). Provenance is in analysis.json (manual_kpis)."
     }
   ],
   "findings": {
-    "verdict": "ULTRATECH CEMENT LTD destroys value: ROIC 10.3% vs WACC 12.7% in FY26. Overall AMBER (50/100); strongest pillar 1 Growth, weakest 4 Returns; 1 high-severity flag.",
+    "verdict": "ULTRATECH CEMENT LTD destroys value: ROIC 10.3% vs WACC 12.7% in FY26. Overall AMBER (51/100); strongest pillar 1 Growth, weakest 4 Returns; 1 high-severity flag.",
     "strengths": [
       {
         "kind": "metric",
@@ -9542,21 +9564,6 @@
       },
       {
         "kind": "flag",
-        "id": "B04",
-        "pillar": "balance_sheet",
-        "severity_label": "medium",
-        "severity": 0.6,
-        "confidence": 1.0,
-        "score": 0.6,
-        "name": "Liquidity squeeze",
-        "covers": [
-          "cash_to_st_borrowings",
-          "current_ratio_proxy"
-        ],
-        "text": "B04 Liquidity squeeze: Other assets cover other liabilities only 0.7x and cash covers debt 0.1x: short-term obligations depend on refinancing."
-      },
-      {
-        "kind": "flag",
         "id": "M03",
         "pillar": "margins",
         "severity_label": "medium",
@@ -9585,17 +9592,34 @@
       },
       {
         "kind": "flag",
-        "id": "V01",
+        "id": "V03",
         "pillar": "valuation",
         "severity_label": "medium",
         "severity": 0.6,
         "confidence": 1.0,
         "score": 0.6,
-        "name": "Priced for acceleration",
+        "name": "P/B well above what returns justify",
         "covers": [
-          "implied_minus_delivered_growth"
+          "implied_minus_delivered_growth",
+          "pb_to_justified_pb"
         ],
-        "text": "V01 Priced for acceleration: Today's EV implies 29.3% a year FCF growth for 10 years, +20.4pp above the growth delivered over the last 5 years: the price needs an acceleration that has not happened yet."
+        "text": "V03 P/B well above what returns justify: P/B of 4.2x is 6.0x the 0.7x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
+      },
+      {
+        "kind": "metric",
+        "id": "fcf_to_pat_5y",
+        "pillar": "cash_quality",
+        "rag": "red",
+        "severity": 0.749865,
+        "confidence": 0.6,
+        "score": 0.449919,
+        "name": "FCF / PAT (5y cumulative)",
+        "number": "-0.39",
+        "context": "RED vs band: red ≤ 0.30, green ≥ 0.70, indicative",
+        "trend": "deteriorating −0.09/yr over FY22-FY26",
+        "chain": null,
+        "chain_source": null,
+        "text": "FCF / PAT (5y cumulative): -0.39 (RED vs band: red ≤ 0.30, green ≥ 0.70, indicative); deteriorating −0.09/yr over FY22-FY26"
       }
     ],
     "watch": [
@@ -9604,51 +9628,32 @@
         "id": "eps_cagr_3y",
         "pillar": "growth",
         "rag": "green",
-        "severity": 0.749913,
+        "severity": 0.747513,
         "confidence": 0.9,
-        "score": 0.674921,
+        "score": 0.672761,
         "name": "EPS CAGR 3y",
         "number": "16.5%",
         "context": "GREEN vs band: red ≤ 4.0%, green ≥ 8.9%",
-        "trend": "deteriorating −5.5 pts/yr over FY22-FY26",
+        "trend": "deteriorating −4.5 pts/yr over FY22-FY26",
         "chain": null,
         "chain_source": null,
-        "text": "EPS CAGR 3y: 16.5% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%); deteriorating −5.5 pts/yr over FY22-FY26"
+        "text": "EPS CAGR 3y: 16.5% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%); deteriorating −4.5 pts/yr over FY22-FY26"
       },
       {
         "kind": "metric",
         "id": "pat_cagr_3y",
         "pillar": "growth",
         "rag": "green",
-        "severity": 0.749894,
+        "severity": 0.747445,
         "confidence": 0.9,
-        "score": 0.674904,
+        "score": 0.6727,
         "name": "PAT CAGR 3y",
         "number": "17.3%",
         "context": "GREEN vs band: red ≤ 4.0%, green ≥ 8.9%",
-        "trend": "deteriorating −5.8 pts/yr over FY22-FY26",
+        "trend": "deteriorating −4.7 pts/yr over FY22-FY26",
         "chain": null,
         "chain_source": null,
-        "text": "PAT CAGR 3y: 17.3% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%); deteriorating −5.8 pts/yr over FY22-FY26"
-      },
-      {
-        "kind": "metric",
-        "id": "pat_margin",
-        "pillar": "margins",
-        "rag": "amber",
-        "severity": 0.562212,
-        "confidence": 1.0,
-        "score": 0.562212,
-        "name": "PAT margin",
-        "number": "9.2%",
-        "context": "AMBER vs band: red ≤ 4.4%, green ≥ 8.4%",
-        "trend": "deteriorating −1.0 pts/yr over FY22-FY26",
-        "chain": "+1.2 pts over 3y; 74% from EBIT margin; EBIT margin rose because other expenses % of sales fell 63.5% → 56.6%",
-        "chain_source": {
-          "tree": "roe_dupont",
-          "window": "3y"
-        },
-        "text": "PAT margin: 9.2% (AMBER vs band: red ≤ 4.4%, green ≥ 8.4%); deteriorating −1.0 pts/yr over FY22-FY26; +1.2 pts over 3y; 74% from EBIT margin; EBIT margin rose because other expenses % of sales fell 63.5% → 56.6%"
+        "text": "PAT CAGR 3y: 17.3% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%); deteriorating −4.7 pts/yr over FY22-FY26"
       },
       {
         "kind": "metric",
@@ -9700,6 +9705,25 @@
           "window": "3y"
         },
         "text": "EBIT margin: 14.5% (AMBER vs band: red ≤ 10.3%, green ≥ 15.4%); deteriorating −0.8 pts/yr over FY22-FY26; +1.4 pts over 3y; 169% from EBITDA margin, partly offset by the other drivers; EBITDA margin rose because other expenses % of sales fell 63.5% → 56.6%"
+      },
+      {
+        "kind": "metric",
+        "id": "pat_margin",
+        "pillar": "margins",
+        "rag": "amber",
+        "severity": 0.313147,
+        "confidence": 1.0,
+        "score": 0.313147,
+        "name": "PAT margin",
+        "number": "9.2%",
+        "context": "AMBER vs band: red ≤ 4.4%, green ≥ 8.4%",
+        "trend": "deteriorating −0.4 pts/yr over FY22-FY26",
+        "chain": "+1.2 pts over 3y; 74% from EBIT margin; EBIT margin rose because other expenses % of sales fell 63.5% → 56.6%",
+        "chain_source": {
+          "tree": "roe_dupont",
+          "window": "3y"
+        },
+        "text": "PAT margin: 9.2% (AMBER vs band: red ≤ 4.4%, green ≥ 8.4%); deteriorating −0.4 pts/yr over FY22-FY26; +1.2 pts over 3y; 74% from EBIT margin; EBIT margin rose because other expenses % of sales fell 63.5% → 56.6%"
       }
     ],
     "bull": [
@@ -9742,24 +9766,20 @@
         "text": "A04 Dividends funded by debt: Dividends (Rs 11,377 cr over 3 years) exceeded FCF (Rs -18,834 cr) every year while net debt rose Rs 12,463 cr: payouts are being funded from the balance sheet. [A04]"
       },
       {
-        "ref": "B04",
-        "text": "B04 Liquidity squeeze: Other assets cover other liabilities only 0.7x and cash covers debt 0.1x: short-term obligations depend on refinancing. [B04]"
-      },
-      {
         "ref": "M03",
         "text": "M03 Materials cost creeping up: Materials rose +4.1pp of sales over 3 years to 19.4%: input inflation is not being passed on, or the mix is shifting to lower-margin products. [M03]"
       },
       {
+        "ref": "R03",
+        "text": "R03 New capital earning below its cost: Invested capital grew 62.0% over 3 years but the capital added earned only 11.6% (WACC 12.7%): incremental investment is diluting returns. [R03]"
+      },
+      {
         "ref": "economic_profit",
-        "text": "Destroys value: ROIC 10.3% vs WACC 12.7%; economic profit Rs −2,177 cr in FY26, positive in 1 of 9 years [economic_profit]"
+        "text": "Destroys value: ROIC 10.3% vs WACC 12.7%; economic profit Rs −2,177 cr in FY26, positive in 0 of 9 years [economic_profit]"
       },
       {
         "ref": "pb",
         "text": "P/B 4.25x vs Damodaran India industry 3.10x (Construction Supplies) [pb]"
-      },
-      {
-        "ref": "implied_minus_delivered_growth",
-        "text": "Market implies 29.3% FCF growth for 10 years vs 8.9% delivered (gap +20.4 pts) [implied_minus_delivered_growth]"
       },
       {
         "ref": "roe_dupont",
@@ -9792,24 +9812,26 @@
           "missing": "acquisition_roic_delta_3y FY26"
         },
         {
+          "id": "V01",
+          "name": "Priced for acceleration",
+          "missing": "implied_minus_delivered_growth FY26"
+        },
+        {
           "id": "CY02",
           "name": "Expanding at the top of the cycle",
           "missing": "peak_cycle_capex FY26"
-        },
-        {
-          "id": "CY04",
-          "name": "Unit margins far below the cycle average",
-          "missing": "ebitda_per_tonne_vs_avg FY26 [n/a in FY26: missing ebitda_per_tonne: 2 of 3 years available]"
         }
       ],
       "unverified": {
-        "n": 6,
-        "total": 6,
-        "text": "6 of 6 manual KPI values (100%) are verified = N: taken from the cited page, not checked in the primary document."
+        "n": 7,
+        "total": 7,
+        "text": "7 of 7 manual KPI values (100%) are verified = N: taken from the cited page, not checked in the primary document."
       },
       "not_scored": [],
       "estimates": [
         "Estimated exceptional item 434 (pre-tax, gain): other income 2.6% of sales vs normal 0.8% (median of other years). Core profit excludes it (tax effect at statutory rate). Override via data/manual (exceptional_items).",
+        "Tax rate -11% vs normal 31% on core PBT 5,183: write-back or deferred-tax credit of 2,150 treated as one-off; core PAT reduced accordingly.",
+        "Tax rate 14% vs normal 31% on core PBT 8,524: write-back or deferred-tax credit of 1,423 treated as one-off; core PAT reduced accordingly.",
         "Net profit differs from PBT - tax in 10 of 10 years (latest -22.71): minority interest (negative) and share of associates/JVs (positive) sit between PBT and net profit, so the export is consolidated and net profit is the owners' share. Equity excludes minority interest (Screener includes NCI in Other Liabilities); ROIC/ROCE capital therefore omits NCI unless data/manual supplies minority_interest.",
         "Capex is not in the export. Proxy = change in net block + change in CWIP + depreciation (includes acquired fixed assets and Ind AS 116 right-of-use additions; impairments and disposals understate it). FCF = CFO - capex proxy.",
         "Ind AS 116 (leases) visible in FY20, the first period starting on/after 1-Apr-2019: depreciation/sales +0.5%, other opex/sales -3.0%, interest/sales +0.4% vs FY19. Lease rentals moved out of operating costs into depreciation and interest, so EBITDA margins before and after FY20 are not comparable; lease liabilities sit inside Borrowings."

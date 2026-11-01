@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HDFCLIFE FY26: equity diagnostic</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+<style>
+:root {
+  --ink: #1d2433; --muted: #5b6475; --line: #d9dee7; --bg: #ffffff; --panel: #f6f8fb;
+  --green: #1a7f4b; --green-bg: #e3f4ea; --amber: #a86700; --amber-bg: #fdf1dc; --red: #b42318; --red-bg: #fde7e4;
+  --na: #6b7280; --na-bg: #eef0f3; --accent: #2457a6; --pos: #2f8f5b; --neg: #c2412d;
+  --s0: #2457a6; --s1: #d97706; --s2: #0f766e; --s3: #9333ea; --s4: #be123c;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+main { max-width: 1120px; margin: 0 auto; padding: 24px 28px 64px; }
+h1 { font-size: 24px; margin: 0 0 4px; } h2 { font-size: 18px; margin: 32px 0 8px; padding-top: 8px; border-top: 2px solid var(--ink); }
+h3 { font-size: 15px; margin: 18px 0 6px; } p { margin: 6px 0; } small, .muted { color: var(--muted); }
+a { color: var(--accent); } code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+.intro { color: var(--muted); margin-bottom: 10px; }
+nav.toc { position: sticky; top: 0; z-index: 5; background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line); }
+nav.toc div { max-width: 1120px; margin: 0 auto; padding: 6px 28px; display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; }
+nav.toc a { text-decoration: none; color: var(--muted); } nav.toc a:hover { color: var(--accent); }
+
+/* header */
+.head { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start; }
+.head .meta { color: var(--muted); font-size: 13px; }
+.score { text-align: center; border: 1px solid var(--line); border-radius: 10px; padding: 10px 16px; min-width: 130px; }
+.score .num { font-size: 34px; font-weight: 700; line-height: 1.1; }
+.verdict { font-size: 16px; margin: 12px 0 4px; padding: 10px 14px; border-left: 4px solid var(--accent); background: var(--panel); }
+.kv { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--muted); margin-top: 6px; }
+.kv b { color: var(--ink); font-weight: 600; }
+
+/* RAG */
+.rag { display: inline-block; padding: 0 7px; border-radius: 10px; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; }
+.rag.green { color: var(--green); background: var(--green-bg); } .rag.amber { color: var(--amber); background: var(--amber-bg); }
+.rag.red { color: var(--red); background: var(--red-bg); } .rag.na { color: var(--na); background: var(--na-bg); }
+.sev { font-size: 11px; font-weight: 700; text-transform: uppercase; } .sev.high { color: var(--red); } .sev.medium { color: var(--amber); } .sev.low { color: var(--muted); }
+
+/* findings */
+.cols3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.card { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: #fff; break-inside: avoid; }
+.card h3 { margin-top: 0; }
+.card.strengths { border-top: 4px solid var(--green); } .card.weaknesses { border-top: 4px solid var(--red); } .card.watch { border-top: 4px solid var(--amber); }
+ol.find { margin: 0; padding-left: 18px; } ol.find li { margin: 0 0 8px; font-size: 13px; }
+.why { display: block; color: var(--muted); font-size: 11px; }
+
+/* MECE tree */
+.tree { border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: var(--panel); }
+.root-node { margin: 0 auto 14px; max-width: 640px; text-align: center; background: #fff; border: 2px solid var(--ink); border-radius: 10px; padding: 8px 12px; }
+.root-node.pos { border-color: var(--green); } .root-node.neg { border-color: var(--red); }
+.groups { display: grid; grid-template-columns: 3fr 2fr 2fr 1.2fr; gap: 10px; }
+.group { border-top: 2px solid var(--muted); padding-top: 6px; } .group > .gname { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; }
+.pnodes { display: flex; flex-direction: column; gap: 6px; }
+button.pnode { all: unset; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: 4px; align-items: center; padding: 8px 10px; border-radius: 8px; background: #fff; border: 1px solid var(--line); border-left: 6px solid var(--na); }
+button.pnode:focus-visible { outline: 2px solid var(--accent); }
+button.pnode.green { border-left-color: var(--green); } button.pnode.amber { border-left-color: var(--amber); } button.pnode.red { border-left-color: var(--red); }
+button.pnode[aria-expanded="true"] { box-shadow: 0 0 0 2px var(--accent); }
+.pnode .pname { font-weight: 600; } .pnode .pscore { font-weight: 700; font-size: 16px; } .pnode .psub { grid-column: 1 / -1; font-size: 11px; color: var(--muted); }
+.controls { margin: 10px 0; display: flex; gap: 8px; }
+.controls button, .tabs button { font: inherit; font-size: 12px; border: 1px solid var(--line); background: #fff; border-radius: 6px; padding: 3px 10px; cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+.pillar-panel { margin-top: 12px; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: #fff; }
+.pillar-panel h3 { margin-top: 2px; }
+table { border-collapse: collapse; width: 100%; } th, td { text-align: left; vertical-align: top; padding: 5px 6px; border-bottom: 1px solid var(--line); }
+th { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; font-weight: 600; }
+table.metrics td.num, td.num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+tr.detail td { border-bottom: 1px solid var(--line); padding-top: 0; font-size: 12px; color: var(--muted); }
+tr.main td { border-bottom: none; } tr.comp td.name { color: var(--muted); }
+.eq .tex { color: var(--ink); } .eq.rendered .plain { display: none; } .eq .plain { white-space: normal; }
+.mid { font-size: 11px; color: var(--muted); }
+
+/* svg */
+svg { overflow: visible; } svg text { font: 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; fill: var(--ink); }
+.spark .line polyline { fill: none; stroke: var(--accent); stroke-width: 1.4; } .spark .line circle, .spark .last { fill: var(--accent); }
+.band .z-red { fill: #f4c7c1; } .band .z-amber { fill: #f6e0b5; } .band .z-green { fill: #bfe3cc; } .band .marker { fill: var(--ink); }
+.waterfall .wf-start, .waterfall .wf-end { fill: #7b8597; } .waterfall .wf-pos { fill: var(--pos); } .waterfall .wf-neg { fill: var(--neg); }
+.axis { stroke: var(--muted); stroke-width: 1; } .grid { stroke: var(--line); } .tick { fill: var(--muted); }
+.bars .impl { fill: var(--accent); } .bars .deliv { fill: #0f766e; } .bars .hist { fill: #9aa5b8; }
+.grouped .s0 { fill: var(--s0); } .grouped .s1 { fill: var(--s1); } .grouped .s2 { fill: var(--s2); } .grouped .s3 { fill: var(--s3); } .grouped .s4 { fill: var(--s4); }
+.legend span { display: inline-block; margin-right: 12px; font-size: 12px; } .legend i { display: inline-block; width: 10px; height: 10px; margin-right: 4px; vertical-align: middle; }
+
+/* sections */
+.tree-card { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin-bottom: 14px; break-inside: avoid; }
+.win { margin-top: 8px; } .note { font-size: 12px; color: var(--amber); background: var(--amber-bg); padding: 4px 8px; border-radius: 6px; display: inline-block; }
+.flag { border-left: 4px solid var(--line); padding: 6px 10px; margin: 8px 0; background: var(--panel); break-inside: avoid; }
+.flag.high { border-left-color: var(--red); } .flag.medium { border-left-color: var(--amber); } .flag.low { border-left-color: var(--muted); }
+.flag .rule { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+.cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+ul.bb { margin: 0; padding-left: 18px; } ul.bb li { margin-bottom: 6px; font-size: 13px; }
+.card.bull { border-top: 4px solid var(--green); } .card.bear { border-top: 4px solid var(--red); }
+details > summary { cursor: pointer; color: var(--accent); margin: 6px 0; }
+.missing-kpi { margin: 6px 0 10px; } .missing-kpi b { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+footer { margin-top: 40px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 10px; }
+
+@media (max-width: 860px) { .cols3, .cols2, .groups { grid-template-columns: 1fr; } .head { grid-template-columns: 1fr; } }
+
+@media print {
+  @page { size: A4; margin: 14mm 12mm; }
+  body { font-size: 11px; } main { max-width: none; padding: 0; } nav.toc, .controls, .tabs { display: none !important; }
+  .pillar-panel[hidden], .win[hidden], details > *:not(summary) { display: block !important; }
+  details > summary { display: none; } h2 { break-after: avoid; } tr, .card, .flag, .tree-card { break-inside: avoid; }
+  button.pnode { border: 1px solid #999; border-left-width: 6px; } a { color: inherit; text-decoration: none; }
+  .verdict, .tree, .flag { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .rag, .band rect, .waterfall rect, .bars rect, .grouped rect, button.pnode { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+</style>
+</head>
+<body>
+<nav class="toc"><div>
+  <a href="#summary"><b>HDFCLIFE</b></a><a href="#findings">Findings</a><a href="#tree">MECE tree</a><a href="#flags">Red flags</a>
+  <a href="#drivers">Drivers</a><a href="#valuation">Valuation</a><a href="#missing">Missing data</a><a href="#bullbear">Bull / bear</a><a href="#notes">Notes</a>
+</div></nav>
+<main>
+
+<!-- 1. Header -->
+<section id="summary">
+  <div class="head">
+    <div>
+      <h1>HDFC LIFE INSURANCE COMPANY LTD <small>(HDFCLIFE)</small></h1>
+      <div class="meta">Archetype <b>insurance</b> (default → insurance; insurance) · As of <b>FY26</b> (as-of (truncated, no look-ahead); data FY17-FY26; manual KPIs FY22-FY26; latest quarter 2026-03-31)</div>
+      <div class="kv">
+        <span>Price <b>Rs 591</b> (fy_end_asof)</span><span>Market cap <b>Rs 127,440 cr</b></span>
+        <span>WACC <b>13.4%</b></span><span>Ke <b>13.4%</b></span><span>beta <b>0.86</b></span>
+        <span>rf <b>7.4%</b></span><span>ERP <b>6.9%</b></span><span>synthetic rating <b>Aaa/AAA</b></span>
+      </div>
+    </div>
+    <div class="score"><div class="muted">Overall</div><div class="num">61</div><span class="rag amber">amber</span>
+      <div class="mid">coverage 100%; capped by flags</div></div>
+  </div>
+  <p class="verdict">HDFC LIFE INSURANCE COMPANY LTD destroys value: ROE 11.3% vs Ke 13.4% in FY26. Overall AMBER (61/100); strongest pillar 8 Valuation, weakest 4 Returns; 2 high-severity flags.</p>
+<details><summary>How to read this sector (insurance)</summary><p>A life insurer&#39;s value is the embedded value of policies already sold plus the value of new business (VNB) it keeps writing.
+Read VNB growth and VNB margin (profitability of new sales), persistency (do customers keep paying?) and solvency (can it fund growth?).
+Accounting P&amp;L understates a growing insurer because new-business strain front-loads costs, so P/EV and operating RoEV matter more than P/E or P/B.
+For general insurers, a combined ratio above 100% means underwriting loses money and profits rely on investment income.</p></details></section>
+
+<!-- 2. Strengths / Weaknesses / Watch -->
+<section id="findings">
+  <h2>Strengths, weaknesses, watch</h2>
+  <p class="intro">Ranked by severity x confidence (config/scoring.yaml: report). Each line: finding, number, trend, and the driver chain behind it.</p>
+  <div class="cols3">
+    <div class="card strengths"><h3>Strengths</h3>
+<ol class="find">
+<li>PAT CAGR 3y: 11.8% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%); improving +3.0 pts/yr over FY22-FY26<span class="why">metric pat_cagr_3y · 1 Growth · severity 0.81 × confidence 0.90 = 0.73</span></li><li>EPS CAGR 3y: 11.7% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%); improving +3.4 pts/yr over FY22-FY26<span class="why">metric eps_cagr_3y · 1 Growth · severity 0.79 × confidence 0.90 = 0.72</span></li><li>61st-month persistency: 64.0% (GREEN vs band: red ≤ 45.0%, green ≥ 55.0%, indicative)<span class="why">metric persistency_61m · 5 Cash and earnings quality (persistency) · severity 0.70 × confidence 0.48 = 0.34</span></li><li>P/B percentile vs own history: 0.0% (GREEN vs band: red ≥ 67.0%, green ≤ 33.0%, indicative)<span class="why">metric pb_percentile_10y · 8 Valuation · severity 0.49 × confidence 0.36 = 0.18</span></li><li>P/E percentile vs own history: 12.5% (GREEN vs band: red ≥ 67.0%, green ≤ 33.0%, indicative)<span class="why">metric pe_percentile_10y · 8 Valuation · severity 0.37 × confidence 0.36 = 0.13</span></li><li>Share count change: 0.2% (GREEN vs band: red ≥ 3.0%, green ≤ 0.0%, indicative); improving −1.0 pts/yr over FY22-FY26<span class="why">metric share_count_change · 7 Capital allocation · severity 0.10 × confidence 0.60 = 0.06</span></li>      </ol>    </div>
+    <div class="card weaknesses"><h3>Weaknesses</h3>
+<ol class="find">
+<li>R05 ROE below cost of equity (financials): ROE (11.3%) has been below the cost of equity for 2 years (spread -2.1pp): the franchise is not earning its cost of capital.<span class="why">flag R05 · 4 Returns · severity 1.00 × confidence 1.00 = 1.00</span></li><li>IN01 Solvency cushion thinning: Solvency ratio is 177.0% (-17.0pp in a year; IRDAI control level 150%): growth or dividends may need fresh capital.<span class="why">flag IN01 · 6 Balance sheet · severity 1.00 × confidence 0.80 = 0.80</span></li><li>IN03 VNB margin compressing: VNB margin fell -2.1pp over 2 years (-1.4pp in the latest year) to 24.2% (product mix, regulation or pricing pressure).<span class="why">flag IN03 · 2 Margins · severity 0.60 × confidence 0.80 = 0.48</span></li><li>Return on equity: 11.3% (RED vs band: red ≤ 13.4%, green ≥ 18.4%); stable +0.3 pts/yr over FY22-FY26; +1.7 pts over 3y; 161% from equity multiplier, partly offset by the other drivers; equity multiplier rose because other liabilities / equity (average) rose 15.68x → 20.65x<span class="why">metric roe · 4 Returns · severity 0.36 × confidence 0.90 = 0.32</span></li><li>VNB growth: 1.8% (RED vs band: red ≤ 4.0%, green ≥ 8.9%)<span class="why">metric vnb_growth · 1 Growth · severity 0.63 × confidence 0.43 = 0.27</span></li><li>Latest quarter PAT YoY: 4.7% (RED vs band: red ≤ 4.0%, green ≥ 8.9%)<span class="why">metric q_pat_yoy · 1 Growth · severity 0.24 × confidence 0.54 = 0.13</span></li>      </ol>    </div>
+    <div class="card watch"><h3>Watch</h3>
+<ol class="find">
+<li>Revenue CAGR 3y: 12.3% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%); deteriorating −3.6 pts/yr over FY22-FY26<span class="why">metric revenue_cagr_3y · 1 Growth · severity 0.96 × confidence 0.90 = 0.87</span></li><li>Book value per share CAGR 5y: 14.0% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%); deteriorating −3.8 pts/yr over FY22-FY26<span class="why">metric bvps_cagr_5y · 1 Growth · severity 0.95 × confidence 0.90 = 0.85</span></li><li>ROE - cost of equity: −2.1pp (RED vs band: red ≤ +0.0pp, green ≥ +5.0pp); improving +0.3 pts/yr over FY22-FY26<span class="why">metric roe_ke_spread · 4 Returns · severity 0.83 × confidence 0.90 = 0.75</span></li><li>Solvency ratio: 177.0% (GREEN vs band: red ≤ 150.0%, green ≥ 180.0%); not counted as a strength while IN01 (Solvency cushion thinning) stands<span class="why">metric solvency_ratio · 6 Balance sheet · severity 0.20 × confidence 0.80 = 0.16</span></li><li>VNB margin: 24.2% (GREEN vs band: red ≤ 18.0%, green ≥ 25.0%, indicative); not counted as a strength while IN03 (VNB margin compressing) stands<span class="why">metric vnb_margin · 2 Margins · severity 0.19 × confidence 0.48 = 0.09</span></li>      </ol>    </div>
+  </div>
+</section>
+
+<!-- 3. MECE tree -->
+<section id="tree">
+  <h2>MECE diagnostic tree</h2>
+  <p class="intro">Value creation is economic profit = (ROIC − WACC) × invested capital. Click a pillar to open its metrics.</p>
+  <div class="tree">
+    <div class="root-node neg"><b>Does the company create value?</b><br>Destroys value: ROE 11.3% vs Ke 13.4% in FY26 -&gt; economic profit Rs -356 cr. Economic profit was positive in 4 of 9 years; trend improving.<br><svg class="spark " width="160" height="30" viewBox="0 0 160 30" role="img"><title>FY18-FY26</title><g class="line"><polyline points="20.11,4.04 37.22,3 54.33,5.57 71.44,8.48 88.56,21.7 105.67,27 122.78,21.29 139.89,20.75 157,22.98"/></g><circle class="last" cx="157" cy="22.98" r="2.2"/></svg></div>
+    <div class="groups">
+      <div class="group"><div class="gname">Operations</div><div class="pnodes">
+        <button type="button" class="pnode amber" data-target="pillar-growth" aria-expanded="false" aria-controls="pillar-growth">
+          <span class="pname">1 Growth</span><span class="pscore">60</span>
+          <span class="psub"><span class="rag amber">amber</span> weight 20 · 16/16 scored</span>
+        </button>
+        <button type="button" class="pnode green" data-target="pillar-margins" aria-expanded="false" aria-controls="pillar-margins">
+          <span class="pname">2 Margins</span><span class="pscore">63</span>
+          <span class="psub"><span class="rag green">green</span> weight 15 · 1/4 scored · flags IN03</span>
+        </button>
+        <button type="button" class="pnode na" data-target="pillar-capital_efficiency" aria-expanded="false" aria-controls="pillar-capital_efficiency">
+          <span class="pname">3 Capital efficiency</span><span class="pscore">n/a</span>
+          <span class="psub"><span class="rag na">n/a</span> weight 0 · 0/0 scored</span>
+        </button>
+      </div></div>
+      <div class="group"><div class="gname">Value and quality</div><div class="pnodes">
+        <button type="button" class="pnode red" data-target="pillar-returns" aria-expanded="false" aria-controls="pillar-returns">
+          <span class="pname">4 Returns</span><span class="pscore">35</span>
+          <span class="psub"><span class="rag red">red</span> weight 20 · 3/4 scored · flags R05</span>
+        </button>
+        <button type="button" class="pnode green" data-target="pillar-cash_quality" aria-expanded="false" aria-controls="pillar-cash_quality">
+          <span class="pname">5 Cash and earnings quality (persistency)</span><span class="pscore">77</span>
+          <span class="psub"><span class="rag green">green</span> weight 15 · 2/2 scored</span>
+        </button>
+      </div></div>
+      <div class="group"><div class="gname">Financing</div><div class="pnodes">
+        <button type="button" class="pnode amber" data-target="pillar-balance_sheet" aria-expanded="false" aria-controls="pillar-balance_sheet">
+          <span class="pname">6 Balance sheet</span><span class="pscore">63</span>
+          <span class="psub"><span class="rag amber">amber</span> weight 15 · 1/1 scored · flags IN01</span>
+        </button>
+        <button type="button" class="pnode green" data-target="pillar-capital_allocation" aria-expanded="false" aria-controls="pillar-capital_allocation">
+          <span class="pname">7 Capital allocation</span><span class="pscore">70</span>
+          <span class="psub"><span class="rag green">green</span> weight 5 · 1/3 scored</span>
+        </button>
+      </div></div>
+      <div class="group"><div class="gname">Market</div><div class="pnodes">
+        <button type="button" class="pnode green" data-target="pillar-valuation" aria-expanded="false" aria-controls="pillar-valuation">
+          <span class="pname">8 Valuation</span><span class="pscore">84</span>
+          <span class="psub"><span class="rag green">green</span> weight 10 · 3/3 scored</span>
+        </button>
+      </div></div>
+    </div>
+  </div>
+  <div class="controls"><button type="button" id="expand-all">Expand all pillars</button></div>
+  <div class="pillar-panel" id="pillar-growth" hidden>
+    <h3>1 Growth <span class="rag amber">amber</span> <small>60/100</small></h3>
+    <p class="muted">1 Growth: AMBER (60/100, 16 scored metrics). Strongest: Revenue CAGR (full span, up to 10y) 14.0% (green), PAT CAGR 3y 11.8% (green). Weakest: VNB growth 1.8% (red), Latest quarter PAT YoY 4.7% (red).</p>
+    <table class="metrics">
+      <thead><tr><th>Metric</th><th>FY17–FY26</th><th>Latest</th><th>Level vs band or peers</th><th>Trend / stability</th></tr></thead>
+      <tbody>
+        <tr class="main ">
+          <td class="name"><b>APE growth</b><br><span class="mid">ape_growth · config/sectors/insurance.yaml</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY25-FY26</title><g class="line"><polyline points="104.33,3 117,25"/></g><circle class="last" cx="117" cy="25" r="2.2"/></svg></td>
+          <td class="num"><b>7.5%</b><br><span class="rag amber">amber</span></td>
+          <td>AMBER vs band: red ≤ 4.0%, green ≥ 8.9%<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="107.69" height="12"/><rect class="z-green" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="91.73" y="0" width="3" height="18"/></svg><br><span class="mid">derived: config/sectors/insurance.yaml</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{APE}_{t}}{\text{APE}_{t-1}} - 1"><span class="tex"></span><code class="plain">APE_t / APE_t-1 - 1</code></span> — Growth in new-business premium volume.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>Book value per share CAGR 5y</b><br><span class="mid">bvps_cagr_5y</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY22-FY26</title><g class="line"><polyline points="66.33,3 79,16.05 91.67,17.86 104.33,20.65 117,25"/></g><circle class="last" cx="117" cy="25" r="2.2"/></svg></td>
+          <td class="num"><b>14.0%</b><br><span class="rag green">green</span></td>
+          <td>GREEN vs band: red ≤ 4.0%, green ≥ 8.9%<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="52.85" height="12"/><rect class="z-green" x="69.01" y="3" width="70.99" height="12"/><rect class="marker" x="122.35" y="0" width="3" height="18"/></svg><br><span class="mid">derived: config/bands.yaml (generic)</span></td>
+          <td>deteriorating −3.8 pts/yr over FY22-FY26</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="{\left(\dfrac{\text{BVPS}_{t}}{\text{BVPS}_{t-5}}\right)}^{\tfrac{1}{5}} - 1,\quad \text{BVPS} = \dfrac{\text{equity}}{\text{adjusted shares}}"><span class="tex"></span><code class="plain">(BVPS_t / BVPS_t-5)^(1/5) - 1, BVPS = equity / adjusted shares</code></span> — Compounding of book value per share, the core growth measure for lenders and insurers.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>EPS CAGR (full span, up to 10y)</b><br><span class="mid">eps_cagr_10y</span></td>
+          <td></td>
+          <td class="num"><b>8.0%</b><br><span class="rag green">green</span></td>
+          <td>GREEN vs band: red ≤ 4.0%, green ≥ 8.9%<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="107.69" height="12"/><rect class="z-green" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="102.3" y="0" width="3" height="18"/></svg><br><span class="mid">derived: config/bands.yaml (generic)</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="{\left(\dfrac{\text{EPS}_{t}}{\text{EPS\_t-n}}\right)}^{\tfrac{1}{\text{n}}} - 1,\quad \text{n} = \text{full available span} \le 10"><span class="tex"></span><code class="plain">(EPS_t / EPS_t-n)^(1/n) - 1, n = full available span &lt;= 10; n/m if either value &lt;= 0</code></span> — Compound annual growth of EPS = core PAT / split-adjusted shares over the longest available history (max 10 years; 9 with a 10-column export). <i>CAGR over 9 years (FY17-FY26); export holds 10 annual points</i></td></tr>
+        <tr class="main ">
+          <td class="name"><b>EPS CAGR 3y</b><br><span class="mid">eps_cagr_3y</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY20-FY26</title><g class="line"><polyline points="41,3 53.67,13.11 66.33,24.94 79,25 91.67,19.88 104.33,7.77 117,5.42"/></g><circle class="last" cx="117" cy="5.42" r="2.2"/></svg></td>
+          <td class="num"><b>11.7%</b><br><span class="rag green">green</span></td>
+          <td>GREEN vs band: red ≤ 4.0%, green ≥ 8.9%<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="68.89" height="12"/><rect class="z-green" x="85.04" y="3" width="54.96" height="12"/><rect class="marker" x="122.35" y="0" width="3" height="18"/></svg><br><span class="mid">derived: config/bands.yaml (generic)</span></td>
+          <td>improving +3.4 pts/yr over FY22-FY26</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="{\left(\dfrac{\text{EPS}_{t}}{\text{EPS}_{t-3}}\right)}^{\tfrac{1}{3}} - 1"><span class="tex"></span><code class="plain">(EPS_t / EPS_t-3)^(1/3) - 1; n/m if either value &lt;= 0</code></span> — Compound annual growth of EPS = core PAT / split-adjusted shares over 3 years.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>EPS CAGR 5y</b><br><span class="mid">eps_cagr_5y</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY22-FY26</title><g class="line"><polyline points="66.33,3 79,24.88 91.67,25 104.33,11.59 117,10.98"/></g><circle class="last" cx="117" cy="10.98" r="2.2"/></svg></td>
+          <td class="num"><b>5.6%</b><br><span class="rag amber">amber</span></td>
+          <td>AMBER vs band: red ≤ 4.0%, green ≥ 8.9%<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="107.69" height="12"/><rect class="z-green" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="50.84" y="0" width="3" height="18"/></svg><br><span class="mid">derived: config/bands.yaml (generic)</span></td>
+          <td>stable −0.1 pts/yr over FY22-FY26</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="{\left(\dfrac{\text{EPS}_{t}}{\text{EPS}_{t-5}}\right)}^{\tfrac{1}{5}} - 1"><span class="tex"></span><code class="plain">(EPS_t / EPS_t-5)^(1/5) - 1; n/m if either value &lt;= 0</code></span> — Compound annual growth of EPS = core PAT / split-adjusted shares over 5 years.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>Embedded value growth</b><br><span class="mid">ev_growth · config/sectors/insurance.yaml</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY24-FY26</title><g class="line"><polyline points="91.67,3 104.33,12.19 117,25"/></g><circle class="last" cx="117" cy="25" r="2.2"/></svg></td>
+          <td class="num"><b>12.1%</b><br><span class="rag green">green</span></td>
+          <td>GREEN vs band: red ≤ 4.0%, green ≥ 13.4%<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="107.69" height="12"/><rect class="z-green" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="107.85" y="0" width="3" height="18"/></svg><br><span class="mid">derived: config/sectors/insurance.yaml</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{EV}_{t}}{\text{EV}_{t-1}} - 1"><span class="tex"></span><code class="plain">EV_t / EV_t-1 - 1</code></span> — Compounding of shareholder value (includes dividends paid out as a drag).</td></tr>
+        <tr class="main ">
+          <td class="name"><b>Latest quarter PAT YoY</b><br><span class="mid">q_pat_yoy</span></td>
+          <td></td>
+          <td class="num"><b>4.7%</b><br><span class="rag red">red</span></td>
+          <td>RED vs band: red ≤ 4.0%, green ≥ 8.9%<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="107.69" height="12"/><rect class="z-green" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="29.06" y="0" width="3" height="18"/></svg><br><span class="mid">derived: config/bands.yaml (generic)</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{PAT}_{q}}{\text{PAT}_{q}} - 4 - 1\,\;\text{(PAT\_q-4 &gt; 0)}"><span class="tex"></span><code class="plain">PAT_q / PAT_q-4 - 1 (PAT_q-4 &gt; 0)</code></span> — Reported net profit growth in the latest quarter versus a year earlier (n/m if the year-ago quarter was a loss).</td></tr>
+        <tr class="main ">
+          <td class="name"><b>PAT CAGR (full span, up to 10y)</b><br><span class="mid">pat_cagr_10y</span></td>
+          <td></td>
+          <td class="num"><b>8.9%</b><br><span class="rag green">green</span></td>
+          <td>GREEN vs band: red ≤ 4.0%, green ≥ 8.9%<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="107.43" height="12"/><rect class="z-green" x="123.59" y="3" width="16.41" height="12"/><rect class="marker" x="122.35" y="0" width="3" height="18"/></svg><br><span class="mid">derived: config/bands.yaml (generic)</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="{\left(\dfrac{\text{PAT}_{t}}{\text{PAT\_t-n}}\right)}^{\tfrac{1}{\text{n}}} - 1,\quad \text{n} = \text{full available span} \le 10"><span class="tex"></span><code class="plain">(PAT_t / PAT_t-n)^(1/n) - 1, n = full available span &lt;= 10; n/m if either value &lt;= 0</code></span> — Compound annual growth of core PAT (owners&#39; net profit excluding estimated exceptional items) over the longest available history (max 10 years; 9 with a 10-column export). <i>CAGR over 9 years (FY17-FY26); export holds 10 annual points</i></td></tr>
+        <tr class="main ">
+          <td class="name"><b>PAT CAGR 3y</b><br><span class="mid">pat_cagr_3y</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY20-FY26</title><g class="line"><polyline points="41,3 53.67,14.49 66.33,25 79,24.06 91.67,18.34 104.33,7.67 117,6.08"/></g><circle class="last" cx="117" cy="6.08" r="2.2"/></svg></td>
+          <td class="num"><b>11.8%</b><br><span class="rag green">green</span></td>
+          <td>GREEN vs band: red ≤ 4.0%, green ≥ 8.9%<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="67.61" height="12"/><rect class="z-green" x="83.76" y="3" width="56.24" height="12"/><rect class="marker" x="122.35" y="0" width="3" height="18"/></svg><br><span class="mid">derived: config/bands.yaml (generic)</span></td>
+          <td>improving +3.0 pts/yr over FY22-FY26</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="{\left(\dfrac{\text{PAT}_{t}}{\text{PAT}_{t-3}}\right)}^{\tfrac{1}{3}} - 1"><span class="tex"></span><code class="plain">(PAT_t / PAT_t-3)^(1/3) - 1; n/m if either value &lt;= 0</code></span> — Compound annual growth of core PAT (owners&#39; net profit excluding estimated exceptional items) over 3 years.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>PAT CAGR 5y</b><br><span class="mid">pat_cagr_5y</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY22-FY26</title><g class="line"><polyline points="66.33,3 79,24.63 91.67,25 104.33,10.96 117,10.19"/></g><circle class="last" cx="117" cy="10.19" r="2.2"/></svg></td>
+          <td class="num"><b>7.0%</b><br><span class="rag amber">amber</span></td>
+          <td>AMBER vs band: red ≤ 4.0%, green ≥ 8.9%<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="107.69" height="12"/><rect class="z-green" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="81.48" y="0" width="3" height="18"/></svg><br><span class="mid">derived: config/bands.yaml (generic)</span></td>
+          <td>stable 0.0 pts/yr over FY22-FY26</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="{\left(\dfrac{\text{PAT}_{t}}{\text{PAT}_{t-5}}\right)}^{\tfrac{1}{5}} - 1"><span class="tex"></span><code class="plain">(PAT_t / PAT_t-5)^(1/5) - 1; n/m if either value &lt;= 0</code></span> — Compound annual growth of core PAT (owners&#39; net profit excluding estimated exceptional items) over 5 years.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>PAT growth volatility</b><br><span class="mid">pat_growth_volatility</span></td>
+          <td></td>
+          <td class="num"><b>0.95</b><br><span class="rag amber">amber</span></td>
+          <td>AMBER vs band: red ≥ 1.50, green ≤ 0.50, indicative<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-green" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="107.69" height="12"/><rect class="z-red" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="63.26" y="0" width="3" height="18"/></svg><br><span class="mid">indicative: config/bands.yaml (generic)</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\operatorname{sd}\left(\text{g}_{t}\right)}{\left\lvert \operatorname{mean}\left(\text{g}_{t}\right)\right\rvert}\,\text{of core PAT growth over the last}\,10\,\text{years}\,\;\text{(base year PAT &gt; 0)}"><span class="tex"></span><code class="plain">sd(g_t) / |mean(g_t)| of core PAT growth over the last 10 years (base year PAT &gt; 0); n/m if |mean| &lt; 1%</code></span> — How erratic annual core-profit growth is (sd / mean of yearly growth).</td></tr>
+        <tr class="main ">
+          <td class="name"><b>Revenue CAGR (full span, up to 10y)</b><br><span class="mid">revenue_cagr_10y</span></td>
+          <td></td>
+          <td class="num"><b>14.0%</b><br><span class="rag green">green</span></td>
+          <td>GREEN vs band: red ≤ 4.0%, green ≥ 8.9%<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="52.92" height="12"/><rect class="z-green" x="69.08" y="3" width="70.92" height="12"/><rect class="marker" x="122.35" y="0" width="3" height="18"/></svg><br><span class="mid">derived: config/bands.yaml (generic)</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="{\left(\dfrac{\text{Revenue}_{t}}{\text{Revenue\_t-n}}\right)}^{\tfrac{1}{\text{n}}} - 1,\quad \text{n} = \text{full available span} \le 10"><span class="tex"></span><code class="plain">(Revenue_t / Revenue_t-n)^(1/n) - 1, n = full available span &lt;= 10; n/m if either value &lt;= 0</code></span> — Compound annual growth of revenue (Screener &#39;Sales&#39;; banks: interest earned; insurers: premium + investment income) over the longest available history (max 10 years; 9 with a 10-column export). <i>CAGR over 9 years (FY17-FY26); export holds 10 annual points</i></td></tr>
+        <tr class="main ">
+          <td class="name"><b>Revenue CAGR 3y</b><br><span class="mid">revenue_cagr_3y</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY20-FY26</title><g class="line"><polyline points="41,25 53.67,5.07 66.33,11.59 79,3 91.67,16.37 104.33,15.96 117,16.41"/></g><circle class="last" cx="117" cy="16.41" r="2.2"/></svg></td>
+          <td class="num"><b>12.3%</b><br><span class="rag green">green</span></td>
+          <td>GREEN vs band: red ≤ 4.0%, green ≥ 8.9%<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="63.58" height="12"/><rect class="z-green" x="79.73" y="3" width="60.27" height="12"/><rect class="marker" x="122.35" y="0" width="3" height="18"/></svg><br><span class="mid">derived: config/bands.yaml (generic)</span></td>
+          <td>deteriorating −3.6 pts/yr over FY22-FY26</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="{\left(\dfrac{\text{Revenue}_{t}}{\text{Revenue}_{t-3}}\right)}^{\tfrac{1}{3}} - 1"><span class="tex"></span><code class="plain">(Revenue_t / Revenue_t-3)^(1/3) - 1; n/m if either value &lt;= 0</code></span> — Compound annual growth of revenue (Screener &#39;Sales&#39;; banks: interest earned; insurers: premium + investment income) over 3 years.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>Revenue CAGR 5y</b><br><span class="mid">revenue_cagr_5y</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY22-FY26</title><g class="line"><polyline points="66.33,13.9 79,14.06 91.67,9.32 104.33,3 117,25"/></g><circle class="last" cx="117" cy="25" r="2.2"/></svg></td>
+          <td class="num"><b>6.8%</b><br><span class="rag amber">amber</span></td>
+          <td>AMBER vs band: red ≤ 4.0%, green ≥ 8.9%<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="107.69" height="12"/><rect class="z-green" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="76.4" y="0" width="3" height="18"/></svg><br><span class="mid">derived: config/bands.yaml (generic)</span></td>
+          <td>deteriorating −1.0 pts/yr over FY22-FY26</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="{\left(\dfrac{\text{Revenue}_{t}}{\text{Revenue}_{t-5}}\right)}^{\tfrac{1}{5}} - 1"><span class="tex"></span><code class="plain">(Revenue_t / Revenue_t-5)^(1/5) - 1; n/m if either value &lt;= 0</code></span> — Compound annual growth of revenue (Screener &#39;Sales&#39;; banks: interest earned; insurers: premium + investment income) over 5 years.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>Total assets CAGR 3y</b><br><span class="mid">assets_cagr_3y</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY20-FY26</title><g class="line"><polyline points="41,25 53.67,13.78 66.33,7.25 79,3 91.67,11.15 104.33,18.95 117,16.15"/></g><circle class="last" cx="117" cy="16.15" r="2.2"/></svg></td>
+          <td class="num"><b>16.3%</b><br><span class="rag green">green</span></td>
+          <td>GREEN vs band: red ≤ 4.0%, green ≥ 8.9%<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="42.81" height="12"/><rect class="z-green" x="58.96" y="3" width="81.04" height="12"/><rect class="marker" x="122.35" y="0" width="3" height="18"/></svg><br><span class="mid">derived: config/bands.yaml (generic)</span></td>
+          <td>deteriorating −1.8 pts/yr over FY22-FY26</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="{\left(\dfrac{\text{Total}\,\text{assets}_{t}}{\text{Total}\,\text{assets}_{t-3}}\right)}^{\tfrac{1}{3}} - 1"><span class="tex"></span><code class="plain">(Total assets_t / Total assets_t-3)^(1/3) - 1</code></span> — Balance-sheet growth (loan book + investments) for financials.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>VNB growth</b><br><span class="mid">vnb_growth · config/sectors/insurance.yaml</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY24-FY26</title><g class="line"><polyline points="91.67,25 104.33,3 117,16.97"/></g><circle class="last" cx="117" cy="16.97" r="2.2"/></svg></td>
+          <td class="num"><b>1.8%</b><br><span class="rag red">red</span></td>
+          <td>RED vs band: red ≤ 4.0%, green ≥ 8.9%<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="49.34" height="12"/><rect class="z-amber" x="49.34" y="3" width="74.5" height="12"/><rect class="z-green" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="14.65" y="0" width="3" height="18"/></svg><br><span class="mid">derived: config/sectors/insurance.yaml</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{VNB}_{t}}{\text{VNB}_{t-1}} - 1"><span class="tex"></span><code class="plain">VNB_t / VNB_t-1 - 1</code></span> — Growth in the value created by new sales: the core growth measure for a life insurer.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pillar-panel" id="pillar-margins" hidden>
+    <h3>2 Margins <span class="rag green">green</span> <small>63/100</small></h3>
+    <p class="muted">2 Margins: GREEN (63/100, 1 scored metrics). Strongest: VNB margin 24.2% (green). Weakest: VNB margin 24.2% (green). Flags: IN03.</p>
+    <table class="metrics">
+      <thead><tr><th>Metric</th><th>FY17–FY26</th><th>Latest</th><th>Level vs band or peers</th><th>Trend / stability</th></tr></thead>
+      <tbody>
+        <tr class="main ">
+          <td class="name"><b>Benefits ratio</b><br><span class="mid">benefits_ratio</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY17-FY26</title><g class="line"><polyline points="3,13.36 15.67,17.96 28.33,14.94 41,25 53.67,4.04 66.33,7.18 79,12.09 91.67,3 104.33,3.43 117,5.52"/></g><circle class="last" cx="117" cy="5.52" r="2.2"/></svg></td>
+          <td class="num"><b>90.3%</b><br><span class="rag na">n/a</span></td>
+          <td>informational (neutral direction)</td>
+          <td>flat +0.8 pts/yr over FY22-FY26<br><span class="mid">stable</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{Benefits}}{\text{Revenue}}"><span class="tex"></span><code class="plain">Benefits / Revenue</code></span> — Benefits paid plus change in policy reserves per rupee of revenue (Screener &#39;Other Mfr. Exp&#39; for insurers).</td></tr>
+        <tr class="main ">
+          <td class="name"><b>Combined ratio (GI)</b><br><span class="mid">combined_ratio · config/sectors/insurance.yaml</span></td>
+          <td><svg class="spark empty" width="120" height="28" viewBox="0 0 120 28" role="img" aria-label="no data"></svg></td>
+          <td class="num"><b>n/a</b><br><span class="rag na">n/a</span></td>
+          <td>no value for the as-of year<br><span class="mid">indicative: config/sectors/insurance.yaml</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\left(\text{Claims} + \text{expenses} + \text{commission}\right)}{\text{net earned premium}}\,\;\text{(reported)}"><span class="tex"></span><code class="plain">(Claims + expenses + commission) / net earned premium (reported)</code></span> — Underwriting profitability: above 100% = underwriting loss. <i>n/a in FY26: missing combined_ratio_pct FY26 (manual KPI)</i></td></tr>
+        <tr class="main ">
+          <td class="name"><b>Expense ratio</b><br><span class="mid">expense_ratio</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY17-FY26</title><g class="line"><polyline points="3,16.12 15.67,10.7 28.33,14.07 41,3 53.67,25 66.33,20.05 79,12.03 91.67,24.27 104.33,24.52 117,23.23"/></g><circle class="last" cx="117" cy="23.23" r="2.2"/></svg></td>
+          <td class="num"><b>7.9%</b><br><span class="rag na">n/a</span></td>
+          <td>no sourced band and fewer than 4 same-archetype peers: level not scored</td>
+          <td>improving −1.0 pts/yr over FY22-FY26<br><span class="mid">moderate</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\left(\text{Total opex} - \text{Benefits}\right)}{\text{Revenue}}"><span class="tex"></span><code class="plain">(Total opex - Benefits) / Revenue</code></span> — Operating expenses other than benefits per rupee of revenue.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>Opex ratio (reported)</b><br><span class="mid">opex_ratio_reported · config/sectors/insurance.yaml</span></td>
+          <td><svg class="spark empty" width="120" height="28" viewBox="0 0 120 28" role="img" aria-label="no data"></svg></td>
+          <td class="num"><b>n/a</b><br><span class="rag na">n/a</span></td>
+          <td>no value for the as-of year</td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{Operating expenses}}{\text{total premium}}\,\;\text{(reported)}"><span class="tex"></span><code class="plain">Operating expenses / total premium (reported)</code></span> — Cost efficiency of distribution and operations. <i>n/a in FY26: missing opex_ratio_pct FY26 (manual KPI)</i></td></tr>
+        <tr class="main ">
+          <td class="name"><b>VNB margin</b><br><span class="mid">vnb_margin · config/sectors/insurance.yaml</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY22-FY26</title><g class="line"><polyline points="66.33,4.29 79,3 91.67,11.41 104.33,15.94 117,25"/></g><circle class="last" cx="117" cy="25" r="2.2"/></svg></td>
+          <td class="num"><b>24.2%</b><br><span class="rag green">green</span></td>
+          <td>GREEN vs band: red ≤ 18.0%, green ≥ 25.0%, indicative<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="107.69" height="12"/><rect class="z-green" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="110.04" y="0" width="3" height="18"/></svg><br><span class="mid">indicative: config/sectors/insurance.yaml</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{Value of new business}}{\text{APE}}\,\;\text{(reported)}"><span class="tex"></span><code class="plain">Value of new business / APE (reported)</code></span> — Profitability of the year&#39;s new policies.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pillar-panel" id="pillar-capital_efficiency" hidden>
+    <h3>3 Capital efficiency <span class="rag na">n/a</span> <small>n/a/100</small></h3>
+    <p class="muted">3 Capital efficiency: not scored (no metric with a level for this company).</p>
+    <table class="metrics">
+      <thead><tr><th>Metric</th><th>FY17–FY26</th><th>Latest</th><th>Level vs band or peers</th><th>Trend / stability</th></tr></thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+  <div class="pillar-panel" id="pillar-returns" hidden>
+    <h3>4 Returns <span class="rag red">red</span> <small>35/100</small></h3>
+    <p class="muted">4 Returns: RED (35/100, 3 scored metrics). Strongest: Operating RoEV 15.0% (amber), ROE - cost of equity -2.1pp (red). Weakest: Return on equity 11.3% (red), ROE - cost of equity -2.1pp (red). Flags: R05.</p>
+    <table class="metrics">
+      <thead><tr><th>Metric</th><th>FY17–FY26</th><th>Latest</th><th>Level vs band or peers</th><th>Trend / stability</th></tr></thead>
+      <tbody>
+        <tr class="main ">
+          <td class="name"><b>Operating RoEV</b><br><span class="mid">operating_roev · config/sectors/insurance.yaml</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY22-FY26</title><g class="line"><polyline points="66.33,17.51 79,3 91.67,13.3 104.33,17.04 117,25"/></g><circle class="last" cx="117" cy="25" r="2.2"/></svg></td>
+          <td class="num"><b>15.0%</b><br><span class="rag amber">amber</span></td>
+          <td>AMBER vs band: red ≤ 13.4%, green ≥ 18.4%<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="107.69" height="12"/><rect class="z-green" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="49.55" y="0" width="3" height="18"/></svg><br><span class="mid">derived: config/sectors/insurance.yaml</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{Operating EV earnings}}{\text{opening EV}}\,\;\text{(reported)}"><span class="tex"></span><code class="plain">Operating EV earnings / opening EV (reported)</code></span> — Return on embedded value from operations: the insurer&#39;s true RoE.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>ROE - cost of equity</b><br><span class="mid">roe_ke_spread</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY18-FY26</title><g class="line"><polyline points="15.67,3 28.33,4.69 41,9.86 53.67,14.19 66.33,23.15 79,25 91.67,22.56 104.33,22.07 117,22.7"/></g><circle class="last" cx="117" cy="22.7" r="2.2"/></svg></td>
+          <td class="num"><b>−2.1pp</b><br><span class="rag red">red</span></td>
+          <td>RED vs band: red ≤ +0.0pp, green ≥ +5.0pp<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="48" height="12"/><rect class="z-amber" x="48" y="3" width="75.85" height="12"/><rect class="z-green" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="14.65" y="0" width="3" height="18"/></svg><br><span class="mid">derived: config/bands.yaml (generic)</span></td>
+          <td>improving +0.3 pts/yr over FY22-FY26<br><span class="mid">volatile</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\text{ROE} - \text{Ke},\quad \text{Ke} = \text{rf} + \text{beta} \times \text{ERP}"><span class="tex"></span><code class="plain">ROE - Ke, Ke = rf + beta x ERP</code></span> — Value created per rupee of equity for a lender/insurer.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>Return on assets</b><br><span class="mid">roa</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY18-FY26</title><g class="line"><polyline points="15.67,3 28.33,3.57 41,6.44 53.67,11.03 66.33,19.9 79,22.86 91.67,22.85 104.33,23.49 117,25"/></g><circle class="last" cx="117" cy="25" r="2.2"/></svg></td>
+          <td class="num"><b>0.5%</b><br><span class="rag na">n/a</span></td>
+          <td>no sourced band and fewer than 4 same-archetype peers: level not scored</td>
+          <td>stable 0.0 pts/yr over FY22-FY26<br><span class="mid">stable</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{core PAT}}{\text{average total assets}}"><span class="tex"></span><code class="plain">core PAT / average total assets</code></span> — Owners&#39; core profit per rupee of total assets.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>Return on equity</b><br><span class="mid">roe</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY18-FY26</title><g class="line"><polyline points="15.67,3 28.33,4.69 41,9.86 53.67,14.19 66.33,23.15 79,25 91.67,22.56 104.33,22.07 117,22.7"/></g><circle class="last" cx="117" cy="22.7" r="2.2"/></svg></td>
+          <td class="num"><b>11.3%</b><br><span class="rag red">red</span></td>
+          <td>RED vs band: red ≤ 13.4%, green ≥ 18.4%<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="48" height="12"/><rect class="z-amber" x="48" y="3" width="75.85" height="12"/><rect class="z-green" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="14.65" y="0" width="3" height="18"/></svg><br><span class="mid">derived: config/bands.yaml (generic)</span></td>
+          <td>stable +0.3 pts/yr over FY22-FY26<br><span class="mid">volatile</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{core PAT}}{\text{average equity}}\,\left(\text{share capital} + \text{reserves}\right)"><span class="tex"></span><code class="plain">core PAT / average equity (share capital + reserves)</code></span> — Owners&#39; core profit per rupee of shareholders&#39; equity.</td></tr>
+        <tr class="main comp">
+          <td class="name"><b>Attributable-profit factor</b><br><span class="mid">attributable_factor · component (not scored)</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY17-FY26</title><g class="line"><polyline points="3,13.27 15.67,13.27 28.33,13.27 41,25 53.67,13.27 66.33,25 79,3 91.67,13.27 104.33,13.27 117,13.27"/></g><circle class="last" cx="117" cy="13.27" r="2.2"/></svg></td>
+          <td class="num"><b>1.00</b><br><span class="rag na">n/a</span></td>
+          <td>informational (neutral direction)</td>
+          <td>flat 0.00/yr over FY22-FY26<br><span class="mid">stable</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{core PAT}}{\left(\text{core PBT} - \text{core tax}\right)}"><span class="tex"></span><code class="plain">core PAT / (core PBT - core tax)</code></span> — Owners&#39; share of after-tax profit: below 1 = minorities take a slice; above 1 = associate/JV income adds to it.</td></tr>
+        <tr class="main comp">
+          <td class="name"><b>Borrowings / equity (average)</b><br><span class="mid">debt_to_equity_avg · component (not scored)</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY18-FY26</title><g class="line"><polyline points="15.67,25 28.33,25 41,25 53.67,20.21 66.33,18.9 79,18.32 91.67,16.53 104.33,9.4 117,3"/></g><circle class="last" cx="117" cy="3" r="2.2"/></svg></td>
+          <td class="num"><b>0.18x</b><br><span class="rag na">n/a</span></td>
+          <td>informational (neutral direction)</td>
+          <td>rising +0.03x/yr over FY22-FY26<br><span class="mid">stable</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{average borrowings}}{\text{average equity}}"><span class="tex"></span><code class="plain">average borrowings / average equity</code></span> — Debt part of the equity multiplier.</td></tr>
+        <tr class="main comp">
+          <td class="name"><b>Depreciation / assets</b><br><span class="mid">dep_to_assets · component (not scored)</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY18-FY26</title><g class="line"><polyline points="15.67,3.27 28.33,10.98 41,13.86 53.67,17.85 66.33,25 79,19.09 91.67,23.35 104.33,18.81 117,3"/></g><circle class="last" cx="117" cy="3" r="2.2"/></svg></td>
+          <td class="num"><b>0.0%</b><br><span class="rag na">n/a</span></td>
+          <td>informational (neutral direction)</td>
+          <td>flat 0.0 pts/yr over FY22-FY26<br><span class="mid">stable</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{depreciation}}{\text{average total assets}}"><span class="tex"></span><code class="plain">depreciation / average total assets</code></span> — Depreciation per rupee of average assets. ROA = yield - interest + other income - opex - depreciation - tax + minority/associates.</td></tr>
+        <tr class="main comp">
+          <td class="name"><b>Equity multiplier</b><br><span class="mid">equity_multiplier · component (not scored)</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY18-FY26</title><g class="line"><polyline points="15.67,3 28.33,5.55 41,12.06 53.67,14.68 66.33,24.45 79,25 91.67,15.51 104.33,11.79 117,9.8"/></g><circle class="last" cx="117" cy="9.8" r="2.2"/></svg></td>
+          <td class="num"><b>21.82x</b><br><span class="rag na">n/a</span></td>
+          <td>informational (neutral direction)</td>
+          <td>rising +1.42x/yr over FY22-FY26<br><span class="mid">stable</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{average total assets}}{\text{average equity}}"><span class="tex"></span><code class="plain">average total assets / average equity</code></span> — Assets per rupee of equity: the leverage term in DuPont.</td></tr>
+        <tr class="main comp">
+          <td class="name"><b>Interest expended / assets</b><br><span class="mid">interest_to_assets · component (not scored)</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY18-FY26</title><g class="line"><polyline points="15.67,5.09 28.33,3 41,25 53.67,25 66.33,25 79,25 91.67,25 104.33,25 117,25"/></g><circle class="last" cx="117" cy="25" r="2.2"/></svg></td>
+          <td class="num"><b>0.0%</b><br><span class="rag na">n/a</span></td>
+          <td>informational (neutral direction)</td>
+          <td>flat 0.0 pts/yr over FY22-FY26<br><span class="mid">stable</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{interest}}{\text{average total assets}}"><span class="tex"></span><code class="plain">interest / average total assets</code></span> — Interest paid per rupee of average assets. ROA = yield - interest + other income - opex - depreciation - tax + minority/associates.</td></tr>
+        <tr class="main comp">
+          <td class="name"><b>Minority &amp; associates / assets</b><br><span class="mid">minority_to_assets · component (not scored)</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY18-FY26</title><g class="line"><polyline points="15.67,14 28.33,14 41,14 53.67,14 66.33,14 79,14 91.67,14 104.33,14 117,14"/></g><circle class="last" cx="117" cy="14" r="2.2"/></svg></td>
+          <td class="num"><b>−0.0%</b><br><span class="rag na">n/a</span></td>
+          <td>informational (neutral direction)</td>
+          <td>flat 0.0 pts/yr over FY22-FY26<br><span class="mid">stable</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{minority\_and\_associates}}{\text{average total assets}}"><span class="tex"></span><code class="plain">minority_and_associates / average total assets</code></span> — Associate income less minority share per rupee of average assets. ROA = yield - interest + other income - opex - depreciation - tax + minority/associates.</td></tr>
+        <tr class="main comp">
+          <td class="name"><b>Other income / assets</b><br><span class="mid">other_income_to_assets · component (not scored)</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY18-FY26</title><g class="line"><polyline points="15.67,17.71 28.33,24.97 41,17.39 53.67,17.2 66.33,13.24 79,3 91.67,23.35 104.33,25 117,24.39"/></g><circle class="last" cx="117" cy="24.39" r="2.2"/></svg></td>
+          <td class="num"><b>0.1%</b><br><span class="rag na">n/a</span></td>
+          <td>informational (neutral direction)</td>
+          <td>flat −0.1 pts/yr over FY22-FY26<br><span class="mid">stable</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{other\_income}}{\text{average total assets}}"><span class="tex"></span><code class="plain">other_income / average total assets</code></span> — Fee and other income per rupee of average assets. ROA = yield - interest + other income - opex - depreciation - tax + minority/associates.</td></tr>
+        <tr class="main comp">
+          <td class="name"><b>Other liabilities / equity (average)</b><br><span class="mid">other_liab_to_equity_avg · component (not scored)</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY18-FY26</title><g class="line"><polyline points="15.67,3 28.33,5.54 41,12 53.67,14.71 66.33,24.44 79,25 91.67,15.62 104.33,12.1 117,10.27"/></g><circle class="last" cx="117" cy="10.27" r="2.2"/></svg></td>
+          <td class="num"><b>20.65x</b><br><span class="rag na">n/a</span></td>
+          <td>informational (neutral direction)</td>
+          <td>rising +1.39x/yr over FY22-FY26<br><span class="mid">stable</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{average other liabilities}}{\text{average equity}}"><span class="tex"></span><code class="plain">average other liabilities / average equity</code></span> — Non-debt liabilities part of the equity multiplier.</td></tr>
+        <tr class="main comp">
+          <td class="name"><b>Tax / assets</b><br><span class="mid">tax_to_assets · component (not scored)</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY18-FY26</title><g class="line"><polyline points="15.67,3 28.33,12.63 41,6.36 53.67,3.89 66.33,8.97 79,11.56 91.67,25 104.33,21.91 117,11.09"/></g><circle class="last" cx="117" cy="11.09" r="2.2"/></svg></td>
+          <td class="num"><b>0.0%</b><br><span class="rag na">n/a</span></td>
+          <td>informational (neutral direction)</td>
+          <td>flat 0.0 pts/yr over FY22-FY26<br><span class="mid">stable</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{tax\_core}}{\text{average total assets}}"><span class="tex"></span><code class="plain">tax_core / average total assets</code></span> — Tax per rupee of average assets. ROA = yield - interest + other income - opex - depreciation - tax + minority/associates.</td></tr>
+        <tr class="main comp">
+          <td class="name"><b>Tax burden</b><br><span class="mid">tax_burden · component (not scored)</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY17-FY26</title><g class="line"><polyline points="3,24.99 15.67,24.55 28.33,20.62 41,23.54 53.67,25 66.33,23.39 79,21.77 91.67,3 104.33,8.87 117,22.33"/></g><circle class="last" cx="117" cy="22.33" r="2.2"/></svg></td>
+          <td class="num"><b>0.93</b><br><span class="rag na">n/a</span></td>
+          <td>component metric (not scored)</td>
+          <td>improving +0.05/yr over FY22-FY26<br><span class="mid">moderate</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\left(\text{core PBT} - \text{core tax}\right)}{\text{core PBT}}"><span class="tex"></span><code class="plain">(core PBT - core tax) / core PBT</code></span> — Share of pre-tax profit kept after tax (1 - effective tax rate).</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pillar-panel" id="pillar-cash_quality" hidden>
+    <h3>5 Cash and earnings quality (persistency) <span class="rag green">green</span> <small>77/100</small></h3>
+    <p class="muted">5 Cash and earnings quality: GREEN (77/100, 2 scored metrics). Strongest: 61st-month persistency 64.0% (green), 13th-month persistency 85.0% (amber). Weakest: 13th-month persistency 85.0% (amber), 61st-month persistency 64.0% (green).</p>
+    <table class="metrics">
+      <thead><tr><th>Metric</th><th>FY17–FY26</th><th>Latest</th><th>Level vs band or peers</th><th>Trend / stability</th></tr></thead>
+      <tbody>
+        <tr class="main ">
+          <td class="name"><b>13th-month persistency</b><br><span class="mid">persistency_13m · config/sectors/insurance.yaml</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY22-FY26</title><g class="line"><polyline points="66.33,3 79,3 91.67,3 104.33,3 117,25"/></g><circle class="last" cx="117" cy="25" r="2.2"/></svg></td>
+          <td class="num"><b>85.0%</b><br><span class="rag amber">amber</span></td>
+          <td>AMBER vs band: red ≤ 80.0%, green ≥ 87.0%, indicative<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="107.69" height="12"/><rect class="z-green" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="91.58" y="0" width="3" height="18"/></svg><br><span class="mid">indicative: config/sectors/insurance.yaml</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{Premiums renewed in month}\,13}{\text{premiums due}}\,\;\text{(reported)}"><span class="tex"></span><code class="plain">Premiums renewed in month 13 / premiums due (reported)</code></span> — Do first-year customers keep paying? Low = mis-selling or weak fit.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>61st-month persistency</b><br><span class="mid">persistency_61m · config/sectors/insurance.yaml</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY22-FY26</title><g class="line"><polyline points="66.33,21.33 79,25 91.67,23.17 104.33,4.83 117,3"/></g><circle class="last" cx="117" cy="3" r="2.2"/></svg></td>
+          <td class="num"><b>64.0%</b><br><span class="rag green">green</span></td>
+          <td>GREEN vs band: red ≤ 45.0%, green ≥ 55.0%, indicative<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="56.68" height="12"/><rect class="z-green" x="72.83" y="3" width="67.17" height="12"/><rect class="marker" x="122.35" y="0" width="3" height="18"/></svg><br><span class="mid">indicative: config/sectors/insurance.yaml</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{Premiums renewed in month}\,61}{\text{premiums due}}\,\;\text{(reported)}"><span class="tex"></span><code class="plain">Premiums renewed in month 61 / premiums due (reported)</code></span> — Long-term customer retention, which drives realised value.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pillar-panel" id="pillar-balance_sheet" hidden>
+    <h3>6 Balance sheet <span class="rag amber">amber</span> <small>63/100</small></h3>
+    <p class="muted">6 Balance sheet: AMBER (63/100, 1 scored metrics). Strongest: Solvency ratio 177.0% (green). Weakest: Solvency ratio 177.0% (green). Flags: IN01.</p>
+    <table class="metrics">
+      <thead><tr><th>Metric</th><th>FY17–FY26</th><th>Latest</th><th>Level vs band or peers</th><th>Trend / stability</th></tr></thead>
+      <tbody>
+        <tr class="main ">
+          <td class="name"><b>Solvency ratio</b><br><span class="mid">solvency_ratio · config/sectors/insurance.yaml</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY22-FY26</title><g class="line"><polyline points="66.33,25 79,3 91.67,16.04 104.33,10.33 117,24.19"/></g><circle class="last" cx="117" cy="24.19" r="2.2"/></svg></td>
+          <td class="num"><b>177.0%</b><br><span class="rag green">green</span></td>
+          <td>GREEN vs band: red ≤ 150.0%, green ≥ 180.0%<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-red" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="107.69" height="12"/><rect class="z-green" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="111.58" y="0" width="3" height="18"/></svg><br><span class="mid"><a href="https://www.business-standard.com/amp/article/finance/irdai-issues-new-insurer-solvency-margin-rules-116051801182_1.html">external: config/sectors/insurance.yaml</a></span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{Available solvency margin}}{\text{required solvency margin}}\,\;\text{(reported)}"><span class="tex"></span><code class="plain">Available solvency margin / required solvency margin (reported)</code></span> — Capital cushion to absorb shocks and fund growth.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pillar-panel" id="pillar-capital_allocation" hidden>
+    <h3>7 Capital allocation <span class="rag green">green</span> <small>70/100</small></h3>
+    <p class="muted">7 Capital allocation: GREEN (70/100, 1 scored metrics). Strongest: Share count change 0.2% (green). Weakest: Share count change 0.2% (green).</p>
+    <table class="metrics">
+      <thead><tr><th>Metric</th><th>FY17–FY26</th><th>Latest</th><th>Level vs band or peers</th><th>Trend / stability</th></tr></thead>
+      <tbody>
+        <tr class="main ">
+          <td class="name"><b>Buyback (estimate)</b><br><span class="mid">buyback_estimate</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY19-FY26</title><g class="line"><polyline points="28.33,14 41,14 53.67,14 66.33,14 79,14 91.67,14 104.33,14 117,14"/></g><circle class="last" cx="117" cy="14" r="2.2"/></svg></td>
+          <td class="num"><b>Rs 0 cr</b><br><span class="rag na">n/a</span></td>
+          <td>informational (neutral direction)</td>
+          <td>flat 0 cr/yr over FY22-FY26</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\max\left(0, -\left(\text{Adj}\,\text{shares}_{t} - \text{Adj}\,\text{shares}_{t-1}\right)\right) \times \left(\text{Price}_{t} + \text{Price}_{t-1}\right)}{2}"><span class="tex"></span><code class="plain">max(0, -(Adj shares_t - Adj shares_t-1)) x (Price_t + Price_t-1)/2</code></span> — Estimated rupees spent on buybacks: shares retired x average of the two year-end prices.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>Dividend payout</b><br><span class="mid">payout_ratio</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY17-FY26</title><g class="line"><polyline points="3,6.82 15.67,6.88 28.33,6.13 41,25 53.67,3 66.33,5.15 79,3.11 91.67,4.96 104.33,6.69 117,7.62"/></g><circle class="last" cx="117" cy="7.62" r="2.2"/></svg></td>
+          <td class="num"><b>0.24</b><br><span class="rag na">n/a</span></td>
+          <td>informational (neutral direction)</td>
+          <td>falling −0.01/yr over FY22-FY26<br><span class="mid">moderate</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{Dividend}}{\text{core PAT}}\,\;\text{(PAT &gt; 0)}"><span class="tex"></span><code class="plain">Dividend / core PAT (PAT &gt; 0)</code></span> — Share of core profit paid as dividends (Screener &#39;Dividend Amount&#39;, declared for the year).</td></tr>
+        <tr class="main ">
+          <td class="name"><b>Internal capital generation</b><br><span class="mid">internal_capital_generation</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY18-FY26</title><g class="line"><polyline points="15.67,5.03 28.33,6.89 41,3 53.67,16.25 66.33,23.02 79,25 91.67,22.57 104.33,21.72 117,22.05"/></g><circle class="last" cx="117" cy="22.05" r="2.2"/></svg></td>
+          <td class="num"><b>8.6%</b><br><span class="rag na">n/a</span></td>
+          <td>informational (neutral direction)</td>
+          <td>rising +0.3 pts/yr over FY22-FY26<br><span class="mid">volatile</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\text{ROE} \times \left(1 - \text{payout}\right)"><span class="tex"></span><code class="plain">ROE x (1 - payout)</code></span> — Growth in equity a lender can fund from retained profit alone.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>Promoter holding</b><br><span class="mid">promoter_holding</span></td>
+          <td><svg class="spark empty" width="120" height="28" viewBox="0 0 120 28" role="img" aria-label="no data"></svg></td>
+          <td class="num"><b>n/a</b><br><span class="rag na">n/a</span></td>
+          <td>informational (neutral direction)</td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\text{manual promoter\_holding\_pct}\,\;\text{(FY-end)}"><span class="tex"></span><code class="plain">manual promoter_holding_pct (FY-end)</code></span> — Promoter (controlling shareholder) stake. Not in the Screener export: supply promoter_holding_pct in data/manual.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>Promoter holding change 3y</b><br><span class="mid">promoter_holding_change_3y</span></td>
+          <td><svg class="spark empty" width="120" height="28" viewBox="0 0 120 28" role="img" aria-label="no data"></svg></td>
+          <td class="num"><b>n/a</b><br><span class="rag na">n/a</span></td>
+          <td>no value for the as-of year<br><span class="mid">indicative: config/bands.yaml (generic)</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\text{Promoter}\,\text{holding}_{t} - \text{Promoter}\,\text{holding}_{t-3}"><span class="tex"></span><code class="plain">Promoter holding_t - Promoter holding_t-3</code></span> — Change in promoter stake over 3 years (selling down = negative).</td></tr>
+        <tr class="main ">
+          <td class="name"><b>Promoter pledge</b><br><span class="mid">promoter_pledge</span></td>
+          <td><svg class="spark empty" width="120" height="28" viewBox="0 0 120 28" role="img" aria-label="no data"></svg></td>
+          <td class="num"><b>n/a</b><br><span class="rag na">n/a</span></td>
+          <td>no value for the as-of year<br><span class="mid">indicative: config/bands.yaml (generic)</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\text{manual promoter\_pledge\_pct}\,\left(\dfrac{\text{pledged shares}}{\text{promoter shares}}\right)"><span class="tex"></span><code class="plain">manual promoter_pledge_pct (pledged shares / promoter shares)</code></span> — Share of promoter holding pledged to lenders (forced-selling risk). Manual data only.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>Share count change</b><br><span class="mid">share_count_change</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY18-FY26</title><g class="line"><polyline points="15.67,22.09 28.33,23.95 41,25 53.67,24.83 66.33,3 79,16.77 91.67,25 104.33,24.86 117,24.24"/></g><circle class="last" cx="117" cy="24.24" r="2.2"/></svg></td>
+          <td class="num"><b>0.2%</b><br><span class="rag green">green</span></td>
+          <td>GREEN vs band: red ≥ 3.0%, green ≤ 0.0%, indicative<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-green" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="107.69" height="12"/><rect class="z-red" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="22.66" y="0" width="3" height="18"/></svg><br><span class="mid">indicative: config/bands.yaml (generic)</span></td>
+          <td>improving −1.0 pts/yr over FY22-FY26<br><span class="mid">moderate</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{Adjusted}\,\text{shares}_{t}}{\text{Adjusted}\,\text{shares}_{t-1}} - 1"><span class="tex"></span><code class="plain">Adjusted shares_t / Adjusted shares_t-1 - 1</code></span> — Net issuance (dilution, +) or buyback (-) of shares, adjusted for splits and bonuses.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>Shareholder yield</b><br><span class="mid">shareholder_yield</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY18-FY26</title><g class="line"><polyline points="15.67,9.71 28.33,3 41,25 53.67,10.17 66.33,8.86 79,5.55 91.67,8.87 104.33,9.35 117,6.83"/></g><circle class="last" cx="117" cy="6.83" r="2.2"/></svg></td>
+          <td class="num"><b>0.4%</b><br><span class="rag na">n/a</span></td>
+          <td>informational (neutral direction)</td>
+          <td>flat 0.0 pts/yr over FY22-FY26<br><span class="mid">stable</span></td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\left(\text{Dividend} + \text{buyback estimate}\right)}{\text{Market cap}}\,\;\text{(FY-end)}"><span class="tex"></span><code class="plain">(Dividend + buyback estimate) / Market cap (FY-end)</code></span> — Cash returned to shareholders (dividends + estimated buybacks) as a share of year-end market value.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pillar-panel" id="pillar-valuation" hidden>
+    <h3>8 Valuation <span class="rag green">green</span> <small>84/100</small></h3>
+    <p class="muted">8 Valuation: GREEN (84/100, 3 scored metrics). Strongest: P/B percentile vs own history 0.0% (green), P/E percentile vs own history 12.5% (green). Weakest: Price / embedded value 2.05x (green), P/E percentile vs own history 12.5% (green).</p>
+    <table class="metrics">
+      <thead><tr><th>Metric</th><th>FY17–FY26</th><th>Latest</th><th>Level vs band or peers</th><th>Trend / stability</th></tr></thead>
+      <tbody>
+        <tr class="main ">
+          <td class="name"><b>P/B</b><br><span class="mid">pb</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY18-FY26</title><g class="line"><polyline points="15.67,3 28.33,13.59 41,14.39 53.67,8.65 66.33,24.82 79,23.06 91.67,21.21 104.33,21.48 117,25"/></g><circle class="last" cx="117" cy="25" r="2.2"/></svg></td>
+          <td class="num"><b>7.18x</b><br><span class="rag na">n/a</span></td>
+          <td>informational (neutral direction)</td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{Market cap}}{\text{book equity}}"><span class="tex"></span><code class="plain">Market cap / book equity</code></span> — P/B multiple. Series = FY-end values; the last value is the current multiple (export price) in a latest run.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>P/B percentile vs own history</b><br><span class="mid">pb_percentile_10y</span></td>
+          <td></td>
+          <td class="num"><b>0.0%</b><br><span class="rag green">green</span></td>
+          <td>GREEN vs band: red ≥ 67.0%, green ≤ 33.0%, indicative<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-green" x="0" y="3" width="69.2" height="12"/><rect class="z-amber" x="69.2" y="3" width="54.65" height="12"/><rect class="z-red" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="14.65" y="0" width="3" height="18"/></svg><br><span class="mid">indicative: config/bands.yaml (generic)</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\left(\text{\# historical FY-end P/B below current} + 0.5 \times \text{\# equal}\right)}{\text{\# historical values}}"><span class="tex"></span><code class="plain">(# historical FY-end P/B below current + 0.5 x # equal) / # historical values</code></span> — Where today&#39;s P/B sits within the company&#39;s own FY-end history (0% = cheapest ever, 100% = richest). Needs &gt;= 5 years.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>P/E</b><br><span class="mid">pe</span></td>
+          <td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY18-FY26</title><g class="line"><polyline points="15.67,13.5 28.33,25 41,20.5 53.67,3 66.33,11.92 79,15.59 91.67,11.49 104.33,14.02 117,21.53"/></g><circle class="last" cx="117" cy="21.53" r="2.2"/></svg></td>
+          <td class="num"><b>66.64x</b><br><span class="rag na">n/a</span></td>
+          <td>informational (neutral direction)</td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{Market cap}}{\text{core PAT}}\,\;\text{(current: TTM PAT when available)}"><span class="tex"></span><code class="plain">Market cap / core PAT (current: TTM PAT when available)</code></span> — P/E multiple. Series = FY-end values; the last value is the current multiple (export price) in a latest run. <i>current = market cap / FY26 annual PAT (core)</i></td></tr>
+        <tr class="main ">
+          <td class="name"><b>P/E percentile vs own history</b><br><span class="mid">pe_percentile_10y</span></td>
+          <td></td>
+          <td class="num"><b>12.5%</b><br><span class="rag green">green</span></td>
+          <td>GREEN vs band: red ≥ 67.0%, green ≤ 33.0%, indicative<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-green" x="0" y="3" width="56.66" height="12"/><rect class="z-amber" x="56.66" y="3" width="67.18" height="12"/><rect class="z-red" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="14.65" y="0" width="3" height="18"/></svg><br><span class="mid">indicative: config/bands.yaml (generic)</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\left(\text{\# historical FY-end P/E below current} + 0.5 \times \text{\# equal}\right)}{\text{\# historical values}}"><span class="tex"></span><code class="plain">(# historical FY-end P/E below current + 0.5 x # equal) / # historical values</code></span> — Where today&#39;s P/E sits within the company&#39;s own FY-end history (0% = cheapest ever, 100% = richest). Needs &gt;= 5 years.</td></tr>
+        <tr class="main ">
+          <td class="name"><b>Price / embedded value</b><br><span class="mid">p_ev · config/sectors/insurance.yaml</span></td>
+          <td></td>
+          <td class="num"><b>2.05x</b><br><span class="rag green">green</span></td>
+          <td>GREEN vs band: red ≥ 3.50x, green ≤ 2.00x, indicative<br><svg class="band" width="140" height="18" viewBox="0 0 140 18" role="img"><rect class="z-green" x="0" y="3" width="16.15" height="12"/><rect class="z-amber" x="16.15" y="3" width="107.69" height="12"/><rect class="z-red" x="123.85" y="3" width="16.15" height="12"/><rect class="marker" x="18.31" y="0" width="3" height="18"/></svg><br><span class="mid">indicative: config/sectors/insurance.yaml</span></td>
+          <td>—</td>
+        </tr>
+        <tr class="detail"><td colspan="5"><span class="eq" data-tex="\dfrac{\text{Market cap}}{\text{latest embedded value}}"><span class="tex"></span><code class="plain">Market cap / latest embedded value</code></span> — Premium the market pays over the value of the in-force book.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <details><summary>12 metrics switched off by the sector module</summary>
+    <table><thead><tr><th>Metric</th><th>Why</th></tr></thead><tbody>
+<tr><td>Equity / assets <span class="mid">equity_to_assets</span></td><td>Policyholder liabilities dominate the balance sheet; the solvency ratio is the capital measure</td></tr><tr><td>P/B-implied growth <span class="mid">implied_growth_pb</span></td><td>As justified P/B; P/EV is used instead</td></tr><tr><td>P/B-implied - delivered growth <span class="mid">implied_pb_growth_minus_delivered</span></td><td>As justified P/B</td></tr><tr><td>Justified P/B <span class="mid">justified_pb</span></td><td>Insurers are valued on embedded value; book-value models understate in-force value</td></tr><tr><td>Cash + investments / assets <span class="mid">liquid_assets_ratio</span></td><td>Investments are the business (policyholder funds), not a liquidity buffer</td></tr><tr><td>Operating cost / average assets <span class="mid">opex_to_assets</span></td><td>Includes benefits and reserve changes; meaningless per rupee of policyholder assets</td></tr><tr><td>PAT margin <span class="mid">pat_margin</span></td><td>PAT over premium plus investment income mixes policyholder flows with shareholder profit; VNB margin is the margin measure</td></tr><tr><td>P/B / justified P/B <span class="mid">pb_to_justified_pb</span></td><td>As justified P/B</td></tr><tr><td>Latest quarter revenue YoY <span class="mid">q_revenue_yoy</span></td><td>Sales include investment income on policyholders&#39; funds (ULIP mark-to-market), so a quarter&#39;s revenue swings with markets; growth is read from APE/VNB</td></tr><tr><td>Quarterly YoY growth trend <span class="mid">q_revenue_yoy_trend</span></td><td>As latest-quarter revenue growth</td></tr><tr><td>Revenue growth volatility <span class="mid">revenue_growth_volatility</span></td><td>Volatility of revenue growth mostly measures investment-income swings, not business risk</td></tr><tr><td>Revenue / average assets <span class="mid">yield_on_assets</span></td><td>Revenue includes investment income on policyholders&#39; funds; not a pricing signal</td></tr>    </tbody></table>
+  </details>
+</section>
+
+<!-- 4. Red flags -->
+<section id="flags">
+  <h2>Red flags fired</h2>
+  <p class="intro">Rules from config/flags.yaml and the sector module. Each shows the rule, the evidence and the explanation. High 2 · medium 1 · low 0 · clear 8 · not evaluable 7.</p>
+  <div class="flag high">
+    <b>IN01 Solvency cushion thinning</b> <span class="sev high">high</span> <span class="mid">6 Balance sheet · config/sectors/insurance.yaml</span>
+    <p>Solvency ratio is 177.0% (-17.0pp in a year; IRDAI control level 150%): growth or dividends may need fresh capital.</p>
+    <p class="mid">Rule: <span class="rule">m(&#39;solvency_ratio&#39;) &lt; 1.70 or chg(&#39;solvency_ratio&#39;, 1) &lt; -0.15</span><br>Evidence: <span class="mono">now = 1.77; d = -0.17</span></p>
+  </div>
+  <div class="flag high">
+    <b>R05 ROE below cost of equity (financials)</b> <span class="sev high">high</span> <span class="mid">4 Returns · config/flags.yaml</span>
+    <p>ROE (11.3%) has been below the cost of equity for 2 years (spread -2.1pp): the franchise is not earning its cost of capital.</p>
+    <p class="mid">Rule: <span class="rule">all_last(&#39;roe_ke_spread&#39;, 2, &#39;&lt;&#39;, 0)</span><br>Evidence: <span class="mono">roe = 0.1128; spread = -0.02099</span></p>
+  </div>
+  <div class="flag medium">
+    <b>IN03 VNB margin compressing</b> <span class="sev medium">medium</span> <span class="mid">2 Margins · config/sectors/insurance.yaml</span>
+    <p>VNB margin fell -2.1pp over 2 years (-1.4pp in the latest year) to 24.2% (product mix, regulation or pricing pressure).</p>
+    <p class="mid">Rule: <span class="rule">chg(&#39;vnb_margin&#39;, 1) &lt; -0.01 or chg(&#39;vnb_margin&#39;, 2) &lt; -0.02</span><br>Evidence: <span class="mono">now = 0.242; d = -0.021; d1 = -0.014</span></p>
+  </div>
+  <details><summary>7 rules could not be evaluated</summary>
+    <table><thead><tr><th>Rule</th><th>Missing input</th></tr></thead><tbody>
+<tr><td>G04 Erratic revenue growth</td><td>revenue_growth_volatility (not available for this company)</td></tr><tr><td>G05 Quarterly growth decelerating</td><td>q_revenue_yoy_trend (not available for this company)</td></tr><tr><td>A02 Rising promoter pledge</td><td>promoter_pledge FY24</td></tr><tr><td>A03 Promoters selling down</td><td>promoter_holding_change_3y FY26</td></tr><tr><td>V03 P/B well above what returns justify</td><td>pb_to_justified_pb (not available for this company)</td></tr><tr><td>V06 P/B implies faster growth than delivered (financials)</td><td>implied_pb_growth_minus_delivered (not available for this company)</td></tr><tr><td>IN05 Underwriting loss (general insurance)</td><td>combined_ratio FY26 [n/a in FY26: missing combined_ratio_pct FY26 (manual KPI)]</td></tr>    </tbody></table>
+  </details>
+</section>
+
+<!-- 5. Drivers -->
+<section id="drivers">
+  <h2>Driver decomposition</h2>
+  <p class="intro">Exact decompositions of the change in the root metric (contributions sum to the change; residual shown).</p>
+<div class="tree-card" id="tree-fin_roe">
+  <h3>ROE = ROA x equity multiplier; ROA = yield - interest + other income - opex - depreciation - tax + minority/associates (all per rupee of assets)</h3>
+  <p class="mid">Tree <code>fin_roe</code> from config/drivers.yaml</p>
+  <div class="tabs" role="tablist">
+<button type="button" role="tab" data-win="1y" aria-selected="false">1y</button><button type="button" role="tab" data-win="3y" aria-selected="true">3y</button><button type="button" role="tab" data-win="5y" aria-selected="false">5y</button>  </div>
+  <div class="win" data-win="1y" hidden>
+    <p><b>1y</b> (FY25 → FY26): Return on equity 11.8% → 11.3% (−0.5 pts)</p>
+    <svg class="waterfall" width="660" height="88" viewBox="0 0 660 88" role="img"><line class="axis" x1="210" y1="0" x2="210" y2="88"/><text class="lab" x="204" y="16.4" text-anchor="end">Return on equity FY25</text><rect class="wf-start" x="210" y="7" width="360" height="14"/><text class="val" x="574" y="16.4">11.8%</text><text class="lab" x="204" y="36.4" text-anchor="end">Return on assets</text><rect class="wf-neg" x="544.67" y="27" width="25.33" height="14"/><text class="val" x="574" y="36.4">−0.8 pts</text><text class="lab" x="204" y="56.4" text-anchor="end">Equity multiplier</text><rect class="wf-pos" x="544.67" y="47" width="10.93" height="14"/><text class="val" x="559.61" y="56.4">+0.4 pts</text><text class="lab" x="204" y="76.4" text-anchor="end">Return on equity FY26</text><rect class="wf-end" x="210" y="67" width="345.61" height="14"/><text class="val" x="559.61" y="76.4">11.3%</text></svg>
+    <table class="tops"><thead><tr><th>Largest leaf drivers</th><th>Own change</th><th>Contribution</th><th>Share</th><th>Path</th></tr></thead><tbody>
+<tr><td>Operating cost / average assets</td><td class="num">−3.0pp</td><td class="num">+64.6 pts</td><td class="num">−13756%</td><td class="mid">roe &gt; roa &gt; opex_to_assets</td></tr><tr><td>Revenue / average assets</td><td class="num">−2.8pp</td><td class="num">−61.2 pts</td><td class="num">13031%</td><td class="mid">roe &gt; roa &gt; yield_on_assets</td></tr><tr><td>Tax / assets</td><td class="num">+0.2pp</td><td class="num">−4.3 pts</td><td class="num">910%</td><td class="mid">roe &gt; roa &gt; tax_to_assets</td></tr><tr><td>Other liabilities / equity (average)</td><td class="num">+0.61x</td><td class="num">+0.3 pts</td><td class="num">−70%</td><td class="mid">roe &gt; equity_multiplier &gt; other_liab_to_equity_avg</td></tr><tr><td>Other income / assets</td><td class="num">+0.0pp</td><td class="num">+0.3 pts</td><td class="num">−62%</td><td class="mid">roe &gt; roa &gt; other_income_to_assets</td></tr>    </tbody></table>
+  </div>
+  <div class="win" data-win="3y">
+    <p><b>3y</b> (FY23 → FY26): Return on equity 9.6% → 11.3% (+1.7 pts)</p>
+    <svg class="waterfall" width="660" height="88" viewBox="0 0 660 88" role="img"><line class="axis" x1="210" y1="0" x2="210" y2="88"/><text class="lab" x="204" y="16.4" text-anchor="end">Return on equity FY23</text><rect class="wf-start" x="210" y="7" width="279.4" height="14"/><text class="val" x="493.4" y="16.4">9.6%</text><text class="lab" x="204" y="36.4" text-anchor="end">Equity multiplier</text><rect class="wf-pos" x="489.4" y="27" width="80.6" height="14"/><text class="val" x="574" y="36.4">+2.8 pts</text><text class="lab" x="204" y="56.4" text-anchor="end">Return on assets</text><rect class="wf-neg" x="539.48" y="47" width="30.52" height="14"/><text class="val" x="574" y="56.4">−1.0 pts</text><text class="lab" x="204" y="76.4" text-anchor="end">Return on equity FY26</text><rect class="wf-end" x="210" y="67" width="329.48" height="14"/><text class="val" x="543.48" y="76.4">11.3%</text></svg>
+    <table class="tops"><thead><tr><th>Largest leaf drivers</th><th>Own change</th><th>Contribution</th><th>Share</th><th>Path</th></tr></thead><tbody>
+<tr><td>Operating cost / average assets</td><td class="num">−2.9pp</td><td class="num">+55.3 pts</td><td class="num">3224%</td><td class="mid">roe &gt; roa &gt; opex_to_assets</td></tr><tr><td>Revenue / average assets</td><td class="num">−2.4pp</td><td class="num">−46.8 pts</td><td class="num">−2733%</td><td class="mid">roe &gt; roa &gt; yield_on_assets</td></tr><tr><td>Other income / assets</td><td class="num">−0.5pp</td><td class="num">−9.1 pts</td><td class="num">−530%</td><td class="mid">roe &gt; roa &gt; other_income_to_assets</td></tr><tr><td>Other liabilities / equity (average)</td><td class="num">+4.96x</td><td class="num">+2.7 pts</td><td class="num">157%</td><td class="mid">roe &gt; equity_multiplier &gt; other_liab_to_equity_avg</td></tr><tr><td>Depreciation / assets</td><td class="num">+0.0pp</td><td class="num">−0.2 pts</td><td class="num">−13%</td><td class="mid">roe &gt; roa &gt; dep_to_assets</td></tr>    </tbody></table>
+  </div>
+  <div class="win" data-win="5y" hidden>
+    <p><b>5y</b> (FY21 → FY26): Return on equity 17.6% → 11.3% (−6.3 pts)</p>
+    <svg class="waterfall" width="660" height="88" viewBox="0 0 660 88" role="img"><line class="axis" x1="210" y1="0" x2="210" y2="88"/><text class="lab" x="204" y="16.4" text-anchor="end">Return on equity FY21</text><rect class="wf-start" x="210" y="7" width="360" height="14"/><text class="val" x="574" y="16.4">17.6%</text><text class="lab" x="204" y="36.4" text-anchor="end">Return on assets</text><rect class="wf-neg" x="417.89" y="27" width="152.11" height="14"/><text class="val" x="574" y="36.4">−7.4 pts</text><text class="lab" x="204" y="56.4" text-anchor="end">Equity multiplier</text><rect class="wf-pos" x="417.89" y="47" width="22.58" height="14"/><text class="val" x="444.47" y="56.4">+1.1 pts</text><text class="lab" x="204" y="76.4" text-anchor="end">Return on equity FY26</text><rect class="wf-end" x="210" y="67" width="230.47" height="14"/><text class="val" x="444.47" y="76.4">11.3%</text></svg>
+    <table class="tops"><thead><tr><th>Largest leaf drivers</th><th>Own change</th><th>Contribution</th><th>Share</th><th>Path</th></tr></thead><tbody>
+<tr><td>Revenue / average assets</td><td class="num">−19.0pp</td><td class="num">−397.4 pts</td><td class="num">6269%</td><td class="mid">roe &gt; roa &gt; yield_on_assets</td></tr><tr><td>Operating cost / average assets</td><td class="num">−18.7pp</td><td class="num">+390.8 pts</td><td class="num">−6164%</td><td class="mid">roe &gt; roa &gt; opex_to_assets</td></tr><tr><td>Other income / assets</td><td class="num">−0.2pp</td><td class="num">−3.3 pts</td><td class="num">53%</td><td class="mid">roe &gt; roa &gt; other_income_to_assets</td></tr><tr><td>Tax / assets</td><td class="num">−0.1pp</td><td class="num">+2.8 pts</td><td class="num">−44%</td><td class="mid">roe &gt; roa &gt; tax_to_assets</td></tr><tr><td>Other liabilities / equity (average)</td><td class="num">+1.49x</td><td class="num">+1.0 pts</td><td class="num">−16%</td><td class="mid">roe &gt; equity_multiplier &gt; other_liab_to_equity_avg</td></tr>    </tbody></table>
+  </div>
+</div>
+<p class="muted">ROIC is not meaningful for insurance companies (deposits and borrowings are raw material, not financing), so no ROIC tree is shown.</p>  <h3>Other trees</h3>
+<div class="tree-card" id="tree-eps_tree">
+  <h3>EPS = revenue per share x net margin (volume/price vs margin vs dilution)</h3>
+  <p class="mid">Tree <code>eps_tree</code> from config/drivers.yaml</p>
+  <div class="tabs" role="tablist">
+<button type="button" role="tab" data-win="1y" aria-selected="false">1y</button><button type="button" role="tab" data-win="3y" aria-selected="true">3y</button><button type="button" role="tab" data-win="5y" aria-selected="false">5y</button>  </div>
+  <div class="win" data-win="1y" hidden>
+    <p><b>1y</b> (FY25 → FY26): eps_core 8.41 → 8.86 (+0.45)</p>
+    <svg class="waterfall" width="660" height="88" viewBox="0 0 660 88" role="img"><line class="axis" x1="210" y1="0" x2="210" y2="88"/><text class="lab" x="204" y="16.4" text-anchor="end">eps_core FY25</text><rect class="wf-start" x="210" y="7" width="341.65" height="14"/><text class="val" x="555.65" y="16.4">8.41</text><text class="lab" x="204" y="36.4" text-anchor="end">PAT margin</text><rect class="wf-pos" x="551.65" y="27" width="10.16" height="14"/><text class="val" x="565.81" y="36.4">+0.25</text><text class="lab" x="204" y="56.4" text-anchor="end">revenue_per_share</text><rect class="wf-pos" x="561.81" y="47" width="8.19" height="14"/><text class="val" x="574" y="56.4">+0.20</text><text class="lab" x="204" y="76.4" text-anchor="end">eps_core FY26</text><rect class="wf-end" x="210" y="67" width="360" height="14"/><text class="val" x="574" y="76.4">8.86</text></svg>
+    <table class="tops"><thead><tr><th>Largest leaf drivers</th><th>Own change</th><th>Contribution</th><th>Share</th><th>Path</th></tr></thead><tbody>
+<tr><td>PAT margin</td><td class="num">+0.1pp</td><td class="num">+0.25</td><td class="num">55%</td><td class="mid">eps_core &gt; pat_margin</td></tr><tr><td>revenue</td><td class="num">+2,510 cr</td><td class="num">+0.22</td><td class="num">49%</td><td class="mid">eps_core &gt; revenue_per_share &gt; revenue</td></tr><tr><td>adjusted_shares_cr</td><td class="num">+0.480</td><td class="num">−0.02</td><td class="num">−4%</td><td class="mid">eps_core &gt; revenue_per_share &gt; adjusted_shares_cr</td></tr>    </tbody></table>
+  </div>
+  <div class="win" data-win="3y">
+    <p><b>3y</b> (FY23 → FY26): eps_core 6.37 → 8.86 (+2.50)</p>
+    <svg class="waterfall" width="660" height="88" viewBox="0 0 660 88" role="img"><line class="axis" x1="210" y1="0" x2="210" y2="88"/><text class="lab" x="204" y="16.4" text-anchor="end">eps_core FY23</text><rect class="wf-start" x="210" y="7" width="255.7" height="14"/><text class="val" x="469.7" y="16.4">6.37</text><text class="lab" x="204" y="36.4" text-anchor="end">revenue_per_share</text><rect class="wf-pos" x="465.7" y="27" width="104.3" height="14"/><text class="val" x="574" y="36.4">+2.60</text><text class="lab" x="204" y="56.4" text-anchor="end">PAT margin</text><rect class="wf-neg" x="565.98" y="47" width="4.02" height="14"/><text class="val" x="574" y="56.4">−0.10</text><text class="lab" x="204" y="76.4" text-anchor="end">eps_core FY26</text><rect class="wf-end" x="210" y="67" width="355.98" height="14"/><text class="val" x="569.98" y="76.4">8.86</text></svg>
+    <table class="tops"><thead><tr><th>Largest leaf drivers</th><th>Own change</th><th>Contribution</th><th>Share</th><th>Path</th></tr></thead><tbody>
+<tr><td>revenue</td><td class="num">+29,224 cr</td><td class="num">+2.63</td><td class="num">105%</td><td class="mid">eps_core &gt; revenue_per_share &gt; revenue</td></tr><tr><td>PAT margin</td><td class="num">−0.0pp</td><td class="num">−0.10</td><td class="num">−4%</td><td class="mid">eps_core &gt; pat_margin</td></tr><tr><td>adjusted_shares_cr</td><td class="num">+0.840</td><td class="num">−0.03</td><td class="num">−1%</td><td class="mid">eps_core &gt; revenue_per_share &gt; adjusted_shares_cr</td></tr>    </tbody></table>
+  </div>
+  <div class="win" data-win="5y" hidden>
+    <p><b>5y</b> (FY21 → FY26): eps_core 6.73 → 8.86 (+2.13)</p>
+    <svg class="waterfall" width="660" height="88" viewBox="0 0 660 88" role="img"><line class="axis" x1="210" y1="0" x2="210" y2="88"/><text class="lab" x="204" y="16.4" text-anchor="end">eps_core FY21</text><rect class="wf-start" x="210" y="7" width="273.54" height="14"/><text class="val" x="487.54" y="16.4">6.73</text><text class="lab" x="204" y="36.4" text-anchor="end">revenue_per_share</text><rect class="wf-pos" x="483.54" y="27" width="83.05" height="14"/><text class="val" x="570.6" y="36.4">+2.04</text><text class="lab" x="204" y="56.4" text-anchor="end">PAT margin</text><rect class="wf-pos" x="566.6" y="47" width="3.4" height="14"/><text class="val" x="574" y="56.4">+0.08</text><text class="lab" x="204" y="76.4" text-anchor="end">eps_core FY26</text><rect class="wf-end" x="210" y="67" width="360" height="14"/><text class="val" x="574" y="76.4">8.86</text></svg>
+    <table class="tops"><thead><tr><th>Largest leaf drivers</th><th>Own change</th><th>Contribution</th><th>Share</th><th>Path</th></tr></thead><tbody>
+<tr><td>revenue</td><td class="num">+27,903 cr</td><td class="num">+2.55</td><td class="num">120%</td><td class="mid">eps_core &gt; revenue_per_share &gt; revenue</td></tr><tr><td>adjusted_shares_cr</td><td class="num">+13.690</td><td class="num">−0.51</td><td class="num">−24%</td><td class="mid">eps_core &gt; revenue_per_share &gt; adjusted_shares_cr</td></tr><tr><td>PAT margin</td><td class="num">+0.0pp</td><td class="num">+0.08</td><td class="num">4%</td><td class="mid">eps_core &gt; pat_margin</td></tr>    </tbody></table>
+  </div>
+</div>
+</section>
+
+<!-- 6. Valuation -->
+<section id="valuation">
+  <h2>Valuation</h2>
+  <p class="intro">Multiples vs the company&#39;s own 10-year history, same-archetype peers at the same as-of year, and Damodaran&#39;s India industry aggregate. Peers: No same-archetype company in data/universe.csv has data at FY26.. Industry: Insurance (Life) (Damodaran, 2026-01-05).</p>
+<p class="muted">EV-based multiples are not used for banks, NBFCs and insurers (debt is raw material, not financing).</p>  <table>
+    <thead><tr><th>Multiple</th><th>Current</th><th>10y history (FY-end)</th><th>Min / median / max</th><th>Percentile vs own history</th><th>Same-archetype peers</th><th>Industry</th></tr></thead>
+    <tbody>
+      <tr><td><b>P/E</b></td><td class="num"><b>66.64x</b> <span class="rag na">n/a</span></td><td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY18-FY26</title><g class="line"><polyline points="15.67,13.5 28.33,25 41,20.5 53.67,3 66.33,11.92 79,15.59 91.67,11.49 104.33,14.02 117,21.53"/></g><circle class="last" cx="117" cy="21.53" r="2.2"/></svg></td><td class="num">59.75x / 81.53x / 103.39x</td><td class="num">12th</td><td>none</td><td class="num">95.48x</td></tr>
+      <tr><td><b>P/B</b></td><td class="num"><b>7.18x</b> <span class="rag na">n/a</span></td><td><svg class="spark " width="120" height="28" viewBox="0 0 120 28" role="img"><title>FY18-FY26</title><g class="line"><polyline points="15.67,3 28.33,13.59 41,14.39 53.67,8.65 66.33,24.82 79,23.06 91.67,21.21 104.33,21.48 117,25"/></g><circle class="last" cx="117" cy="25" r="2.2"/></svg></td><td class="num">7.18x / 9.29x / 19.43x</td><td class="num">0th</td><td>none</td><td class="num">5.20x</td></tr>
+    </tbody>
+  </table>
+<h3>Implied vs delivered growth</h3><svg class="bars" width="600" height="108" viewBox="0 0 600 108" role="img"><line class="axis" x1="220" y1="0" x2="220" y2="108"/><text class="lab" x="214" y="16.4" text-anchor="end">Revenue CAGR 3y</text><rect class="hist" x="220" y="7" width="264.13" height="14"/><text class="val" x="488.13" y="16.4">12.3%</text><text class="lab" x="214" y="36.4" text-anchor="end">Revenue CAGR 5y</text><rect class="hist" x="220" y="27" width="146.22" height="14"/><text class="val" x="370.22" y="36.4">6.8%</text><text class="lab" x="214" y="56.4" text-anchor="end">Revenue CAGR (full span, up to 10y)</text><rect class="hist" x="220" y="47" width="300" height="14"/><text class="val" x="524" y="56.4">14.0%</text><text class="lab" x="214" y="76.4" text-anchor="end">PAT CAGR 5y</text><rect class="hist" x="220" y="67" width="151.19" height="14"/><text class="val" x="375.19" y="76.4">7.0%</text><text class="lab" x="214" y="96.4" text-anchor="end">EPS CAGR 5y</text><rect class="hist" x="220" y="87" width="121.25" height="14"/><text class="val" x="345.25" y="96.4">5.6%</text></svg>  <h3>Other checks</h3>
+  <table><tbody><tr><td>Price / embedded value</td><td class="num"><b>2.05x</b> <span class="rag green">green</span></td><td class="mid">Market cap / latest embedded value</td></tr></tbody></table>
+</section>
+
+<!-- 7. Missing data -->
+<section id="missing">
+  <h2>Missing data and limits</h2>
+  <p class="intro">Inputs the sector module needs but the data does not have, and what that blocks.</p>
+<p>All required KPIs for this archetype are present at FY26.</p>  <div class="missing-kpi"><b>combined_ratio_pct</b> optional
+    <ul><li>combined_ratio_pct (Combined ratio (general insurers only) for the year) is missing at FY26.</li><li>1 metric cannot be computed: Combined ratio (GI).</li><li>Red-flag rules that cannot be checked: IN05.</li></ul></div>
+  <div class="missing-kpi"><b>opex_ratio_pct</b> optional
+    <ul><li>opex_ratio_pct (Operating expenses (excl. commission) / total premium for the year) is missing at FY26.</li><li>1 metric cannot be computed: Opex ratio (reported).</li></ul></div>
+<p>36 of 36 manual KPI values (100%) are verified = N: taken from the cited page, not checked in the primary document.</p><details><summary>Estimated or proxy inputs (4)</summary><ul><li>Financial company: other income is core (fees, treasury), so no exceptional-item estimate is made.</li><li>One-off tax normalisation is off for insurance: Life insurance profits are taxed at 12.5% under section 115B (shareholders&#39; surplus is disputed between that and normal rates), and policyholders&#39; surplus transfers move between accounts, so the effective tax rate on accounting PBT has no stable normal to restore. Reported tax kept.</li><li>No material minority/associate residual: export is standalone or has no minorities.</li><li>Capex is not in the export. Proxy = change in net block + change in CWIP + depreciation (includes acquired fixed assets and Ind AS 116 right-of-use additions; impairments and disposals understate it). FCF = CFO - capex proxy.</li></ul></details></section>
+
+<!-- 8. Bull and bear -->
+<section id="bullbear">
+  <h2>Bull and bear case starter</h2>
+  <p class="intro">Financial evidence only, as a starting point for a pitch. Strategy and management judgement stay with the analyst.</p>
+  <div class="cols2">
+    <div class="card bull"><h3>Bull: financial evidence</h3><ul class="bb"><li>PAT CAGR 3y: 11.8% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%); improving +3.0 pts/yr over FY22-FY26 [pat_cagr_3y]</li><li>EPS CAGR 3y: 11.7% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%); improving +3.4 pts/yr over FY22-FY26 [eps_cagr_3y]</li><li>61st-month persistency: 64.0% (GREEN vs band: red ≤ 45.0%, green ≥ 55.0%, indicative) [persistency_61m]</li><li>P/B percentile vs own history: 0.0% (GREEN vs band: red ≥ 67.0%, green ≤ 33.0%, indicative) [pb_percentile_10y]</li><li>P/E 66.64x sits at the 12th percentile of its own 10-year history [pe_percentile_10y]</li><li>P/E 66.64x vs Damodaran India industry 95.48x (Insurance (Life)) [pe]</li><li>P/B 7.18x sits at the 0th percentile of its own 10-year history [pb_percentile_10y]</li><li>Largest positive driver of return on equity over 3y: Operating cost / average assets (-2.9pp) -&gt; +55.3pp (3224% of the change) [fin_roe]</li></ul></div>
+    <div class="card bear"><h3>Bear: financial evidence</h3><ul class="bb"><li>R05 ROE below cost of equity (financials): ROE (11.3%) has been below the cost of equity for 2 years (spread -2.1pp): the franchise is not earning its cost of capital. [R05]</li><li>IN01 Solvency cushion thinning: Solvency ratio is 177.0% (-17.0pp in a year; IRDAI control level 150%): growth or dividends may need fresh capital. [IN01]</li><li>IN03 VNB margin compressing: VNB margin fell -2.1pp over 2 years (-1.4pp in the latest year) to 24.2% (product mix, regulation or pricing pressure). [IN03]</li><li>Return on equity: 11.3% (RED vs band: red ≤ 13.4%, green ≥ 18.4%); stable +0.3 pts/yr over FY22-FY26; +1.7 pts over 3y; 161% from equity multiplier, partly offset by the other drivers; equity multiplier rose because other liabilities / equity (average) rose 15.68x → 20.65x [roe]</li><li>Destroys value: ROE 11.3% vs Ke 13.4%; economic profit Rs −356 cr in FY26, positive in 4 of 9 years [economic_profit]</li><li>P/B 7.18x vs Damodaran India industry 5.20x (Insurance (Life)) [pb]</li><li>Largest negative driver of return on equity over 3y: Revenue / average assets (-2.4pp) -&gt; -46.8pp (-2733% of the change) [fin_roe]</li></ul></div>
+  </div>
+</section>
+
+<section id="notes">
+  <h2>Data notes and sources</h2>
+  <details><summary>14 data notes from standardisation</summary><ul><li><span class="mid">source</span> Source file HDFCLIFE.xlsx; sha256 37cf4508798ac857...; Screener template version 2.1. Only the &#39;Data Sheet&#39; is read (display sheets are formulas without cached values).</li><li><span class="mid">units</span> Units: Rs crore. Share counts in crore (Screener &#39;Adjusted Equity Shares in Cr&#39;); prices in Rs.</li><li><span class="mid">source</span> Data Sheet has 2 formula cell(s) without cached values (e.g. &#39;Number of shares&#39;); recomputed where needed.</li><li><span class="mid">missing</span> Blank line items are treated as zero (Screener leaves zero items blank; the P&amp;L and balance-sheet identities hold on that basis). Blank price or share count = missing.</li><li><span class="mid">exceptional</span> Financial company: other income is core (fees, treasury), so no exceptional-item estimate is made.</li><li><span class="mid">exceptional</span> One-off tax normalisation is off for insurance: Life insurance profits are taxed at 12.5% under section 115B (shareholders&#39; surplus is disputed between that and normal rates), and policyholders&#39; surplus transfers move between accounts, so the effective tax rate on accounting PBT has no stable normal to restore. Reported tax kept.</li><li><span class="mid">minority</span> No material minority/associate residual: export is standalone or has no minorities.</li><li><span class="mid">semantics</span> Insurance mapping: Sales = premium + investment income; Other Mfr. Exp = benefits paid + change in valuation of policy liabilities; Other Liabilities = policyholders&#39; funds; Investments include policyholders&#39; investments.</li><li><span class="mid">capex</span> Capex is not in the export. Proxy = change in net block + change in CWIP + depreciation (includes acquired fixed assets and Ind AS 116 right-of-use additions; impairments and disposals understate it). FCF = CFO - capex proxy.</li><li><span class="mid">market FY17</span> No FY-end price (e.g. not yet listed): market multiples for this year are missing.</li><li><span class="mid">asof</span> As-of FY26: annual data after FY26, all later quarters and the export-date price are removed before standardisation; valuation uses the FY26 year-end price.</li><li><span class="mid">quarterly</span> 8 quarters from 2024-06-30 to 2026-03-31 (Q1FY25-Q4FY26). Quarterly profit is as reported (no exceptional-item estimate).</li><li><span class="mid">manual</span> Manual KPIs loaded: ape_cr, embedded_value_cr, operating_roev_pct, persistency_13m_pct, persistency_61m_pct, solvency_ratio_pct, vnb_cr, vnb_margin_pct for FY22, FY23, FY24, FY25, FY26.</li><li><span class="mid">manual</span> 36 manual KPI values: 0 verified against the primary document (Y), 36 from secondary sources (N). Provenance is in analysis.json (manual_kpis).</li></ul></details>
+  <details><summary>Cost-of-capital sources</summary><ul><li><b>beta</b>: method industry levered beta 0.86 (Insurance (Life)) <a href="https://pages.stern.nyu.edu/~adamodar/pc/datasets/betaIndia.xls">https://pages.stern.nyu.edu/~adamodar/pc/datasets/betaIndia.xls</a> (2026-01-05)</li><li><b>equity_risk_premium</b>: value 0.0692 <a href="https://pages.stern.nyu.edu/~adamodar/pc/datasets/ctrypremJuly26.xlsx">https://pages.stern.nyu.edu/~adamodar/pc/datasets/ctrypremJuly26.xlsx</a> (2026-07-01)</li><li><b>risk_free</b>: value 0.0741 <a href="https://www.investing.com/rates-bonds/india-10-year-bond-yield-historical-data">https://www.investing.com/rates-bonds/india-10-year-bond-yield-historical-data</a> (2026-10-30)</li><li><b>synthetic_rating</b>:  <a href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ratings.html">https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ratings.html</a> (2026-01)</li><li><b>tax</b>: value 0.25168 <a href="https://cleartax.in/s/section-115-baa-tax-rate-domestic-companies">https://cleartax.in/s/section-115-baa-tax-rate-domestic-companies</a> (2026-04-01)</li></ul></details>
+</section>
+
+<footer>equity-diagnostic-engine 0.1.0 · generated 2026-11-01 · Deterministic: no network, no LLM. Diagnoses financials only; strategy and management judgement stay with the analyst. All text from engine/report/templates/.</footer>
+</main>
+<script>
+(function () {
+  "use strict";
+  var expandAll = false;
+
+  function panels() { return Array.prototype.slice.call(document.querySelectorAll(".pillar-panel")); }
+  function nodes() { return Array.prototype.slice.call(document.querySelectorAll("button.pnode")); }
+
+  function openPillar(id, scroll) {
+    panels().forEach(function (p) { p.hidden = !expandAll && p.id !== id; });
+    nodes().forEach(function (b) { b.setAttribute("aria-expanded", b.getAttribute("data-target") === id ? "true" : "false"); });
+    var el = document.getElementById(id);
+    if (el && scroll && el.scrollIntoView) { el.scrollIntoView({ behavior: "smooth", block: "start" }); }
+  }
+
+  nodes().forEach(function (b) {
+    b.addEventListener("click", function () {
+      var id = b.getAttribute("data-target");
+      var el = document.getElementById(id);
+      if (!expandAll && el && !el.hidden && b.getAttribute("aria-expanded") === "true") {
+        el.hidden = true; b.setAttribute("aria-expanded", "false");
+      } else { openPillar(id, true); }
+    });
+  });
+
+  var all = document.getElementById("expand-all");
+  if (all) {
+    all.addEventListener("click", function () {
+      expandAll = !expandAll;
+      panels().forEach(function (p) { p.hidden = !expandAll; });
+      all.textContent = expandAll ? "Collapse all pillars" : "Expand all pillars";
+    });
+  }
+
+  Array.prototype.slice.call(document.querySelectorAll(".tabs")).forEach(function (bar) {
+    var card = bar.parentNode;
+    bar.addEventListener("click", function (ev) {
+      var btn = ev.target.closest ? ev.target.closest("button[data-win]") : null;
+      if (!btn) { return; }
+      var key = btn.getAttribute("data-win");
+      Array.prototype.slice.call(bar.querySelectorAll("button")).forEach(function (x) {
+        x.setAttribute("aria-selected", x === btn ? "true" : "false");
+      });
+      Array.prototype.slice.call(card.querySelectorAll(".win")).forEach(function (w) {
+        w.hidden = w.getAttribute("data-win") !== key;
+      });
+    });
+  });
+
+  window.__renderTex = function () {
+    if (!window.katex) { return; }
+    Array.prototype.slice.call(document.querySelectorAll(".eq[data-tex]")).forEach(function (el) {
+      if (el.classList.contains("rendered")) { return; }
+      try {
+        el.querySelector(".tex").innerHTML = window.katex.renderToString(el.getAttribute("data-tex"), { throwOnError: true, strict: "ignore" });
+        el.classList.add("rendered");
+      } catch (e) { /* keep the plain-text equation */ }
+    });
+  };
+  window.__renderTex();
+
+  var state = null;
+  window.addEventListener("beforeprint", function () {
+    state = panels().map(function (p) { return p.hidden; });
+    panels().forEach(function (p) { p.hidden = false; });
+  });
+  window.addEventListener("afterprint", function () {
+    if (state) { panels().forEach(function (p, i) { p.hidden = state[i]; }); }
+  });
+})();
+
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous" onload="window.__renderTex &amp;&amp; window.__renderTex()"></script>
+</body>
+</html>

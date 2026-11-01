@@ -36,5 +36,5 @@
 
 ## manual
 - Manual KPIs loaded: advances_cr, casa_pct, cet1_pct, crar_pct, deposits_cr, gnpa_pct, nnpa_pct, npa_divergence_cr, pcr_pct, provisions_cr for FY14, FY15, FY16, FY17, FY18, FY22, FY23, FY24, FY25, FY26.
-- 63 manual KPI values: 0 verified against the primary document (Y), 63 from secondary sources (N). Provenance is in analysis.json (manual_kpis).
+- 64 manual KPI values: 0 verified against the primary document (Y), 64 from secondary sources (N). Provenance is in analysis.json (manual_kpis).
 - Manual KPI years FY14, FY15, FY16 precede the export (FY17): added as KPI-only rows (all export fields blank) so KPI trends cover them.

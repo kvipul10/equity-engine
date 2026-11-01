@@ -38,4 +38,4 @@
 
 ## manual
 - Manual KPIs loaded: capacity_mtpa, sales_volume_mt for FY23, FY24, FY25, FY26.
-- 6 manual KPI values: 0 verified against the primary document (Y), 6 from secondary sources (N). Provenance is in analysis.json (manual_kpis).
+- 7 manual KPI values: 0 verified against the primary document (Y), 7 from secondary sources (N). Provenance is in analysis.json (manual_kpis).
