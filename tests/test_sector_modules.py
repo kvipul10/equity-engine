@@ -373,7 +373,7 @@ def test_rule_ids_unique_and_valid(real_cfg):
 
 
 def test_templates_match_configs(real_cfg, tmp_path):
-    from engine.templates import COLUMNS, template_rows, year_range
+    from engine.kpi_templates import COLUMNS, template_rows, year_range
 
     tdir = REPO / "data" / "manual" / "templates"
     assert {p.stem.replace("_kpis", "") for p in tdir.glob("*_kpis.csv")} == ARCHETYPES
@@ -475,7 +475,7 @@ def test_asof_ignores_later_kpis_and_financials(tmp_path):
 
 # ---------------------------------------------------------------------------------------------- KPI coverage report
 def test_kpi_coverage_report_matches_files(real_cfg):
-    from engine.templates import _read_kpis, coverage, coverage_markdown, target_years
+    from engine.kpi_templates import _read_kpis, coverage, coverage_markdown, target_years
 
     rows = coverage(real_cfg)
     assert {r["ticker"] for r in rows} == set(real_cfg.universe)

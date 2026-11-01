@@ -147,7 +147,7 @@ def cmd_rules(args) -> int:
 
 
 def cmd_kpi_templates(args) -> int:
-    from .templates import write_templates
+    from .kpi_templates import write_templates
 
     cfg = _cfg(args)
     paths = write_templates(cfg, args.years)
@@ -156,7 +156,7 @@ def cmd_kpi_templates(args) -> int:
 
 
 def cmd_kpi_coverage(args) -> int:
-    from .templates import write_coverage
+    from .kpi_templates import write_coverage
 
     p = write_coverage(_cfg(args))
     print(f"Wrote {p}")

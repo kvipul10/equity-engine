@@ -10,8 +10,8 @@ from typing import Dict, List, Optional
 import numpy as np
 import pandas as pd
 
-from . import __version__
-from .registry import PILLAR_NAMES, PILLARS, REGISTRY
+from .. import __version__
+from ..registry import PILLAR_NAMES, PILLARS, REGISTRY
 
 
 def _clean(o):
