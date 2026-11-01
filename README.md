@@ -75,6 +75,16 @@ python -m engine metrics
 python -m engine rules
 ```
 
+Write the blank manual-KPI template for every archetype (`data/manual/templates/<archetype>_kpis.csv`), and the coverage report of the filled KPI files (`data/manual/COVERAGE.md`):
+
+```bash
+python -m engine kpi-templates --years FY22-FY26
+```
+
+```bash
+python -m engine kpi-coverage
+```
+
 Run the tests:
 
 ```bash
@@ -92,8 +102,8 @@ Options for `analyse`:
 | Path | What |
 |---|---|
 | `data/raw/screener/<TICKER>.xlsx` | Screener export (only the `Data Sheet` is read; see `docs/screener_format.md`) |
-| `data/universe.csv` | `ticker,archetype,role,asof`. Archetypes are defined in `config/sectors.yaml` |
-| `data/manual/<TICKER>_kpis.csv` | Optional extra data: payables, promoter holding/pledge, capex, exceptional items, bank KPIs (see `data/manual/README.md`) |
+| `data/universe.csv` | `ticker,archetype,role,asof`. Each archetype is a sector module in `config/sectors/<archetype>.yaml` |
+| `data/manual/<TICKER>_kpis.csv` | Sector KPIs (asset quality, order book, volumes, ARPU...) and extra data such as payables or promoter pledge. Every value carries a source URL, date and verified flag (see `data/manual/README.md`; coverage in `data/manual/COVERAGE.md`) |
 | `data/raw/screener/vintages/<TICKER>/*.xlsx` | Optional older exports; restated years are logged in `notes.md` |
 
 To add a company:
@@ -123,11 +133,11 @@ To add a company:
 | File | Content |
 |---|---|
 | `config/market.yaml` | Risk-free rate (India 10y G-sec), ERP (Damodaran, India), tax rate, macro anchors, synthetic-rating table, beta method/overrides |
-| `config/sectors.yaml` | Archetype → family (non-financial / bank-like / insurance) → Damodaran India industry |
+| `config/sectors/<archetype>.yaml` | One sector module per archetype (18, plus the shared `_cyclical` base): family, Damodaran industries, how to read the sector, metrics switched off, sector metrics with formulas, required manual KPIs, sourced or `indicative` bands, sector red flags, driver trees and pillar weights. Modules inherit from `default` (or `extends:`); see `docs/methodology.md` section 10 |
 | `config/sector_benchmarks.yaml` | **Generated** by `python -m engine build-benchmarks` from `data/external/damodaran/*.xls`: industry betas, sector bands, references |
 | `config/bands.yaml` | Generic, family and archetype bands (macro, cost of capital, rating-agency, academic), each with its source |
 | `config/scoring.yaml` | Level/trend/stability rules, RAG cut-offs, pillar and metric weights |
-| `config/flags.yaml` | 54 red-flag rules (id, pillar, severity, applies, condition, explanation template) |
+| `config/flags.yaml` | 54 generic red-flag rules (id, pillar, severity, applies, condition, explanation template); sector rules live in the sector modules |
 | `config/drivers.yaml` | Driver trees as data |
 
 **Refresh before a pitch:**

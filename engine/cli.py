@@ -155,6 +155,14 @@ def cmd_kpi_templates(args) -> int:
     return 0
 
 
+def cmd_kpi_coverage(args) -> int:
+    from .templates import write_coverage
+
+    p = write_coverage(_cfg(args))
+    print(f"Wrote {p}")
+    return 0
+
+
 def cmd_build_benchmarks(args) -> int:
     from .benchmarks import write
 
@@ -190,6 +198,8 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("kpi-templates", help="write data/manual/templates/<archetype>_kpis.csv from config/sectors/*.yaml")
     p.add_argument("--years", default="FY22-FY26", help="fiscal-year range, e.g. FY22-FY26")
     p.set_defaults(fn=cmd_kpi_templates)
+    p = sub.add_parser("kpi-coverage", help="write data/manual/COVERAGE.md (found / blank per company x KPI x year)")
+    p.set_defaults(fn=cmd_kpi_coverage)
     p = sub.add_parser("build-benchmarks", help="rebuild config/sector_benchmarks.yaml from data/external/damodaran/*.xls")
     p.set_defaults(fn=cmd_build_benchmarks)
     return ap

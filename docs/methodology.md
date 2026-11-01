@@ -128,17 +128,18 @@ Worked example (tests/test_scoring_drivers.py): ROIC 12% with WACC 12% is exactl
 ## 6. Bands and benchmarks
 
 Lookup order for a company's metric:
-1. `bands.yaml` archetype entries
-2. `sector_benchmarks.yaml` (Damodaran India, by archetype)
-3. `bands.yaml` family entries
-4. `bands.yaml` generic entries
+1. the sector module's `bands` (`config/sectors/<archetype>.yaml`, inherited entries included)
+2. `bands.yaml` archetype entries (kept for compatibility; empty)
+3. `sector_benchmarks.yaml` (Damodaran India, by archetype)
+4. `bands.yaml` family entries (empty; family defaults now live in the sector modules)
+5. `bands.yaml` generic entries
 
 Each band is one of three types:
-- `external`: carries `source_url` and `as_of`, enforced at load time.
-- `rule_of_thumb`: carries a `rationale` and `as_of`.
+- `external`: carries `source_url` and `as_of`, enforced at load time (RBI, IRDAI, CERC, Ministry of Power, ICRA, Anarock, Damodaran...).
+- `indicative`: not from a published source; carries a `rationale` and `as_of`, and the report marks it "indicative". `rule_of_thumb` (Session 1 name) is read as an alias.
 - `derived`: expressed in market inputs, e.g. ROIC red ≤ `wacc`, green ≥ `wacc + 0.05`; growth red ≤ inflation target, green ≥ nominal GDP growth.
 
-**Sector bands** (margins, DSO/DIO/DPO, NWC days, operating cycle/CCC, IC turnover) come from Damodaran's January 2026 India datasets. Each archetype is mapped to industries by Damodaran's own classification of the universe companies (`config/sectors.yaml`):
+**Sector bands** (margins, DSO/DIO/DPO, NWC days, operating cycle/CCC, IC turnover) come from Damodaran's January 2026 India datasets. Each archetype is mapped to industries by Damodaran's own classification of the universe companies (`damodaran_industries` in each sector module):
 - centre = industry value
 - half-width = max(20% × |centre|, unit floor: 2pp, 10 days, 0.2x)
 - higher-is-better: red = centre − h, green = centre + h (mirrored for lower-is-better)
@@ -197,11 +198,31 @@ Remaining non-data look-ahead:
 - the 2026 benchmark vintage (bands, betas, ERP)
 - the rf, unless `rf_history` is supplied
 
-## 10. Known limitations
+## 10. Sector modules (config/sectors/<archetype>.yaml)
+
+One file per archetype: bank, nbfc, insurance, it_services, fmcg, consumer_manufacturing, metals, cement, chemicals, auto, pharma, capital_goods_defence, real_estate, utilities, telecom, retail, holdco and default. Each module holds:
+- `family` (non_financial, bank_like or insurance), `damodaran_industries`, and `how_to_read` (3-5 lines printed in the report)
+- `metrics_off`: engine metrics that are invalid for the sector. They are dropped from scoring and the report but stay computable internally (driver trees can still use them). An entry `{id: ..., applies: NF}` switches off a whole applicability group
+- `metrics_add`: sector metrics, each with id, pillar, unit, direction, formula, equation and meaning. They are registered in the same registry as the engine metrics (`origin` = the YAML file) and appear in `docs/metrics.md`
+- `manual_kpis`: the KPI inputs, with units and descriptions, flagged `required` or optional. `python -m engine kpi-templates` turns them into `data/manual/templates/<archetype>_kpis.csv`
+- `bands`, sector `flags`, `constants` (e.g. CERC allowed RoE), `drivers` (`add` new trees; `replace` a generic tree), `pillar_weights` and `pillar_names`
+
+**Inheritance.** A module `extends` one parent (default: `default`). Files starting with `_` are bases, not archetypes (`_cyclical` is shared by metals, cement and chemicals). Lists merge by `id`, and an entry with `remove: true` deletes the inherited one. Dicts merge by key, and `null` deletes. Every entry keeps its origin file, and the report shows the lineage (for cement: default, _cyclical, cement).
+
+**Sector formulas** use the same safe expression language as the flags (no `eval`) and are evaluated per fiscal year with only data up to that year: `f('field')` (standardised field), `kpi('id')` (manual KPI), `m('metric')`, `avg`, `growth`, `cagr`, `mean_last`, `min_last`, `max_last`, `sum_last`, `at_min`, `slope_last`, `mcap_now`. A missing input makes the value n/a and records which input, e.g. "missing provisions_cr FY26 (manual KPI)". Flags that cannot be evaluated name the same input.
+
+**Driver trees.** Sector trees use the same link types. The bank tree is the bank DuPont: RoA = NII/A + fees & other income/A − opex/A − provisions/A − tax/A, and RoE = RoA × A/E. It replaces the generic financial ROE tree whenever at least one window can be computed (otherwise the generic tree is kept and the report says why). Real estate decomposes CFO as pre-sales × collections/pre-sales × CFO/collections. Capital goods use opening order book × execution rate. A `product` link can carry a constant factor (`const`) for unit scaling, e.g. EBITDA per tonne.
+
+**Scoring.** Sector bands rank first in the lookup (section 6). Pillar weights can be set per archetype. For example, the bank module gives pillar 5 (renamed asset quality) a weight of 15, where the generic bank-like weights give it 0, because the KPIs make it measurable. The report's `sector` section lists the switched-off metrics, the KPIs present at the as-of year, missing required KPIs, the share of verified KPI values, the indicative bands used and the sector flags triggered.
+
+**Manual KPIs (v2).** `metric,fiscal_year,value,unit,source_url,source_date,verified` (see `data/manual/README.md`). Blank values are ignored and values are never estimated. As-of runs drop KPI rows after the as-of year. KPI years before the first Screener year extend the timeline as KPI-only rows: their financial fields stay empty, so only KPI-based metrics are computed there. `data/manual/COVERAGE.md` (from `python -m engine kpi-coverage`) shows the found and blank company-years.
+
+## 11. Known limitations
 
 - Ten annual points and ten quarters per export. YESBANK as of FY18 has two years and no quarters, so trend and stability are not computable there and level-only flags carry the analysis (A06 and B06 still fire).
 - No payables, current/non-current split, capex, goodwill or shareholding in the export. These are proxies until `data/manual` is filled.
-- Bank provisions and asset quality are not separable, so cost-to-income includes provisions. Insurer metrics are Screener approximations; embedded value and VNB need manual data.
+- Bank provisions and asset quality are not separable in the export, so cost-to-income includes provisions unless `provisions_cr` is supplied. Insurer metrics are Screener approximations until VNB, EV and persistency are in the manual KPIs.
+- Manual KPIs were collected by web search. Most are `verified = N` (taken from the cited page, not from the primary document), and coverage is uneven (see `data/manual/COVERAGE.md`).
 - Exceptional items are estimates. Their tax effect assumes the statutory rate (capital gains may be taxed differently).
 - ROIC/ROCE omit balance-sheet minority interest unless supplied, so ROIC is overstated for groups with large minorities (e.g. Bharti).
 - Consolidated vs standalone is inferred, not stated in the file.

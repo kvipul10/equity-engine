@@ -471,3 +471,20 @@ def test_asof_ignores_later_kpis_and_financials(tmp_path):
         r["data_notes"] = [n for n in r["data_notes"] if n["category"] != "source"]
     assert json.dumps(ra, sort_keys=True) == json.dumps(rb, sort_keys=True)
     assert set(ra["manual_kpis"]["gnpa_pct"]["values"]) == {"FY21", "FY22", "FY23"}
+
+
+# ---------------------------------------------------------------------------------------------- KPI coverage report
+def test_kpi_coverage_report_matches_files(real_cfg):
+    from engine.templates import _read_kpis, coverage, coverage_markdown, target_years
+
+    rows = coverage(real_cfg)
+    assert {r["ticker"] for r in rows} == set(real_cfg.universe)
+    yb = [r for r in rows if r["ticker"] == "YESBANK"]
+    assert yb and yb[0]["years"][:5] == ["FY14", "FY15", "FY16", "FY17", "FY18"] and yb[0]["years"][-1] == "FY26"
+    assert target_years({"role": "test"}) == ["FY22", "FY23", "FY24", "FY25", "FY26"]
+    for r in rows:
+        have = _read_kpis(real_cfg.paths.manual_file(r["ticker"]))
+        assert r["found"] == [y for y in r["years"] if (r["kpi"], y) in have]
+    md = coverage_markdown(real_cfg)
+    assert md.startswith("# Manual KPI coverage") and "| YESBANK | bank |" in md
+    assert (REPO / "data" / "manual" / "COVERAGE.md").read_text() == md, "COVERAGE.md is stale: run python -m engine kpi-coverage"
