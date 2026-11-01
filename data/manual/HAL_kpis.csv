@@ -1,0 +1,7 @@
+metric,fiscal_year,value,unit,source_url,source_date,verified
+order_book_cr,FY22,82153,Rs cr (as on 31 March 2022),https://icicidirect.com/research/equity/trending-news/hal-reports-strong-performance-in-q1fy23,2022-08-16,N
+order_book_cr,FY23,81784,Rs cr (as on 31 March 2023),https://dsij.in/appmindshare/rs-81784-crore-order-book-this-aerospace-defence-company-hits-52-week-high-on-outstanding-results-declares-stellar-dividend,2023-05,N
+order_book_cr,FY24,94129,Rs cr (opening order book for FY25),https://www.business-standard.com/companies/news/hal-records-rs-30-400-cr-revenue-in-fy25-despite-lca-alh-delivery-delays-125033100872_1.html,2025-03-31,N
+order_book_cr,FY25,189000,"Rs cr (approx, stated as Rs 1.89 lakh crore)",https://upstox.com/news/market-news/stocks/hindustan-aeronautics-bel-grse-defence-stocks-in-focus-on-wednesday-april-1-what-you-need-to-know/article-191493,2026-04-01,N
+order_book_cr,FY26,254538,Rs cr (as on 31 March 2026),https://quartr.com/events/hindustan-aeronautics-limited-hal-q4-25-26_FVSJVvpl,2026-05,N
+order_inflow_cr,FY26,97028,Rs cr,https://quartr.com/events/hindustan-aeronautics-limited-hal-q4-25-26_FVSJVvpl,2026-05,N
