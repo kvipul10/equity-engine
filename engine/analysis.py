@@ -61,6 +61,18 @@ class PeerSet:
         self.cache[key] = vals
         return vals
 
+    def table(self, archetype: str, asof_label: str, ticker: str) -> Dict[str, Dict[str, float]]:
+        """{peer ticker: {metric: latest value}} for same-archetype companies with data at the same as-of year
+        (any number of peers; used by the report, not by scoring)."""
+        out = {}
+        for t in self.members(archetype):
+            if t == ticker:
+                continue
+            r = self._latest(t, asof_label)
+            if r:
+                out[t] = {k: v for k, v in r.items() if v is not None}
+        return out
+
     def values(self, archetype: str, asof_label: str, ticker: str, own: Dict[str, pd.Series]) -> Dict[str, List[float]]:
         members = self.members(archetype)
         need = int(self.cfg.scoring["level"]["min_peers_for_percentile"])
@@ -91,7 +103,8 @@ def analyse(ticker: str, cfg: Config, asof: Optional[str] = None, beta: Optional
     manual = std.manual.reindex(std.annual.index) if std.manual is not None and not std.manual.empty else None
     flags = evaluate_rules(cfg.rules_for(std.archetype), metrics, std.annual, ctx.tokens, names, manual=manual, info=ctx.info)
     triggered = [f for f in flags if f["status"] == "triggered"]
-    peer_vals = (peers or PeerSet(cfg)).values(std.archetype, std.last_fy, ticker, metrics)
+    peers = peers or PeerSet(cfg)
+    peer_vals = peers.values(std.archetype, std.last_fy, ticker, metrics)
     results = {}
     for mid, s in metrics.items():
         results[mid] = score_metric(mid, s, std.last_fy, cfg, std.archetype, std.family, names, peer_vals.get(mid) if peer_vals else None)
@@ -112,5 +125,9 @@ def analyse(ticker: str, cfg: Config, asof: Optional[str] = None, beta: Optional
 
     drivers = run_trees(cfg, ctx.tokens, get, std.last_fy, set(std.years), sector=sector, explain=lambda n: ctx.info.get(n))
     from .report import build_report
+    from .report.findings import build_findings
 
-    return build_report(comp, results, pillars, overall, flags, drivers, cfg, names)
+    rep = build_report(comp, results, pillars, overall, flags, drivers, cfg, names,
+                       peer_table=peers.table(std.archetype, std.last_fy, ticker))
+    rep["findings"] = build_findings(rep, cfg)
+    return rep

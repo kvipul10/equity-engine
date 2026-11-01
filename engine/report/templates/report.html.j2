@@ -1,0 +1,194 @@
+{% import "_macros.j2" as M %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ company.ticker }} {{ asof.fy }}: equity diagnostic</title>
+<link rel="stylesheet" href="{{ katex_css }}" crossorigin="anonymous">
+<style>
+{{ css }}
+</style>
+</head>
+<body>
+<nav class="toc"><div>
+  <a href="#summary"><b>{{ company.ticker }}</b></a><a href="#findings">Findings</a><a href="#tree">MECE tree</a><a href="#flags">Red flags</a>
+  <a href="#drivers">Drivers</a><a href="#valuation">Valuation</a><a href="#missing">Missing data</a><a href="#bullbear">Bull / bear</a><a href="#notes">Notes</a>
+</div></nav>
+<main>
+
+<!-- 1. Header -->
+<section id="summary">
+  <div class="head">
+    <div>
+      <h1>{{ company.name }} <small>({{ company.ticker }})</small></h1>
+      <div class="meta">Archetype <b>{{ company.archetype }}</b> ({{ lineage }}; {{ company.family|replace('_', '-') }}) · As of <b>{{ asof.fy }}</b> ({{ asof.mode }}; data {{ asof.data_window }}{% if asof.manual_kpi_window %}; manual KPIs {{ asof.manual_kpi_window }}{% endif %}{% if asof.latest_quarter_used %}; latest quarter {{ asof.latest_quarter_used }}{% endif %})</div>
+      <div class="kv">
+        <span>Price <b>{{ market.price }}</b> ({{ asof.price_basis or 'n/a' }})</span><span>Market cap <b>{{ market.mcap }}</b></span>
+        <span>WACC <b>{{ coc.wacc }}</b></span><span>Ke <b>{{ coc.ke }}</b></span><span>beta <b>{{ coc.beta }}</b></span>
+        <span>rf <b>{{ coc.rf }}</b></span><span>ERP <b>{{ coc.erp }}</b></span><span>synthetic rating <b>{{ coc.rating }}</b></span>
+      </div>
+    </div>
+    <div class="score"><div class="muted">Overall</div><div class="num">{{ overall_score }}</div>{{ M.rag(overall.rag) }}
+      <div class="mid">coverage {{ '%.0f'|format((overall.coverage or 0) * 100) }}%{% if overall.capped_by_flags %}; capped by flags{% endif %}</div></div>
+  </div>
+  <p class="verdict">{{ verdict }}</p>
+  {% if how_to_read %}<details><summary>How to read this sector ({{ company.archetype|replace('_', ' ') }})</summary><p>{{ how_to_read }}</p></details>{% endif %}
+</section>
+
+<!-- 2. Strengths / Weaknesses / Watch -->
+<section id="findings">
+  <h2>Strengths, weaknesses, watch</h2>
+  <p class="intro">{{ text.findings }}</p>
+  <div class="cols3">
+    {% for title, key, items in lists %}
+    <div class="card {{ key }}"><h3>{{ title }}</h3>
+      {% if items %}<ol class="find">
+        {% for c in items %}<li>{{ c.text }}<span class="why">{{ c.kind }} {{ c.id }} · {{ pillar_name[c.pillar] }} · severity {{ '%.2f'|format(c.severity) }} × confidence {{ '%.2f'|format(c.confidence) }} = {{ '%.2f'|format(c.score) }}</span></li>{% endfor %}
+      </ol>{% else %}<p class="muted">{{ empty[key] }}</p>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- 3. MECE tree -->
+<section id="tree">
+  <h2>MECE diagnostic tree</h2>
+  <p class="intro">{{ text.tree }}</p>
+  <div class="tree">
+    <div class="root-node {{ 'pos' if root.positive else 'neg' }}"><b>Does the company create value?</b><br>{{ root.text }}<br>{{ root.spark }}</div>
+    <div class="groups">
+      {% for g in groups %}
+      <div class="group"><div class="gname">{{ g.name }}</div><div class="pnodes">
+        {% for p in g.pillars %}
+        <button type="button" class="pnode {{ p.rag|rag }}" data-target="pillar-{{ p.id }}" aria-expanded="false" aria-controls="pillar-{{ p.id }}">
+          <span class="pname">{{ p.name }}</span><span class="pscore">{{ p.score }}</span>
+          <span class="psub">{{ M.rag(p.rag) }} weight {{ '%.0f'|format(p.weight or 0) }} · {{ p.n_scored }}/{{ p.n_metrics }} scored{% if p.flags %} · flags {{ p.flags|join(', ') }}{% endif %}</span>
+        </button>
+        {% endfor %}
+      </div></div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="controls"><button type="button" id="expand-all">Expand all pillars</button></div>
+  {% for p in pillars %}
+  <div class="pillar-panel" id="pillar-{{ p.id }}" hidden>
+    <h3>{{ p.name }} {{ M.rag(p.rag) }} <small>{{ p.score }}/100</small></h3>
+    <p class="muted">{{ p.summary }}</p>
+    <table class="metrics">
+      <thead><tr><th>Metric</th><th>{{ years[0] if years else '' }}–{{ years[-1] if years else '' }}</th><th>Latest</th><th>Level vs band or peers</th><th>Trend / stability</th></tr></thead>
+      <tbody>
+      {% for r in p.rows %}
+        <tr class="main {{ 'comp' if r.role == 'component' else '' }}">
+          <td class="name"><b>{{ r.name }}</b><br><span class="mid">{{ r.id }}{% if r.role == 'component' %} · component (not scored){% endif %}{% if r.origin != 'engine' %} · {{ r.origin }}{% endif %}</span></td>
+          <td>{{ r.spark }}</td>
+          <td class="num"><b>{{ r.value }}</b><br>{{ M.rag(r.rag) }}</td>
+          <td>{{ r.level }}{% if r.band_strip %}<br>{{ r.band_strip }}{% endif %}{% if r.band_source %}<br><span class="mid">{% if r.band_url %}<a href="{{ r.band_url }}">{{ r.band_source }}</a>{% else %}{{ r.band_source }}{% endif %}</span>{% endif %}{% if r.peers %}<br><span class="mid">peers: {{ r.peers }}</span>{% endif %}</td>
+          <td>{{ r.trend or '—' }}{% if r.stability %}<br><span class="mid">{{ r.stability }}</span>{% endif %}</td>
+        </tr>
+        <tr class="detail"><td colspan="5">{{ M.eq(r.equation, r.latex) }} — {{ r.meaning }}{% if r.note %} <i>{{ r.note }}</i>{% endif %}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endfor %}
+  {% if switched_off %}
+  <details><summary>{{ switched_off|length }} metric{{ 's' if switched_off|length != 1 else '' }} switched off by the sector module</summary>
+    <table><thead><tr><th>Metric</th><th>Why</th></tr></thead><tbody>
+    {% for s in switched_off %}<tr><td>{{ s.name }} <span class="mid">{{ s.id }}</span></td><td>{{ s.reason }}</td></tr>{% endfor %}
+    </tbody></table>
+  </details>
+  {% endif %}
+</section>
+
+<!-- 4. Red flags -->
+<section id="flags">
+  <h2>Red flags fired</h2>
+  <p class="intro">{{ text.flags }} High {{ flags.counts.high or 0 }} · medium {{ flags.counts.medium or 0 }} · low {{ flags.counts.low or 0 }} · clear {{ flags.n_clear }} · not evaluable {{ flags.not_evaluable|length }}.</p>
+  {% for f in flags.triggered %}
+  <div class="flag {{ f.severity }}">
+    <b>{{ f.id }} {{ f.name }}</b> <span class="sev {{ f.severity }}">{{ f.severity }}</span> <span class="mid">{{ f.pillar }} · {{ f.origin }}</span>
+    <p>{{ f.text }}</p>
+    <p class="mid">Rule: <span class="rule">{{ f.condition }}</span>{% if f.evidence %}<br>Evidence: <span class="mono">{{ f.evidence }}</span>{% endif %}</p>
+  </div>
+  {% else %}<p class="muted">{{ empty.flags }}</p>{% endfor %}
+  {% if flags.not_evaluable %}
+  <details><summary>{{ flags.not_evaluable|length }} rule{{ 's' if flags.not_evaluable|length != 1 else '' }} could not be evaluated</summary>
+    <table><thead><tr><th>Rule</th><th>Missing input</th></tr></thead><tbody>
+    {% for f in flags.not_evaluable %}<tr><td>{{ f.id }} {{ f.name }}</td><td>{{ f.missing }}</td></tr>{% endfor %}
+    </tbody></table>
+  </details>
+  {% endif %}
+</section>
+
+<!-- 5. Drivers -->
+<section id="drivers">
+  <h2>Driver decomposition</h2>
+  <p class="intro">{{ text.drivers }}</p>
+  {% if drivers.roe %}{{ M.tree_card(drivers.roe) }}{% endif %}
+  {% if drivers.roic %}{{ M.tree_card(drivers.roic) }}{% elif drivers.roic_na %}<p class="muted">{{ drivers.roic_na }}</p>{% endif %}
+  {% if drivers.others %}
+  <h3>Other trees</h3>
+  {% for t in drivers.others %}{{ M.tree_card(t) }}{% endfor %}
+  {% endif %}
+</section>
+
+<!-- 6. Valuation -->
+<section id="valuation">
+  <h2>Valuation</h2>
+  <p class="intro">{{ text.valuation }} Peers: {{ valuation.peers }}. Industry: {{ valuation.industries or 'n/a' }}{% if valuation.ref_asof %} (Damodaran, {{ valuation.ref_asof }}){% endif %}.</p>
+  {% if valuation.ev_note %}<p class="muted">{{ valuation.ev_note }}</p>{% endif %}
+  <table>
+    <thead><tr><th>Multiple</th><th>Current</th><th>10y history (FY-end)</th><th>Min / median / max</th><th>Percentile vs own history</th><th>Same-archetype peers</th><th>Industry</th></tr></thead>
+    <tbody>
+    {% for v in valuation.rows %}
+      <tr><td><b>{{ v.name }}</b></td><td class="num"><b>{{ v.value }}</b> {{ M.rag(v.rag) }}</td><td>{{ v.spark }}</td><td class="num">{{ v.min }} / {{ v.median }} / {{ v.max }}</td><td class="num">{{ v.percentile }}</td><td>{{ v.peers }}</td><td class="num">{{ v.industry }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% if valuation.growth_svg %}<h3>Implied vs delivered growth</h3>{{ valuation.growth_svg }}{% endif %}
+  {% if valuation.checks %}
+  <h3>Other checks</h3>
+  <table><tbody>{% for c in valuation.checks %}<tr><td>{{ c.name }}</td><td class="num"><b>{{ c.value }}</b> {{ M.rag(c.rag) }}</td><td class="mid">{{ c.equation }}</td></tr>{% endfor %}</tbody></table>
+  {% endif %}
+</section>
+
+<!-- 7. Missing data -->
+<section id="missing">
+  <h2>Missing data and limits</h2>
+  <p class="intro">{{ text.missing }}</p>
+  {% if missing.all_required_present %}<p>{{ missing.all_present_text }}</p>{% endif %}
+  {% for k in missing.kpis %}
+  <div class="missing-kpi"><b>{{ k.kpi }}</b> {{ 'required' if k.required else 'optional' }}
+    <ul>{% for line in k.lines %}<li>{{ line }}</li>{% endfor %}</ul></div>
+  {% endfor %}
+  {% if missing.unverified and missing.unverified.text %}<p>{{ missing.unverified.text }}</p>{% endif %}
+  {% if missing.driver_notes %}<p>{% for n in missing.driver_notes %}<span class="note">{{ n }}</span> {% endfor %}</p>{% endif %}
+  {% if missing.not_scored %}<details><summary>Metrics computed but not scored</summary><ul>{% for n in missing.not_scored %}<li>{{ n }}</li>{% endfor %}</ul></details>{% endif %}
+  {% if missing.estimates %}<details><summary>Estimated or proxy inputs ({{ missing.estimates|length }})</summary><ul>{% for n in missing.estimates %}<li>{{ n }}</li>{% endfor %}</ul></details>{% endif %}
+</section>
+
+<!-- 8. Bull and bear -->
+<section id="bullbear">
+  <h2>Bull and bear case starter</h2>
+  <p class="intro">{{ text.bullbear }}</p>
+  <div class="cols2">
+    <div class="card bull"><h3>Bull: financial evidence</h3>{% if bull %}<ul class="bb">{% for b in bull %}<li>{{ b.text }}</li>{% endfor %}</ul>{% else %}<p class="muted">{{ empty.bull }}</p>{% endif %}</div>
+    <div class="card bear"><h3>Bear: financial evidence</h3>{% if bear %}<ul class="bb">{% for b in bear %}<li>{{ b.text }}</li>{% endfor %}</ul>{% else %}<p class="muted">{{ empty.bear }}</p>{% endif %}</div>
+  </div>
+</section>
+
+<section id="notes">
+  <h2>Data notes and sources</h2>
+  <details><summary>{{ notes|length }} data notes from standardisation</summary><ul>{% for n in notes %}<li><span class="mid">{{ n.category }}{% if n.fy %} {{ n.fy }}{% endif %}</span> {{ n.text }}</li>{% endfor %}</ul></details>
+  <details><summary>Cost-of-capital sources</summary><ul>{% for s in sources %}<li><b>{{ s.key }}</b>: {{ s.text }}{% if s.url %} <a href="{{ s.url }}">{{ s.url }}</a>{% endif %}{% if s.as_of %} ({{ s.as_of }}){% endif %}</li>{% endfor %}</ul></details>
+</section>
+
+<footer>{{ engine.name }} {{ engine.version }} · generated {{ engine.generated_on }} · {{ engine.note }} All text from engine/report/templates/.</footer>
+</main>
+<script>
+{{ js }}
+</script>
+<script defer src="{{ katex_js }}" crossorigin="anonymous" onload="window.__renderTex &amp;&amp; window.__renderTex()"></script>
+</body>
+</html>

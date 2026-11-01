@@ -1,0 +1,89 @@
+# Every sentence the report prints is one of these Jinja2 templates (rendered with StrictUndefined).
+# Numbers arrive pre-formatted by engine/report/formats.py, so the wording here is the only free text in the report.
+
+verdict: >-
+  {{ company }} {{ ep_verdict }}: {{ ret_name }} {{ ret }} vs {{ hurdle_name }} {{ hurdle }} in {{ fy }}.
+  Overall {{ rag }} ({{ score }}/100){% if best %}; strongest pillar {{ best }}{% endif %}{% if worst %}, weakest {{ worst }}{% endif %}{% if high %}; {{ high }} high-severity flag{{ 's' if high != 1 else '' }}{% endif %}.
+
+ep_verdict:
+  creates: "creates value"
+  destroys: "destroys value"
+  unknown: "has no economic-profit verdict"
+
+rag_word:
+  green: GREEN
+  amber: AMBER
+  red: RED
+  none: "n/a"
+
+finding:
+  metric: "{{ name }}: {{ value }}{% if context %} ({{ context }}){% endif %}{% if trend %}; {{ trend }}{% endif %}{% if chain %}; {{ chain }}{% endif %}"
+  flag: "{{ id }} {{ name }}: {{ text }}"
+
+level_context:
+  band: "{{ rag }} vs band: red {{ red_op }} {{ red }}, green {{ green_op }} {{ green }}{% if indicative %}, indicative{% endif %}"
+  percentile: "{{ rag }}, {{ pct }} percentile of {{ n }} same-archetype companies"
+  none: "{{ rag }} on trend and stability only (no band or peer set)"
+
+trend: "{{ label }} {{ slope }}/yr over {{ window }}"
+
+chain:
+  head: "{{ delta }} over {{ window }}"
+  share: "{{ share }} from {{ child }}"
+  because: "{{ child }} {{ child_move }} because {{ leaf }} {{ leaf_move }} {{ a }} → {{ b }}"
+  leaf_only: "{{ child }} {{ child_move }} {{ a }} → {{ b }}"
+  as_leaf: "drove {{ share }} of the {{ root }} change over {{ window }} ({{ root_delta }})"
+
+move:
+  up: rose
+  down: fell
+  flat: "was flat"
+
+bull:
+  strength: "{{ text }} [{{ id }}]"
+  ep: "Creates value: {{ ret_name }} {{ ret }} vs {{ hurdle_name }} {{ hurdle }}; economic profit Rs {{ ep }} cr in {{ fy }}, positive in {{ pos }} of {{ n }} years [economic_profit]"
+  cheap_history: "{{ name }} {{ value }} sits at the {{ pct }} percentile of its own 10-year history [{{ id }}]"
+  cheap_peers: "{{ name }} {{ value }} vs same-archetype peers {{ peers }} [{{ id }}]"
+  cheap_industry: "{{ name }} {{ value }} vs Damodaran India industry {{ industry }} ({{ industries }}) [{{ id }}]"
+  growth_gap: "Market implies {{ implied }} FCF growth for 10 years vs {{ delivered }} delivered (gap {{ gap }}) [implied_minus_delivered_growth]"
+  driver: "Largest positive driver of {{ root }} over {{ window }}: {{ text }} [{{ tree }}]"
+
+bear:
+  weakness: "{{ text }} [{{ id }}]"
+  ep: "Destroys value: {{ ret_name }} {{ ret }} vs {{ hurdle_name }} {{ hurdle }}; economic profit Rs {{ ep }} cr in {{ fy }}, positive in {{ pos }} of {{ n }} years [economic_profit]"
+  rich_history: "{{ name }} {{ value }} sits at the {{ pct }} percentile of its own 10-year history [{{ id }}]"
+  rich_peers: "{{ name }} {{ value }} vs same-archetype peers {{ peers }} [{{ id }}]"
+  rich_industry: "{{ name }} {{ value }} vs Damodaran India industry {{ industry }} ({{ industries }}) [{{ id }}]"
+  growth_gap: "Market implies {{ implied }} FCF growth for 10 years vs {{ delivered }} delivered (gap {{ gap }}) [implied_minus_delivered_growth]"
+  driver: "Largest negative driver of {{ root }} over {{ window }}: {{ text }} [{{ tree }}]"
+  missing: "{{ n }} required KPI{{ 's' if n != 1 else '' }} missing at {{ fy }} ({{ kpis }}): the diagnosis of {{ pillars }} is incomplete [missing data]"
+
+missing:
+  kpi: "{{ kpi }} ({{ description }}) is missing at {{ fy }}{% if years %}; present for {{ years }}{% endif %}."
+  metrics: "{{ n }} metric{{ 's' if n != 1 else '' }} cannot be computed: {{ names }}."
+  flags: "Red-flag rules that cannot be checked: {{ ids }}."
+  trees: "Driver trees affected: {{ trees }}."
+  none: "No direct effect on the computed metrics (it is an input for context only)."
+  unverified: "{{ n }} of {{ total }} manual KPI values ({{ share }}) are verified = N: taken from the cited page, not checked in the primary document."
+  not_scored: "{{ n }} metric{{ 's' if n != 1 else '' }} computed but not scored: {{ reason }}."
+  all_present: "All required KPIs for this archetype are present at {{ fy }}."
+
+empty:
+  strengths: "No metric scores green with enough confidence."
+  weaknesses: "No metric scores red and no medium or high flag fired."
+  watch: "Nothing on the watch list."
+  flags: "No red-flag rule fired."
+  drivers: "Not computable: {{ reason }}."
+  peers: "No same-archetype company in data/universe.csv has data at {{ fy }}."
+  bull: "No financial evidence for a bull case under the current rules."
+  bear: "No financial evidence for a bear case under the current rules."
+  roic_bank: "ROIC is not meaningful for {{ family }} companies (deposits and borrowings are raw material, not financing), so no ROIC tree is shown."
+
+section_intro:
+  findings: "Ranked by severity x confidence (config/scoring.yaml: report). Each line: finding, number, trend, and the driver chain behind it."
+  tree: "Value creation is economic profit = (ROIC − WACC) × invested capital. Click a pillar to open its metrics."
+  flags: "Rules from config/flags.yaml and the sector module. Each shows the rule, the evidence and the explanation."
+  drivers: "Exact decompositions of the change in the root metric (contributions sum to the change; residual shown)."
+  valuation: "Multiples vs the company's own 10-year history, same-archetype peers at the same as-of year, and Damodaran's India industry aggregate."
+  missing: "Inputs the sector module needs but the data does not have, and what that blocks."
+  bullbear: "Financial evidence only, as a starting point for a pitch. Strategy and management judgement stay with the analyst."

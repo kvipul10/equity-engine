@@ -108,3 +108,20 @@ drivers:
   windows: [1, 3, 5]
   top_n: 5
   exactness_tolerance: 1.0e-6
+
+# Report ranking (engine/report/findings.py). score = severity x confidence; lists are capped and de-duplicated.
+report:
+  severity:
+    flag: {high: 1.0, medium: 0.6, low: 0.3}
+    role: {scored: 1.0, root: 1.0, component: 0.67}
+    pillar_weight_floor: 0.25          # pillar weight / max pillar weight, floored so zero-weight pillars can still appear
+  confidence:
+    years_full: 5                      # data coverage = min(1, years with data / 5)
+    point_metric_coverage: 0.6         # metrics without an annual series (latest quarter, point-in-time)
+    unverified_kpi: 0.8                # multiplier when an unverified manual KPI feeds the metric or flag
+    source: {percentile: 1.0, external: 1.0, derived: 0.9, indicative: 0.6, rule_of_thumb: 0.6, none: 0.5}
+  lists: {max_items: 6, max_per_pillar: 2, watch_fast_trend_score: 25}
+  bullbear: {max_items: 8, from_lists: 4, cheap_percentile: 0.3, rich_percentile: 0.7, relative_gap: 0.2}
+  driver_window_order: [3y, 5y, 1y]
+  driver_tree_order: [bank_dupont, fin_roe, roe_dupont, roic_tree, eps_tree]
+  estimate_note_categories: [exceptional, capex, lease, minority, stale, reclassification]

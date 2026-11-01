@@ -1,0 +1,39 @@
+{% import "_macros.j2" as M %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compare {{ cols|map(attribute='ticker')|join(' vs ') }}</title>
+<style>
+{{ css }}
+</style>
+</head>
+<body>
+<main>
+<h1>Pillar scores side by side</h1>
+<p class="muted">{{ cols|map(attribute='ticker')|join(', ') }} · as of {{ fys }} · each company at its own as-of year unless --asof was given. Scores are 0-100 per pillar ({{ archetypes }}).</p>
+{% if mixed %}<p><span class="note">Archetypes differ ({{ archetypes }}): pillar weights, bands and switched-off metrics differ by sector module, so compare scores within a pillar with care.</span></p>{% endif %}
+
+<table>
+  <thead><tr><th></th>{% for c in cols %}<th>{{ c.ticker }}<br><span class="mid">{{ c.archetype }} · {{ c.fy }}</span></th>{% endfor %}</tr></thead>
+  <tbody>
+    <tr><td><b>Overall</b></td>{% for c in cols %}<td class="num"><b>{{ c.overall }}</b> {{ M.rag(c.overall_rag) }}</td>{% endfor %}</tr>
+    {% for name in pillar_names %}{% set i = loop.index0 %}
+    <tr><td>{{ name }}</td>{% for c in cols %}{% set p = c.pillars[i] %}<td class="num"><b>{{ p.score }}</b> {{ M.rag(p.rag) }}<br><span class="mid">weight {{ '%.0f'|format(p.weight or 0) }}{% if p.alias %} · shown as "{{ p.alias }}"{% endif %}</span>{% if p.best %}<br><span class="mid">strongest: {{ p.best }}{% if p.worst %}<br>weakest: {{ p.worst }}{% endif %}</span>{% endif %}</td>{% endfor %}</tr>
+    {% endfor %}
+    <tr><td>Economic profit (Rs cr)</td>{% for c in cols %}<td class="num">{{ c.ep }}</td>{% endfor %}</tr>
+    <tr><td>Flags (high / medium / low)</td>{% for c in cols %}<td class="num">{{ c.flags.high or 0 }} / {{ c.flags.medium or 0 }} / {{ c.flags.low or 0 }}</td>{% endfor %}</tr>
+  </tbody>
+</table>
+
+<h2>Scores</h2>
+<p class="legend">{% for c in cols %}<span><i class="s{{ loop.index0 }}" style="background: var(--s{{ loop.index0 }})"></i>{{ c.ticker }}</span>{% endfor %}</p>
+{{ svg }}
+
+<h2>Verdicts</h2>
+<ul>{% for c in cols %}<li><b>{{ c.ticker }}</b>: {{ c.verdict }}</li>{% endfor %}</ul>
+<footer>{{ engine.name }} {{ engine.version }} · generated {{ engine.generated_on }} · {{ engine.note }} All text from engine/report/templates/.</footer>
+</main>
+</body>
+</html>
