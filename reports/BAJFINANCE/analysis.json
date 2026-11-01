@@ -471,6 +471,63 @@
               "text": "adjusted_shares_cr (+0.830) -> -0.04 (-1% of the change)"
             }
           ],
+          "nodes": {
+            "eps_core": {
+              "name": "eps_core",
+              "t0": 26.773873,
+              "t1": 30.562298,
+              "change": 3.788425,
+              "contribution": 3.788425,
+              "share_of_root": 1.0,
+              "path": "eps_core",
+              "leaf": false,
+              "unit": "num"
+            },
+            "revenue_per_share": {
+              "name": "revenue_per_share",
+              "t0": 110.765086,
+              "t1": 131.755918,
+              "change": 20.990832,
+              "contribution": 4.967796,
+              "share_of_root": 1.311309,
+              "path": "eps_core > revenue_per_share",
+              "leaf": false,
+              "unit": "num"
+            },
+            "revenue": {
+              "name": "revenue",
+              "t0": 68831.64,
+              "t1": 81985.12,
+              "change": 13153.48,
+              "contribution": 5.006006,
+              "share_of_root": 1.321395,
+              "path": "eps_core > revenue_per_share > revenue",
+              "leaf": true,
+              "unit": "inr_cr"
+            },
+            "adjusted_shares_cr": {
+              "name": "adjusted_shares_cr",
+              "t0": 621.42,
+              "t1": 622.25,
+              "change": 0.83,
+              "contribution": -0.038209,
+              "share_of_root": -0.010086,
+              "path": "eps_core > revenue_per_share > adjusted_shares_cr",
+              "leaf": true,
+              "unit": "num"
+            },
+            "pat_margin": {
+              "name": "PAT margin",
+              "t0": 0.241718,
+              "t1": 0.231961,
+              "change": -0.009756,
+              "contribution": -1.179371,
+              "share_of_root": -0.311309,
+              "path": "eps_core > pat_margin",
+              "leaf": true,
+              "unit": "pct"
+            }
+          },
           "text": "eps_core moved from 26.77 to 30.56 (FY25->FY26). Largest drivers: revenue (+13,153 cr) -> 5.01 (132% of the change); PAT margin (-1.0pp) -> -1.18 (-31% of the change); adjusted_shares_cr (+0.830) -> -0.04 (-1% of the change)."
         },
         "3y": {
@@ -522,6 +579,63 @@
               "text": "adjusted_shares_cr (+16.830) -> -0.67 (-6% of the change)"
             }
           ],
+          "nodes": {
+            "eps_core": {
+              "name": "eps_core",
+              "t0": 19.00778,
+              "t1": 30.562298,
+              "change": 11.554518,
+              "contribution": 11.554518,
+              "share_of_root": 1.0,
+              "path": "eps_core",
+              "leaf": false,
+              "unit": "num"
+            },
+            "revenue_per_share": {
+              "name": "revenue_per_share",
+              "t0": 68.400796,
+              "t1": 131.755918,
+              "change": 63.355122,
+              "contribution": 15.949583,
+              "share_of_root": 1.380376,
+              "path": "eps_core > revenue_per_share",
+              "leaf": false,
+              "unit": "num"
+            },
+            "revenue": {
+              "name": "revenue",
+              "t0": 41411.21,
+              "t1": 81985.12,
+              "change": 40573.91,
+              "contribution": 16.616685,
+              "share_of_root": 1.438111,
+              "path": "eps_core > revenue_per_share > revenue",
+              "leaf": true,
+              "unit": "inr_cr"
+            },
+            "adjusted_shares_cr": {
+              "name": "adjusted_shares_cr",
+              "t0": 605.42,
+              "t1": 622.25,
+              "change": 16.83,
+              "contribution": -0.667102,
+              "share_of_root": -0.057735,
+              "path": "eps_core > revenue_per_share > adjusted_shares_cr",
+              "leaf": true,
+              "unit": "num"
+            },
+            "pat_margin": {
+              "name": "PAT margin",
+              "t0": 0.277888,
+              "t1": 0.231961,
+              "change": -0.045927,
+              "contribution": -4.395064,
+              "share_of_root": -0.380376,
+              "path": "eps_core > pat_margin",
+              "leaf": true,
+              "unit": "pct"
+            }
+          },
           "text": "eps_core moved from 19.01 to 30.56 (FY23->FY26). Largest drivers: revenue (+40,574 cr) -> 16.62 (144% of the change); PAT margin (-4.6pp) -> -4.40 (-38% of the change); adjusted_shares_cr (+16.830) -> -0.67 (-6% of the change)."
         },
         "5y": {
@@ -573,6 +687,63 @@
               "text": "adjusted_shares_cr (+19.670) -> -0.52 (-2% of the change)"
             }
           ],
+          "nodes": {
+            "eps_core": {
+              "name": "eps_core",
+              "t0": 7.334827,
+              "t1": 30.562298,
+              "change": 23.227471,
+              "contribution": 23.227471,
+              "share_of_root": 1.0,
+              "path": "eps_core",
+              "leaf": false,
+              "unit": "num"
+            },
+            "revenue_per_share": {
+              "name": "revenue_per_share",
+              "t0": 44.264446,
+              "t1": 131.755918,
+              "change": 87.491472,
+              "contribution": 17.75294,
+              "share_of_root": 0.764308,
+              "path": "eps_core > revenue_per_share",
+              "leaf": false,
+              "unit": "num"
+            },
+            "revenue": {
+              "name": "revenue",
+              "t0": 26672.87,
+              "t1": 81985.12,
+              "change": 55312.25,
+              "contribution": 18.275737,
+              "share_of_root": 0.786816,
+              "path": "eps_core > revenue_per_share > revenue",
+              "leaf": true,
+              "unit": "inr_cr"
+            },
+            "adjusted_shares_cr": {
+              "name": "adjusted_shares_cr",
+              "t0": 602.58,
+              "t1": 622.25,
+              "change": 19.67,
+              "contribution": -0.522797,
+              "share_of_root": -0.022508,
+              "path": "eps_core > revenue_per_share > adjusted_shares_cr",
+              "leaf": true,
+              "unit": "num"
+            },
+            "pat_margin": {
+              "name": "PAT margin",
+              "t0": 0.165705,
+              "t1": 0.231961,
+              "change": 0.066257,
+              "contribution": 5.474531,
+              "share_of_root": 0.235692,
+              "path": "eps_core > pat_margin",
+              "leaf": true,
+              "unit": "pct"
+            }
+          },
           "text": "eps_core moved from 7.33 to 30.56 (FY21->FY26). Largest drivers: revenue (+55,312 cr) -> 18.28 (79% of the change); PAT margin (+6.6pp) -> 5.47 (24% of the change); adjusted_shares_cr (+19.670) -> -0.52 (-2% of the change)."
         }
       },
@@ -657,6 +828,140 @@
               "text": "Minority & associates / assets (-0.0pp) -> -0.1pp (12% of the change)"
             }
           ],
+          "nodes": {
+            "roe": {
+              "name": "Return on equity",
+              "t0": 0.191914,
+              "t1": 0.180523,
+              "change": -0.011391,
+              "contribution": -0.011391,
+              "share_of_root": 1.0,
+              "path": "roe",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "roa": {
+              "name": "Return on assets",
+              "t0": 0.039526,
+              "t1": 0.037068,
+              "change": -0.002458,
+              "contribution": -0.011952,
+              "share_of_root": 1.049237,
+              "path": "roe > roa",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "yield_on_assets": {
+              "name": "Revenue / average assets",
+              "t0": 0.163521,
+              "t1": 0.159803,
+              "change": -0.003718,
+              "contribution": -0.018081,
+              "share_of_root": 1.587354,
+              "path": "roe > roa > yield_on_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "interest_to_assets": {
+              "name": "Interest expended / assets",
+              "t0": 0.059371,
+              "t1": 0.056329,
+              "change": -0.003042,
+              "contribution": 0.014792,
+              "share_of_root": -1.298574,
+              "path": "roe > roa > interest_to_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "other_income_to_assets": {
+              "name": "Other income / assets",
+              "t0": -6e-06,
+              "t1": -0.000512,
+              "change": -0.000507,
+              "contribution": -0.002463,
+              "share_of_root": 0.216221,
+              "path": "roe > roa > other_income_to_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "opex_to_assets": {
+              "name": "Operating cost / average assets",
+              "t0": 0.049598,
+              "t1": 0.050674,
+              "change": 0.001076,
+              "contribution": -0.005233,
+              "share_of_root": 0.459417,
+              "path": "roe > roa > opex_to_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "dep_to_assets": {
+              "name": "Depreciation / assets",
+              "t0": 0.002093,
+              "t1": 0.001967,
+              "change": -0.000126,
+              "contribution": 0.000614,
+              "share_of_root": -0.053903,
+              "path": "roe > roa > dep_to_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "tax_to_assets": {
+              "name": "Tax / assets",
+              "t0": 0.012591,
+              "t1": 0.012639,
+              "change": 4.8e-05,
+              "contribution": -0.000231,
+              "share_of_root": 0.020307,
+              "path": "roe > roa > tax_to_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "minority_to_assets": {
+              "name": "Minority & associates / assets",
+              "t0": -0.000337,
+              "t1": -0.000614,
+              "change": -0.000277,
+              "contribution": -0.001349,
+              "share_of_root": 0.118416,
+              "path": "roe > roa > minority_to_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "equity_multiplier": {
+              "name": "Equity multiplier",
+              "t0": 4.855396,
+              "t1": 4.870046,
+              "change": 0.01465,
+              "contribution": 0.000561,
+              "share_of_root": -0.049237,
+              "path": "roe > equity_multiplier",
+              "leaf": false,
+              "unit": "x"
+            },
+            "debt_to_equity_avg": {
+              "name": "Borrowings / equity (average)",
+              "t0": 3.775311,
+              "t1": 3.779743,
+              "change": 0.004432,
+              "contribution": 0.00017,
+              "share_of_root": -0.014894,
+              "path": "roe > equity_multiplier > debt_to_equity_avg",
+              "leaf": true,
+              "unit": "x"
+            },
+            "other_liab_to_equity_avg": {
+              "name": "Other liabilities / equity (average)",
+              "t0": 0.080085,
+              "t1": 0.090303,
+              "change": 0.010219,
+              "contribution": 0.000391,
+              "share_of_root": -0.034343,
+              "path": "roe > equity_multiplier > other_liab_to_equity_avg",
+              "leaf": true,
+              "unit": "x"
+            }
+          },
           "text": "Return on equity moved from 19.2% to 18.1% (FY25->FY26). Largest drivers: Revenue / average assets (-0.4pp) -> -1.8pp (159% of the change); Interest expended / assets (-0.3pp) -> +1.5pp (-130% of the change); Operating cost / average assets (+0.1pp) -> -0.5pp (46% of the change)."
         },
         "3y": {
@@ -734,6 +1039,140 @@
               "text": "Borrowings / equity (average) (-0.11x) -> -0.5pp (9% of the change)"
             }
           ],
+          "nodes": {
+            "roe": {
+              "name": "Return on equity",
+              "t0": 0.234648,
+              "t1": 0.180523,
+              "change": -0.054125,
+              "contribution": -0.054125,
+              "share_of_root": 1.0,
+              "path": "roe",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "roa": {
+              "name": "Return on assets",
+              "t0": 0.047189,
+              "t1": 0.037068,
+              "change": -0.010121,
+              "contribution": -0.049825,
+              "share_of_root": 0.920562,
+              "path": "roe > roa",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "yield_on_assets": {
+              "name": "Revenue / average assets",
+              "t0": 0.169811,
+              "t1": 0.159803,
+              "change": -0.010009,
+              "contribution": -0.049275,
+              "share_of_root": 0.910392,
+              "path": "roe > roa > yield_on_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "interest_to_assets": {
+              "name": "Interest expended / assets",
+              "t0": 0.05208,
+              "t1": 0.056329,
+              "change": 0.004248,
+              "contribution": -0.020916,
+              "share_of_root": 0.386433,
+              "path": "roe > roa > interest_to_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "other_income_to_assets": {
+              "name": "Other income / assets",
+              "t0": -1.9e-05,
+              "t1": -0.000512,
+              "change": -0.000493,
+              "contribution": -0.002428,
+              "share_of_root": 0.04486,
+              "path": "roe > roa > other_income_to_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "opex_to_assets": {
+              "name": "Operating cost / average assets",
+              "t0": 0.052048,
+              "t1": 0.050674,
+              "change": -0.001374,
+              "contribution": 0.006764,
+              "share_of_root": -0.124961,
+              "path": "roe > roa > opex_to_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "dep_to_assets": {
+              "name": "Depreciation / assets",
+              "t0": 0.00199,
+              "t1": 0.001967,
+              "change": -2.4e-05,
+              "contribution": 0.000117,
+              "share_of_root": -0.002154,
+              "path": "roe > roa > dep_to_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "tax_to_assets": {
+              "name": "Tax / assets",
+              "t0": 0.016485,
+              "t1": 0.012639,
+              "change": -0.003846,
+              "contribution": 0.018936,
+              "share_of_root": -0.34985,
+              "path": "roe > roa > tax_to_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "minority_to_assets": {
+              "name": "Minority & associates / assets",
+              "t0": 0.0,
+              "t1": -0.000614,
+              "change": -0.000614,
+              "contribution": -0.003022,
+              "share_of_root": 0.055843,
+              "path": "roe > roa > minority_to_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "equity_multiplier": {
+              "name": "Equity multiplier",
+              "t0": 4.972558,
+              "t1": 4.870046,
+              "change": -0.102512,
+              "contribution": -0.0043,
+              "share_of_root": 0.079438,
+              "path": "roe > equity_multiplier",
+              "leaf": false,
+              "unit": "x"
+            },
+            "debt_to_equity_avg": {
+              "name": "Borrowings / equity (average)",
+              "t0": 3.893803,
+              "t1": 3.779743,
+              "change": -0.114061,
+              "contribution": -0.004784,
+              "share_of_root": 0.088388,
+              "path": "roe > equity_multiplier > debt_to_equity_avg",
+              "leaf": true,
+              "unit": "x"
+            },
+            "other_liab_to_equity_avg": {
+              "name": "Other liabilities / equity (average)",
+              "t0": 0.078754,
+              "t1": 0.090303,
+              "change": 0.011549,
+              "contribution": 0.000484,
+              "share_of_root": -0.00895,
+              "path": "roe > equity_multiplier > other_liab_to_equity_avg",
+              "leaf": true,
+              "unit": "x"
+            }
+          },
           "text": "Return on equity moved from 23.5% to 18.1% (FY23->FY26). Largest drivers: Revenue / average assets (-1.0pp) -> -4.9pp (91% of the change); Interest expended / assets (+0.4pp) -> -2.1pp (39% of the change); Tax / assets (-0.4pp) -> +1.9pp (-35% of the change)."
         },
         "5y": {
@@ -811,6 +1250,140 @@
               "text": "Other income / assets (-0.1pp) -> -0.3pp (-5% of the change)"
             }
           ],
+          "nodes": {
+            "roe": {
+              "name": "Return on equity",
+              "t0": 0.127656,
+              "t1": 0.180523,
+              "change": 0.052868,
+              "contribution": 0.052868,
+              "share_of_root": 1.0,
+              "path": "roe",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "roa": {
+              "name": "Return on assets",
+              "t0": 0.026319,
+              "t1": 0.037068,
+              "change": 0.010749,
+              "contribution": 0.052247,
+              "share_of_root": 0.988254,
+              "path": "roe > roa",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "yield_on_assets": {
+              "name": "Revenue / average assets",
+              "t0": 0.158833,
+              "t1": 0.159803,
+              "change": 0.00097,
+              "contribution": 0.004716,
+              "share_of_root": 0.089199,
+              "path": "roe > roa > yield_on_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "interest_to_assets": {
+              "name": "Interest expended / assets",
+              "t0": 0.056686,
+              "t1": 0.056329,
+              "change": -0.000357,
+              "contribution": 0.001737,
+              "share_of_root": 0.032864,
+              "path": "roe > roa > interest_to_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "other_income_to_assets": {
+              "name": "Other income / assets",
+              "t0": 2e-05,
+              "t1": -0.000512,
+              "change": -0.000532,
+              "contribution": -0.002585,
+              "share_of_root": -0.048905,
+              "path": "roe > roa > other_income_to_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "opex_to_assets": {
+              "name": "Operating cost / average assets",
+              "t0": 0.064546,
+              "t1": 0.050674,
+              "change": -0.013872,
+              "contribution": 0.067428,
+              "share_of_root": 1.275414,
+              "path": "roe > roa > opex_to_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "dep_to_assets": {
+              "name": "Depreciation / assets",
+              "t0": 0.001937,
+              "t1": 0.001967,
+              "change": 3e-05,
+              "contribution": -0.000145,
+              "share_of_root": -0.002734,
+              "path": "roe > roa > dep_to_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "tax_to_assets": {
+              "name": "Tax / assets",
+              "t0": 0.009364,
+              "t1": 0.012639,
+              "change": 0.003275,
+              "contribution": -0.015921,
+              "share_of_root": -0.301139,
+              "path": "roe > roa > tax_to_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "minority_to_assets": {
+              "name": "Minority & associates / assets",
+              "t0": 0.0,
+              "t1": -0.000614,
+              "change": -0.000614,
+              "contribution": -0.002984,
+              "share_of_root": -0.056445,
+              "path": "roe > roa > minority_to_assets",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "equity_multiplier": {
+              "name": "Equity multiplier",
+              "t0": 4.850263,
+              "t1": 4.870046,
+              "change": 0.019783,
+              "contribution": 0.000621,
+              "share_of_root": 0.011746,
+              "path": "roe > equity_multiplier",
+              "leaf": false,
+              "unit": "x"
+            },
+            "debt_to_equity_avg": {
+              "name": "Borrowings / equity (average)",
+              "t0": 3.775522,
+              "t1": 3.779743,
+              "change": 0.00422,
+              "contribution": 0.000132,
+              "share_of_root": 0.002506,
+              "path": "roe > equity_multiplier > debt_to_equity_avg",
+              "leaf": true,
+              "unit": "x"
+            },
+            "other_liab_to_equity_avg": {
+              "name": "Other liabilities / equity (average)",
+              "t0": 0.074741,
+              "t1": 0.090303,
+              "change": 0.015562,
+              "contribution": 0.000489,
+              "share_of_root": 0.00924,
+              "path": "roe > equity_multiplier > other_liab_to_equity_avg",
+              "leaf": true,
+              "unit": "x"
+            }
+          },
           "text": "Return on equity moved from 12.8% to 18.1% (FY21->FY26). Largest drivers: Operating cost / average assets (-1.4pp) -> +6.7pp (128% of the change); Tax / assets (+0.3pp) -> -1.6pp (-30% of the change); Revenue / average assets (+0.1pp) -> +0.5pp (9% of the change)."
         }
       },
@@ -851,7 +1424,11 @@
           "d": -0.007393,
           "now": 0.103474
         },
-        "text": "NII / average assets fell -0.7pp over 2 years to 10.3%: funding costs rising faster than lending yields, or a shift to lower-yield assets."
+        "text": "NII / average assets fell -0.7pp over 2 years to 10.3%: funding costs rising faster than lending yields, or a shift to lower-yield assets.",
+        "condition": "chg('nii_to_assets', 2) < -0.005",
+        "applies": [
+          "BL"
+        ]
       },
       {
         "id": "R04",
@@ -864,7 +1441,11 @@
           "now": 0.180523,
           "then": 0.234648
         },
-        "text": "ROE has fallen in each of the last 3 years, from 23.5% to 18.1%. See the ROE driver tree."
+        "text": "ROE has fallen in each of the last 3 years, from 23.5% to 18.1%. See the ROE driver tree.",
+        "condition": "falling('roe', 3) and chg('roe', 3) < -0.05",
+        "applies": [
+          "ALL"
+        ]
       },
       {
         "id": "V03",
@@ -878,7 +1459,11 @@
           "j": 2.464036,
           "r": 2.081468
         },
-        "text": "P/B of 5.1x is 2.1x the 2.5x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+        "text": "P/B of 5.1x is 2.1x the 2.5x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise.",
+        "condition": "m('pb_to_justified_pb') > 1.5",
+        "applies": [
+          "ALL"
+        ]
       }
     ],
     "clear": [
@@ -4744,6 +5329,11 @@
       "text": "Deposits share of borrowings: n/a [informational (neutral direction)] Note: n/a in FY26: missing borrowing_deposits_pct FY26 (manual KPI)"
     }
   },
+  "peers": {
+    "basis": "same archetype in data/universe.csv, computed as of the same fiscal year",
+    "tickers": [],
+    "values": {}
+  },
   "sector_references": {
     "industries": [
       "Financial Svcs. (Non-bank & Insurance)"
@@ -5421,5 +6011,597 @@
       "fy": null,
       "text": "28 manual KPI values: 0 verified against the primary document (Y), 28 from secondary sources (N). Provenance is in analysis.json (manual_kpis)."
     }
-  ]
+  ],
+  "findings": {
+    "verdict": "BAJAJ FINANCE LTD creates value: ROE 18.1% vs Ke 11.6% in FY26. Overall GREEN (64/100); strongest pillar 1 Growth, weakest 2 Margins.",
+    "strengths": [
+      {
+        "kind": "metric",
+        "id": "revenue_cagr_3y",
+        "pillar": "growth",
+        "rag": "green",
+        "severity": 0.703461,
+        "confidence": 0.9,
+        "score": 0.633115,
+        "name": "Revenue CAGR 3y",
+        "number": "25.6%",
+        "context": "GREEN vs band: red ≤ 4.0%, green ≥ 8.9%",
+        "trend": "improving +2.5 pts/yr over FY22-FY26",
+        "chain": null,
+        "chain_source": null,
+        "text": "Revenue CAGR 3y: 25.6% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%); improving +2.5 pts/yr over FY22-FY26"
+      },
+      {
+        "kind": "metric",
+        "id": "assets_cagr_3y",
+        "pillar": "growth",
+        "rag": "green",
+        "severity": 0.699063,
+        "confidence": 0.9,
+        "score": 0.629157,
+        "name": "Total assets CAGR 3y",
+        "number": "26.7%",
+        "context": "GREEN vs band: red ≤ 4.0%, green ≥ 8.9%",
+        "trend": "improving +2.5 pts/yr over FY22-FY26",
+        "chain": null,
+        "chain_source": null,
+        "text": "Total assets CAGR 3y: 26.7% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%); improving +2.5 pts/yr over FY22-FY26"
+      },
+      {
+        "kind": "metric",
+        "id": "nnpa_ratio",
+        "pillar": "cash_quality",
+        "rag": "green",
+        "severity": 0.44875,
+        "confidence": 0.8,
+        "score": 0.359,
+        "name": "Net NPA ratio",
+        "number": "0.4%",
+        "context": "GREEN vs band: red ≥ 6.0%, green ≤ 2.0%",
+        "trend": "",
+        "chain": null,
+        "chain_source": null,
+        "text": "Net NPA ratio: 0.4% (GREEN vs band: red ≥ 6.0%, green ≤ 2.0%)"
+      },
+      {
+        "kind": "metric",
+        "id": "crar",
+        "pillar": "balance_sheet",
+        "rag": "green",
+        "severity": 0.54,
+        "confidence": 0.64,
+        "score": 0.3456,
+        "name": "Capital adequacy (CRAR)",
+        "number": "21.6%",
+        "context": "GREEN vs band: red ≤ 15.0%, green ≥ 20.0%",
+        "trend": "",
+        "chain": null,
+        "chain_source": null,
+        "text": "Capital adequacy (CRAR): 21.6% (GREEN vs band: red ≤ 15.0%, green ≥ 20.0%)"
+      },
+      {
+        "kind": "metric",
+        "id": "roe",
+        "pillar": "returns",
+        "rag": "green",
+        "severity": 0.316481,
+        "confidence": 0.9,
+        "score": 0.284833,
+        "name": "Return on equity",
+        "number": "18.1%",
+        "context": "GREEN vs band: red ≤ 11.6%, green ≥ 16.6%",
+        "trend": "stable −0.3 pts/yr over FY22-FY26",
+        "chain": "−5.4 pts over 3y; 92% from return on assets; return on assets fell because revenue / average assets fell 17.0% → 16.0%",
+        "chain_source": {
+          "tree": "fin_roe",
+          "window": "3y"
+        },
+        "text": "Return on equity: 18.1% (GREEN vs band: red ≤ 11.6%, green ≥ 16.6%); stable −0.3 pts/yr over FY22-FY26; −5.4 pts over 3y; 92% from return on assets; return on assets fell because revenue / average assets fell 17.0% → 16.0%"
+      },
+      {
+        "kind": "metric",
+        "id": "roa",
+        "pillar": "returns",
+        "rag": "green",
+        "severity": 0.41792,
+        "confidence": 0.6,
+        "score": 0.250752,
+        "name": "Return on assets",
+        "number": "3.7%",
+        "context": "GREEN vs band: red ≤ 1.5%, green ≥ 3.0%, indicative",
+        "trend": "stable −0.1 pts/yr over FY22-FY26",
+        "chain": "−1.0 pts over 3y; 99% from revenue / average assets; revenue / average assets fell 17.0% → 16.0%",
+        "chain_source": {
+          "tree": "fin_roe",
+          "window": "3y"
+        },
+        "text": "Return on assets: 3.7% (GREEN vs band: red ≤ 1.5%, green ≥ 3.0%, indicative); stable −0.1 pts/yr over FY22-FY26; −1.0 pts over 3y; 99% from revenue / average assets; revenue / average assets fell 17.0% → 16.0%"
+      }
+    ],
+    "weaknesses": [
+      {
+        "kind": "flag",
+        "id": "M08",
+        "pillar": "margins",
+        "severity_label": "medium",
+        "severity": 0.6,
+        "confidence": 1.0,
+        "score": 0.6,
+        "name": "Net interest margin compressing",
+        "covers": [
+          "nii_to_assets"
+        ],
+        "text": "M08 Net interest margin compressing: NII / average assets fell -0.7pp over 2 years to 10.3%: funding costs rising faster than lending yields, or a shift to lower-yield assets."
+      },
+      {
+        "kind": "flag",
+        "id": "R04",
+        "pillar": "returns",
+        "severity_label": "medium",
+        "severity": 0.6,
+        "confidence": 1.0,
+        "score": 0.6,
+        "name": "ROE down three years running",
+        "covers": [
+          "roe"
+        ],
+        "text": "R04 ROE down three years running: ROE has fallen in each of the last 3 years, from 23.5% to 18.1%. See the ROE driver tree."
+      },
+      {
+        "kind": "flag",
+        "id": "V03",
+        "pillar": "valuation",
+        "severity_label": "medium",
+        "severity": 0.6,
+        "confidence": 1.0,
+        "score": 0.6,
+        "name": "P/B well above what returns justify",
+        "covers": [
+          "pb_to_justified_pb"
+        ],
+        "text": "V03 P/B well above what returns justify: P/B of 5.1x is 2.1x the 2.5x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+      },
+      {
+        "kind": "metric",
+        "id": "pcr",
+        "pillar": "cash_quality",
+        "rag": "red",
+        "severity": 0.25,
+        "confidence": 0.32,
+        "score": 0.08,
+        "name": "Provision coverage ratio",
+        "number": "60.0%",
+        "context": "RED vs band: red ≤ 60.0%, green ≥ 70.0%",
+        "trend": "",
+        "chain": null,
+        "chain_source": null,
+        "text": "Provision coverage ratio: 60.0% (RED vs band: red ≤ 60.0%, green ≥ 70.0%)"
+      }
+    ],
+    "watch": [
+      {
+        "kind": "metric",
+        "id": "bvps_cagr_5y",
+        "pillar": "growth",
+        "rag": "green",
+        "severity": 0.462712,
+        "confidence": 0.9,
+        "score": 0.416441,
+        "name": "Book value per share CAGR 5y",
+        "number": "24.5%",
+        "context": "GREEN vs band: red ≤ 4.0%, green ≥ 8.9%",
+        "trend": "deteriorating −2.0 pts/yr over FY22-FY26",
+        "chain": null,
+        "chain_source": null,
+        "text": "Book value per share CAGR 5y: 24.5% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%); deteriorating −2.0 pts/yr over FY22-FY26"
+      },
+      {
+        "kind": "metric",
+        "id": "roe_ke_spread",
+        "pillar": "returns",
+        "rag": "amber",
+        "severity": 0.344386,
+        "confidence": 0.9,
+        "score": 0.309947,
+        "name": "ROE - cost of equity",
+        "number": "+6.5pp",
+        "context": "AMBER vs band: red ≤ +0.0pp, green ≥ +5.0pp",
+        "trend": "deteriorating −0.3 pts/yr over FY22-FY26",
+        "chain": null,
+        "chain_source": null,
+        "text": "ROE - cost of equity: +6.5pp (AMBER vs band: red ≤ +0.0pp, green ≥ +5.0pp); deteriorating −0.3 pts/yr over FY22-FY26"
+      }
+    ],
+    "bull": [
+      {
+        "ref": "revenue_cagr_3y",
+        "text": "Revenue CAGR 3y: 25.6% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%); improving +2.5 pts/yr over FY22-FY26 [revenue_cagr_3y]"
+      },
+      {
+        "ref": "assets_cagr_3y",
+        "text": "Total assets CAGR 3y: 26.7% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%); improving +2.5 pts/yr over FY22-FY26 [assets_cagr_3y]"
+      },
+      {
+        "ref": "nnpa_ratio",
+        "text": "Net NPA ratio: 0.4% (GREEN vs band: red ≥ 6.0%, green ≤ 2.0%) [nnpa_ratio]"
+      },
+      {
+        "ref": "crar",
+        "text": "Capital adequacy (CRAR): 21.6% (GREEN vs band: red ≤ 15.0%, green ≥ 20.0%) [crar]"
+      },
+      {
+        "ref": "economic_profit",
+        "text": "Creates value: ROE 18.1% vs Ke 11.6%; economic profit Rs 6,812 cr in FY26, positive in 9 of 9 years [economic_profit]"
+      },
+      {
+        "ref": "pe_percentile_10y",
+        "text": "P/E 26.95x sits at the 20th percentile of its own 10-year history [pe_percentile_10y]"
+      },
+      {
+        "ref": "pe",
+        "text": "P/E 26.95x vs Damodaran India industry 65.01x (Financial Svcs. (Non-bank & Insurance)) [pe]"
+      },
+      {
+        "ref": "pb_percentile_10y",
+        "text": "P/B 5.13x sits at the 20th percentile of its own 10-year history [pb_percentile_10y]"
+      }
+    ],
+    "bear": [
+      {
+        "ref": "M08",
+        "text": "M08 Net interest margin compressing: NII / average assets fell -0.7pp over 2 years to 10.3%: funding costs rising faster than lending yields, or a shift to lower-yield assets. [M08]"
+      },
+      {
+        "ref": "R04",
+        "text": "R04 ROE down three years running: ROE has fallen in each of the last 3 years, from 23.5% to 18.1%. See the ROE driver tree. [R04]"
+      },
+      {
+        "ref": "V03",
+        "text": "V03 P/B well above what returns justify: P/B of 5.1x is 2.1x the 2.5x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise. [V03]"
+      },
+      {
+        "ref": "pcr",
+        "text": "Provision coverage ratio: 60.0% (RED vs band: red ≤ 60.0%, green ≥ 70.0%) [pcr]"
+      },
+      {
+        "ref": "pb",
+        "text": "P/B 5.13x vs Damodaran India industry 2.52x (Financial Svcs. (Non-bank & Insurance)) [pb]"
+      },
+      {
+        "ref": "fin_roe",
+        "text": "Largest negative driver of return on equity over 3y: Revenue / average assets (-1.0pp) -> -4.9pp (91% of the change) [fin_roe]"
+      },
+      {
+        "ref": "missing data",
+        "text": "6 required KPIs missing at FY26 (advances_cr, borrowing_bank_pct, borrowing_market_pct, cost_of_borrowing_pct, provisions_cr, stage2_pct): the diagnosis of 1 Growth, 2 Margins, 4 Returns, 5 Cash and earnings quality (asset quality), 6 Balance sheet is incomplete [missing data]"
+      }
+    ],
+    "missing_data": {
+      "kpis": [
+        {
+          "kpi": "advances_cr",
+          "required": true,
+          "description": "On-book loans (net) at 31 March",
+          "years_present": [],
+          "metrics": [
+            "loan_growth"
+          ],
+          "flags": [
+            "BK05"
+          ],
+          "trees": [],
+          "lines": [
+            "advances_cr (On-book loans (net) at 31 March) is missing at FY26.",
+            "1 metric cannot be computed: Loan growth.",
+            "Red-flag rules that cannot be checked: BK05."
+          ]
+        },
+        {
+          "kpi": "borrowing_bank_pct",
+          "required": true,
+          "description": "Bank loans as % of total borrowings at 31 March",
+          "years_present": [],
+          "metrics": [
+            "bank_borrowing_share"
+          ],
+          "flags": [],
+          "trees": [],
+          "lines": [
+            "borrowing_bank_pct (Bank loans as % of total borrowings at 31 March) is missing at FY26.",
+            "1 metric cannot be computed: Bank borrowings share."
+          ]
+        },
+        {
+          "kpi": "borrowing_market_pct",
+          "required": true,
+          "description": "Market borrowings (NCDs + CP + bonds) as % of total borrowings at 31 March",
+          "years_present": [],
+          "metrics": [
+            "market_borrowing_share"
+          ],
+          "flags": [],
+          "trees": [],
+          "lines": [
+            "borrowing_market_pct (Market borrowings (NCDs + CP + bonds) as % of total borrowings at 31 March) is missing at FY26.",
+            "1 metric cannot be computed: Market borrowings share."
+          ]
+        },
+        {
+          "kpi": "cost_of_borrowing_pct",
+          "required": true,
+          "description": "Cost of borrowings for the year",
+          "years_present": [],
+          "metrics": [
+            "cost_of_borrowing",
+            "spread"
+          ],
+          "flags": [
+            "NB05"
+          ],
+          "trees": [],
+          "lines": [
+            "cost_of_borrowing_pct (Cost of borrowings for the year) is missing at FY26.",
+            "2 metrics cannot be computed: Cost of borrowing, Spread (yield on AUM - cost of borrowing).",
+            "Red-flag rules that cannot be checked: NB05."
+          ]
+        },
+        {
+          "kpi": "provisions_cr",
+          "required": true,
+          "description": "Impairment on financial instruments (loan losses and provisions) for the full year",
+          "years_present": [
+            "FY25"
+          ],
+          "metrics": [
+            "bank_opex_to_assets",
+            "cost_to_income_bank",
+            "credit_cost_aum",
+            "provisions_to_assets",
+            "provisions_to_ppop"
+          ],
+          "flags": [
+            "BK08",
+            "NB06"
+          ],
+          "trees": [
+            "bank_dupont"
+          ],
+          "lines": [
+            "provisions_cr (Impairment on financial instruments (loan losses and provisions) for the full year) is missing at FY26; present for FY25.",
+            "5 metrics cannot be computed: Opex (ex provisions) / assets, Cost-to-income (ex-provisions), Credit cost (on AUM), Provisions / assets, Provisions / pre-provision profit.",
+            "Red-flag rules that cannot be checked: BK08, NB06.",
+            "Driver trees affected: bank_dupont (Sector tree 'bank_dupont' not computable (missing values for bank_opex_to_assets, provisions_to_assets at FY25 or FY26 (n/a in FY26: missing provisions_cr FY26 (manual KPI))); generic 'fin_roe' used instead.)."
+          ]
+        },
+        {
+          "kpi": "stage2_pct",
+          "required": true,
+          "description": "Stage-2 assets as % of loans at 31 March",
+          "years_present": [],
+          "metrics": [
+            "stage2_ratio"
+          ],
+          "flags": [
+            "NB02"
+          ],
+          "trees": [],
+          "lines": [
+            "stage2_pct (Stage-2 assets as % of loans at 31 March) is missing at FY26.",
+            "1 metric cannot be computed: Stage-2 assets.",
+            "Red-flag rules that cannot be checked: NB02."
+          ]
+        },
+        {
+          "kpi": "alm_gap_1y_pct",
+          "required": false,
+          "description": "Cumulative ALM gap up to 1 year as % of cumulative outflows up to 1 year (positive = surplus)",
+          "years_present": [],
+          "metrics": [
+            "alm_gap_1y"
+          ],
+          "flags": [
+            "NB04"
+          ],
+          "trees": [],
+          "lines": [
+            "alm_gap_1y_pct (Cumulative ALM gap up to 1 year as % of cumulative outflows up to 1 year (positive = surplus)) is missing at FY26.",
+            "1 metric cannot be computed: ALM gap up to 1 year.",
+            "Red-flag rules that cannot be checked: NB04."
+          ]
+        },
+        {
+          "kpi": "borrowing_cp_pct",
+          "required": false,
+          "description": "Commercial paper as % of total borrowings at 31 March",
+          "years_present": [],
+          "metrics": [
+            "cp_share"
+          ],
+          "flags": [
+            "NB03"
+          ],
+          "trees": [],
+          "lines": [
+            "borrowing_cp_pct (Commercial paper as % of total borrowings at 31 March) is missing at FY26.",
+            "1 metric cannot be computed: Commercial paper share.",
+            "Red-flag rules that cannot be checked: NB03."
+          ]
+        },
+        {
+          "kpi": "borrowing_deposits_pct",
+          "required": false,
+          "description": "Deposits as % of total borrowings at 31 March",
+          "years_present": [
+            "FY25"
+          ],
+          "metrics": [
+            "deposit_share"
+          ],
+          "flags": [],
+          "trees": [],
+          "lines": [
+            "borrowing_deposits_pct (Deposits as % of total borrowings at 31 March) is missing at FY26; present for FY25.",
+            "1 metric cannot be computed: Deposits share of borrowings."
+          ]
+        },
+        {
+          "kpi": "cet1_pct",
+          "required": false,
+          "description": "Common equity tier-1 ratio at 31 March",
+          "years_present": [],
+          "metrics": [
+            "cet1"
+          ],
+          "flags": [],
+          "trees": [],
+          "lines": [
+            "cet1_pct (Common equity tier-1 ratio at 31 March) is missing at FY26.",
+            "1 metric cannot be computed: CET1 ratio."
+          ]
+        },
+        {
+          "kpi": "cost_of_funds_pct",
+          "required": false,
+          "description": "Cost of funds (or cost of deposits) for the year",
+          "years_present": [],
+          "metrics": [
+            "cost_of_funds_reported"
+          ],
+          "flags": [],
+          "trees": [],
+          "lines": [
+            "cost_of_funds_pct (Cost of funds (or cost of deposits) for the year) is missing at FY26.",
+            "1 metric cannot be computed: Cost of funds (reported)."
+          ]
+        },
+        {
+          "kpi": "nim_pct",
+          "required": false,
+          "description": "Net interest margin for the year as reported (bank's own definition)",
+          "years_present": [],
+          "metrics": [
+            "nim_reported"
+          ],
+          "flags": [],
+          "trees": [],
+          "lines": [
+            "nim_pct (Net interest margin for the year as reported (bank's own definition)) is missing at FY26.",
+            "1 metric cannot be computed: Net interest margin (reported)."
+          ]
+        },
+        {
+          "kpi": "slippage_ratio_pct",
+          "required": false,
+          "description": "Gross slippages as % of opening standard advances",
+          "years_present": [],
+          "metrics": [
+            "slippage_ratio"
+          ],
+          "flags": [],
+          "trees": [],
+          "lines": [
+            "slippage_ratio_pct (Gross slippages as % of opening standard advances) is missing at FY26.",
+            "1 metric cannot be computed: Slippage ratio."
+          ]
+        },
+        {
+          "kpi": "yield_on_advances_pct",
+          "required": false,
+          "description": "Yield on advances for the year",
+          "years_present": [],
+          "metrics": [
+            "yield_on_advances"
+          ],
+          "flags": [],
+          "trees": [],
+          "lines": [
+            "yield_on_advances_pct (Yield on advances for the year) is missing at FY26.",
+            "1 metric cannot be computed: Yield on advances."
+          ]
+        },
+        {
+          "kpi": "yield_on_aum_pct",
+          "required": false,
+          "description": "Yield on average AUM for the year",
+          "years_present": [],
+          "metrics": [
+            "spread"
+          ],
+          "flags": [
+            "NB05"
+          ],
+          "trees": [],
+          "lines": [
+            "yield_on_aum_pct (Yield on average AUM for the year) is missing at FY26.",
+            "1 metric cannot be computed: Spread (yield on AUM - cost of borrowing).",
+            "Red-flag rules that cannot be checked: NB05."
+          ]
+        }
+      ],
+      "all_required_present": false,
+      "all_present_text": "All required KPIs for this archetype are present at FY26.",
+      "not_evaluable": [
+        {
+          "id": "A02",
+          "name": "Rising promoter pledge",
+          "missing": "promoter_pledge FY24"
+        },
+        {
+          "id": "A03",
+          "name": "Promoters selling down",
+          "missing": "promoter_holding_change_3y FY26"
+        },
+        {
+          "id": "BK05",
+          "name": "Fast loan growth while capital falls",
+          "missing": "loan_growth FY26 [n/a in FY26: missing advances_cr FY25 (manual KPI)]"
+        },
+        {
+          "id": "BK08",
+          "name": "Provisions consume most of operating profit",
+          "missing": "provisions_to_ppop FY26 [n/a in FY26: missing provisions_cr FY26 (manual KPI)]"
+        },
+        {
+          "id": "NB02",
+          "name": "Stage-2 book rising",
+          "missing": "stage2_ratio FY24"
+        },
+        {
+          "id": "NB03",
+          "name": "Commercial-paper dependence",
+          "missing": "cp_share FY26 [n/a in FY26: missing borrowing_cp_pct FY26 (manual KPI)]"
+        },
+        {
+          "id": "NB04",
+          "name": "Negative one-year ALM gap",
+          "missing": "alm_gap_1y FY26 [n/a in FY26: missing alm_gap_1y_pct FY26 (manual KPI)]"
+        },
+        {
+          "id": "NB05",
+          "name": "Spread compressing",
+          "missing": "spread FY26 [n/a in FY26: missing yield_on_aum_pct FY26 (manual KPI)]"
+        },
+        {
+          "id": "NB06",
+          "name": "Credit costs eating the spread",
+          "missing": "credit_cost_aum FY26 [n/a in FY26: missing provisions_cr FY26 (manual KPI)]"
+        }
+      ],
+      "unverified": {
+        "n": 28,
+        "total": 28,
+        "text": "28 of 28 manual KPI values (100%) are verified = N: taken from the cited page, not checked in the primary document."
+      },
+      "not_scored": [],
+      "estimates": [
+        "Financial company: other income is core (fees, treasury), so no exceptional-item estimate is made.",
+        "Net profit differs from PBT - tax in 2 of 10 years (latest -315): minority interest (negative) and share of associates/JVs (positive) sit between PBT and net profit, so the export is consolidated and net profit is the owners' share. Equity excludes minority interest (Screener includes NCI in Other Liabilities); ROIC/ROCE capital therefore omits NCI unless data/manual supplies minority_interest.",
+        "Capex is not in the export. Proxy = change in net block + change in CWIP + depreciation (includes acquired fixed assets and Ind AS 116 right-of-use additions; impairments and disposals understate it). FCF = CFO - capex proxy."
+      ],
+      "driver_notes": [
+        "Sector tree 'bank_dupont' not computable (missing values for bank_opex_to_assets, provisions_to_assets at FY25 or FY26 (n/a in FY26: missing provisions_cr FY26 (manual KPI))); generic 'fin_roe' used instead."
+      ]
+    },
+    "method": "severity x confidence; see config/scoring.yaml: report and engine/report/findings.py"
+  }
 }

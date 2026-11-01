@@ -613,6 +613,261 @@
               "text": "Depreciation / sales (+0.4pp) -> -0.5pp (-26% of the change)"
             }
           ],
+          "nodes": {
+            "roe": {
+              "name": "Return on equity",
+              "t0": 0.192364,
+              "t1": 0.212176,
+              "change": 0.019812,
+              "contribution": 0.019812,
+              "share_of_root": 1.0,
+              "path": "roe",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "pat_margin": {
+              "name": "PAT margin",
+              "t0": 0.10816,
+              "t1": 0.121555,
+              "change": 0.013395,
+              "contribution": 0.023597,
+              "share_of_root": 1.191035,
+              "path": "roe > pat_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "attributable_factor": {
+              "name": "Attributable-profit factor",
+              "t0": 0.988549,
+              "t1": 0.984222,
+              "change": -0.004327,
+              "contribution": -0.000887,
+              "share_of_root": -0.044751,
+              "path": "roe > pat_margin > attributable_factor",
+              "leaf": true,
+              "unit": "ratio"
+            },
+            "tax_burden": {
+              "name": "Tax burden",
+              "t0": 0.726957,
+              "t1": 0.732029,
+              "change": 0.005072,
+              "contribution": 0.001405,
+              "share_of_root": 0.070929,
+              "path": "roe > pat_margin > tax_burden",
+              "leaf": true,
+              "unit": "ratio"
+            },
+            "interest_burden": {
+              "name": "Interest burden",
+              "t0": 0.957408,
+              "t1": 0.968476,
+              "change": 0.011069,
+              "contribution": 0.002323,
+              "share_of_root": 0.11726,
+              "path": "roe > pat_margin > interest_burden",
+              "leaf": true,
+              "unit": "ratio"
+            },
+            "ebit_margin": {
+              "name": "EBIT margin",
+              "t0": 0.157204,
+              "t1": 0.174206,
+              "change": 0.017002,
+              "contribution": 0.020755,
+              "share_of_root": 1.047598,
+              "path": "roe > pat_margin > ebit_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "ebitda_margin": {
+              "name": "EBITDA margin",
+              "t0": 0.177145,
+              "t1": 0.188282,
+              "change": 0.011137,
+              "contribution": 0.013595,
+              "share_of_root": 0.686211,
+              "path": "roe > pat_margin > ebit_margin > ebitda_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "materials_pct": {
+              "name": "Materials % of sales",
+              "t0": 0.510225,
+              "t1": 0.498705,
+              "change": -0.01152,
+              "contribution": 0.014064,
+              "share_of_root": 0.709852,
+              "path": "roe > pat_margin > ebit_margin > ebitda_margin > materials_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "employee_pct": {
+              "name": "Employee cost % of sales",
+              "t0": 0.076854,
+              "t1": 0.078962,
+              "change": 0.002108,
+              "contribution": -0.002573,
+              "share_of_root": -0.129863,
+              "path": "roe > pat_margin > ebit_margin > ebitda_margin > employee_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "other_expenses_pct": {
+              "name": "Other expenses % of sales",
+              "t0": 0.235776,
+              "t1": 0.234052,
+              "change": -0.001724,
+              "contribution": 0.002104,
+              "share_of_root": 0.106222,
+              "path": "roe > pat_margin > ebit_margin > ebitda_margin > other_expenses_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "dep_to_sales": {
+              "name": "Depreciation / sales",
+              "t0": 0.03027,
+              "t1": 0.034534,
+              "change": 0.004264,
+              "contribution": -0.005205,
+              "share_of_root": -0.262717,
+              "path": "roe > pat_margin > ebit_margin > dep_to_sales",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "oi_core_to_sales": {
+              "name": "Core other income / sales",
+              "t0": 0.010329,
+              "t1": 0.020458,
+              "change": 0.010129,
+              "contribution": 0.012365,
+              "share_of_root": 0.624104,
+              "path": "roe > pat_margin > ebit_margin > oi_core_to_sales",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "asset_turnover": {
+              "name": "Asset turnover",
+              "t0": 1.125385,
+              "t1": 1.097005,
+              "change": -0.028381,
+              "contribution": -0.005162,
+              "share_of_root": -0.26056,
+              "path": "roe > asset_turnover",
+              "leaf": false,
+              "unit": "x"
+            },
+            "nb_to_sales": {
+              "name": "Net block / sales",
+              "t0": 0.241357,
+              "t1": 0.265016,
+              "change": 0.023658,
+              "contribution": -0.005313,
+              "share_of_root": -0.268153,
+              "path": "roe > asset_turnover > nb_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "cwip_to_sales": {
+              "name": "CWIP / sales",
+              "t0": 0.058292,
+              "t1": 0.043604,
+              "change": -0.014688,
+              "contribution": 0.003298,
+              "share_of_root": 0.166481,
+              "path": "roe > asset_turnover > cwip_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "investments_to_sales": {
+              "name": "Investments / sales",
+              "t0": 0.137332,
+              "t1": 0.165617,
+              "change": 0.028285,
+              "contribution": -0.006352,
+              "share_of_root": -0.32059,
+              "path": "roe > asset_turnover > investments_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "receivables_to_sales": {
+              "name": "Receivables / sales",
+              "t0": 0.135711,
+              "t1": 0.123308,
+              "change": -0.012403,
+              "contribution": 0.002785,
+              "share_of_root": 0.140578,
+              "path": "roe > asset_turnover > receivables_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "inventory_to_sales": {
+              "name": "Inventory / sales",
+              "t0": 0.186439,
+              "t1": 0.175123,
+              "change": -0.011317,
+              "contribution": 0.002541,
+              "share_of_root": 0.128268,
+              "path": "roe > asset_turnover > inventory_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "cash_to_sales": {
+              "name": "Cash & bank / sales",
+              "t0": 0.027517,
+              "t1": 0.026075,
+              "change": -0.001443,
+              "contribution": 0.000324,
+              "share_of_root": 0.016352,
+              "path": "roe > asset_turnover > cash_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "other_assets_rest_to_sales": {
+              "name": "Other assets (loans, advances, other) / sales",
+              "t0": 0.101936,
+              "t1": 0.112832,
+              "change": 0.010896,
+              "contribution": -0.002447,
+              "share_of_root": -0.123496,
+              "path": "roe > asset_turnover > other_assets_rest_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "equity_multiplier": {
+              "name": "Equity multiplier",
+              "t0": 1.580357,
+              "t1": 1.591164,
+              "change": 0.010808,
+              "contribution": 0.001377,
+              "share_of_root": 0.069525,
+              "path": "roe > equity_multiplier",
+              "leaf": false,
+              "unit": "x"
+            },
+            "debt_to_equity_avg": {
+              "name": "Borrowings / equity (average)",
+              "t0": 0.124965,
+              "t1": 0.152539,
+              "change": 0.027574,
+              "contribution": 0.003514,
+              "share_of_root": 0.177385,
+              "path": "roe > equity_multiplier > debt_to_equity_avg",
+              "leaf": true,
+              "unit": "x"
+            },
+            "other_liab_to_equity_avg": {
+              "name": "Other liabilities / equity (average)",
+              "t0": 0.455392,
+              "t1": 0.438626,
+              "change": -0.016766,
+              "contribution": -0.002137,
+              "share_of_root": -0.10786,
+              "path": "roe > equity_multiplier > other_liab_to_equity_avg",
+              "leaf": true,
+              "unit": "x"
+            }
+          },
           "text": "Return on equity moved from 19.2% to 21.2% (FY25->FY26). Largest drivers: Materials % of sales (-1.2pp) -> +1.4pp (71% of the change); Core other income / sales (+1.0pp) -> +1.2pp (62% of the change); Investments / sales (+10 days of sales) -> -0.6pp (-32% of the change)."
         },
         "3y": {
@@ -708,6 +963,261 @@
               "text": "Investments / sales (+21 days of sales) -> -1.7pp (27% of the change)"
             }
           ],
+          "nodes": {
+            "roe": {
+              "name": "Return on equity",
+              "t0": 0.275566,
+              "t1": 0.212176,
+              "change": -0.06339,
+              "contribution": -0.06339,
+              "share_of_root": 1.0,
+              "path": "roe",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "pat_margin": {
+              "name": "PAT margin",
+              "t0": 0.119067,
+              "t1": 0.121555,
+              "change": 0.002488,
+              "contribution": 0.005015,
+              "share_of_root": -0.079107,
+              "path": "roe > pat_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "attributable_factor": {
+              "name": "Attributable-profit factor",
+              "t0": 0.978815,
+              "t1": 0.984222,
+              "change": 0.005407,
+              "contribution": 0.001336,
+              "share_of_root": -0.021075,
+              "path": "roe > pat_margin > attributable_factor",
+              "leaf": true,
+              "unit": "ratio"
+            },
+            "tax_burden": {
+              "name": "Tax burden",
+              "t0": 0.737468,
+              "t1": 0.732029,
+              "change": -0.005439,
+              "contribution": -0.001795,
+              "share_of_root": 0.02832,
+              "path": "roe > pat_margin > tax_burden",
+              "leaf": true,
+              "unit": "ratio"
+            },
+            "interest_burden": {
+              "name": "Interest burden",
+              "t0": 0.975237,
+              "t1": 0.968476,
+              "change": -0.006761,
+              "contribution": -0.001687,
+              "share_of_root": 0.026611,
+              "path": "roe > pat_margin > interest_burden",
+              "leaf": true,
+              "unit": "ratio"
+            },
+            "ebit_margin": {
+              "name": "EBIT margin",
+              "t0": 0.169137,
+              "t1": 0.174206,
+              "change": 0.005069,
+              "contribution": 0.007161,
+              "share_of_root": -0.112963,
+              "path": "roe > pat_margin > ebit_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "ebitda_margin": {
+              "name": "EBITDA margin",
+              "t0": 0.181505,
+              "t1": 0.188282,
+              "change": 0.006777,
+              "contribution": 0.009574,
+              "share_of_root": -0.151026,
+              "path": "roe > pat_margin > ebit_margin > ebitda_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "materials_pct": {
+              "name": "Materials % of sales",
+              "t0": 0.541507,
+              "t1": 0.498705,
+              "change": -0.042802,
+              "contribution": 0.060463,
+              "share_of_root": -0.953829,
+              "path": "roe > pat_margin > ebit_margin > ebitda_margin > materials_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "employee_pct": {
+              "name": "Employee cost % of sales",
+              "t0": 0.059046,
+              "t1": 0.078962,
+              "change": 0.019916,
+              "contribution": -0.028134,
+              "share_of_root": 0.443817,
+              "path": "roe > pat_margin > ebit_margin > ebitda_margin > employee_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "other_expenses_pct": {
+              "name": "Other expenses % of sales",
+              "t0": 0.217943,
+              "t1": 0.234052,
+              "change": 0.016109,
+              "contribution": -0.022756,
+              "share_of_root": 0.358986,
+              "path": "roe > pat_margin > ebit_margin > ebitda_margin > other_expenses_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "dep_to_sales": {
+              "name": "Depreciation / sales",
+              "t0": 0.024878,
+              "t1": 0.034534,
+              "change": 0.009656,
+              "contribution": -0.01364,
+              "share_of_root": 0.21518,
+              "path": "roe > pat_margin > ebit_margin > dep_to_sales",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "oi_core_to_sales": {
+              "name": "Core other income / sales",
+              "t0": 0.01251,
+              "t1": 0.020458,
+              "change": 0.007948,
+              "contribution": 0.011227,
+              "share_of_root": -0.177117,
+              "path": "roe > pat_margin > ebit_margin > oi_core_to_sales",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "asset_turnover": {
+              "name": "Asset turnover",
+              "t0": 1.415272,
+              "t1": 1.097005,
+              "change": -0.318267,
+              "contribution": -0.061772,
+              "share_of_root": 0.974473,
+              "path": "roe > asset_turnover",
+              "leaf": false,
+              "unit": "x"
+            },
+            "nb_to_sales": {
+              "name": "Net block / sales",
+              "t0": 0.16367,
+              "t1": 0.265016,
+              "change": 0.101345,
+              "contribution": -0.030539,
+              "share_of_root": 0.481759,
+              "path": "roe > asset_turnover > nb_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "cwip_to_sales": {
+              "name": "CWIP / sales",
+              "t0": 0.020964,
+              "t1": 0.043604,
+              "change": 0.02264,
+              "contribution": -0.006822,
+              "share_of_root": 0.107623,
+              "path": "roe > asset_turnover > cwip_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "investments_to_sales": {
+              "name": "Investments / sales",
+              "t0": 0.108866,
+              "t1": 0.165617,
+              "change": 0.056752,
+              "contribution": -0.017101,
+              "share_of_root": 0.269777,
+              "path": "roe > asset_turnover > investments_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "receivables_to_sales": {
+              "name": "Receivables / sales",
+              "t0": 0.123351,
+              "t1": 0.123308,
+              "change": -4.3e-05,
+              "contribution": 1.3e-05,
+              "share_of_root": -0.000204,
+              "path": "roe > asset_turnover > receivables_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "inventory_to_sales": {
+              "name": "Inventory / sales",
+              "t0": 0.179242,
+              "t1": 0.175123,
+              "change": -0.00412,
+              "contribution": 0.001241,
+              "share_of_root": -0.019583,
+              "path": "roe > asset_turnover > inventory_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "cash_to_sales": {
+              "name": "Cash & bank / sales",
+              "t0": 0.024764,
+              "t1": 0.026075,
+              "change": 0.001311,
+              "contribution": -0.000395,
+              "share_of_root": 0.006231,
+              "path": "roe > asset_turnover > cash_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "other_assets_rest_to_sales": {
+              "name": "Other assets (loans, advances, other) / sales",
+              "t0": 0.085722,
+              "t1": 0.112832,
+              "change": 0.02711,
+              "contribution": -0.008169,
+              "share_of_root": 0.128872,
+              "path": "roe > asset_turnover > other_assets_rest_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "equity_multiplier": {
+              "name": "Equity multiplier",
+              "t0": 1.635287,
+              "t1": 1.591164,
+              "change": -0.044123,
+              "contribution": -0.006633,
+              "share_of_root": 0.104634,
+              "path": "roe > equity_multiplier",
+              "leaf": false,
+              "unit": "x"
+            },
+            "debt_to_equity_avg": {
+              "name": "Borrowings / equity (average)",
+              "t0": 0.118089,
+              "t1": 0.152539,
+              "change": 0.03445,
+              "contribution": 0.005179,
+              "share_of_root": -0.081695,
+              "path": "roe > equity_multiplier > debt_to_equity_avg",
+              "leaf": true,
+              "unit": "x"
+            },
+            "other_liab_to_equity_avg": {
+              "name": "Other liabilities / equity (average)",
+              "t0": 0.517198,
+              "t1": 0.438626,
+              "change": -0.078573,
+              "contribution": -0.011811,
+              "share_of_root": 0.186329,
+              "path": "roe > equity_multiplier > other_liab_to_equity_avg",
+              "leaf": true,
+              "unit": "x"
+            }
+          },
           "text": "Return on equity moved from 27.6% to 21.2% (FY23->FY26). Largest drivers: Materials % of sales (-4.3pp) -> +6.0pp (-95% of the change); Net block / sales (+37 days of sales) -> -3.1pp (48% of the change); Employee cost % of sales (+2.0pp) -> -2.8pp (44% of the change)."
         },
         "5y": {
@@ -803,6 +1313,261 @@
               "text": "Other liabilities / equity (average) (-0.06x) -> -0.9pp (14% of the change)"
             }
           ],
+          "nodes": {
+            "roe": {
+              "name": "Return on equity",
+              "t0": 0.273738,
+              "t1": 0.212176,
+              "change": -0.061562,
+              "contribution": -0.061562,
+              "share_of_root": 1.0,
+              "path": "roe",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "pat_margin": {
+              "name": "PAT margin",
+              "t0": 0.144583,
+              "t1": 0.121555,
+              "change": -0.023028,
+              "contribution": -0.041923,
+              "share_of_root": 0.680983,
+              "path": "roe > pat_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "attributable_factor": {
+              "name": "Attributable-profit factor",
+              "t0": 0.978963,
+              "t1": 0.984222,
+              "change": 0.005259,
+              "contribution": 0.001295,
+              "share_of_root": -0.021029,
+              "path": "roe > pat_margin > attributable_factor",
+              "leaf": true,
+              "unit": "ratio"
+            },
+            "tax_burden": {
+              "name": "Tax burden",
+              "t0": 0.745002,
+              "t1": 0.732029,
+              "change": -0.012974,
+              "contribution": -0.004245,
+              "share_of_root": 0.068958,
+              "path": "roe > pat_margin > tax_burden",
+              "leaf": true,
+              "unit": "ratio"
+            },
+            "interest_burden": {
+              "name": "Interest burden",
+              "t0": 0.979156,
+              "t1": 0.968476,
+              "change": -0.01068,
+              "contribution": -0.00265,
+              "share_of_root": 0.043048,
+              "path": "roe > pat_margin > interest_burden",
+              "leaf": true,
+              "unit": "ratio"
+            },
+            "ebit_margin": {
+              "name": "EBIT margin",
+              "t0": 0.20246,
+              "t1": 0.174206,
+              "change": -0.028255,
+              "contribution": -0.036322,
+              "share_of_root": 0.590007,
+              "path": "roe > pat_margin > ebit_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "ebitda_margin": {
+              "name": "EBITDA margin",
+              "t0": 0.223629,
+              "t1": 0.188282,
+              "change": -0.035347,
+              "contribution": -0.045439,
+              "share_of_root": 0.738099,
+              "path": "roe > pat_margin > ebit_margin > ebitda_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "materials_pct": {
+              "name": "Materials % of sales",
+              "t0": 0.475899,
+              "t1": 0.498705,
+              "change": 0.022806,
+              "contribution": -0.029317,
+              "share_of_root": 0.476222,
+              "path": "roe > pat_margin > ebit_margin > ebitda_margin > materials_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "employee_pct": {
+              "name": "Employee cost % of sales",
+              "t0": 0.071276,
+              "t1": 0.078962,
+              "change": 0.007685,
+              "contribution": -0.009879,
+              "share_of_root": 0.160477,
+              "path": "roe > pat_margin > ebit_margin > ebitda_margin > employee_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "other_expenses_pct": {
+              "name": "Other expenses % of sales",
+              "t0": 0.229196,
+              "t1": 0.234052,
+              "change": 0.004856,
+              "contribution": -0.006242,
+              "share_of_root": 0.1014,
+              "path": "roe > pat_margin > ebit_margin > ebitda_margin > other_expenses_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "dep_to_sales": {
+              "name": "Depreciation / sales",
+              "t0": 0.036443,
+              "t1": 0.034534,
+              "change": -0.001908,
+              "contribution": 0.002453,
+              "share_of_root": -0.039849,
+              "path": "roe > pat_margin > ebit_margin > dep_to_sales",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "oi_core_to_sales": {
+              "name": "Core other income / sales",
+              "t0": 0.015274,
+              "t1": 0.020458,
+              "change": 0.005184,
+              "contribution": 0.006664,
+              "share_of_root": -0.108243,
+              "path": "roe > pat_margin > ebit_margin > oi_core_to_sales",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "asset_turnover": {
+              "name": "Asset turnover",
+              "t0": 1.18996,
+              "t1": 1.097005,
+              "change": -0.092955,
+              "contribution": -0.019655,
+              "share_of_root": 0.31927,
+              "path": "roe > asset_turnover",
+              "leaf": false,
+              "unit": "x"
+            },
+            "nb_to_sales": {
+              "name": "Net block / sales",
+              "t0": 0.279348,
+              "t1": 0.265016,
+              "change": -0.014332,
+              "contribution": 0.003956,
+              "share_of_root": -0.064259,
+              "path": "roe > asset_turnover > nb_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "cwip_to_sales": {
+              "name": "CWIP / sales",
+              "t0": 0.007443,
+              "t1": 0.043604,
+              "change": 0.036161,
+              "contribution": -0.009981,
+              "share_of_root": 0.16213,
+              "path": "roe > asset_turnover > cwip_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "investments_to_sales": {
+              "name": "Investments / sales",
+              "t0": 0.155568,
+              "t1": 0.165617,
+              "change": 0.010049,
+              "contribution": -0.002774,
+              "share_of_root": 0.045054,
+              "path": "roe > asset_turnover > investments_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "receivables_to_sales": {
+              "name": "Receivables / sales",
+              "t0": 0.101263,
+              "t1": 0.123308,
+              "change": 0.022045,
+              "contribution": -0.006085,
+              "share_of_root": 0.098841,
+              "path": "roe > asset_turnover > receivables_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "inventory_to_sales": {
+              "name": "Inventory / sales",
+              "t0": 0.165534,
+              "t1": 0.175123,
+              "change": 0.009589,
+              "contribution": -0.002647,
+              "share_of_root": 0.042991,
+              "path": "roe > asset_turnover > inventory_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "cash_to_sales": {
+              "name": "Cash & bank / sales",
+              "t0": 0.032091,
+              "t1": 0.026075,
+              "change": -0.006017,
+              "contribution": 0.001661,
+              "share_of_root": -0.026976,
+              "path": "roe > asset_turnover > cash_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "other_assets_rest_to_sales": {
+              "name": "Other assets (loans, advances, other) / sales",
+              "t0": 0.099117,
+              "t1": 0.112832,
+              "change": 0.013714,
+              "contribution": -0.003785,
+              "share_of_root": 0.061489,
+              "path": "roe > asset_turnover > other_assets_rest_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "equity_multiplier": {
+              "name": "Equity multiplier",
+              "t0": 1.591062,
+              "t1": 1.591164,
+              "change": 0.000103,
+              "contribution": 1.6e-05,
+              "share_of_root": -0.000253,
+              "path": "roe > equity_multiplier",
+              "leaf": false,
+              "unit": "x"
+            },
+            "debt_to_equity_avg": {
+              "name": "Borrowings / equity (average)",
+              "t0": 0.096424,
+              "t1": 0.152539,
+              "change": 0.056115,
+              "contribution": 0.008522,
+              "share_of_root": -0.138437,
+              "path": "roe > equity_multiplier > debt_to_equity_avg",
+              "leaf": true,
+              "unit": "x"
+            },
+            "other_liab_to_equity_avg": {
+              "name": "Other liabilities / equity (average)",
+              "t0": 0.494638,
+              "t1": 0.438626,
+              "change": -0.056012,
+              "contribution": -0.008507,
+              "share_of_root": 0.138184,
+              "path": "roe > equity_multiplier > other_liab_to_equity_avg",
+              "leaf": true,
+              "unit": "x"
+            }
+          },
           "text": "Return on equity moved from 27.4% to 21.2% (FY21->FY26). Largest drivers: Materials % of sales (+2.3pp) -> -2.9pp (48% of the change); CWIP / sales (+13 days of sales) -> -1.0pp (16% of the change); Employee cost % of sales (+0.8pp) -> -1.0pp (16% of the change)."
         }
       },
@@ -899,6 +1664,184 @@
               "text": "Receivables / sales (-5 days of sales) -> +0.6pp (52% of the change)"
             }
           ],
+          "nodes": {
+            "roic": {
+              "name": "Return on invested capital",
+              "t0": 0.228299,
+              "t1": 0.240181,
+              "change": 0.011883,
+              "contribution": 0.011883,
+              "share_of_root": 1.0,
+              "path": "roic",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "nopat_margin": {
+              "name": "NOPAT margin",
+              "t0": 0.106771,
+              "t1": 0.112548,
+              "change": 0.005776,
+              "contribution": 0.012339,
+              "share_of_root": 1.038383,
+              "path": "roic > nopat_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "nopat_tax_factor": {
+              "name": "NOPAT tax factor",
+              "t0": 0.726957,
+              "t1": 0.732029,
+              "change": 0.005072,
+              "contribution": 0.001628,
+              "share_of_root": 0.137035,
+              "path": "roic > nopat_margin > nopat_tax_factor",
+              "leaf": true,
+              "unit": "ratio"
+            },
+            "operating_margin": {
+              "name": "Operating (EBIT excl. other income) margin",
+              "t0": 0.146874,
+              "t1": 0.153747,
+              "change": 0.006873,
+              "contribution": 0.01071,
+              "share_of_root": 0.901348,
+              "path": "roic > nopat_margin > operating_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "ebitda_margin": {
+              "name": "EBITDA margin",
+              "t0": 0.177145,
+              "t1": 0.188282,
+              "change": 0.011137,
+              "contribution": 0.017354,
+              "share_of_root": 1.460506,
+              "path": "roic > nopat_margin > operating_margin > ebitda_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "materials_pct": {
+              "name": "Materials % of sales",
+              "t0": 0.510225,
+              "t1": 0.498705,
+              "change": -0.01152,
+              "contribution": 0.017952,
+              "share_of_root": 1.510823,
+              "path": "roic > nopat_margin > operating_margin > ebitda_margin > materials_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "employee_pct": {
+              "name": "Employee cost % of sales",
+              "t0": 0.076854,
+              "t1": 0.078962,
+              "change": 0.002108,
+              "contribution": -0.003284,
+              "share_of_root": -0.276395,
+              "path": "roic > nopat_margin > operating_margin > ebitda_margin > employee_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "other_expenses_pct": {
+              "name": "Other expenses % of sales",
+              "t0": 0.235776,
+              "t1": 0.234052,
+              "change": -0.001724,
+              "contribution": 0.002686,
+              "share_of_root": 0.226078,
+              "path": "roic > nopat_margin > operating_margin > ebitda_margin > other_expenses_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "dep_to_sales": {
+              "name": "Depreciation / sales",
+              "t0": 0.03027,
+              "t1": 0.034534,
+              "change": 0.004264,
+              "contribution": -0.006644,
+              "share_of_root": -0.559158,
+              "path": "roic > nopat_margin > operating_margin > dep_to_sales",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "ic_turnover": {
+              "name": "Invested-capital turnover",
+              "t0": 2.138203,
+              "t1": 2.134043,
+              "change": -0.00416,
+              "contribution": -0.000456,
+              "share_of_root": -0.038383,
+              "path": "roic > ic_turnover",
+              "leaf": false,
+              "unit": "x"
+            },
+            "nb_to_sales": {
+              "name": "Net block / sales",
+              "t0": 0.241357,
+              "t1": 0.265016,
+              "change": 0.023658,
+              "contribution": -0.011835,
+              "share_of_root": -0.996031,
+              "path": "roic > ic_turnover > nb_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "cwip_to_sales": {
+              "name": "CWIP / sales",
+              "t0": 0.058292,
+              "t1": 0.043604,
+              "change": -0.014688,
+              "contribution": 0.007348,
+              "share_of_root": 0.61838,
+              "path": "roic > ic_turnover > cwip_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "receivables_to_sales": {
+              "name": "Receivables / sales",
+              "t0": 0.135711,
+              "t1": 0.123308,
+              "change": -0.012403,
+              "contribution": 0.006205,
+              "share_of_root": 0.522164,
+              "path": "roic > ic_turnover > receivables_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "inventory_to_sales": {
+              "name": "Inventory / sales",
+              "t0": 0.186439,
+              "t1": 0.175123,
+              "change": -0.011317,
+              "contribution": 0.005661,
+              "share_of_root": 0.47644,
+              "path": "roic > ic_turnover > inventory_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "other_assets_rest_to_sales": {
+              "name": "Other assets (loans, advances, other) / sales",
+              "t0": 0.101936,
+              "t1": 0.112832,
+              "change": 0.010896,
+              "contribution": -0.005451,
+              "share_of_root": -0.458716,
+              "path": "roic > ic_turnover > other_assets_rest_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "other_liabilities_to_sales": {
+              "name": "Other liabilities / sales",
+              "t0": 0.256053,
+              "t1": 0.251287,
+              "change": -0.004765,
+              "contribution": -0.002384,
+              "share_of_root": -0.20062,
+              "path": "roic > ic_turnover > other_liabilities_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            }
+          },
           "text": "Return on invested capital moved from 22.8% to 24.0% (FY25->FY26). Largest drivers: Materials % of sales (-1.2pp) -> +1.8pp (151% of the change); Net block / sales (+9 days of sales) -> -1.2pp (-100% of the change); CWIP / sales (-5 days of sales) -> +0.7pp (62% of the change)."
         },
         "3y": {
@@ -988,6 +1931,184 @@
               "text": "Other liabilities / sales (+10 days of sales) -> +1.9pp (-21% of the change)"
             }
           ],
+          "nodes": {
+            "roic": {
+              "name": "Return on invested capital",
+              "t0": 0.330514,
+              "t1": 0.240181,
+              "change": -0.090333,
+              "contribution": -0.090333,
+              "share_of_root": 1.0,
+              "path": "roic",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "nopat_margin": {
+              "name": "NOPAT margin",
+              "t0": 0.115507,
+              "t1": 0.112548,
+              "change": -0.002959,
+              "contribution": -0.007344,
+              "share_of_root": 0.081296,
+              "path": "roic > nopat_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "nopat_tax_factor": {
+              "name": "NOPAT tax factor",
+              "t0": 0.737468,
+              "t1": 0.732029,
+              "change": -0.005439,
+              "contribution": -0.002095,
+              "share_of_root": 0.023189,
+              "path": "roic > nopat_margin > nopat_tax_factor",
+              "leaf": true,
+              "unit": "ratio"
+            },
+            "operating_margin": {
+              "name": "Operating (EBIT excl. other income) margin",
+              "t0": 0.156626,
+              "t1": 0.153747,
+              "change": -0.002879,
+              "contribution": -0.005249,
+              "share_of_root": 0.058107,
+              "path": "roic > nopat_margin > operating_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "ebitda_margin": {
+              "name": "EBITDA margin",
+              "t0": 0.181505,
+              "t1": 0.188282,
+              "change": 0.006777,
+              "contribution": 0.012357,
+              "share_of_root": -0.136792,
+              "path": "roic > nopat_margin > operating_margin > ebitda_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "materials_pct": {
+              "name": "Materials % of sales",
+              "t0": 0.541507,
+              "t1": 0.498705,
+              "change": -0.042802,
+              "contribution": 0.078041,
+              "share_of_root": -0.863933,
+              "path": "roic > nopat_margin > operating_margin > ebitda_margin > materials_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "employee_pct": {
+              "name": "Employee cost % of sales",
+              "t0": 0.059046,
+              "t1": 0.078962,
+              "change": 0.019916,
+              "contribution": -0.036313,
+              "share_of_root": 0.401988,
+              "path": "roic > nopat_margin > operating_margin > ebitda_margin > employee_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "other_expenses_pct": {
+              "name": "Other expenses % of sales",
+              "t0": 0.217943,
+              "t1": 0.234052,
+              "change": 0.016109,
+              "contribution": -0.029372,
+              "share_of_root": 0.325153,
+              "path": "roic > nopat_margin > operating_margin > ebitda_margin > other_expenses_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "dep_to_sales": {
+              "name": "Depreciation / sales",
+              "t0": 0.024878,
+              "t1": 0.034534,
+              "change": 0.009656,
+              "contribution": -0.017606,
+              "share_of_root": 0.194899,
+              "path": "roic > nopat_margin > operating_margin > dep_to_sales",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "ic_turnover": {
+              "name": "Invested-capital turnover",
+              "t0": 2.861423,
+              "t1": 2.134043,
+              "change": -0.72738,
+              "contribution": -0.082989,
+              "share_of_root": 0.918704,
+              "path": "roic > ic_turnover",
+              "leaf": false,
+              "unit": "x"
+            },
+            "nb_to_sales": {
+              "name": "Net block / sales",
+              "t0": 0.16367,
+              "t1": 0.265016,
+              "change": 0.101345,
+              "contribution": -0.070607,
+              "share_of_root": 0.781633,
+              "path": "roic > ic_turnover > nb_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "cwip_to_sales": {
+              "name": "CWIP / sales",
+              "t0": 0.020964,
+              "t1": 0.043604,
+              "change": 0.02264,
+              "contribution": -0.015773,
+              "share_of_root": 0.174614,
+              "path": "roic > ic_turnover > cwip_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "receivables_to_sales": {
+              "name": "Receivables / sales",
+              "t0": 0.123351,
+              "t1": 0.123308,
+              "change": -4.3e-05,
+              "contribution": 3e-05,
+              "share_of_root": -0.000331,
+              "path": "roic > ic_turnover > receivables_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "inventory_to_sales": {
+              "name": "Inventory / sales",
+              "t0": 0.179242,
+              "t1": 0.175123,
+              "change": -0.00412,
+              "contribution": 0.00287,
+              "share_of_root": -0.031773,
+              "path": "roic > ic_turnover > inventory_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "other_assets_rest_to_sales": {
+              "name": "Other assets (loans, advances, other) / sales",
+              "t0": 0.085722,
+              "t1": 0.112832,
+              "change": 0.02711,
+              "contribution": -0.018888,
+              "share_of_root": 0.209089,
+              "path": "roic > ic_turnover > other_assets_rest_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "other_liabilities_to_sales": {
+              "name": "Other liabilities / sales",
+              "t0": 0.223472,
+              "t1": 0.251287,
+              "change": 0.027815,
+              "contribution": 0.019379,
+              "share_of_root": -0.214527,
+              "path": "roic > ic_turnover > other_liabilities_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            }
+          },
           "text": "Return on invested capital moved from 33.1% to 24.0% (FY23->FY26). Largest drivers: Materials % of sales (-4.3pp) -> +7.8pp (-86% of the change); Net block / sales (+37 days of sales) -> -7.1pp (78% of the change); Employee cost % of sales (+2.0pp) -> -3.6pp (40% of the change)."
         },
         "5y": {
@@ -1077,6 +2198,184 @@
               "text": "Net block / sales (-5 days of sales) -> +1.0pp (-8% of the change)"
             }
           ],
+          "nodes": {
+            "roic": {
+              "name": "Return on invested capital",
+              "t0": 0.356252,
+              "t1": 0.240181,
+              "change": -0.116071,
+              "contribution": -0.116071,
+              "share_of_root": 1.0,
+              "path": "roic",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "nopat_margin": {
+              "name": "NOPAT margin",
+              "t0": 0.139454,
+              "t1": 0.112548,
+              "change": -0.026906,
+              "contribution": -0.06311,
+              "share_of_root": 0.543721,
+              "path": "roic > nopat_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "nopat_tax_factor": {
+              "name": "NOPAT tax factor",
+              "t0": 0.745002,
+              "t1": 0.732029,
+              "change": -0.012974,
+              "contribution": -0.005172,
+              "share_of_root": 0.04456,
+              "path": "roic > nopat_margin > nopat_tax_factor",
+              "leaf": true,
+              "unit": "ratio"
+            },
+            "operating_margin": {
+              "name": "Operating (EBIT excl. other income) margin",
+              "t0": 0.187186,
+              "t1": 0.153747,
+              "change": -0.033438,
+              "contribution": -0.057938,
+              "share_of_root": 0.499161,
+              "path": "roic > nopat_margin > operating_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "ebitda_margin": {
+              "name": "EBITDA margin",
+              "t0": 0.223629,
+              "t1": 0.188282,
+              "change": -0.035347,
+              "contribution": -0.061244,
+              "share_of_root": 0.527648,
+              "path": "roic > nopat_margin > operating_margin > ebitda_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "materials_pct": {
+              "name": "Materials % of sales",
+              "t0": 0.475899,
+              "t1": 0.498705,
+              "change": 0.022806,
+              "contribution": -0.039515,
+              "share_of_root": 0.340439,
+              "path": "roic > nopat_margin > operating_margin > ebitda_margin > materials_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "employee_pct": {
+              "name": "Employee cost % of sales",
+              "t0": 0.071276,
+              "t1": 0.078962,
+              "change": 0.007685,
+              "contribution": -0.013316,
+              "share_of_root": 0.114721,
+              "path": "roic > nopat_margin > operating_margin > ebitda_margin > employee_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "other_expenses_pct": {
+              "name": "Other expenses % of sales",
+              "t0": 0.229196,
+              "t1": 0.234052,
+              "change": 0.004856,
+              "contribution": -0.008414,
+              "share_of_root": 0.072489,
+              "path": "roic > nopat_margin > operating_margin > ebitda_margin > other_expenses_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "dep_to_sales": {
+              "name": "Depreciation / sales",
+              "t0": 0.036443,
+              "t1": 0.034534,
+              "change": -0.001908,
+              "contribution": 0.003307,
+              "share_of_root": -0.028487,
+              "path": "roic > nopat_margin > operating_margin > dep_to_sales",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "ic_turnover": {
+              "name": "Invested-capital turnover",
+              "t0": 2.55462,
+              "t1": 2.134043,
+              "change": -0.420577,
+              "contribution": -0.052961,
+              "share_of_root": 0.456279,
+              "path": "roic > ic_turnover",
+              "leaf": false,
+              "unit": "x"
+            },
+            "nb_to_sales": {
+              "name": "Net block / sales",
+              "t0": 0.279348,
+              "t1": 0.265016,
+              "change": -0.014332,
+              "contribution": 0.009839,
+              "share_of_root": -0.084766,
+              "path": "roic > ic_turnover > nb_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "cwip_to_sales": {
+              "name": "CWIP / sales",
+              "t0": 0.007443,
+              "t1": 0.043604,
+              "change": 0.036161,
+              "contribution": -0.024824,
+              "share_of_root": 0.213871,
+              "path": "roic > ic_turnover > cwip_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "receivables_to_sales": {
+              "name": "Receivables / sales",
+              "t0": 0.101263,
+              "t1": 0.123308,
+              "change": 0.022045,
+              "contribution": -0.015134,
+              "share_of_root": 0.130384,
+              "path": "roic > ic_turnover > receivables_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "inventory_to_sales": {
+              "name": "Inventory / sales",
+              "t0": 0.165534,
+              "t1": 0.175123,
+              "change": 0.009589,
+              "contribution": -0.006582,
+              "share_of_root": 0.056711,
+              "path": "roic > ic_turnover > inventory_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "other_assets_rest_to_sales": {
+              "name": "Other assets (loans, advances, other) / sales",
+              "t0": 0.099117,
+              "t1": 0.112832,
+              "change": 0.013714,
+              "contribution": -0.009415,
+              "share_of_root": 0.081112,
+              "path": "roic > ic_turnover > other_assets_rest_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "other_liabilities_to_sales": {
+              "name": "Other liabilities / sales",
+              "t0": 0.261257,
+              "t1": 0.251287,
+              "change": -0.00997,
+              "contribution": -0.006844,
+              "share_of_root": 0.058966,
+              "path": "roic > ic_turnover > other_liabilities_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            }
+          },
           "text": "Return on invested capital moved from 35.6% to 24.0% (FY21->FY26). Largest drivers: Materials % of sales (+2.3pp) -> -4.0pp (34% of the change); CWIP / sales (+13 days of sales) -> -2.5pp (21% of the change); Receivables / sales (+8 days of sales) -> -1.5pp (13% of the change)."
         }
       },
@@ -1135,6 +2434,63 @@
               "text": "adjusted_shares_cr (+0.000) -> -0.00 (-0% of the change)"
             }
           ],
+          "nodes": {
+            "eps_core": {
+              "name": "eps_core",
+              "t0": 38.232173,
+              "t1": 45.093307,
+              "change": 6.861134,
+              "contribution": 6.861134,
+              "share_of_root": 1.0,
+              "path": "eps_core",
+              "leaf": false,
+              "unit": "num"
+            },
+            "revenue_per_share": {
+              "name": "revenue_per_share",
+              "t0": 353.478107,
+              "t1": 370.971018,
+              "change": 17.492911,
+              "contribution": 2.007853,
+              "share_of_root": 0.292642,
+              "path": "eps_core > revenue_per_share",
+              "leaf": false,
+              "unit": "num"
+            },
+            "revenue": {
+              "name": "revenue",
+              "t0": 33905.62,
+              "t1": 35583.54,
+              "change": 1677.92,
+              "contribution": 2.007853,
+              "share_of_root": 0.292642,
+              "path": "eps_core > revenue_per_share > revenue",
+              "leaf": true,
+              "unit": "inr_cr"
+            },
+            "adjusted_shares_cr": {
+              "name": "adjusted_shares_cr",
+              "t0": 95.92,
+              "t1": 95.92,
+              "change": 0.0,
+              "contribution": -0.0,
+              "share_of_root": -0.0,
+              "path": "eps_core > revenue_per_share > adjusted_shares_cr",
+              "leaf": true,
+              "unit": "num"
+            },
+            "pat_margin": {
+              "name": "PAT margin",
+              "t0": 0.10816,
+              "t1": 0.121555,
+              "change": 0.013395,
+              "contribution": 4.853281,
+              "share_of_root": 0.707358,
+              "path": "eps_core > pat_margin",
+              "leaf": true,
+              "unit": "pct"
+            }
+          },
           "text": "eps_core moved from 38.23 to 45.09 (FY25->FY26). Largest drivers: PAT margin (+1.3pp) -> 4.85 (71% of the change); revenue (+1,678 cr) -> 2.01 (29% of the change); adjusted_shares_cr (+0.000) -> -0.00 (-0% of the change)."
         },
         "3y": {
@@ -1186,6 +2542,63 @@
               "text": "adjusted_shares_cr (+0.000) -> -0.00 (-0% of the change)"
             }
           ],
+          "nodes": {
+            "eps_core": {
+              "name": "eps_core",
+              "t0": 42.811197,
+              "t1": 45.093307,
+              "change": 2.28211,
+              "contribution": 2.28211,
+              "share_of_root": 1.0,
+              "path": "eps_core",
+              "leaf": false,
+              "unit": "num"
+            },
+            "revenue_per_share": {
+              "name": "revenue_per_share",
+              "t0": 359.555776,
+              "t1": 370.971018,
+              "change": 11.415242,
+              "contribution": 1.373403,
+              "share_of_root": 0.601813,
+              "path": "eps_core > revenue_per_share",
+              "leaf": false,
+              "unit": "num"
+            },
+            "revenue": {
+              "name": "revenue",
+              "t0": 34488.59,
+              "t1": 35583.54,
+              "change": 1094.95,
+              "contribution": 1.373403,
+              "share_of_root": 0.601813,
+              "path": "eps_core > revenue_per_share > revenue",
+              "leaf": true,
+              "unit": "inr_cr"
+            },
+            "adjusted_shares_cr": {
+              "name": "adjusted_shares_cr",
+              "t0": 95.92,
+              "t1": 95.92,
+              "change": 0.0,
+              "contribution": -0.0,
+              "share_of_root": -0.0,
+              "path": "eps_core > revenue_per_share > adjusted_shares_cr",
+              "leaf": true,
+              "unit": "num"
+            },
+            "pat_margin": {
+              "name": "PAT margin",
+              "t0": 0.119067,
+              "t1": 0.121555,
+              "change": 0.002488,
+              "contribution": 0.908708,
+              "share_of_root": 0.398187,
+              "path": "eps_core > pat_margin",
+              "leaf": true,
+              "unit": "pct"
+            }
+          },
           "text": "eps_core moved from 42.81 to 45.09 (FY23->FY26). Largest drivers: revenue (+1,095 cr) -> 1.37 (60% of the change); PAT margin (+0.2pp) -> 0.91 (40% of the change); adjusted_shares_cr (+0.000) -> -0.00 (-0% of the change)."
         },
         "5y": {
@@ -1237,6 +2650,63 @@
               "text": "adjusted_shares_cr (+0.000) -> -0.00 (-0% of the change)"
             }
           ],
+          "nodes": {
+            "eps_core": {
+              "name": "eps_core",
+              "t0": 32.728211,
+              "t1": 45.093307,
+              "change": 12.365096,
+              "contribution": 12.365096,
+              "share_of_root": 1.0,
+              "path": "eps_core",
+              "leaf": false,
+              "unit": "num"
+            },
+            "revenue_per_share": {
+              "name": "revenue_per_share",
+              "t0": 226.363532,
+              "t1": 370.971018,
+              "change": 144.607485,
+              "contribution": 19.058345,
+              "share_of_root": 1.541302,
+              "path": "eps_core > revenue_per_share",
+              "leaf": false,
+              "unit": "num"
+            },
+            "revenue": {
+              "name": "revenue",
+              "t0": 21712.79,
+              "t1": 35583.54,
+              "change": 13870.75,
+              "contribution": 19.058345,
+              "share_of_root": 1.541302,
+              "path": "eps_core > revenue_per_share > revenue",
+              "leaf": true,
+              "unit": "inr_cr"
+            },
+            "adjusted_shares_cr": {
+              "name": "adjusted_shares_cr",
+              "t0": 95.92,
+              "t1": 95.92,
+              "change": 0.0,
+              "contribution": -0.0,
+              "share_of_root": -0.0,
+              "path": "eps_core > revenue_per_share > adjusted_shares_cr",
+              "leaf": true,
+              "unit": "num"
+            },
+            "pat_margin": {
+              "name": "PAT margin",
+              "t0": 0.144583,
+              "t1": 0.121555,
+              "change": -0.023028,
+              "contribution": -6.693249,
+              "share_of_root": -0.541302,
+              "path": "eps_core > pat_margin",
+              "leaf": true,
+              "unit": "pct"
+            }
+          },
           "text": "eps_core moved from 32.73 to 45.09 (FY21->FY26). Largest drivers: revenue (+13,871 cr) -> 19.06 (154% of the change); PAT margin (-2.3pp) -> -6.69 (-54% of the change); adjusted_shares_cr (+0.000) -> -0.00 (-0% of the change)."
         }
       },
@@ -1258,7 +2728,11 @@
           "e": 6699.73,
           "e3": 6259.84
         },
-        "text": "Borrowings have outgrown EBITDA for 3 consecutive years (debt Rs 1,933 cr to Rs 3,929 cr; EBITDA Rs 6,260 cr to Rs 6,700 cr): leverage is rising faster than the capacity to service it."
+        "text": "Borrowings have outgrown EBITDA for 3 consecutive years (debt Rs 1,933 cr to Rs 3,929 cr; EBITDA Rs 6,260 cr to Rs 6,700 cr): leverage is rising faster than the capacity to service it.",
+        "condition": "all_last('debt_vs_ebitda_growth', 3, '>', 0)",
+        "applies": [
+          "NF"
+        ]
       },
       {
         "id": "R03",
@@ -1271,7 +2745,11 @@
           "inc": 0.004581,
           "icg": 0.339002
         },
-        "text": "Invested capital grew 33.9% over 3 years but the capital added earned only 0.5% (WACC 11.9%): incremental investment is diluting returns."
+        "text": "Invested capital grew 33.9% over 3 years but the capital added earned only 0.5% (WACC 11.9%): incremental investment is diluting returns.",
+        "condition": "m('incremental_roic_3y') < wacc and pchg('invested_capital', 3) > 0.30",
+        "applies": [
+          "NF"
+        ]
       },
       {
         "id": "V01",
@@ -1284,7 +2762,11 @@
           "imp": 0.240922,
           "gap": 0.183404
         },
-        "text": "Today's EV implies 24.1% a year FCF growth for 10 years, +18.3pp above the growth delivered over the last 5 years: the price needs an acceleration that has not happened yet."
+        "text": "Today's EV implies 24.1% a year FCF growth for 10 years, +18.3pp above the growth delivered over the last 5 years: the price needs an acceleration that has not happened yet.",
+        "condition": "m('implied_minus_delivered_growth') > 0.05",
+        "applies": [
+          "NF"
+        ]
       },
       {
         "id": "V03",
@@ -1298,7 +2780,11 @@
           "j": 3.015719,
           "r": 3.452776
         },
-        "text": "P/B of 10.4x is 3.5x the 3.0x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+        "text": "P/B of 10.4x is 3.5x the 3.0x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise.",
+        "condition": "m('pb_to_justified_pb') > 1.5",
+        "applies": [
+          "ALL"
+        ]
       },
       {
         "id": "C04",
@@ -1311,7 +2797,11 @@
           "now": 1.097005,
           "then": 1.415272
         },
-        "text": "Asset turnover fell from 1.4x to 1.1x over 3 years: assets are growing much faster than revenue."
+        "text": "Asset turnover fell from 1.4x to 1.1x over 3 years: assets are growing much faster than revenue.",
+        "condition": "pchg('asset_turnover', 3) < -0.20",
+        "applies": [
+          "NF"
+        ]
       },
       {
         "id": "V04",
@@ -1324,7 +2814,11 @@
           "r": 6.276614,
           "evic": 12.719262
         },
-        "text": "EV/IC is 12.7x, 6.3x what current ROIC/WACC would support in steady state."
+        "text": "EV/IC is 12.7x, 6.3x what current ROIC/WACC would support in steady state.",
+        "condition": "m('ev_ic_to_roic_wacc') > 1.5",
+        "applies": [
+          "NF"
+        ]
       }
     ],
     "clear": [
@@ -7575,6 +9069,11 @@
       "text": "Gross-margin sensitivity to commodities: n/a [no value for the as-of year] Note: n/a in FY26: missing gross_margin_change_1y vs commodity_change_1y: 0 points (< 4)"
     }
   },
+  "peers": {
+    "basis": "same archetype in data/universe.csv, computed as of the same fiscal year",
+    "tickers": [],
+    "values": {}
+  },
   "sector_references": {
     "industries": [
       "Chemical (Specialty)"
@@ -7802,5 +9301,489 @@
       "fy": null,
       "text": "2 manual KPI values: 0 verified against the primary document (Y), 2 from secondary sources (N). Provenance is in analysis.json (manual_kpis)."
     }
-  ]
+  ],
+  "findings": {
+    "verdict": "ASIAN PAINTS LTD creates value: ROIC 24.0% vs WACC 11.8% in FY26. Overall GREEN (62/100); strongest pillar 5 Cash and earnings quality, weakest 8 Valuation; 1 high-severity flag.",
+    "strengths": [
+      {
+        "kind": "metric",
+        "id": "beneish_m_score",
+        "pillar": "cash_quality",
+        "rag": "green",
+        "severity": 0.630936,
+        "confidence": 1.0,
+        "score": 0.630936,
+        "name": "Beneish M-score (Screener proxies)",
+        "number": "-2.76",
+        "context": "GREEN vs band: red ≥ -1.78, green ≤ -2.22",
+        "trend": "improving −0.26/yr over FY22-FY26",
+        "chain": null,
+        "chain_source": null,
+        "text": "Beneish M-score (Screener proxies): -2.76 (GREEN vs band: red ≥ -1.78, green ≤ -2.22); improving −0.26/yr over FY22-FY26"
+      },
+      {
+        "kind": "metric",
+        "id": "ebit_margin",
+        "pillar": "margins",
+        "rag": "green",
+        "severity": 0.545402,
+        "confidence": 1.0,
+        "score": 0.545402,
+        "name": "EBIT margin",
+        "number": "17.4%",
+        "context": "GREEN vs band: red ≤ 7.8%, green ≥ 11.8%",
+        "trend": "stable +0.4 pts/yr over FY22-FY26",
+        "chain": "+0.5 pts over 3y; 157% from core other income / sales, partly offset by the other drivers; core other income / sales rose 1.3% → 2.0%",
+        "chain_source": {
+          "tree": "roe_dupont",
+          "window": "3y"
+        },
+        "text": "EBIT margin: 17.4% (GREEN vs band: red ≤ 7.8%, green ≥ 11.8%); stable +0.4 pts/yr over FY22-FY26; +0.5 pts over 3y; 157% from core other income / sales, partly offset by the other drivers; core other income / sales rose 1.3% → 2.0%"
+      },
+      {
+        "kind": "metric",
+        "id": "ebitda_margin",
+        "pillar": "margins",
+        "rag": "green",
+        "severity": 0.513838,
+        "confidence": 1.0,
+        "score": 0.513838,
+        "name": "EBITDA margin",
+        "number": "18.8%",
+        "context": "GREEN vs band: red ≤ 9.7%, green ≥ 14.6%",
+        "trend": "stable +0.4 pts/yr over FY22-FY26",
+        "chain": "+0.7 pts over 3y; 632% from materials % of sales, partly offset by the other drivers; materials % of sales fell 54.2% → 49.9%",
+        "chain_source": {
+          "tree": "roe_dupont",
+          "window": "3y"
+        },
+        "text": "EBITDA margin: 18.8% (GREEN vs band: red ≤ 9.7%, green ≥ 14.6%); stable +0.4 pts/yr over FY22-FY26; +0.7 pts over 3y; 632% from materials % of sales, partly offset by the other drivers; materials % of sales fell 54.2% → 49.9%"
+      },
+      {
+        "kind": "metric",
+        "id": "accruals_ratio",
+        "pillar": "cash_quality",
+        "rag": "green",
+        "severity": 0.496027,
+        "confidence": 1.0,
+        "score": 0.496027,
+        "name": "Accruals ratio",
+        "number": "−8.5%",
+        "context": "GREEN vs band: red ≥ 10.0%, green ≤ 0.0%",
+        "trend": "improving −3.8 pts/yr over FY22-FY26",
+        "chain": null,
+        "chain_source": null,
+        "text": "Accruals ratio: −8.5% (GREEN vs band: red ≥ 10.0%, green ≤ 0.0%); improving −3.8 pts/yr over FY22-FY26"
+      },
+      {
+        "kind": "metric",
+        "id": "roe",
+        "pillar": "returns",
+        "rag": "green",
+        "severity": 0.47735,
+        "confidence": 0.9,
+        "score": 0.429615,
+        "name": "Return on equity",
+        "number": "21.2%",
+        "context": "GREEN vs band: red ≤ 12.0%, green ≥ 17.0%",
+        "trend": "deteriorating −1.1 pts/yr over FY22-FY26",
+        "chain": "−6.3 pts over 3y; 97% from asset turnover; asset turnover fell because net block / sales rose 60 days → 97 days",
+        "chain_source": {
+          "tree": "roe_dupont",
+          "window": "3y"
+        },
+        "text": "Return on equity: 21.2% (GREEN vs band: red ≤ 12.0%, green ≥ 17.0%); deteriorating −1.1 pts/yr over FY22-FY26; −6.3 pts over 3y; 97% from asset turnover; asset turnover fell because net block / sales rose 60 days → 97 days"
+      },
+      {
+        "kind": "metric",
+        "id": "q_revenue_yoy",
+        "pillar": "growth",
+        "rag": "green",
+        "severity": 0.75,
+        "confidence": 0.54,
+        "score": 0.405,
+        "name": "Latest quarter revenue YoY",
+        "number": "16.9%",
+        "context": "GREEN vs band: red ≤ 4.0%, green ≥ 8.9%",
+        "trend": "",
+        "chain": null,
+        "chain_source": null,
+        "text": "Latest quarter revenue YoY: 16.9% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "kind": "flag",
+        "id": "B01",
+        "pillar": "balance_sheet",
+        "severity_label": "high",
+        "severity": 1.0,
+        "confidence": 1.0,
+        "score": 1.0,
+        "name": "Debt growing faster than EBITDA for three years",
+        "covers": [
+          "debt_vs_ebitda_growth"
+        ],
+        "text": "B01 Debt growing faster than EBITDA for three years: Borrowings have outgrown EBITDA for 3 consecutive years (debt Rs 1,933 cr to Rs 3,929 cr; EBITDA Rs 6,260 cr to Rs 6,700 cr): leverage is rising faster than the capacity to service it."
+      },
+      {
+        "kind": "flag",
+        "id": "R03",
+        "pillar": "returns",
+        "severity_label": "medium",
+        "severity": 0.6,
+        "confidence": 1.0,
+        "score": 0.6,
+        "name": "New capital earning below its cost",
+        "covers": [
+          "incremental_roic_3y"
+        ],
+        "text": "R03 New capital earning below its cost: Invested capital grew 33.9% over 3 years but the capital added earned only 0.5% (WACC 11.9%): incremental investment is diluting returns."
+      },
+      {
+        "kind": "flag",
+        "id": "V01",
+        "pillar": "valuation",
+        "severity_label": "medium",
+        "severity": 0.6,
+        "confidence": 1.0,
+        "score": 0.6,
+        "name": "Priced for acceleration",
+        "covers": [
+          "implied_minus_delivered_growth"
+        ],
+        "text": "V01 Priced for acceleration: Today's EV implies 24.1% a year FCF growth for 10 years, +18.3pp above the growth delivered over the last 5 years: the price needs an acceleration that has not happened yet."
+      },
+      {
+        "kind": "flag",
+        "id": "V03",
+        "pillar": "valuation",
+        "severity_label": "medium",
+        "severity": 0.6,
+        "confidence": 1.0,
+        "score": 0.6,
+        "name": "P/B well above what returns justify",
+        "covers": [
+          "pb_to_justified_pb"
+        ],
+        "text": "V03 P/B well above what returns justify: P/B of 10.4x is 3.5x the 3.0x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+      },
+      {
+        "kind": "metric",
+        "id": "revenue_cagr_3y",
+        "pillar": "growth",
+        "rag": "red",
+        "severity": 0.609396,
+        "confidence": 0.9,
+        "score": 0.548457,
+        "name": "Revenue CAGR 3y",
+        "number": "1.0%",
+        "context": "RED vs band: red ≤ 4.0%, green ≥ 8.9%",
+        "trend": "deteriorating −4.2 pts/yr over FY22-FY26",
+        "chain": null,
+        "chain_source": null,
+        "text": "Revenue CAGR 3y: 1.0% (RED vs band: red ≤ 4.0%, green ≥ 8.9%); deteriorating −4.2 pts/yr over FY22-FY26"
+      },
+      {
+        "kind": "metric",
+        "id": "eps_cagr_3y",
+        "pillar": "growth",
+        "rag": "red",
+        "severity": 0.556995,
+        "confidence": 0.9,
+        "score": 0.501296,
+        "name": "EPS CAGR 3y",
+        "number": "1.7%",
+        "context": "RED vs band: red ≤ 4.0%, green ≥ 8.9%",
+        "trend": "deteriorating −2.9 pts/yr over FY22-FY26",
+        "chain": null,
+        "chain_source": null,
+        "text": "EPS CAGR 3y: 1.7% (RED vs band: red ≤ 4.0%, green ≥ 8.9%); deteriorating −2.9 pts/yr over FY22-FY26"
+      }
+    ],
+    "watch": [
+      {
+        "kind": "metric",
+        "id": "roic_wacc_spread",
+        "pillar": "returns",
+        "rag": "green",
+        "severity": 0.84515,
+        "confidence": 0.9,
+        "score": 0.760635,
+        "name": "ROIC - WACC",
+        "number": "+12.2pp",
+        "context": "GREEN vs band: red ≤ +0.0pp, green ≥ +5.0pp",
+        "trend": "deteriorating −2.1 pts/yr over FY22-FY26",
+        "chain": null,
+        "chain_source": null,
+        "text": "ROIC - WACC: +12.2pp (GREEN vs band: red ≤ +0.0pp, green ≥ +5.0pp); deteriorating −2.1 pts/yr over FY22-FY26"
+      },
+      {
+        "kind": "metric",
+        "id": "roic",
+        "pillar": "returns",
+        "rag": "green",
+        "severity": 0.626698,
+        "confidence": 0.9,
+        "score": 0.564028,
+        "name": "Return on invested capital",
+        "number": "24.0%",
+        "context": "GREEN vs band: red ≤ 11.9%, green ≥ 16.9%",
+        "trend": "deteriorating −2.1 pts/yr over FY22-FY26",
+        "chain": "−9.0 pts over 3y; 92% from invested-capital turnover; invested-capital turnover fell because net block / sales rose 60 days → 97 days",
+        "chain_source": {
+          "tree": "roic_tree",
+          "window": "3y"
+        },
+        "text": "Return on invested capital: 24.0% (GREEN vs band: red ≤ 11.9%, green ≥ 16.9%); deteriorating −2.1 pts/yr over FY22-FY26; −9.0 pts over 3y; 92% from invested-capital turnover; invested-capital turnover fell because net block / sales rose 60 days → 97 days"
+      },
+      {
+        "kind": "metric",
+        "id": "revenue_cagr_5y",
+        "pillar": "growth",
+        "rag": "amber",
+        "severity": 0.549408,
+        "confidence": 0.9,
+        "score": 0.494468,
+        "name": "Revenue CAGR 5y",
+        "number": "10.4%",
+        "context": "AMBER vs band: red ≤ 4.0%, green ≥ 8.9%",
+        "trend": "deteriorating −1.2 pts/yr over FY22-FY26",
+        "chain": null,
+        "chain_source": null,
+        "text": "Revenue CAGR 5y: 10.4% (AMBER vs band: red ≤ 4.0%, green ≥ 8.9%); deteriorating −1.2 pts/yr over FY22-FY26"
+      },
+      {
+        "kind": "metric",
+        "id": "interest_cover",
+        "pillar": "balance_sheet",
+        "rag": "green",
+        "severity": 0.419764,
+        "confidence": 1.0,
+        "score": 0.419764,
+        "name": "Interest cover",
+        "number": "31.72x",
+        "context": "GREEN vs band: red ≤ 2.50x, green ≥ 4.25x",
+        "trend": "deteriorating −4.32x/yr over FY22-FY26",
+        "chain": null,
+        "chain_source": null,
+        "text": "Interest cover: 31.72x (GREEN vs band: red ≤ 2.50x, green ≥ 4.25x); deteriorating −4.32x/yr over FY22-FY26"
+      },
+      {
+        "kind": "metric",
+        "id": "ic_turnover",
+        "pillar": "capital_efficiency",
+        "rag": "amber",
+        "severity": 0.363852,
+        "confidence": 1.0,
+        "score": 0.363852,
+        "name": "Invested-capital turnover",
+        "number": "2.13x",
+        "context": "AMBER vs band: red ≤ 1.40x, green ≥ 2.10x",
+        "trend": "deteriorating −0.23x/yr over FY22-FY26",
+        "chain": "−0.73x over 3y; 85% from net block / sales; net block / sales rose 60 days → 97 days",
+        "chain_source": {
+          "tree": "roic_tree",
+          "window": "3y"
+        },
+        "text": "Invested-capital turnover: 2.13x (AMBER vs band: red ≤ 1.40x, green ≥ 2.10x); deteriorating −0.23x/yr over FY22-FY26; −0.73x over 3y; 85% from net block / sales; net block / sales rose 60 days → 97 days"
+      },
+      {
+        "kind": "metric",
+        "id": "other_income_to_pbt",
+        "pillar": "margins",
+        "rag": "amber",
+        "severity": 0.586,
+        "confidence": 0.6,
+        "score": 0.3516,
+        "name": "Other income / PBT",
+        "number": "12.1%",
+        "context": "AMBER vs band: red ≥ 25.0%, green ≤ 10.0%, indicative",
+        "trend": "deteriorating +0.9 pts/yr over FY22-FY26",
+        "chain": null,
+        "chain_source": null,
+        "text": "Other income / PBT: 12.1% (AMBER vs band: red ≥ 25.0%, green ≤ 10.0%, indicative); deteriorating +0.9 pts/yr over FY22-FY26"
+      }
+    ],
+    "bull": [
+      {
+        "ref": "beneish_m_score",
+        "text": "Beneish M-score (Screener proxies): -2.76 (GREEN vs band: red ≥ -1.78, green ≤ -2.22); improving −0.26/yr over FY22-FY26 [beneish_m_score]"
+      },
+      {
+        "ref": "ebit_margin",
+        "text": "EBIT margin: 17.4% (GREEN vs band: red ≤ 7.8%, green ≥ 11.8%); stable +0.4 pts/yr over FY22-FY26; +0.5 pts over 3y; 157% from core other income / sales, partly offset by the other drivers; core other income / sales rose 1.3% → 2.0% [ebit_margin]"
+      },
+      {
+        "ref": "ebitda_margin",
+        "text": "EBITDA margin: 18.8% (GREEN vs band: red ≤ 9.7%, green ≥ 14.6%); stable +0.4 pts/yr over FY22-FY26; +0.7 pts over 3y; 632% from materials % of sales, partly offset by the other drivers; materials % of sales fell 54.2% → 49.9% [ebitda_margin]"
+      },
+      {
+        "ref": "accruals_ratio",
+        "text": "Accruals ratio: −8.5% (GREEN vs band: red ≥ 10.0%, green ≤ 0.0%); improving −3.8 pts/yr over FY22-FY26 [accruals_ratio]"
+      },
+      {
+        "ref": "economic_profit",
+        "text": "Creates value: ROIC 24.0% vs WACC 11.8%; economic profit Rs 2,029 cr in FY26, positive in 9 of 9 years [economic_profit]"
+      },
+      {
+        "ref": "pe_percentile_10y",
+        "text": "P/E 45.99x sits at the 0th percentile of its own 10-year history [pe_percentile_10y]"
+      },
+      {
+        "ref": "pe",
+        "text": "P/E 45.99x vs Damodaran India industry 63.77x (Chemical (Specialty)) [pe]"
+      },
+      {
+        "ref": "pb_percentile_10y",
+        "text": "P/B 10.41x sits at the 10th percentile of its own 10-year history [pb_percentile_10y]"
+      }
+    ],
+    "bear": [
+      {
+        "ref": "B01",
+        "text": "B01 Debt growing faster than EBITDA for three years: Borrowings have outgrown EBITDA for 3 consecutive years (debt Rs 1,933 cr to Rs 3,929 cr; EBITDA Rs 6,260 cr to Rs 6,700 cr): leverage is rising faster than the capacity to service it. [B01]"
+      },
+      {
+        "ref": "R03",
+        "text": "R03 New capital earning below its cost: Invested capital grew 33.9% over 3 years but the capital added earned only 0.5% (WACC 11.9%): incremental investment is diluting returns. [R03]"
+      },
+      {
+        "ref": "V01",
+        "text": "V01 Priced for acceleration: Today's EV implies 24.1% a year FCF growth for 10 years, +18.3pp above the growth delivered over the last 5 years: the price needs an acceleration that has not happened yet. [V01]"
+      },
+      {
+        "ref": "V03",
+        "text": "V03 P/B well above what returns justify: P/B of 10.4x is 3.5x the 3.0x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise. [V03]"
+      },
+      {
+        "ref": "pb",
+        "text": "P/B 10.41x vs Damodaran India industry 3.99x (Chemical (Specialty)) [pb]"
+      },
+      {
+        "ref": "ev_ebitda",
+        "text": "EV/EBITDA 29.93x vs Damodaran India industry 21.95x (Chemical (Specialty)) [ev_ebitda]"
+      },
+      {
+        "ref": "implied_minus_delivered_growth",
+        "text": "Market implies 24.1% FCF growth for 10 years vs 5.8% delivered (gap +18.3 pts) [implied_minus_delivered_growth]"
+      },
+      {
+        "ref": "roe_dupont",
+        "text": "Largest negative driver of return on equity over 3y: Net block / sales (+37 days of sales) -> -3.1pp (48% of the change) [roe_dupont]"
+      }
+    ],
+    "missing_data": {
+      "kpis": [
+        {
+          "kpi": "ad_promo_cr",
+          "required": true,
+          "description": "Advertising and promotion expense for the year",
+          "years_present": [],
+          "metrics": [
+            "ad_spend_pct"
+          ],
+          "flags": [
+            "FM02"
+          ],
+          "trees": [],
+          "lines": [
+            "ad_promo_cr (Advertising and promotion expense for the year) is missing at FY26.",
+            "1 metric cannot be computed: A&P % of sales.",
+            "Red-flag rules that cannot be checked: FM02."
+          ]
+        },
+        {
+          "kpi": "volume_growth_pct",
+          "required": true,
+          "description": "Underlying volume growth for the year (as reported)",
+          "years_present": [
+            "FY24",
+            "FY25"
+          ],
+          "metrics": [
+            "price_mix_growth",
+            "volume_growth"
+          ],
+          "flags": [
+            "FM01"
+          ],
+          "trees": [],
+          "lines": [
+            "volume_growth_pct (Underlying volume growth for the year (as reported)) is missing at FY26; present for FY24, FY25.",
+            "2 metrics cannot be computed: Price/mix growth, Volume growth.",
+            "Red-flag rules that cannot be checked: FM01."
+          ]
+        },
+        {
+          "kpi": "commodity_index",
+          "required": false,
+          "description": "Analyst-chosen input-cost index level for the year (e.g. a WPI component matching the company's basket); document the choice in source_url",
+          "years_present": [],
+          "metrics": [
+            "commodity_change_1y",
+            "gm_commodity_pass_through"
+          ],
+          "flags": [
+            "FM04"
+          ],
+          "trees": [],
+          "lines": [
+            "commodity_index (Analyst-chosen input-cost index level for the year (e.g. a WPI component matching the company's basket); document the choice in source_url) is missing at FY26.",
+            "2 metrics cannot be computed: Commodity index change (1y), Gross-margin sensitivity to commodities.",
+            "Red-flag rules that cannot be checked: FM04."
+          ]
+        }
+      ],
+      "all_required_present": false,
+      "all_present_text": "All required KPIs for this archetype are present at FY26.",
+      "not_evaluable": [
+        {
+          "id": "A02",
+          "name": "Rising promoter pledge",
+          "missing": "promoter_pledge FY24"
+        },
+        {
+          "id": "A03",
+          "name": "Promoters selling down",
+          "missing": "promoter_holding_change_3y FY26"
+        },
+        {
+          "id": "A05",
+          "name": "Acquisition spend followed by falling ROIC",
+          "missing": "acquisition_roic_delta_3y FY26"
+        },
+        {
+          "id": "FM01",
+          "name": "Price-led growth with falling volumes",
+          "missing": "volume_growth FY26 [n/a in FY26: missing volume_growth_pct FY26 (manual KPI)]"
+        },
+        {
+          "id": "FM02",
+          "name": "Margin gain from cutting A&P",
+          "missing": "ad_spend_pct FY26 [n/a in FY26: missing ad_promo_cr FY26 (manual KPI)]"
+        },
+        {
+          "id": "FM04",
+          "name": "Gross margin down while commodities fell",
+          "missing": "commodity_change_1y FY26 [n/a in FY26: missing commodity_index FY25 (manual KPI)]"
+        }
+      ],
+      "unverified": {
+        "n": 2,
+        "total": 2,
+        "text": "2 of 2 manual KPI values (100%) are verified = N: taken from the cited page, not checked in the primary document."
+      },
+      "not_scored": [],
+      "estimates": [
+        "Negative cost line(s) other_exp=-2,028: Screener reclassification. Only materials, employee and the sum of all other cost lines (other_opex) are used.",
+        "No exceptional items detected in other income (robust outlier test).",
+        "Net profit differs from PBT - tax in 10 of 10 years (latest -69.34): minority interest (negative) and share of associates/JVs (positive) sit between PBT and net profit, so the export is consolidated and net profit is the owners' share. Equity excludes minority interest (Screener includes NCI in Other Liabilities); ROIC/ROCE capital therefore omits NCI unless data/manual supplies minority_interest.",
+        "Capex is not in the export. Proxy = change in net block + change in CWIP + depreciation (includes acquired fixed assets and Ind AS 116 right-of-use additions; impairments and disposals understate it). FCF = CFO - capex proxy.",
+        "Ind AS 116 adoption year FY20: no visible step in depreciation/opex/interest ratios."
+      ],
+      "driver_notes": []
+    },
+    "method": "severity x confidence; see config/scoring.yaml: report and engine/report/findings.py"
+  }
 }
