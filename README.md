@@ -41,7 +41,7 @@ After setup, everything runs offline. The requirements are pandas, numpy, openpy
 
 ## Usage
 
-Analyse one company. This writes `reports/<TICKER>/analysis.json` and `metrics.csv`:
+Analyse one company. This writes `reports/<TICKER>/report.html`, `analysis.xlsx`, `analysis.json` and `metrics.csv`:
 
 ```bash
 python -m engine analyse TCS
@@ -63,6 +63,12 @@ Parse and standardise only, into `data/processed/<TICKER>/` (CSVs + `notes.md`):
 
 ```bash
 python -m engine ingest --all
+```
+
+Compare 2-5 companies side by side. This writes `reports/compare.html`. Each company is taken at its universe as-of year; `--asof FY24` sets a common year:
+
+```bash
+python -m engine compare TCS INFY HDFCBANK
 ```
 
 List the metric registry (`--markdown` writes `docs/metrics.md`) and the red-flag rules (`--markdown` writes `docs/flags.md`):
@@ -126,7 +132,21 @@ To add a company:
   - driver decompositions (1y/3y/5y)
   - red flags with explanations
   - all data notes
+  - peers (same archetype, same as-of year), the full driver nodes, and `findings` (strengths, weaknesses, watch, bull and bear evidence, missing data)
 - **`reports/<TICKER>/metrics.csv`**: one row per metric, with FY columns and scores, ready for Excel.
+- **`reports/<TICKER>/report.html`**: the readable report, one self-contained file. Open it in a browser; print to PDF from the browser (A4 print styles open every panel). Sections:
+  1. header and one-line verdict
+  2. strengths, weaknesses and watch, each line with the number, trend and driver chain, ranked by severity × confidence
+  3. the interactive MECE tree: click a pillar for its metrics (10-year sparkline, level vs band or peers, trend, equation, meaning)
+  4. red flags with the rule and evidence
+  5. ROE and ROIC driver waterfalls (1y/3y/5y)
+  6. valuation vs history, peers and industry, and reverse-DCF implied vs delivered growth
+  7. missing data and what it blocks
+  8. the bull and bear case starter (financial evidence only)
+
+  Equations render with KaTeX from a CDN when online. Offline, they show as plain text and everything else works.
+- **`reports/<TICKER>/analysis.xlsx`**: a Summary sheet, one sheet per pillar (all metrics × years as numbers), Flags and Drivers.
+- **`reports/compare.html`**: from `python -m engine compare A B C` (2-5 tickers): pillar scores side by side, with the strongest and weakest metric per pillar.
 
 ## Configuration (every external benchmark carries a source URL and an as-of date)
 

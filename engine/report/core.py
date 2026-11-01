@@ -10,8 +10,8 @@ from typing import Dict, List, Optional
 import numpy as np
 import pandas as pd
 
-from . import __version__
-from .registry import PILLAR_NAMES, PILLARS, REGISTRY
+from .. import __version__
+from ..registry import PILLAR_NAMES, PILLARS, REGISTRY
 
 
 def _clean(o):
@@ -144,6 +144,9 @@ def _driver_texts(drivers: Dict) -> Dict:
                             + (f" ({share * 100:.0f}% of the change)" if share is not None and abs(d) > 1e-9 else ""),
                 })
             mids = {n: v for n, v in r["nodes"].items() if n != root and n not in r["leaves"]}
+            all_nodes = {n: {"name": REGISTRY[n].name if n in REGISTRY else n, "t0": v["t0"], "t1": v["t1"], "change": v["change"],
+                             "contribution": v["contribution"], "share_of_root": v["share_of_root"], "path": v["path"],
+                             "leaf": n in r["leaves"], "unit": _driver_unit(n)} for n, v in r["nodes"].items()}
             wins[w] = {
                 "status": "ok", "from": r["t0"], "to": r["t1"],
                 "root_from": r["nodes"][root]["t0"], "root_to": r["nodes"][root]["t1"], "root_change": d,
@@ -151,6 +154,7 @@ def _driver_texts(drivers: Dict) -> Dict:
                 "intermediate": {n: {"change": v["change"], "contribution": v["contribution"], "share_of_root": v["share_of_root"],
                                      "method": v["method"]} for n, v in mids.items()},
                 "top_drivers": tops,
+                "nodes": all_nodes,
                 "text": (f"{REGISTRY[root].name if root in REGISTRY else root} moved from {fmt(r['nodes'][root]['t0'], ru)} to "
                          f"{fmt(r['nodes'][root]['t1'], ru)} ({r['t0']}->{r['t1']}). Largest drivers: "
                          + "; ".join(x["text"] for x in tops[:3]) + "."),
@@ -202,7 +206,8 @@ def _pillar_text(p: str, pv: Dict, results: Dict, flags: List[Dict]) -> str:
             + (f" Flags: {', '.join(fl)}." if fl else ""))
 
 
-def build_report(comp, results: Dict, pillars: Dict, overall: Dict, flags: List[Dict], drivers: Dict, cfg, names: Dict) -> Dict:
+def build_report(comp, results: Dict, pillars: Dict, overall: Dict, flags: List[Dict], drivers: Dict, cfg, names: Dict,
+                 peer_table: Optional[Dict[str, Dict[str, float]]] = None) -> Dict:
     std, coc, metrics, ctx = comp.std, comp.coc, comp.metrics, comp.ctx
     last = std.last_fy
     fin = std.family != "non_financial"
@@ -223,7 +228,9 @@ def build_report(comp, results: Dict, pillars: Dict, overall: Dict, flags: List[
         pillars[p]["summary"] = _pillar_text(p, pillars[p], results, flags)
         pillars[p]["metrics"] = [mid for mid in metrics if REGISTRY[mid].pillar == p]
         pillars[p]["flags_triggered"] = [f["id"] for f in flags if f["pillar"] == p and f["status"] == "triggered"]
-    triggered = [f for f in flags if f["status"] == "triggered"]
+    rules = {r["id"]: r for r in cfg.rules_for(std.archetype)}
+    triggered = [{**f, "condition": rules.get(f["id"], {}).get("condition"), "applies": rules.get(f["id"], {}).get("applies")}
+                 for f in flags if f["status"] == "triggered"]
     sev_rank = {"high": 0, "medium": 1, "low": 2}
     triggered.sort(key=lambda f: (sev_rank[f["severity"]], f["id"]))
     snap = std.snapshot or {}
@@ -258,12 +265,25 @@ def build_report(comp, results: Dict, pillars: Dict, overall: Dict, flags: List[
             "counts": {s: sum(1 for f in triggered if f["severity"] == s) for s in ("high", "medium", "low")},
         },
         "metrics": mout,
+        "peers": _peer_section(peer_table or {}, mout),
         "sector_references": (cfg.sector.get("references") or {}).get(std.archetype),
         "sector": _sector_section(cfg, std, ctx, results, flags),
         "manual_kpis": _manual_section(cfg, std),
         "data_notes": std.notes,
     }
     return _clean(rep)
+
+
+def _peer_section(table: Dict[str, Dict[str, float]], mout: Dict) -> Dict:
+    """Same-archetype peers at the same as-of year: latest value per metric that this company also reports."""
+    tickers = sorted(table)
+    values = {}
+    for mid in mout:
+        row = {t: table[t][mid] for t in tickers if mid in table[t] and table[t][mid] is not None}
+        if row:
+            values[mid] = row
+    return {"basis": "same archetype in data/universe.csv, computed as of the same fiscal year", "tickers": tickers,
+            "values": values}
 
 
 def _sector_section(cfg, std, ctx, results: Dict, flags: List[Dict]) -> Dict:
@@ -351,13 +371,23 @@ def out_dir_for(paths, ticker: str, rep: Dict) -> Path:
     return base
 
 
-def write_outputs(rep: Dict, out_dir: Path) -> Dict[str, Path]:
+def write_outputs(rep: Dict, out_dir: Path, cfg=None, html: bool = True, xlsx: bool = True) -> Dict[str, Path]:
+    """analysis.json + metrics.csv, plus report.html and analysis.xlsx (Session 3)."""
     out_dir.mkdir(parents=True, exist_ok=True)
     pj = out_dir / "analysis.json"
     pj.write_text(json.dumps(rep, indent=2, ensure_ascii=False, sort_keys=False))
     pc = out_dir / "metrics.csv"
     metrics_frame(rep).to_csv(pc, index=False, float_format="%.6f")
-    return {"analysis": pj, "metrics": pc}
+    files = {"analysis": pj, "metrics": pc}
+    if html:
+        from .html import write_report_html
+
+        files["html"] = write_report_html(rep, out_dir, cfg)
+    if xlsx:
+        from .xlsx import write_xlsx
+
+        files["xlsx"] = write_xlsx(rep, out_dir, cfg)
+    return files
 
 
 def console_summary(rep: Dict) -> str:

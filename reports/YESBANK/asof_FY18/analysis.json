@@ -444,6 +444,63 @@
               "text": "adjusted_shares_cr (+2.060) -> -0.15 (-4% of the change)"
             }
           ],
+          "nodes": {
+            "eps_core": {
+              "name": "eps_core",
+              "t0": 14.633237,
+              "t1": 18.381329,
+              "change": 3.748092,
+              "contribution": 3.748092,
+              "share_of_root": 1.0,
+              "path": "eps_core",
+              "leaf": false,
+              "unit": "num"
+            },
+            "revenue_per_share": {
+              "name": "revenue_per_share",
+              "t0": 71.963722,
+              "t1": 88.009509,
+              "change": 16.045787,
+              "contribution": 3.308307,
+              "share_of_root": 0.882664,
+              "path": "eps_core > revenue_per_share",
+              "leaf": false,
+              "unit": "num"
+            },
+            "revenue": {
+              "name": "revenue",
+              "t0": 16425.0,
+              "t1": 20268.59,
+              "change": 3843.59,
+              "contribution": 3.455987,
+              "share_of_root": 0.922066,
+              "path": "eps_core > revenue_per_share > revenue",
+              "leaf": true,
+              "unit": "inr_cr"
+            },
+            "adjusted_shares_cr": {
+              "name": "adjusted_shares_cr",
+              "t0": 228.24,
+              "t1": 230.3,
+              "change": 2.06,
+              "contribution": -0.14768,
+              "share_of_root": -0.039401,
+              "path": "eps_core > revenue_per_share > adjusted_shares_cr",
+              "leaf": true,
+              "unit": "num"
+            },
+            "pat_margin": {
+              "name": "PAT margin",
+              "t0": 0.203342,
+              "t1": 0.208856,
+              "change": 0.005514,
+              "contribution": 0.439785,
+              "share_of_root": 0.117336,
+              "path": "eps_core > pat_margin",
+              "leaf": true,
+              "unit": "pct"
+            }
+          },
           "text": "eps_core moved from 14.63 to 18.38 (FY17->FY18). Largest drivers: revenue (+3,844 cr) -> 3.46 (92% of the change); PAT margin (+0.6pp) -> 0.44 (12% of the change); adjusted_shares_cr (+2.060) -> -0.15 (-4% of the change)."
         },
         "3y": {
@@ -512,7 +569,11 @@
           "g": 0.452851,
           "icg": 0.15113
         },
-        "text": "Assets grew 45.3% versus internal capital generation of 15.1% (+30.2pp gap): growth must be funded by fresh equity or thinner capital buffers."
+        "text": "Assets grew 45.3% versus internal capital generation of 15.1% (+30.2pp gap): growth must be funded by fresh equity or thinner capital buffers.",
+        "condition": "m('growth_minus_icg') > 0.15",
+        "applies": [
+          "BL"
+        ]
       },
       {
         "id": "B06",
@@ -526,7 +587,11 @@
           "prev": 0.102481,
           "g": 0.452851
         },
-        "text": "Total assets grew 45.3% in a year while equity/assets fell from 10.2% to 8.2%: the lender is growing faster than its capital, which is how most Indian lending blow-ups started."
+        "text": "Total assets grew 45.3% in a year while equity/assets fell from 10.2% to 8.2%: the lender is growing faster than its capital, which is how most Indian lending blow-ups started.",
+        "condition": "chg('equity_to_assets', 1) < -0.01 and pchg('total_assets', 1) > 0.25",
+        "applies": [
+          "BL"
+        ]
       },
       {
         "id": "B07",
@@ -538,7 +603,11 @@
         "values": {
           "d": 0.350196
         },
-        "text": "Deposits + borrowings grew +35.0pp faster than equity this year: leverage is rising quickly."
+        "text": "Deposits + borrowings grew +35.0pp faster than equity this year: leverage is rising quickly.",
+        "condition": "m('funding_vs_equity_growth') > 0.20",
+        "applies": [
+          "BL"
+        ]
       },
       {
         "id": "V03",
@@ -552,7 +621,11 @@
           "j": 1.199628,
           "r": 2.272553
         },
-        "text": "P/B of 2.7x is 2.3x the 1.2x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+        "text": "P/B of 2.7x is 2.3x the 1.2x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise.",
+        "condition": "m('pb_to_justified_pb') > 1.5",
+        "applies": [
+          "ALL"
+        ]
       }
     ],
     "clear": [
@@ -3319,6 +3392,167 @@
       "text": "Provisions / assets: 0.6% [component metric (not scored)]"
     }
   },
+  "peers": {
+    "basis": "same archetype in data/universe.csv, computed as of the same fiscal year",
+    "tickers": [
+      "HDFCBANK",
+      "ICICIBANK"
+    ],
+    "values": {
+      "roe": {
+        "HDFCBANK": 0.18382,
+        "ICICIBANK": 0.071654
+      },
+      "roa": {
+        "HDFCBANK": 0.018551,
+        "ICICIBANK": 0.00731
+      },
+      "roe_ke_spread": {
+        "HDFCBANK": 0.026163,
+        "ICICIBANK": -0.086002
+      },
+      "attributable_factor": {
+        "HDFCBANK": 0.997262,
+        "ICICIBANK": 0.847535
+      },
+      "tax_burden": {
+        "HDFCBANK": 0.652083,
+        "ICICIBANK": 0.828854
+      },
+      "equity_multiplier": {
+        "HDFCBANK": 9.908634,
+        "ICICIBANK": 9.802049
+      },
+      "debt_to_equity_avg": {
+        "HDFCBANK": 8.373511,
+        "ICICIBANK": 7.042925
+      },
+      "other_liab_to_equity_avg": {
+        "HDFCBANK": 0.535123,
+        "ICICIBANK": 1.759124
+      },
+      "interest_to_assets": {
+        "HDFCBANK": 0.042476,
+        "ICICIBANK": 0.032476
+      },
+      "other_income_to_assets": {
+        "HDFCBANK": 0.016093,
+        "ICICIBANK": 0.053845
+      },
+      "dep_to_assets": {
+        "HDFCBANK": 0.000969,
+        "ICICIBANK": 0.000874
+      },
+      "tax_to_assets": {
+        "HDFCBANK": 0.009925,
+        "ICICIBANK": 0.001781
+      },
+      "minority_to_assets": {
+        "HDFCBANK": -5.1e-05,
+        "ICICIBANK": -0.001315
+      },
+      "payout_ratio": {
+        "HDFCBANK": 0.18226,
+        "ICICIBANK": 0.125044
+      },
+      "share_count_change": {
+        "HDFCBANK": 0.012702,
+        "ICICIBANK": 0.003293
+      },
+      "buyback_estimate": {
+        "HDFCBANK": 0.0,
+        "ICICIBANK": 0.0
+      },
+      "shareholder_yield": {
+        "HDFCBANK": 0.006892,
+        "ICICIBANK": 0.00539
+      },
+      "internal_capital_generation": {
+        "HDFCBANK": 0.150317,
+        "ICICIBANK": 0.062694
+      },
+      "growth_minus_icg": {
+        "HDFCBANK": 0.085962,
+        "ICICIBANK": 0.077869
+      },
+      "equity_to_assets": {
+        "HDFCBANK": 0.099348,
+        "ICICIBANK": 0.0984
+      },
+      "funding_vs_equity_growth": {
+        "HDFCBANK": 0.080142,
+        "ICICIBANK": 0.105794
+      },
+      "opex_to_assets": {
+        "HDFCBANK": 0.029598,
+        "ICICIBANK": 0.069011
+      },
+      "liquid_assets_ratio": {
+        "HDFCBANK": 0.311053,
+        "ICICIBANK": 0.360657
+      },
+      "revenue_cagr_10y": {
+        "HDFCBANK": 0.164,
+        "ICICIBANK": 0.020059
+      },
+      "pat_cagr_10y": {
+        "HDFCBANK": 0.211351,
+        "ICICIBANK": -0.243041
+      },
+      "eps_cagr_10y": {
+        "HDFCBANK": 0.196157,
+        "ICICIBANK": -0.245525
+      },
+      "pat_margin": {
+        "HDFCBANK": 0.21703,
+        "ICICIBANK": 0.124065
+      },
+      "nii_to_assets": {
+        "HDFCBANK": 0.043002,
+        "ICICIBANK": 0.026446
+      },
+      "yield_on_assets": {
+        "HDFCBANK": 0.085479,
+        "ICICIBANK": 0.058921
+      },
+      "cost_of_funds": {
+        "HDFCBANK": 0.050264,
+        "ICICIBANK": 0.045198
+      },
+      "cost_to_income": {
+        "HDFCBANK": 0.517258,
+        "ICICIBANK": 0.870395
+      },
+      "other_income_share": {
+        "HDFCBANK": 0.272317,
+        "ICICIBANK": 0.670626
+      },
+      "economic_profit": {
+        "HDFCBANK": 2634.570753,
+        "ICICIBANK": -9256.497271
+      },
+      "pe": {
+        "HDFCBANK": 26.443353,
+        "ICICIBANK": 23.200074
+      },
+      "pb": {
+        "HDFCBANK": 4.465975,
+        "ICICIBANK": 1.617318
+      },
+      "implied_growth_pb": {
+        "HDFCBANK": 0.150108,
+        "ICICIBANK": 0.296972
+      },
+      "justified_pb": {
+        "HDFCBANK": 1.267914,
+        "ICICIBANK": 0.119338
+      },
+      "pb_to_justified_pb": {
+        "HDFCBANK": 3.522302,
+        "ICICIBANK": 13.552447
+      }
+    }
+  },
   "sector_references": {
     "industries": [
       "Bank (Money Center)"
@@ -3966,5 +4200,459 @@
       "fy": null,
       "text": "Manual KPI years FY14, FY15, FY16 precede the export (FY17): added as KPI-only rows (all export fields blank) so KPI trends cover them."
     }
-  ]
+  ],
+  "findings": {
+    "verdict": "YES BANK LTD creates value: ROE 17.7% vs Ke 15.8% in FY18. Overall AMBER (59/100); strongest pillar 1 Growth, weakest 8 Valuation; 2 high-severity flags.",
+    "strengths": [
+      {
+        "kind": "metric",
+        "id": "loan_growth",
+        "pillar": "growth",
+        "rag": "green",
+        "severity": 0.75,
+        "confidence": 0.576,
+        "score": 0.432,
+        "name": "Loan growth",
+        "number": "53.9%",
+        "context": "GREEN vs band: red ≤ 4.0%, green ≥ 8.9%",
+        "trend": "",
+        "chain": null,
+        "chain_source": null,
+        "text": "Loan growth: 53.9% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%)"
+      },
+      {
+        "kind": "metric",
+        "id": "eps_cagr_10y",
+        "pillar": "growth",
+        "rag": "green",
+        "severity": 0.75,
+        "confidence": 0.54,
+        "score": 0.405,
+        "name": "EPS CAGR (full span, up to 10y)",
+        "number": "25.6%",
+        "context": "GREEN vs band: red ≤ 4.0%, green ≥ 8.9%",
+        "trend": "",
+        "chain": null,
+        "chain_source": null,
+        "text": "EPS CAGR (full span, up to 10y): 25.6% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%)"
+      },
+      {
+        "kind": "metric",
+        "id": "gnpa_ratio",
+        "pillar": "cash_quality",
+        "rag": "green",
+        "severity": 0.394444,
+        "confidence": 0.8,
+        "score": 0.315556,
+        "name": "Gross NPA ratio",
+        "number": "1.3%",
+        "context": "GREEN vs band: red ≥ 3.6%, green ≤ 1.8%",
+        "trend": "",
+        "chain": null,
+        "chain_source": null,
+        "text": "Gross NPA ratio: 1.3% (GREEN vs band: red ≥ 3.6%, green ≤ 1.8%)"
+      },
+      {
+        "kind": "metric",
+        "id": "crar",
+        "pillar": "balance_sheet",
+        "rag": "green",
+        "severity": 0.45977,
+        "confidence": 0.64,
+        "score": 0.294253,
+        "name": "Capital adequacy (CRAR)",
+        "number": "18.4%",
+        "context": "GREEN vs band: red ≤ 11.5%, green ≥ 17.3%",
+        "trend": "",
+        "chain": null,
+        "chain_source": null,
+        "text": "Capital adequacy (CRAR): 18.4% (GREEN vs band: red ≤ 11.5%, green ≥ 17.3%)"
+      },
+      {
+        "kind": "metric",
+        "id": "cost_to_income_bank",
+        "pillar": "margins",
+        "rag": "green",
+        "severity": 0.308904,
+        "confidence": 0.192,
+        "score": 0.05931,
+        "name": "Cost-to-income (ex-provisions)",
+        "number": "40.5%",
+        "context": "GREEN vs band: red ≥ 55.0%, green ≤ 42.0%, indicative",
+        "trend": "",
+        "chain": null,
+        "chain_source": null,
+        "text": "Cost-to-income (ex-provisions): 40.5% (GREEN vs band: red ≥ 55.0%, green ≤ 42.0%, indicative)"
+      },
+      {
+        "kind": "metric",
+        "id": "credit_cost",
+        "pillar": "cash_quality",
+        "rag": "green",
+        "severity": 0.197731,
+        "confidence": 0.288,
+        "score": 0.056947,
+        "name": "Credit cost",
+        "number": "0.9%",
+        "context": "GREEN vs band: red ≥ 2.0%, green ≤ 0.8%, indicative",
+        "trend": "",
+        "chain": null,
+        "chain_source": null,
+        "text": "Credit cost: 0.9% (GREEN vs band: red ≥ 2.0%, green ≤ 0.8%, indicative)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "kind": "flag",
+        "id": "A06",
+        "pillar": "capital_allocation",
+        "severity_label": "high",
+        "severity": 1.0,
+        "confidence": 1.0,
+        "score": 1.0,
+        "name": "Lender growing beyond its internal capital",
+        "covers": [
+          "growth_minus_icg"
+        ],
+        "text": "A06 Lender growing beyond its internal capital: Assets grew 45.3% versus internal capital generation of 15.1% (+30.2pp gap): growth must be funded by fresh equity or thinner capital buffers."
+      },
+      {
+        "kind": "flag",
+        "id": "B06",
+        "pillar": "balance_sheet",
+        "severity_label": "high",
+        "severity": 1.0,
+        "confidence": 1.0,
+        "score": 1.0,
+        "name": "Capital ratio falling while balance sheet balloons",
+        "covers": [
+          "equity_to_assets"
+        ],
+        "text": "B06 Capital ratio falling while balance sheet balloons: Total assets grew 45.3% in a year while equity/assets fell from 10.2% to 8.2%: the lender is growing faster than its capital, which is how most Indian lending blow-ups started."
+      },
+      {
+        "kind": "flag",
+        "id": "B07",
+        "pillar": "balance_sheet",
+        "severity_label": "medium",
+        "severity": 0.6,
+        "confidence": 1.0,
+        "score": 0.6,
+        "name": "Funding outgrowing equity",
+        "covers": [
+          "funding_vs_equity_growth"
+        ],
+        "text": "B07 Funding outgrowing equity: Deposits + borrowings grew +35.0pp faster than equity this year: leverage is rising quickly."
+      },
+      {
+        "kind": "flag",
+        "id": "V03",
+        "pillar": "valuation",
+        "severity_label": "medium",
+        "severity": 0.6,
+        "confidence": 1.0,
+        "score": 0.6,
+        "name": "P/B well above what returns justify",
+        "covers": [
+          "pb_to_justified_pb"
+        ],
+        "text": "V03 P/B well above what returns justify: P/B of 2.7x is 2.3x the 1.2x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+      },
+      {
+        "kind": "metric",
+        "id": "pat_margin",
+        "pillar": "margins",
+        "rag": "red",
+        "severity": 0.277377,
+        "confidence": 0.4,
+        "score": 0.110951,
+        "name": "PAT margin",
+        "number": "20.9%",
+        "context": "RED vs band: red ≤ 21.5%, green ≥ 32.2%",
+        "trend": "",
+        "chain": "drove 12% of the eps_core change over 1y (+3.75)",
+        "chain_source": {
+          "tree": "eps_tree",
+          "window": "1y"
+        },
+        "text": "PAT margin: 20.9% (RED vs band: red ≤ 21.5%, green ≥ 32.2%); drove 12% of the eps_core change over 1y (+3.75)"
+      },
+      {
+        "kind": "metric",
+        "id": "nii_to_assets",
+        "pillar": "margins",
+        "rag": "red",
+        "severity": 0.202062,
+        "confidence": 0.2,
+        "score": 0.040412,
+        "name": "NII / average assets (NIM proxy)",
+        "number": "2.9%",
+        "context": "RED vs band: red ≤ 2.8%, green ≥ 4.2%",
+        "trend": "",
+        "chain": null,
+        "chain_source": null,
+        "text": "NII / average assets (NIM proxy): 2.9% (RED vs band: red ≤ 2.8%, green ≥ 4.2%)"
+      }
+    ],
+    "watch": [],
+    "bull": [
+      {
+        "ref": "loan_growth",
+        "text": "Loan growth: 53.9% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%) [loan_growth]"
+      },
+      {
+        "ref": "eps_cagr_10y",
+        "text": "EPS CAGR (full span, up to 10y): 25.6% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%) [eps_cagr_10y]"
+      },
+      {
+        "ref": "gnpa_ratio",
+        "text": "Gross NPA ratio: 1.3% (GREEN vs band: red ≥ 3.6%, green ≤ 1.8%) [gnpa_ratio]"
+      },
+      {
+        "ref": "crar",
+        "text": "Capital adequacy (CRAR): 18.4% (GREEN vs band: red ≤ 11.5%, green ≥ 17.3%) [crar]"
+      },
+      {
+        "ref": "economic_profit",
+        "text": "Creates value: ROE 17.7% vs Ke 15.8%; economic profit Rs 466 cr in FY18, positive in 1 of 1 years [economic_profit]"
+      },
+      {
+        "ref": "pe",
+        "text": "P/E 16.58x vs same-archetype peers HDFCBANK 26.44x, ICICIBANK 23.20x [pe]"
+      },
+      {
+        "ref": "eps_tree",
+        "text": "Largest positive driver of eps_core over 1y: revenue (+3,844 cr) -> 3.46 (92% of the change) [eps_tree]"
+      }
+    ],
+    "bear": [
+      {
+        "ref": "A06",
+        "text": "A06 Lender growing beyond its internal capital: Assets grew 45.3% versus internal capital generation of 15.1% (+30.2pp gap): growth must be funded by fresh equity or thinner capital buffers. [A06]"
+      },
+      {
+        "ref": "B06",
+        "text": "B06 Capital ratio falling while balance sheet balloons: Total assets grew 45.3% in a year while equity/assets fell from 10.2% to 8.2%: the lender is growing faster than its capital, which is how most Indian lending blow-ups started. [B06]"
+      },
+      {
+        "ref": "B07",
+        "text": "B07 Funding outgrowing equity: Deposits + borrowings grew +35.0pp faster than equity this year: leverage is rising quickly. [B07]"
+      },
+      {
+        "ref": "V03",
+        "text": "V03 P/B well above what returns justify: P/B of 2.7x is 2.3x the 1.2x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise. [V03]"
+      },
+      {
+        "ref": "pb",
+        "text": "P/B 2.73x vs Damodaran India industry 1.81x (Bank (Money Center)) [pb]"
+      },
+      {
+        "ref": "eps_tree",
+        "text": "Largest negative driver of eps_core over 1y: adjusted_shares_cr (+2.060) -> -0.15 (-4% of the change) [eps_tree]"
+      },
+      {
+        "ref": "missing data",
+        "text": "2 required KPIs missing at FY18 (deposits_cr, pcr_pct): the diagnosis of 1 Growth, 5 Cash and earnings quality (asset quality), 6 Balance sheet is incomplete [missing data]"
+      }
+    ],
+    "missing_data": {
+      "kpis": [
+        {
+          "kpi": "deposits_cr",
+          "required": true,
+          "description": "Total deposits at 31 March",
+          "years_present": [
+            "FY17"
+          ],
+          "metrics": [
+            "cd_ratio",
+            "deposit_growth"
+          ],
+          "flags": [
+            "BK07"
+          ],
+          "trees": [],
+          "lines": [
+            "deposits_cr (Total deposits at 31 March) is missing at FY18; present for FY17.",
+            "2 metrics cannot be computed: Credit-deposit ratio, Deposit growth.",
+            "Red-flag rules that cannot be checked: BK07."
+          ]
+        },
+        {
+          "kpi": "pcr_pct",
+          "required": true,
+          "description": "Provision coverage ratio at 31 March (excluding technical write-offs, as reported)",
+          "years_present": [
+            "FY17"
+          ],
+          "metrics": [
+            "pcr"
+          ],
+          "flags": [
+            "BK02"
+          ],
+          "trees": [],
+          "lines": [
+            "pcr_pct (Provision coverage ratio at 31 March (excluding technical write-offs, as reported)) is missing at FY18; present for FY17.",
+            "1 metric cannot be computed: Provision coverage ratio.",
+            "Red-flag rules that cannot be checked: BK02."
+          ]
+        },
+        {
+          "kpi": "cost_of_funds_pct",
+          "required": false,
+          "description": "Cost of funds (or cost of deposits) for the year",
+          "years_present": [],
+          "metrics": [
+            "cost_of_funds_reported"
+          ],
+          "flags": [],
+          "trees": [],
+          "lines": [
+            "cost_of_funds_pct (Cost of funds (or cost of deposits) for the year) is missing at FY18.",
+            "1 metric cannot be computed: Cost of funds (reported)."
+          ]
+        },
+        {
+          "kpi": "nim_pct",
+          "required": false,
+          "description": "Net interest margin for the year as reported (bank's own definition)",
+          "years_present": [],
+          "metrics": [
+            "nim_reported"
+          ],
+          "flags": [],
+          "trees": [],
+          "lines": [
+            "nim_pct (Net interest margin for the year as reported (bank's own definition)) is missing at FY18.",
+            "1 metric cannot be computed: Net interest margin (reported)."
+          ]
+        },
+        {
+          "kpi": "slippage_ratio_pct",
+          "required": false,
+          "description": "Gross slippages as % of opening standard advances",
+          "years_present": [],
+          "metrics": [
+            "slippage_ratio"
+          ],
+          "flags": [],
+          "trees": [],
+          "lines": [
+            "slippage_ratio_pct (Gross slippages as % of opening standard advances) is missing at FY18.",
+            "1 metric cannot be computed: Slippage ratio."
+          ]
+        },
+        {
+          "kpi": "yield_on_advances_pct",
+          "required": false,
+          "description": "Yield on advances for the year",
+          "years_present": [],
+          "metrics": [
+            "yield_on_advances"
+          ],
+          "flags": [],
+          "trees": [],
+          "lines": [
+            "yield_on_advances_pct (Yield on advances for the year) is missing at FY18.",
+            "1 metric cannot be computed: Yield on advances."
+          ]
+        }
+      ],
+      "all_required_present": false,
+      "all_present_text": "All required KPIs for this archetype are present at FY18.",
+      "not_evaluable": [
+        {
+          "id": "G01",
+          "name": "Profit growth far ahead of revenue growth",
+          "missing": "pat_cagr_3y FY18"
+        },
+        {
+          "id": "G02",
+          "name": "Per-share growth lagging profit growth (dilution)",
+          "missing": "pat_cagr_5y FY18"
+        },
+        {
+          "id": "G04",
+          "name": "Erratic revenue growth",
+          "missing": "revenue_growth_volatility FY18"
+        },
+        {
+          "id": "G05",
+          "name": "Quarterly growth decelerating",
+          "missing": "q_revenue_yoy_trend FY18"
+        },
+        {
+          "id": "G06",
+          "name": "Revenue shrinking over 3 years",
+          "missing": "revenue_cagr_3y FY18"
+        },
+        {
+          "id": "M08",
+          "name": "Net interest margin compressing",
+          "missing": "nii_to_assets FY16"
+        },
+        {
+          "id": "R02",
+          "name": "ROE rising on leverage while margins fall",
+          "missing": "roe FY15"
+        },
+        {
+          "id": "R04",
+          "name": "ROE down three years running",
+          "missing": "roe FY15"
+        },
+        {
+          "id": "R05",
+          "name": "ROE below cost of equity (financials)",
+          "missing": "roe_ke_spread FY17"
+        },
+        {
+          "id": "A02",
+          "name": "Rising promoter pledge",
+          "missing": "promoter_pledge FY16"
+        },
+        {
+          "id": "A03",
+          "name": "Promoters selling down",
+          "missing": "promoter_holding_change_3y FY18"
+        },
+        {
+          "id": "V05",
+          "name": "Financial rich versus own history",
+          "missing": "pe_percentile_10y FY18"
+        },
+        {
+          "id": "V06",
+          "name": "P/B implies faster growth than delivered (financials)",
+          "missing": "implied_pb_growth_minus_delivered FY18"
+        },
+        {
+          "id": "BK02",
+          "name": "Thin provision cover",
+          "missing": "pcr FY18 [n/a in FY18: missing pcr_pct FY18 (manual KPI)]"
+        },
+        {
+          "id": "BK07",
+          "name": "Lending more than the deposit base supports",
+          "missing": "cd_ratio FY18 [n/a in FY18: missing deposits_cr FY18 (manual KPI)]"
+        }
+      ],
+      "unverified": {
+        "n": 36,
+        "total": 36,
+        "text": "36 of 36 manual KPI values (100%) are verified = N: taken from the cited page, not checked in the primary document."
+      },
+      "not_scored": [],
+      "estimates": [
+        "Financial company: other income is core (fees, treasury), so no exceptional-item estimate is made.",
+        "No material minority/associate residual: export is standalone or has no minorities.",
+        "Capex is not in the export. Proxy = change in net block + change in CWIP + depreciation (includes acquired fixed assets and Ind AS 116 right-of-use additions; impairments and disposals understate it). FCF = CFO - capex proxy."
+      ],
+      "driver_notes": [
+        "Sector tree 'bank_dupont' not computable (missing values for roe, roa, nii_to_assets, yield_on_assets, interest_to_assets, other_income_to_assets at FY17 or FY18); generic 'fin_roe' used instead."
+      ]
+    },
+    "method": "severity x confidence; see config/scoring.yaml: report and engine/report/findings.py"
+  }
 }

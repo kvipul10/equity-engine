@@ -14,6 +14,7 @@ from __future__ import annotations
 import argparse
 import sys
 import warnings
+from pathlib import Path
 from typing import List, Optional
 
 import pandas as pd
@@ -51,10 +52,10 @@ def _analyse_one(cfg: Config, ticker: str, asof: Optional[str], beta: Optional[f
     write_processed(std, cfg.paths.processed_dir / ticker)
     rep = analyse(ticker, cfg, asof=asof, beta=beta, archetype=archetype, peers=peers)
     out = out_dir_for(cfg.paths, ticker, rep)
-    files = write_outputs(rep, out)
+    files = write_outputs(rep, out, cfg)
     if not quiet:
         print(console_summary(rep))
-        print(f"Wrote {files['analysis']} and {files['metrics']}")
+        print("Wrote " + ", ".join(str(files[k]) for k in ("analysis", "metrics", "html", "xlsx") if k in files))
     return rep, files
 
 
@@ -102,6 +103,35 @@ def cmd_analyse_all(args) -> int:
     return 0 if all(r.get("status") == "ok" for r in rows) else 2
 
 
+def cmd_compare(args) -> int:
+    from .analysis import PeerSet, analyse
+    from .report.html import render_compare
+
+    tickers = [t.upper() for t in args.tickers]
+    if not 2 <= len(tickers) <= 5 or len(set(tickers)) != len(tickers):
+        print("compare takes 2 to 5 distinct tickers", file=sys.stderr)
+        return 1
+    cfg = _cfg(args)
+    peers = PeerSet(cfg)
+    reps = []
+    for t in tickers:
+        asof = args.asof if args.asof is not None else cfg.universe_asof(t)
+        try:
+            reps.append(analyse(t, cfg, asof=asof, peers=peers))
+        except FileNotFoundError as e:
+            print(str(e), file=sys.stderr)
+            return 1
+    out = Path(args.out) if args.out else cfg.paths.reports_dir / "compare.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(render_compare(reps), encoding="utf-8")
+    for r in reps:
+        sc = f"{r['overall']['score']:.0f}" if r["overall"]["score"] is not None else "--"
+        print(f"{r['company']['ticker']:<12} {r['asof']['fy']:<5} overall {sc:>3}  " +
+              " ".join(f"P{i + 1} {('%.0f' % v['score']) if v['score'] is not None else '--'}" for i, v in enumerate(r["pillars"].values())))
+    print(f"Wrote {out}")
+    return 0
+
+
 def cmd_metrics(args) -> int:
     from .registry import REGISTRY, load_all, to_markdown
 
@@ -147,7 +177,7 @@ def cmd_rules(args) -> int:
 
 
 def cmd_kpi_templates(args) -> int:
-    from .templates import write_templates
+    from .kpi_templates import write_templates
 
     cfg = _cfg(args)
     paths = write_templates(cfg, args.years)
@@ -156,7 +186,7 @@ def cmd_kpi_templates(args) -> int:
 
 
 def cmd_kpi_coverage(args) -> int:
-    from .templates import write_coverage
+    from .kpi_templates import write_coverage
 
     p = write_coverage(_cfg(args))
     print(f"Wrote {p}")
@@ -189,6 +219,11 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("analyse-all", help="analyse every company in data/universe.csv")
     p.add_argument("--asof", help="override every row's asof")
     p.set_defaults(fn=cmd_analyse_all)
+    p = sub.add_parser("compare", help="reports/compare.html: side-by-side pillar scores for 2-5 tickers")
+    p.add_argument("tickers", nargs="+")
+    p.add_argument("--asof", help="common fiscal year for all tickers (default: each ticker's universe as-of)")
+    p.add_argument("--out", help="output path (default reports/compare.html)")
+    p.set_defaults(fn=cmd_compare)
     p = sub.add_parser("metrics", help="list the metric registry")
     p.add_argument("--markdown", action="store_true", help="write docs/metrics.md")
     p.set_defaults(fn=cmd_metrics)

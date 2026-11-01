@@ -1,0 +1,30 @@
+{% macro rag(r) -%}<span class="rag {{ r|rag }}">{{ r if r in ('green', 'amber', 'red') else 'n/a' }}</span>{%- endmacro %}
+
+{% macro eq(plain, tex) -%}
+{% if tex %}<span class="eq" data-tex="{{ tex }}"><span class="tex"></span><code class="plain">{{ plain }}</code></span>{% else %}<span class="eq"><code class="plain">{{ plain }}</code></span>{% endif %}
+{%- endmacro %}
+
+{% macro tree_card(t) %}
+<div class="tree-card" id="tree-{{ t.id }}">
+  <h3>{{ t.title }}</h3>
+  <p class="mid">Tree <code>{{ t.id }}</code> from {{ t.origin }}{% if t.replaces %}; replaces generic <code>{{ t.replaces }}</code>{% endif %}</p>
+  {% if t.note %}<p><span class="note">{{ t.note }}</span></p>{% endif %}
+  <div class="tabs" role="tablist">
+    {% for w in t.windows %}<button type="button" role="tab" data-win="{{ w.key }}" aria-selected="{{ 'true' if w.key == t.default else 'false' }}">{{ w.key }}</button>{% endfor %}
+  </div>
+  {% for w in t.windows %}
+  <div class="win" data-win="{{ w.key }}"{% if w.key != t.default %} hidden{% endif %}>
+    <p><b>{{ w.key }}</b>{% if w.ok %} ({{ w.from }} → {{ w.to }}): {{ t.root_name }} {{ w.change }}{% endif %}</p>
+    {% if w.ok %}
+    {{ w.svg }}
+    {% if w.inexact %}<p class="mid">Link identity not exact at: {{ w.inexact|join(', ') }}.</p>{% endif %}
+    {% if w.tops %}
+    <table class="tops"><thead><tr><th>Largest leaf drivers</th><th>Own change</th><th>Contribution</th><th>Share</th><th>Path</th></tr></thead><tbody>
+      {% for d in w.tops %}<tr><td>{{ d.name }}</td><td class="num">{{ d.own }}</td><td class="num">{{ d.contribution }}</td><td class="num">{{ d.share }}</td><td class="mid">{{ d.path }}</td></tr>{% endfor %}
+    </tbody></table>
+    {% endif %}
+    {% else %}<p class="muted">{{ w.reason }}</p>{% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endmacro %}
