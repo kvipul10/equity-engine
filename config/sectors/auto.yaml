@@ -1,0 +1,64 @@
+archetype: auto
+family: non_financial
+damodaran_industries: ["Auto & Truck"]
+evidence: "MARUTI -> Auto & Truck in Damodaran's indname.xls (Jan 2026)"
+how_to_read: |
+  Automakers earn on volume x realisation: split revenue growth into units sold and revenue per vehicle (price and mix).
+  Margins depend on commodity costs, operating leverage and discounting; working capital is often negative (dealers pay upfront).
+  Capex comes in waves (new platforms, EV transition), so compare capex/sales with its own cycle average and check that new
+  capacity is filled. Market share and the product cycle are the strategic questions the numbers point to.
+manual_kpis:
+  - {id: units_sold, unit: "count", required: true, description: "Total vehicles sold in the year (domestic + exports)", where: "Monthly sales releases / annual report"}
+  - {id: capacity_units, unit: "count", required: false, description: "Installed production capacity at 31 March (units per year)", where: "Annual report"}
+metrics_add:
+  - {id: volume_growth_units, name: "Volume growth (units)", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:units_sold', 1)",
+     equation: "Units_t / Units_t-1 - 1", meaning: "Unit demand growth."}
+  - {id: realisation_per_unit, name: "Realisation per unit", pillar: growth, unit: inr, direction: higher,
+     formula: "f('revenue') * 10000000 / kpi('units_sold')", equation: "Revenue (Rs) / units sold", meaning: "Average revenue per vehicle (price and mix)."}
+  - {id: realisation_growth, name: "Realisation growth", pillar: growth, unit: pct, direction: higher, formula: "growth('m:realisation_per_unit', 1)",
+     equation: "Realisation_t / Realisation_t-1 - 1", meaning: "Price/mix contribution to growth."}
+  - {id: auto_capacity_utilisation, name: "Capacity utilisation", pillar: capital_efficiency, unit: pct, direction: higher,
+     formula: "kpi('units_sold') / kpi('capacity_units')", equation: "Units sold / installed capacity", meaning: "How fully plants are used."}
+  - {id: capex_cycle, name: "Capex intensity vs its cycle average", pillar: capital_efficiency, unit: x, direction: neutral,
+     formula: "m('capex_to_sales') / mean_last('capex_to_sales', 10, 5)", equation: "Capex/sales / average capex/sales over up to 10 years",
+     meaning: "Above 1 = in an investment phase (new platforms, capacity)."}
+bands:
+  volume_growth_units:
+    red: 0.0
+    green: 0.08
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Indian passenger-vehicle industry volumes have grown mid-to-high single digits over the long run; 8%+ suggests share gains."
+  auto_capacity_utilisation:
+    red: 0.70
+    green: 0.85
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Auto plants need 80%+ utilisation for target margins."
+flags:
+  - id: AU01
+    name: Volumes falling during a capex wave
+    pillar: capital_efficiency
+    severity: medium
+    applies: [auto]
+    condition: "m('volume_growth_units') < 0 and m('capex_cycle') > 1.2"
+    values: {v: "m('volume_growth_units')", c: "m('capex_cycle')"}
+    explanation: >
+      Unit sales fell {{ v|pct }} while capex runs at {{ c|x }} its cycle average: new capacity is arriving into weaker demand.
+  - id: AU02
+    name: Realisation falling two years running
+    pillar: growth
+    severity: medium
+    applies: [auto]
+    condition: "all_last('realisation_growth', 2, '<', 0)"
+    values: {g: "m('realisation_growth')"}
+    explanation: >
+      Revenue per vehicle fell for 2 years (latest {{ g|pct }}): adverse mix or discounting.
+drivers:
+  add:
+    - id: auto_revenue
+      title: "Revenue = units sold x realisation per unit (volume vs price/mix)"
+      applies: [auto]
+      root: revenue
+      links:
+        revenue: {type: product, const: 1.0e-7, children: ["kpi:units_sold", realisation_per_unit]}

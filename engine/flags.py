@@ -69,19 +69,28 @@ def jinja_env() -> jinja2.Environment:
 class SeriesBook:
     """Resolves ids to series: metric results first, then standardised fields."""
 
-    def __init__(self, metrics: Dict[str, pd.Series], annual: pd.DataFrame):
+    def __init__(self, metrics: Dict[str, pd.Series], annual: pd.DataFrame, manual: pd.DataFrame = None, info: Dict = None):
+        self.info = info or {}
         self.metrics = metrics
         self.annual = annual
+        self.manual = manual if manual is not None else pd.DataFrame()
         self.idx = list(annual.index)
         self.asof = self.idx[-1]
         self.y1 = fy_year(self.asof)
         self.label_of = {fy_year(l): l for l in self.idx}
 
     def series(self, ident: str) -> pd.Series:
+        if ident.startswith("kpi:"):
+            k = ident[4:]
+            if not self.manual.empty and k in self.manual.columns:
+                return pd.to_numeric(self.manual[k], errors="coerce").reindex(self.idx)
+            raise Missing(f"{k} (manual KPI)")
         if ident in self.metrics:
             return self.metrics[ident]
         if ident in self.annual.columns:
             return pd.to_numeric(self.annual[ident], errors="coerce")
+        if not self.manual.empty and ident in self.manual.columns:
+            return pd.to_numeric(self.manual[ident], errors="coerce").reindex(self.idx)
         raise Missing(f"{ident} (not available for this company)")
 
     def at(self, ident: str, lag: int = 0) -> float:
@@ -90,7 +99,9 @@ class SeriesBook:
             raise Missing(f"{ident} at t-{lag} (year not in data)")
         v = self.series(ident).get(lab)
         if _isnan(v):
-            raise Missing(f"{ident} {lab}")
+            why = " (manual KPI)" if ident.startswith("kpi:") else ""
+            note = self.info.get(ident) if lab == self.asof else None
+            raise Missing(f"{ident.replace('kpi:', '')} {lab}{why}" + (f" [{note}]" if note else ""))
         return float(v)
 
     def last_n(self, ident: str, n: int) -> List[float]:
@@ -159,14 +170,16 @@ def validate_rules(rules: List[Dict]) -> None:
         jinja_env().from_string(r["explanation"])
 
 
-def evaluate_rules(rules: List[Dict], metrics: Dict[str, pd.Series], annual: pd.DataFrame, tokens, names: Dict[str, float]) -> List[Dict]:
-    book = SeriesBook(metrics, annual)
+def evaluate_rules(rules: List[Dict], metrics: Dict[str, pd.Series], annual: pd.DataFrame, tokens, names: Dict[str, float],
+                   manual: pd.DataFrame = None, info: Dict = None) -> List[Dict]:
+    book = SeriesBook(metrics, annual, manual, info)
     funcs = make_funcs(book)
     env = jinja_env()
     out = []
     for r in rules:
         applies = r["applies"] if isinstance(r["applies"], list) else [r["applies"]]
-        base = {"id": r["id"], "name": r["name"], "pillar": r["pillar"], "severity": r["severity"]}
+        base = {"id": r["id"], "name": r["name"], "pillar": r["pillar"], "severity": r["severity"],
+                "origin": r.get("_origin", "config/flags.yaml")}
         if not any(a in tokens for a in applies):
             continue
         try:

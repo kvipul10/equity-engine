@@ -1,0 +1,17 @@
+archetype: chemicals
+extends: _cyclical
+family: non_financial
+damodaran_industries: ["Chemical (Basic)", "Chemical (Diversified)", "Chemical (Specialty)"]
+evidence: "No universe company yet; mapped to the average of Damodaran's three chemical industries (India, Jan 2026)."
+how_to_read: |
+  Chemicals span commodity (cyclical, spread-driven) and specialty (customer-qualified, margin-stable) businesses: decide which
+  this is before reading the numbers. Through-cycle margins and ROCE matter most for commodity players; for specialty players
+  watch utilisation of new plants, customer concentration and working capital (inventory builds when demand slows, e.g. the
+  2023-24 China destocking). Leverage at the trough and capex at the peak are the classic traps.
+bands:
+  capacity_utilisation:
+    red: 0.60
+    green: 0.80
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Chemical plants typically need 75-85% utilisation for target returns; under 60% is a demand or ramp-up problem."

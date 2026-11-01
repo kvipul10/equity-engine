@@ -86,22 +86,31 @@ def analyse(ticker: str, cfg: Config, asof: Optional[str] = None, beta: Optional
     comp = compute(ticker, cfg, asof=asof, beta=beta, archetype=archetype)
     std, coc, metrics, ctx = comp.std, comp.coc, comp.metrics, comp.ctx
     names = band_vars(cfg, coc)
-    flags = evaluate_rules(cfg.flags, metrics, std.annual, ctx.tokens, names)
+    sector = cfg.sector_of(std.archetype)
+    names.update(sector.constant_values())
+    manual = std.manual.reindex(std.annual.index) if std.manual is not None and not std.manual.empty else None
+    flags = evaluate_rules(cfg.rules_for(std.archetype), metrics, std.annual, ctx.tokens, names, manual=manual, info=ctx.info)
     triggered = [f for f in flags if f["status"] == "triggered"]
     peer_vals = (peers or PeerSet(cfg)).values(std.archetype, std.last_fy, ticker, metrics)
     results = {}
     for mid, s in metrics.items():
         results[mid] = score_metric(mid, s, std.last_fy, cfg, std.archetype, std.family, names, peer_vals.get(mid) if peer_vals else None)
-    pillars, overall = roll_up(results, std.family, cfg, triggered)
+    pillars, overall = roll_up(results, std.family, cfg, triggered, archetype=std.archetype)
 
     def get(node):
+        if node.startswith("kpi:"):
+            return ctx.manual_series(node[4:])
         if node in metrics:
             return metrics[node]
         if node in std.annual.columns:
             return pd.to_numeric(std.annual[node], errors="coerce")
+        if node in REGISTRY and REGISTRY[node].applies_to(ctx.tokens):  # switched-off metric still usable as a node
+            return ctx.m(node)
+        if manual is not None and node in manual.columns:
+            return ctx.manual_series(node)
         return None
 
-    drivers = run_trees(cfg, ctx.tokens, get, std.last_fy, set(std.years))
+    drivers = run_trees(cfg, ctx.tokens, get, std.last_fy, set(std.years), sector=sector, explain=lambda n: ctx.info.get(n))
     from .report import build_report
 
     return build_report(comp, results, pillars, overall, flags, drivers, cfg, names)

@@ -1,0 +1,23 @@
+archetype: metals
+extends: _cyclical
+family: non_financial
+damodaran_industries: ["Steel"]
+evidence: "TATASTEEL -> Steel in Damodaran's indname.xls (Jan 2026)"
+how_to_read: |
+  Steel is a price-taker on global spreads (steel price minus iron ore and coking coal), so single-year margins say little.
+  Judge it through the cycle: 10-year average margins and ROCE, EBITDA per tonne against its own history, and above all
+  leverage in the trough year. Capacity added at the top of the cycle (capex/dep high while margins are above average) is how
+  steelmakers destroy value. For multi-geography groups, check whether the domestic business is funding overseas losses.
+bands:
+  ebitda_per_tonne:
+    red: 6000
+    green: 12000
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Indian integrated steelmakers' EBITDA/t has ranged roughly Rs 6,000-20,000 over the last cycle; under Rs 6,000 is trough-level, above Rs 12,000 healthy mid-to-upper cycle."
+  capacity_utilisation:
+    red: 0.70
+    green: 0.85
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Integrated steel plants need 80%+ utilisation to absorb fixed costs; under 70% is distressed."

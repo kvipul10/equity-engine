@@ -122,7 +122,7 @@ def test_market_inputs_sourced_and_consistent_with_damodaran(real_cfg):
 def test_every_universe_archetype_is_mapped(real_cfg):
     for t, row in real_cfg.universe.items():
         a = row["archetype"]
-        assert a in real_cfg.sectors["archetypes"], a
+        assert a in real_cfg.sectors, a
         assert a in real_cfg.sector["betas"] and real_cfg.sector["betas"][a]["levered"], a
         for m, band in real_cfg.sector["bands"].get(a, {}).items():
             assert band["source_url"].startswith("https://pages.stern.nyu.edu/") and band["as_of"]

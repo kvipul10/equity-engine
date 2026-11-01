@@ -63,8 +63,9 @@ def metric_text(mid: str, r: Dict, note: Optional[str]) -> str:
     parts = [f"{m.name}: {fmt(r.get('value'), m.unit)}"]
     if r.get("rag") and r["rag"] != "n/a":
         lvl = r.get("level") or {}
+        ind = " indicative" if (r.get("band") or {}).get("source_type") == "indicative" else ""
         basis = (f"vs {lvl.get('n_peers')} same-archetype peers" if lvl.get("basis") == "percentile"
-                 else f"vs band ({_band_text(r, m.unit, m.direction)})")
+                 else f"vs{ind} band ({_band_text(r, m.unit, m.direction)})")
         parts.append(f"{r['rag'].upper()} (level {lvl.get('rag')} {basis}")
         t = r.get("trend")
         if t:
@@ -154,7 +155,8 @@ def _driver_texts(drivers: Dict) -> Dict:
                          f"{fmt(r['nodes'][root]['t1'], ru)} ({r['t0']}->{r['t1']}). Largest drivers: "
                          + "; ".join(x["text"] for x in tops[:3]) + "."),
             }
-        out[tid] = {"title": t["title"], "root": root, "windows": wins}
+        out[tid] = {"title": t["title"], "root": root, "windows": wins,
+                    **{k: t[k] for k in ("origin", "replaces", "fallback_for", "note") if k in t}}
     return out
 
 
@@ -210,13 +212,14 @@ def build_report(comp, results: Dict, pillars: Dict, overall: Dict, flags: List[
         r = results.get(mid, {})
         mout[mid] = {
             "name": m.name, "pillar": m.pillar, "role": m.role, "unit": m.unit, "direction": m.direction, "kind": m.kind,
-            "equation": m.equation, "meaning": m.meaning, "value": r.get("value"), "value_text": fmt(r.get("value"), m.unit),
+            "equation": m.equation, "formula": m.formula or None, "origin": m.origin, "meaning": m.meaning,
+            "value": r.get("value"), "value_text": fmt(r.get("value"), m.unit),
             "series": _series_dict(s) if m.kind == "annual" else {}, "level": r.get("level"), "trend": r.get("trend"),
             "stability": r.get("stability"), "composite": r.get("composite"), "rag": r.get("rag"), "band": r.get("band"),
             "reason": r.get("reason"), "note": ctx.info.get(mid), "text": metric_text(mid, r, ctx.info.get(mid)),
         }
     for p in PILLARS:
-        pillars[p]["name"] = PILLAR_NAMES[p]
+        pillars[p]["name"] = cfg.sector_of(std.archetype).pillar_names.get(p, PILLAR_NAMES[p])
         pillars[p]["summary"] = _pillar_text(p, pillars[p], results, flags)
         pillars[p]["metrics"] = [mid for mid in metrics if REGISTRY[mid].pillar == p]
         pillars[p]["flags_triggered"] = [f["id"] for f in flags if f["pillar"] == p and f["status"] == "triggered"]
@@ -235,8 +238,9 @@ def build_report(comp, results: Dict, pillars: Dict, overall: Dict, flags: List[
         "company": {"ticker": std.ticker, "name": std.company, "archetype": std.archetype, "family": std.family,
                     "damodaran_industries": info.get("damodaran_industries")},
         "asof": {"fy": last, "mode": "as-of (truncated, no look-ahead)" if std.meta.get("asof") else "latest",
-                 "period_end": std.annual.loc[last, "period_end"], "data_window": f"{std.years[0]}-{last}",
-                 "n_years": len(std.years), "latest_quarter_used": (std.quarterly.index[-1] if std.quarterly is not None and not std.quarterly.empty else None),
+                 "period_end": std.annual.loc[last, "period_end"], "data_window": f"{std.export_years[0]}-{last}",
+                 "n_years": len(std.export_years),
+                 "manual_kpi_window": (f"{std.manual.index[0]}-{std.manual.index[-1]}" if std.manual is not None and not std.manual.empty else None), "latest_quarter_used": (std.quarterly.index[-1] if std.quarterly is not None and not std.quarterly.empty else None),
                  "price_basis": snap.get("basis")},
         "market": {"price": snap.get("price"), "market_cap": snap.get("market_cap"), "shares_cr": snap.get("shares_cr"),
                    "enterprise_value": ev_cur},
@@ -255,9 +259,57 @@ def build_report(comp, results: Dict, pillars: Dict, overall: Dict, flags: List[
         },
         "metrics": mout,
         "sector_references": (cfg.sector.get("references") or {}).get(std.archetype),
+        "sector": _sector_section(cfg, std, ctx, results, flags),
+        "manual_kpis": _manual_section(cfg, std),
         "data_notes": std.notes,
     }
     return _clean(rep)
+
+
+def _sector_section(cfg, std, ctx, results: Dict, flags: List[Dict]) -> Dict:
+    sec = cfg.sector_of(std.archetype)
+    last = std.last_fy
+    man = std.manual if std.manual is not None else pd.DataFrame()
+    years5 = [y for y in std.export_years][-5:]
+    req = []
+    for kid, k in sec.manual_kpis.items():
+        have = [y for y in years5 if not man.empty and kid in man.columns and y in man.index and not pd.isna(man.loc[y, kid])]
+        req.append({"id": kid, "unit": k.get("unit"), "required": bool(k.get("required")), "description": k.get("description"),
+                    "years_present": have, "present_asof": last in have})
+    n_req = [r for r in req if r["required"]]
+    prov = std.manual_provenance if std.manual_provenance is not None else pd.DataFrame()
+    ind = sorted(mid for mid, r in results.items() if (r.get("band") or {}).get("source_type") == "indicative" and r.get("level"))
+    sec_flags = [f["id"] for f in flags if f.get("origin", "").startswith("config/sectors/") and f["status"] == "triggered"]
+    return {
+        "archetype": sec.archetype, "lineage": sec.lineage, "file": sec.file, "family": sec.family,
+        "how_to_read": sec.how_to_read,
+        "switched_off": [{"id": mid, "name": REGISTRY[mid].name if mid in REGISTRY else mid, "reason": why}
+                         for mid, why in sorted(ctx.switched_off.items()) if mid in REGISTRY and REGISTRY[mid].applies_to(ctx.tokens)],
+        "switched_off_groups": [{**g, "n_metrics": sum(1 for m in REGISTRY.values() if tuple(m.applies) == (g["applies"],))}
+                                for g in getattr(ctx, "switched_off_groups", [])],
+        "manual_kpis": req,
+        "required_kpis_present_asof": f"{sum(1 for r in n_req if r['present_asof'])}/{len(n_req)}",
+        "missing_required_asof": [r["id"] for r in n_req if not r["present_asof"]],
+        "kpi_values": int(len(prov)), "kpi_verified_share": (float((prov["verified"] == "Y").mean()) if len(prov) else None),
+        "indicative_bands_used": ind,
+        "sector_flags_triggered": sec_flags,
+        "constants": {k: {kk: v.get(kk) for kk in ("value", "source_url", "as_of", "rationale") if v.get(kk) is not None}
+                      for k, v in sec.constants.items()},
+    }
+
+
+def _manual_section(cfg, std) -> Dict:
+    prov = std.manual_provenance if std.manual_provenance is not None else pd.DataFrame()
+    if prov is None or not len(prov):
+        return {}
+    sec = cfg.sector_of(std.archetype)
+    out: Dict[str, Dict] = {}
+    for _, r in prov.iterrows():
+        k = r["kpi"]
+        d = out.setdefault(k, {"unit": r["unit"], "description": (sec.manual_kpis.get(k) or {}).get("description"), "values": {}})
+        d["values"][r["fy"]] = {"value": r["value"], "raw_value": r["raw_value"], "unit": r["unit"], "source_url": r["source_url"],
+                                "source_date": r["source_date"], "verified": r["verified"]}
+    return out
 
 
 METRIC_CSV_FIXED = ["metric_id", "name", "pillar", "role", "unit", "direction"]
@@ -271,13 +323,15 @@ def metrics_frame(rep: Dict) -> pd.DataFrame:
                 years.append(y)
     rows = []
     for mid, m in rep["metrics"].items():
-        row = {"metric_id": mid, "name": m["name"], "pillar": m["pillar"], "role": m["role"], "unit": m["unit"], "direction": m["direction"]}
+        row = {"metric_id": mid, "name": m["name"], "pillar": m["pillar"], "role": m["role"], "unit": m["unit"], "direction": m["direction"],
+               "origin": m.get("origin")}
         for y in years:
             row[y] = m["series"].get(y)
         lvl, tr, st, b = m.get("level") or {}, m.get("trend") or {}, m.get("stability") or {}, m.get("band") or {}
         row.update({
             "value": m["value"], "level_score": lvl.get("score"), "level_rag": lvl.get("rag"), "level_basis": lvl.get("basis"),
             "band_red": b.get("red"), "band_green": b.get("green"), "band_origin": b.get("origin"),
+            "band_source_type": b.get("source_type"),
             "trend_label": tr.get("label"), "trend_normalised_slope": tr.get("normalised_slope"), "trend_score": tr.get("score"),
             "stability_label": st.get("label"), "stability_cv": st.get("cv"), "stability_score": st.get("score"),
             "composite": m.get("composite"), "rag": m.get("rag"), "note": m.get("note") or m.get("reason"), "equation": m["equation"],
@@ -320,6 +374,12 @@ def console_summary(rep: Dict) -> str:
         sc = f"{pv['score']:.0f}" if pv["score"] is not None else "--"
         lines.append(f"  {pv['name']:<30} {(pv['rag'] or 'n/a').upper():<6} {sc:>3}  "
                      f"g/a/r {pv['rag_counts']['green']}/{pv['rag_counts']['amber']}/{pv['rag_counts']['red']}")
+    sec = rep.get("sector") or {}
+    if sec:
+        vs = sec.get("kpi_verified_share")
+        lines.append(f"Sector: {sec['archetype']} ({' > '.join(sec['lineage'])}); required KPIs present {sec['required_kpis_present_asof']}"
+                     f"; {len(sec['switched_off'])} metrics switched off; {sec['kpi_values']} manual KPI values"
+                     + (f" ({vs * 100:.0f}% verified)" if vs is not None else ""))
     trig = rep["flags"]["triggered"]
     lines.append(f"Flags: {len(trig)} triggered ({rep['flags']['counts']['high']} high), "
                  f"{len(rep['flags']['not_evaluable'])} not evaluable")

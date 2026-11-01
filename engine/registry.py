@@ -34,7 +34,7 @@ PILLAR_NAMES = {
     "valuation": "8 Valuation",
 }
 DIRECTIONS = ("higher", "lower", "target", "neutral")
-UNITS = ("pct", "pp", "x", "days", "ratio", "inr_cr", "count", "score")
+UNITS = ("pct", "pp", "x", "days", "ratio", "inr_cr", "inr", "num", "count", "score")
 ROLES = ("scored", "component", "root")
 TOKENS = {"ALL", "NF", "FIN", "BL", "BANK", "NBFC", "INS"}
 
@@ -54,6 +54,8 @@ class Metric:
     trend: bool = True
     stability: bool = True
     kind: str = "annual"  # annual: value per FY; point: only at the as-of FY
+    origin: str = "engine"  # 'engine' (Python, engine/metrics/) or the sector file that defines it
+    formula: str = ""  # sector metrics: the formula in the safe expression language
 
     def applies_to(self, tokens: Iterable[str]) -> bool:
         toks = set(tokens)
@@ -63,10 +65,7 @@ class Metric:
 REGISTRY: Dict[str, Metric] = {}
 
 
-def metric(id: str, name: str, pillar: str, unit: str, direction: str, applies, meaning: str, equation: str,
-           role: str = "scored", trend: bool = True, stability: bool = True, kind: str = "annual"):
-    if isinstance(applies, str):
-        applies = (applies,)
+def validate_fields(id: str, pillar: str, direction: str, unit: str, role: str, kind: str) -> None:
     if pillar not in PILLARS and pillar != "root":
         raise ValueError(f"{id}: unknown pillar {pillar}")
     if direction not in DIRECTIONS:
@@ -77,6 +76,13 @@ def metric(id: str, name: str, pillar: str, unit: str, direction: str, applies, 
         raise ValueError(f"{id}: unknown role {role}")
     if kind not in ("annual", "point"):
         raise ValueError(f"{id}: unknown kind {kind}")
+
+
+def metric(id: str, name: str, pillar: str, unit: str, direction: str, applies, meaning: str, equation: str,
+           role: str = "scored", trend: bool = True, stability: bool = True, kind: str = "annual"):
+    if isinstance(applies, str):
+        applies = (applies,)
+    validate_fields(id, pillar, direction, unit, role, kind)
     if not meaning or not equation:
         raise ValueError(f"{id}: meaning and equation are required")
 
@@ -110,21 +116,32 @@ def load_all() -> Dict[str, Metric]:
 
 def to_markdown() -> str:
     reg = load_all()
+    try:  # include sector metrics defined in config/sectors/*.yaml
+        from .config import Config
+        from .paths import Paths
+
+        Config.load(Paths.default())
+        reg = REGISTRY
+    except Exception:  # pragma: no cover - docs still render engine metrics
+        pass
     lines = ["# Metric registry", "",
              "Generated from `engine/registry.py` by `python -m engine metrics --markdown`. Do not edit by hand.", "",
              "Units: pct = fraction shown as %, pp = difference of fractions shown as percentage points, x = multiple. "
              "Applies: ALL, NF = non-financial, FIN = financials, BL = bank + NBFC, BANK, NBFC, INS = insurance. "
              "Role: scored (gets level/trend/stability and a RAG), component (shown, used by driver trees, not scored), "
-             "root (the value-creation verdict).", ""]
+             "root (the value-creation verdict). Origin: `engine` = Python (engine/metrics/), otherwise the sector file "
+             "that defines the metric (formula in the safe expression language).", ""]
     for p in ("root",) + PILLARS:
         ms = [m for m in reg.values() if m.pillar == p]
         if not ms:
             continue
-        lines += [f"## {PILLAR_NAMES[p]}", "", "| id | name | unit | direction | applies | role | equation | meaning |",
-                  "|---|---|---|---|---|---|---|---|"]
+        lines += [f"## {PILLAR_NAMES[p]}", "", "| id | name | unit | direction | applies | role | origin | equation | meaning |",
+                  "|---|---|---|---|---|---|---|---|---|"]
         for m in ms:
             eq = m.equation.replace("|", "\\|")
+            if m.formula:
+                eq += f"<br>`{m.formula.replace('|', '/')}`"
             lines.append(f"| `{m.id}` | {m.name} | {m.unit} | {m.direction} | {', '.join(m.applies)} | {m.role}"
-                         f"{' (point)' if m.kind == 'point' else ''} | {eq} | {m.meaning} |")
+                         f"{' (point)' if m.kind == 'point' else ''} | {m.origin} | {eq} | {m.meaning} |")
         lines.append("")
     return "\n".join(lines)

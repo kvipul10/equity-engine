@@ -1,12 +1,12 @@
-# Level bands for metrics that are comparable across sectors (generic), by family, or by archetype.
+# Level bands for metrics that are comparable across sectors (generic). Sector-specific bands live in config/sectors/*.yaml.
 # Sector-specific bands (margins, working-capital days, IC turnover) are generated from Damodaran's India data into
 # config/sector_benchmarks.yaml.
 #
-# Lookup order for a company: archetype (this file) > sector_benchmarks (archetype) > family (this file) > generic.
+# Lookup order for a company: sector module (config/sectors) > sector_benchmarks (Damodaran) > generic (this file).
 # Direction comes from the metric registry: higher-is-better uses red <= ... < green; lower-is-better green <= ... < red.
 # Values may be numbers or expressions over: wacc, ke, rf, tax_rate, inflation_target, nominal_gdp_growth, terminal_growth.
 #
-# source_type: external (needs source_url + as_of) | rule_of_thumb (needs rationale + as_of) | derived (from market.yaml inputs).
+# source_type: external (needs source_url + as_of) | indicative (needs rationale + as_of) | derived (from market.yaml inputs).
 
 _growth_band: &growth_band
   red: inflation_target
@@ -36,25 +36,25 @@ generic:
   revenue_growth_volatility:
     green: 0.5
     red: 1.5
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "sd/mean of annual growth below 0.5 = steady compounding; above 1.5 = growth is mostly noise (cyclical or lumpy)."
   pat_growth_volatility:
     green: 0.5
     red: 1.5
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Same scale as revenue growth volatility."
   organic_capital_share_3y:
     green: 0.7
     red: 0.3
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "At least 70% of long-term capital deployed into own capex = predominantly organic; under 30% = growth largely bought (or cash parked in investments)."
   q_revenue_yoy_trend:
     green: 0.01
     red: -0.01
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "YoY growth accelerating by >= 1pp per quarter = improving momentum; decelerating by >= 1pp per quarter = fading."
 
@@ -62,19 +62,19 @@ generic:
   ebitda_margin_sd_10y:
     green: 0.02
     red: 0.05
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "EBITDA margin moving within +/-2pp over a decade signals pricing power; a 5pp+ standard deviation signals commodity exposure or weak pass-through."
   other_income_to_pbt:
     green: 0.10
     red: 0.25
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Above 25% of PBT from other income = profits depend on treasury/one-offs (the red-flag threshold in the brief); under 10% = operations drive profit."
   q_ebitda_margin_yoy_change:
     green: 0.01
     red: -0.01
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "A 1pp year-on-year move in quarterly operating margin is material for most companies."
 
@@ -82,7 +82,7 @@ generic:
   cwip_to_net_block:
     green: 0.10
     red: 0.30
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "CWIP above 30% of net block (the red-flag threshold in the brief) means a large share of capital is not yet earning; under 10% is normal maintenance/expansion."
 
@@ -122,25 +122,25 @@ generic:
   cfo_to_ebitda:
     green: 0.80
     red: 0.50
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "After tax (~25%) and normal working-capital needs, 80%+ of EBITDA should arrive as CFO; below 50% means profit is being absorbed by working capital."
   fcf_to_pat:
     green: 0.80
     red: 0.20
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Single-year FCF is lumpy (capex cycles), hence the wide amber zone; use the 5-year version for judgement."
   fcf_to_pat_5y:
     green: 0.70
     red: 0.30
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Over a cycle, a mature business should convert 70%+ of profit into free cash; below 30% profit is being reinvested or is not real."
   cfo_to_pat_5y:
     green: 0.90
     red: 0.60
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Cumulative CFO below 60% of cumulative PAT over 5 years is the red-flag threshold in the brief; 90%+ = profits are cash-backed."
   accruals_ratio:
@@ -153,19 +153,19 @@ generic:
   receivables_vs_revenue_growth:
     green: 0.0
     red: 0.10
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Receivables outgrowing revenue by 10pp+ in a year is a classic quality warning (Beneish DSRI logic)."
   exceptional_frequency_5y:
     green: 1
     red: 3
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "One exceptional year in five is normal; three or more means 'exceptional' items are recurring."
   exceptional_size_5y:
     green: 0.05
     red: 0.20
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Exceptional items above 20% of cumulative PBT make reported profit an unreliable guide to core earnings."
   beneish_m_score:
@@ -187,7 +187,7 @@ generic:
   net_debt_to_equity:
     green: 0.5
     red: 1.5
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Net debt above 1.5x book equity is aggressive for an Indian non-financial; under 0.5x is conservative."
   interest_cover:
@@ -200,19 +200,19 @@ generic:
   current_ratio_proxy:
     red: 1.0
     green: 1.5
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Textbook liquidity norm: below 1.0x short-term obligations exceed short-term assets; 1.5x+ is comfortable. Proxy excludes short-term debt."
   cash_to_st_borrowings:
     red: 0.2
     green: 1.0
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Cash covering all short-term debt (1.0x) removes refinancing risk; under 0.2x depends on rollovers."
   debt_vs_ebitda_growth:
     green: 0.0
     red: 0.10
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Debt growing 10pp a year faster than EBITDA erodes coverage quickly."
   altman_z_india:
@@ -227,31 +227,31 @@ generic:
   share_count_change:
     green: 0.0
     red: 0.03
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Net issuance above 3% a year is material dilution; flat or falling share count = no dilution/buybacks."
   dividend_to_fcf:
     green: 0.7
     red: 1.2
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Paying out more than 120% of FCF must be funded by cash reserves or debt; under 70% leaves room to reinvest."
   acquisition_roic_delta_3y:
     green: 0.0
     red: -0.03
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Acquisition-heavy periods followed by a 3pp+ fall in ROIC suggest value-destructive deals."
   promoter_holding_change_3y:
     green: 0.0
     red: -0.03
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Promoters selling more than 3pp of the company over 3 years is a signal worth explaining."
   promoter_pledge:
     green: 0.01
     red: 0.25
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Pledges above a quarter of promoter holding create forced-selling risk in a drawdown."
 
@@ -259,7 +259,7 @@ generic:
   pe_percentile_10y: &cheap_vs_history
     green: 0.33
     red: 0.67
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Bottom third of the company's own 10-year range = cheap versus itself; top third = rich versus itself."
   pb_percentile_10y: *cheap_vs_history
@@ -268,71 +268,28 @@ generic:
   implied_minus_delivered_growth:
     green: 0.0
     red: 0.05
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Price requiring 5pp+ faster growth than delivered over the last 5 years = expectations risk; at or below delivered = undemanding."
   implied_pb_growth_minus_delivered:
     green: 0.0
     red: 0.05
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Same logic for lenders/insurers versus delivered book-value compounding."
   pb_to_justified_pb:
     green: 1.0
     red: 1.5
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "Paying 50%+ above the P/B that sustainable ROE justifies needs ROE to rise; at or below 1.0x the price is covered by current returns."
   ev_ic_to_roic_wacc:
     green: 1.0
     red: 1.5
-    source_type: rule_of_thumb
+    source_type: indicative
     as_of: "2026-11-01"
     rationale: "In steady state EV/IC = ROIC/WACC; 50%+ above that requires growth or rising returns to be justified."
 
-family:
-  bank_like:
-    equity_to_assets:
-      red: 0.06
-      green: 0.10
-      source_type: rule_of_thumb
-      as_of: "2026-11-01"
-      rationale: "RBI's Basel III leverage-ratio floor is 4% (D-SIBs) / 3.5% (others) of Tier-1 to exposure; book equity below 6% of assets leaves a thin cushion, 10%+ is well capitalised."
-    funding_vs_equity_growth:
-      green: 0.0
-      red: 0.10
-      source_type: rule_of_thumb
-      as_of: "2026-11-01"
-      rationale: "Deposits + borrowings growing 10pp a year faster than equity = rapidly rising leverage."
-    growth_minus_icg:
-      green: 0.0
-      red: 0.10
-      source_type: rule_of_thumb
-      as_of: "2026-11-01"
-      rationale: "Balance-sheet growth 10pp+ above internal capital generation must be funded by dilution or by thinner capital."
-
-archetype:
-  bank:
-    roa:
-      red: 0.0112
-      green: 0.0168
-      centre: 0.014
-      source_type: external
-      source_url: https://www.indiainfoline.com/blog/how-healthy-were-indian-banks-in-the-year-2024-25
-      as_of: "2025-06-30"
-      rationale: "RBI Financial Stability Report (June 2025): scheduled commercial banks' annualised ROA 1.4% (secondary summary; June-2026 FSR figures were not retrievable). Amber zone = 1.4% +/- 20%."
-    nii_to_assets:
-      red: 0.028
-      green: 0.042
-      centre: 0.035
-      source_type: external
-      source_url: https://www.indiainfoline.com/blog/how-healthy-were-indian-banks-in-the-year-2024-25
-      as_of: "2025-06-30"
-      rationale: "RBI FSR June 2025: SCB net interest margin 3.5% (private banks 4.1%, PSBs 3.0%); RBI defines NIM as NII / average total assets, matching this metric. Amber zone = 3.5% +/- 20%."
-  nbfc:
-    borrowings_to_equity:
-      green: 4.0
-      red: 7.0
-      source_type: rule_of_thumb
-      as_of: "2026-11-01"
-      rationale: "RBI caps base-layer NBFC leverage (outside liabilities / owned funds) at 7x (Scale Based Regulation, https://www.rbi.org.in/Scripts/BS_ViewMasterDirections.aspx?id=12179); upper-layer NBFCs are not capped, so 7x is used as a reference red line and 4x as conservative."
+# Family- and archetype-level bands moved to config/sectors/<archetype>.yaml in Session 2.
+family: {}
+archetype: {}

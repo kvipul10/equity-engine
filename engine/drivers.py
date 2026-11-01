@@ -46,11 +46,11 @@ def _parse_child(ch) -> Tuple[str, float, float]:
     return s, 1.0, 1.0
 
 
-def shapley_product(c0: List[float], c1: List[float], powers: List[float]) -> List[float]:
+def shapley_product(c0: List[float], c1: List[float], powers: List[float], const: float = 1.0) -> List[float]:
     n = len(c0)
 
     def f(sel):  # sel[i] True -> use t1 value
-        v = 1.0
+        v = const
         for i in range(n):
             x = c1[i] if sel[i] else c0[i]
             if powers[i] < 0 and x == 0:
@@ -78,6 +78,7 @@ class Tree:
         self.applies = spec.get("applies", ["ALL"])
         self.title = spec.get("title", self.id)
         self.links = spec["links"]
+        self.origin = spec.get("_origin", "config/drivers.yaml")
 
     def nodes(self) -> List[str]:
         seen, order = set(), []
@@ -102,14 +103,16 @@ def _value(get, node: str, lab: str) -> float:
     return float(v) if not pd.isna(v) else float("nan")
 
 
-def decompose(tree: Tree, get, t0: str, t1: str, tol: float = 1e-6) -> Dict:
+def decompose(tree: Tree, get, t0: str, t1: str, tol: float = 1e-6, explain=None) -> Dict:
     """get(node_id) -> pd.Series by FY label. Returns contributions of every node to the root (root units)."""
     vals = {}
     for n in tree.nodes():
         vals[n] = (_value(get, n, t0), _value(get, n, t1))
     missing = [n for n, (a, b) in vals.items() if math.isnan(a) or math.isnan(b)]
     if missing:
-        return {"status": "n/a", "reason": f"missing values for {', '.join(missing[:6])} at {t0} or {t1}"}
+        why = [explain(n) for n in missing if explain and explain(n)]
+        return {"status": "n/a", "reason": f"missing values for {', '.join(missing[:6])} at {t0} or {t1}"
+                                           + (f" ({'; '.join(dict.fromkeys(why))})" if why else "")}
 
     contrib: Dict[str, float] = {tree.root: vals[tree.root][1] - vals[tree.root][0]}
     factor: Dict[str, float] = {tree.root: 1.0}
@@ -131,8 +134,9 @@ def decompose(tree: Tree, get, t0: str, t1: str, tol: float = 1e-6) -> Dict:
             c0 = [vals[c][0] for c, _, _ in kids]
             c1 = [vals[c][1] for c, _, _ in kids]
             pw = [p for _, _, p in kids]
-            rec0 = math.prod(x ** p for x, p in zip(c0, pw))
-            rec1 = math.prod(x ** p for x, p in zip(c1, pw))
+            kconst = float(link.get("const", 1.0))
+            rec0 = kconst * math.prod(x ** p for x, p in zip(c0, pw))
+            rec1 = kconst * math.prod(x ** p for x, p in zip(c1, pw))
             if abs(rec0 - p0) > tol * max(1, abs(p0)) or abs(rec1 - p1) > tol * max(1, abs(p1)):
                 inexact.append(node)
             if all(x > 0 for x in c0 + c1) and p0 > 0 and p1 > 0:
@@ -141,7 +145,7 @@ def decompose(tree: Tree, get, t0: str, t1: str, tol: float = 1e-6) -> Dict:
                     k[c] = Lp * pw_i / logmean(b, a)
                 methods[node] = "log"
             else:
-                phi = shapley_product(c0, c1, pw)
+                phi = shapley_product(c0, c1, pw, kconst)
                 for (c, _, _), ph, a, b in zip(kids, phi, c0, c1):
                     k[c] = ph / (b - a) if b != a else 0.0
                 methods[node] = "shapley"
@@ -216,24 +220,50 @@ def load_trees(cfg) -> List[Tree]:
     return [Tree(s) for s in (cfg.drivers.get("trees") or [])]
 
 
-def run_trees(cfg, tokens, get, asof: str, available_labels) -> Dict:
-    out = {}
+def run_trees(cfg, tokens, get, asof: str, available_labels, sector=None, explain=None) -> Dict:
+    """Generic trees (config/drivers.yaml) plus sector trees (config/sectors/*: drivers.add). A sector tree listed in
+    drivers.replace takes the generic tree's place when at least one window is computable; otherwise the generic
+    tree runs as a fallback and the reason is recorded."""
     windows = cfg.scoring.get("drivers", {}).get("windows", [1, 3, 5])
     top_n = int(cfg.scoring.get("drivers", {}).get("top_n", 5))
     tol = float(cfg.scoring.get("drivers", {}).get("exactness_tolerance", 1e-6))
     y1 = fy_year(asof)
-    for tree in load_trees(cfg):
-        if not any(a in tokens for a in tree.applies):
-            continue
-        res_t = {"title": tree.title, "root": tree.root, "windows": {}}
+
+    def run(tree: Tree) -> Dict:
+        res_t = {"title": tree.title, "root": tree.root, "windows": {}, "origin": tree.origin}
         for w in windows:
             t0 = year_label(y1 - int(w))
             if t0 not in available_labels:
                 res_t["windows"][f"{w}y"] = {"status": "n/a", "reason": f"{t0} not in data"}
                 continue
-            r = decompose(tree, get, t0, asof, tol)
+            r = decompose(tree, get, t0, asof, tol, explain)
             if r.get("status") == "ok":
                 r["top_drivers"] = top_leaves(r, top_n)
             res_t["windows"][f"{w}y"] = r
-        out[tree.id] = res_t
+        return res_t
+
+    def ok(res_t: Dict) -> bool:
+        return any(w.get("status") == "ok" for w in res_t["windows"].values())
+
+    out: Dict[str, Dict] = {}
+    sector_res: Dict[str, Dict] = {}
+    replace = dict(sector.drivers_replace) if sector else {}
+    for spec in (sector.drivers_add if sector else []):
+        t = Tree(spec)
+        if any(a in tokens for a in t.applies):
+            sector_res[t.id] = run(t)
+    for tree in load_trees(cfg):
+        if not any(a in tokens for a in tree.applies):
+            continue
+        sid = replace.get(tree.id)
+        if sid and sid in sector_res and ok(sector_res[sid]):
+            sector_res[sid]["replaces"] = tree.id
+            continue
+        res = run(tree)
+        if sid:
+            why = next((w.get("reason") for w in sector_res.get(sid, {}).get("windows", {}).values() if w.get("reason")), "not applicable")
+            res["fallback_for"] = sid
+            res["note"] = f"Sector tree '{sid}' not computable ({why}); generic '{tree.id}' used instead."
+        out[tree.id] = res
+    out.update(sector_res)
     return out

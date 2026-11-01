@@ -1,0 +1,12 @@
+archetype: consumer_manufacturing
+extends: fmcg
+family: non_financial
+damodaran_industries: ["Chemical (Specialty)"]
+evidence: "ASIANPAINT -> Chemical (Specialty) in Damodaran's indname.xls (Jan 2026)"
+how_to_read: |
+  Branded consumer manufacturers (paints, adhesives, durables) combine FMCG-style brands and distribution with heavier plants and
+  positive working capital. Read volume growth versus price/mix, gross margin through raw-material cycles (crude derivatives for
+  paints), A&P and dealer reach as the moat, and capex: new capacity must earn back its cost, so watch fixed-asset turnover and ROIC
+  after each expansion. Competition shows up first in volume share and A&P intensity.
+bands:
+  nwc_days: null

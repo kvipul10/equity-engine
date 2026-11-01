@@ -1,0 +1,132 @@
+archetype: it_services
+family: non_financial
+damodaran_industries: ["Computer Services"]
+evidence: "TCS, INFY -> Computer Services in Damodaran's indname.xls (Jan 2026)"
+how_to_read: |
+  IT services sell people-hours: revenue = headcount x utilisation x price, and the cost base is mostly salaries.
+  Read constant-currency growth (strips out the rupee), deal wins (TCV / book-to-bill) as the lead indicator, and utilisation
+  and attrition as the margin levers. Employee cost % is the margin story; DSO including unbilled revenue catches revenue
+  recognised ahead of billing. Treasury income is large, so check other income / PBT.
+
+metrics_off:
+  - {id: gross_margin, reason: "No material cost of goods: delivery cost is employee cost"}
+  - {id: materials_pct, reason: "No raw materials"}
+  - {id: dio, reason: "No inventory"}
+  - {id: operating_cycle, reason: "No inventory: receivables (incl. unbilled) are the cycle"}
+  - {id: cash_conversion_cycle, reason: "No inventory; payables are immaterial"}
+  - {id: dpo, reason: "Payables are immaterial for a people business"}
+
+manual_kpis:
+  - {id: cc_revenue_growth_pct, unit: "%", required: true, description: "Constant-currency revenue growth for the year", where: "Results press release / factsheet"}
+  - {id: utilisation_pct, unit: "%", required: true, description: "Utilisation (IT services, excluding trainees) for the year or Q4", where: "Investor factsheet"}
+  - {id: attrition_ltm_pct, unit: "%", required: true, description: "Last-twelve-month attrition at 31 March", where: "Results press release"}
+  - {id: deal_tcv_usd_bn, unit: "USD bn", required: true, description: "Total contract value of deals won in the year", where: "Results press release / factsheet"}
+  - {id: revenue_usd_mn, unit: "USD mn", required: true, description: "Revenue in US dollars for the year", where: "Results press release"}
+  - {id: unbilled_revenue_cr, unit: "Rs cr", required: true, description: "Unbilled revenue / contract assets at 31 March", where: "Balance sheet notes"}
+  - {id: headcount, unit: "count", required: true, description: "Total employees at 31 March", where: "Results press release"}
+
+metrics_add:
+  - {id: cc_growth, name: "Constant-currency growth", pillar: growth, unit: pct, direction: higher, formula: "kpi('cc_revenue_growth_pct')",
+     equation: "Revenue growth at constant exchange rates (reported)", meaning: "Underlying demand growth without currency effects."}
+  - {id: book_to_bill, name: "Book-to-bill (TCV / revenue)", pillar: growth, unit: x, direction: higher,
+     formula: "kpi('deal_tcv_usd_bn') * 1000 / kpi('revenue_usd_mn')",
+     equation: "Deal TCV (USD) / revenue (USD)", meaning: "Order intake relative to sales: the lead indicator of growth."}
+  - {id: deal_tcv_growth, name: "Deal TCV growth", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:deal_tcv_usd_bn', 1)",
+     equation: "TCV_t / TCV_t-1 - 1", meaning: "Momentum in deal wins."}
+  - {id: headcount_growth, name: "Headcount growth", pillar: growth, unit: pct, direction: neutral, formula: "growth('kpi:headcount', 1)",
+     equation: "Headcount_t / Headcount_t-1 - 1", meaning: "Capacity added; compare with revenue growth."}
+  - {id: utilisation, name: "Utilisation", pillar: capital_efficiency, unit: pct, direction: higher, formula: "kpi('utilisation_pct')",
+     equation: "Billed effort / available effort (reported, ex trainees)", meaning: "How fully the workforce is billed: the main margin lever."}
+  - {id: attrition, name: "Attrition (LTM)", pillar: capital_efficiency, unit: pct, direction: lower, formula: "kpi('attrition_ltm_pct')",
+     equation: "Voluntary leavers over the last 12 months / average headcount (reported)", meaning: "Talent churn: drives hiring, training and wage costs."}
+  - {id: dso_incl_unbilled, name: "DSO incl. unbilled", pillar: capital_efficiency, unit: days, direction: lower,
+     formula: "(f('receivables') + kpi('unbilled_revenue_cr')) / f('revenue') * 365",
+     equation: "(Receivables + unbilled revenue) / revenue x 365", meaning: "Days of revenue not yet collected, including work not yet invoiced."}
+  - {id: revenue_per_employee, name: "Revenue per employee", pillar: capital_efficiency, unit: inr, direction: higher,
+     formula: "f('revenue') * 10000000 / avg('kpi:headcount')",
+     equation: "Revenue / average headcount (Rs)", meaning: "Productivity and pricing per person."}
+
+bands:
+  employee_pct:
+    green: 0.50
+    red: 0.60
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Large Indian IT services firms spend roughly 50-56% of revenue on employees; above 60% leaves little operating margin."
+  utilisation:
+    red: 0.78
+    green: 0.85
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Tier-1 Indian IT reports utilisation (ex trainees) of about 82-88%; under 78% is bench-heavy."
+  attrition:
+    green: 0.13
+    red: 0.20
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Tier-1 attrition normalised to 12-14% after the FY22-23 spike of 20%+."
+  book_to_bill:
+    red: 1.0
+    green: 1.3
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "TCV below annual revenue means wins are not replacing what is billed; 1.3x+ supports growth."
+  cc_growth:
+    red: 0.03
+    green: 0.08
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Global IT services spend grows mid-single-digit; Indian tier-1 firms growing above 8% in constant currency are taking share."
+  dso_incl_unbilled:
+    green: 75
+    red: 100
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "Tier-1 IT collects in roughly 65-80 days including unbilled; above 100 days signals billing or collection problems."
+
+flags:
+  - id: IT01
+    name: Attrition high
+    pillar: capital_efficiency
+    severity: medium
+    applies: [it_services]
+    condition: "m('attrition') > 0.20"
+    values: {a: "m('attrition')"}
+    explanation: >
+      LTM attrition is {{ a|pct }}: replacement hiring and wage resets will pressure margins.
+  - id: IT02
+    name: Utilisation slipping
+    pillar: capital_efficiency
+    severity: medium
+    applies: [it_services]
+    condition: "m('utilisation') < 0.80 or chg('utilisation', 1) < -0.03"
+    values: {u: "m('utilisation')"}
+    explanation: >
+      Utilisation is {{ u|pct }} (below 80% or down 3pp in a year): bench costs are rising.
+  - id: IT03
+    name: Weak constant-currency growth
+    pillar: growth
+    severity: medium
+    applies: [it_services]
+    condition: "m('cc_growth') < 0.03"
+    values: {g: "m('cc_growth')"}
+    explanation: >
+      Constant-currency growth is {{ g|pct }}.
+  - id: IT04
+    name: Unbilled and receivable days rising
+    pillar: capital_efficiency
+    severity: medium
+    applies: [it_services]
+    condition: "rising('dso_incl_unbilled', 2) and chg('dso_incl_unbilled', 2) > 5"
+    values: {now: "m('dso_incl_unbilled')", then: "m('dso_incl_unbilled', 2)"}
+    explanation: >
+      DSO including unbilled rose from {{ then|days }} to {{ now|days }} over 2 years: revenue is running ahead of billing and collection.
+  - id: IT05
+    name: Deal wins falling
+    pillar: growth
+    severity: medium
+    applies: [it_services]
+    condition: "m('deal_tcv_growth') < -0.10"
+    values: {g: "m('deal_tcv_growth')"}
+    explanation: >
+      Deal TCV fell {{ g|pct }} year on year: the pipeline for next year's growth is thinner.
