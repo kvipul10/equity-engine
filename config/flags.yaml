@@ -1,0 +1,593 @@
+# Red-flag rules. Condition language: see engine/flags.py (safe expressions, no Python eval).
+# applies: ALL, NF (non-financial), FIN, BL (bank + NBFC), BANK, NBFC, INS or an archetype name.
+# Templates: Jinja2 with filters pct, pp, x, days, cr, num. Missing data => rule reported as 'not evaluable'.
+
+rules:
+  # ======================= 1 GROWTH =======================
+  - id: G01
+    name: Profit growth far ahead of revenue growth
+    pillar: growth
+    severity: medium
+    applies: [ALL]
+    condition: "m('pat_cagr_3y') - m('revenue_cagr_3y') > 0.15"
+    values: {pat_g: "m('pat_cagr_3y')", rev_g: "m('revenue_cagr_3y')"}
+    explanation: >
+      Core PAT compounded at {{ pat_g|pct }} a year over 3 years while revenue grew {{ rev_g|pct }}. Growth driven by
+      margin expansion or lower costs rarely compounds for long; check whether the margin gain is structural or cyclical.
+
+  - id: G02
+    name: Per-share growth lagging profit growth (dilution)
+    pillar: growth
+    severity: medium
+    applies: [ALL]
+    condition: "m('pat_cagr_5y') - m('eps_cagr_5y') > 0.03"
+    values: {pat_g: "m('pat_cagr_5y')", eps_g: "m('eps_cagr_5y')"}
+    explanation: >
+      Core PAT grew {{ pat_g|pct }} a year over 5 years but EPS only {{ eps_g|pct }}: new shares issued (QIPs, rights,
+      share-swap mergers, ESOPs) captured part of the profit growth that shareholders would otherwise have kept.
+
+  - id: G03
+    name: Fast growth funded mostly outside own capex
+    pillar: growth
+    severity: low
+    applies: [NF]
+    condition: "m('organic_capital_share_3y') < 0.5 and m('revenue_cagr_3y') > 0.15"
+    values: {share: "m('organic_capital_share_3y')", rev_g: "m('revenue_cagr_3y')"}
+    explanation: >
+      Revenue grew {{ rev_g|pct }} a year over 3 years, but only {{ share|pct }} of long-term capital deployed went into
+      own capex; the rest went into investments (acquisitions, stakes or treasury). Separate organic from bought growth.
+
+  - id: G04
+    name: Erratic revenue growth
+    pillar: growth
+    severity: low
+    applies: [ALL]
+    condition: "m('revenue_growth_volatility') > 1.5"
+    values: {vol: "m('revenue_growth_volatility')"}
+    explanation: >
+      Annual revenue growth has a standard deviation {{ vol|num }}x its mean over the last decade: growth is lumpy or
+      cyclical, so trailing CAGRs are a poor guide to the future.
+
+  - id: G05
+    name: Quarterly growth decelerating
+    pillar: growth
+    severity: medium
+    applies: [ALL]
+    condition: "m('q_revenue_yoy_trend') < -0.01 and m('q_revenue_yoy') < 0.05"
+    values: {trend: "m('q_revenue_yoy_trend')", latest: "m('q_revenue_yoy')"}
+    explanation: >
+      Year-on-year revenue growth has slowed by {{ trend|pp }} per quarter over the last four quarters and the latest
+      quarter grew only {{ latest|pct }}.
+
+  - id: G06
+    name: Revenue shrinking over 3 years
+    pillar: growth
+    severity: medium
+    applies: [ALL]
+    condition: "m('revenue_cagr_3y') < 0"
+    values: {rev_g: "m('revenue_cagr_3y')"}
+    explanation: >
+      Revenue has declined at {{ rev_g|pct }} a year over the last 3 years.
+
+  # ======================= 2 MARGINS =======================
+  - id: M01
+    name: EBITDA margin down three years running
+    pillar: margins
+    severity: medium
+    applies: [NF]
+    condition: "falling('ebitda_margin', 3) and chg('ebitda_margin', 3) < -0.02"
+    values: {now: "m('ebitda_margin')", then: "m('ebitda_margin', 3)", d: "chg('ebitda_margin', 3)"}
+    explanation: >
+      EBITDA margin has fallen in each of the last 3 years, from {{ then|pct }} to {{ now|pct }} ({{ d|pp }}). See the
+      cost-line drivers for which cost is responsible.
+
+  - id: M02
+    name: Profits leaning on other income
+    pillar: margins
+    severity: medium
+    applies: [NF]
+    condition: "m('other_income_to_pbt') > 0.25"
+    values: {share: "m('other_income_to_pbt')", oi: "m('other_income')", exc: "m('exceptional_est')"}
+    explanation: >
+      Other income is {{ share|pct }} of PBT ({{ oi|cr }}, of which an estimated {{ exc|cr }} is exceptional). Operating
+      profit alone would show a weaker business; check treasury income sustainability and one-offs.
+
+  - id: M03
+    name: Materials cost creeping up
+    pillar: margins
+    severity: medium
+    applies: [NF]
+    condition: "chg('materials_pct', 3) > 0.03"
+    values: {d: "chg('materials_pct', 3)", now: "m('materials_pct')"}
+    explanation: >
+      Materials rose {{ d|pp }} of sales over 3 years to {{ now|pct }}: input inflation is not being passed on, or the mix
+      is shifting to lower-margin products.
+
+  - id: M04
+    name: Employee cost creeping up
+    pillar: margins
+    severity: medium
+    applies: [NF]
+    condition: "chg('employee_pct', 3) > 0.03"
+    values: {d: "chg('employee_pct', 3)", now: "m('employee_pct')"}
+    explanation: >
+      Employee cost rose {{ d|pp }} of sales over 3 years to {{ now|pct }}: hiring ahead of revenue, wage inflation or
+      lower utilisation.
+
+  - id: M05
+    name: Other operating costs creeping up
+    pillar: margins
+    severity: low
+    applies: [NF]
+    condition: "chg('other_expenses_pct', 3) > 0.03"
+    values: {d: "chg('other_expenses_pct', 3)", now: "m('other_expenses_pct')"}
+    explanation: >
+      Other operating costs (power, other manufacturing, selling & admin, other) rose {{ d|pp }} of sales over 3 years to
+      {{ now|pct }}.
+
+  - id: M06
+    name: Operating leverage working in reverse
+    pillar: margins
+    severity: medium
+    applies: [NF]
+    condition: "m('dol') > 3 and pchg('revenue', 1) < 0"
+    values: {dol: "m('dol')", g: "pchg('revenue', 1)"}
+    explanation: >
+      Revenue fell {{ g|pct }} and EBIT fell {{ dol|num }}x as fast: high fixed costs magnify the downturn.
+
+  - id: M07
+    name: Volatile margins
+    pillar: margins
+    severity: low
+    applies: [NF]
+    condition: "m('ebitda_margin_sd_10y') > 0.05"
+    values: {sd: "m('ebitda_margin_sd_10y')"}
+    explanation: >
+      EBITDA margin has a standard deviation of {{ sd|pp }} over the last decade: weak pricing power or commodity exposure.
+
+  - id: M08
+    name: Net interest margin compressing
+    pillar: margins
+    severity: medium
+    applies: [BL]
+    condition: "chg('nii_to_assets', 2) < -0.005"
+    values: {d: "chg('nii_to_assets', 2)", now: "m('nii_to_assets')"}
+    explanation: >
+      NII / average assets fell {{ d|pp }} over 2 years to {{ now|pct }}: funding costs rising faster than lending yields,
+      or a shift to lower-yield assets.
+
+  # ======================= 3 CAPITAL EFFICIENCY =======================
+  - id: C01
+    name: Receivable days up three years running
+    pillar: capital_efficiency
+    severity: medium
+    applies: [NF]
+    condition: "rising('dso', 3) and chg('dso', 3) > 5"
+    values: {now: "m('dso')", then: "m('dso', 3)"}
+    explanation: >
+      Receivable days rose in each of the last 3 years, from {{ then|days }} to {{ now|days }}: customers are paying
+      slower, credit terms have loosened, or revenue is being recognised early.
+
+  - id: C02
+    name: Inventory days up three years running
+    pillar: capital_efficiency
+    severity: medium
+    applies: [NF]
+    condition: "rising('dio', 3) and chg('dio', 3) > 5"
+    values: {now: "m('dio')", then: "m('dio', 3)"}
+    explanation: >
+      Inventory days rose in each of the last 3 years, from {{ then|days }} to {{ now|days }}: slowing sell-through,
+      obsolescence risk, or stock-building ahead of price increases.
+
+  - id: C03
+    name: Capital stuck in work-in-progress
+    pillar: capital_efficiency
+    severity: medium
+    applies: [NF]
+    condition: "all_last('cwip_to_net_block', 2, '>', 0.30)"
+    values: {now: "m('cwip_to_net_block')", prev: "m('cwip_to_net_block', 1)"}
+    explanation: >
+      CWIP has exceeded 30% of net block for at least 2 years ({{ prev|pct }} then {{ now|pct }}): projects are slow to
+      commission, so capital is not yet earning; check for delays, overruns or capitalised interest.
+
+  - id: C04
+    name: Asset turnover slump
+    pillar: capital_efficiency
+    severity: low
+    applies: [NF]
+    condition: "pchg('asset_turnover', 3) < -0.20"
+    values: {now: "m('asset_turnover')", then: "m('asset_turnover', 3)"}
+    explanation: >
+      Asset turnover fell from {{ then|x }} to {{ now|x }} over 3 years: assets are growing much faster than revenue.
+
+  - id: C05
+    name: Under-investment
+    pillar: capital_efficiency
+    severity: low
+    applies: [NF]
+    condition: "all_last('capex_to_depreciation', 3, '<', 0.8)"
+    values: {now: "m('capex_to_depreciation')"}
+    explanation: >
+      Capex has been below 80% of depreciation for 3 years (latest {{ now|x }}): the asset base is shrinking in real
+      terms, which flatters FCF today at the expense of future capacity.
+
+  - id: C06
+    name: Heavy capex with falling fixed-asset turnover
+    pillar: capital_efficiency
+    severity: medium
+    applies: [NF]
+    condition: "m('capex_to_depreciation') > 3 and falling('fixed_asset_turnover', 2)"
+    values: {cd: "m('capex_to_depreciation')", fat: "m('fixed_asset_turnover')", fat2: "m('fixed_asset_turnover', 2)"}
+    explanation: >
+      Capex is {{ cd|x }} depreciation while fixed-asset turnover fell from {{ fat2|x }} to {{ fat|x }} over 2 years:
+      new capacity is not yet producing revenue.
+
+  - id: C07
+    name: Working capital bloating
+    pillar: capital_efficiency
+    severity: medium
+    applies: [NF]
+    condition: "chg('nwc_days', 3) > 30"
+    values: {now: "m('nwc_days')", then: "m('nwc_days', 3)"}
+    explanation: >
+      Net working capital rose from {{ then|days }} to {{ now|days }} of sales over 3 years, absorbing cash that would
+      otherwise be free cash flow.
+
+  # ======================= 4 RETURNS =======================
+  - id: R01
+    name: ROIC below WACC for three years
+    pillar: returns
+    severity: high
+    applies: [NF]
+    condition: "all_last('roic_wacc_spread', 3, '<', 0)"
+    values: {roic: "m('roic')", spread: "m('roic_wacc_spread')"}
+    explanation: >
+      ROIC has been below WACC for 3 consecutive years (latest ROIC {{ roic|pct }}, spread {{ spread|pp }}): the business
+      is destroying value on the capital it employs, and growth makes this worse.
+
+  - id: R02
+    name: ROE rising on leverage while margins fall
+    pillar: returns
+    severity: high
+    applies: [ALL]
+    condition: "chg('roe', 3) > 0 and chg('equity_multiplier', 3) > 0 and chg('pat_margin', 3) < 0"
+    values: {droe: "chg('roe', 3)", dem: "chg('equity_multiplier', 3)", dnpm: "chg('pat_margin', 3)"}
+    explanation: >
+      ROE rose {{ droe|pp }} over 3 years, but only because the equity multiplier rose by {{ dem|num }}x while the net
+      margin fell {{ dnpm|pp }}: better returns are coming from more leverage, not a better business.
+
+  - id: R03
+    name: New capital earning below its cost
+    pillar: returns
+    severity: medium
+    applies: [NF]
+    condition: "m('incremental_roic_3y') < wacc and pchg('invested_capital', 3) > 0.30"
+    values: {inc: "m('incremental_roic_3y')", icg: "pchg('invested_capital', 3)"}
+    explanation: >
+      Invested capital grew {{ icg|pct }} over 3 years but the capital added earned only {{ inc|pct }} (WACC
+      {{ wacc|pct }}): incremental investment is diluting returns.
+
+  - id: R04
+    name: ROE down three years running
+    pillar: returns
+    severity: medium
+    applies: [ALL]
+    condition: "falling('roe', 3) and chg('roe', 3) < -0.05"
+    values: {now: "m('roe')", then: "m('roe', 3)"}
+    explanation: >
+      ROE has fallen in each of the last 3 years, from {{ then|pct }} to {{ now|pct }}. See the ROE driver tree.
+
+  - id: R05
+    name: ROE below cost of equity (financials)
+    pillar: returns
+    severity: high
+    applies: [FIN]
+    condition: "all_last('roe_ke_spread', 2, '<', 0)"
+    values: {roe: "m('roe')", spread: "m('roe_ke_spread')"}
+    explanation: >
+      ROE ({{ roe|pct }}) has been below the cost of equity for 2 years (spread {{ spread|pp }}): the franchise is not
+      earning its cost of capital.
+
+  # ======================= 5 CASH AND EARNINGS QUALITY =======================
+  - id: Q01
+    name: Profits not converting to cash (5y)
+    pillar: cash_quality
+    severity: high
+    applies: [NF]
+    condition: "sum_last('cfo', 5) < 0.6 * sum_last('pat_core', 5) and sum_last('pat_core', 5) > 0"
+    values: {cfo5: "sum_last('cfo', 5)", pat5: "sum_last('pat_core', 5)", ratio: "sum_last('cfo', 5) / sum_last('pat_core', 5)"}
+    explanation: >
+      Over the last 5 years cumulative CFO was {{ cfo5|cr }} against cumulative core PAT of {{ pat5|cr }} ({{ ratio|pct }}
+      conversion; threshold 60%). Reported profit is not turning into cash: check receivables, inventory, capitalised
+      costs and related-party balances.
+
+  - id: Q02
+    name: Negative free cash flow despite profits
+    pillar: cash_quality
+    severity: medium
+    applies: [NF]
+    condition: "all_last('fcf', 3, '<', 0) and all_last('pat_core', 3, '>', 0)"
+    values: {fcf: "sum_last('fcf', 3)", pat: "sum_last('pat_core', 3)"}
+    explanation: >
+      FCF has been negative for 3 years (cumulative {{ fcf|cr }}) while core PAT totalled {{ pat|cr }}: growth or
+      working capital is consuming more cash than the business generates.
+
+  - id: Q03
+    name: High accruals
+    pillar: cash_quality
+    severity: medium
+    applies: [NF]
+    condition: "m('accruals_ratio') > 0.10"
+    values: {acc: "m('accruals_ratio')"}
+    explanation: >
+      Profit exceeded operating cash flow by {{ acc|pct }} of average assets this year (Sloan accruals). Earnings with high
+      accruals tend to be less persistent.
+
+  - id: Q04
+    name: Receivables outpacing revenue
+    pillar: cash_quality
+    severity: medium
+    applies: [NF]
+    condition: "all_last('receivables_vs_revenue_growth', 2, '>', 0.10)"
+    values: {now: "m('receivables_vs_revenue_growth')", prev: "m('receivables_vs_revenue_growth', 1)"}
+    explanation: >
+      Receivables grew faster than revenue by {{ prev|pp }} and then {{ now|pp }} in the last two years: possible
+      channel stuffing, aggressive revenue recognition or collection stress.
+
+  - id: Q05
+    name: Recurring 'exceptional' items
+    pillar: cash_quality
+    severity: medium
+    applies: [NF]
+    condition: "m('exceptional_frequency_5y') >= 3"
+    values: {n: "m('exceptional_frequency_5y')", size: "m('exceptional_size_5y')"}
+    explanation: >
+      Material exceptional items appeared in {{ n|num(0) }} of the last 5 years (total {{ size|pct }} of PBT): items that
+      recur are part of the business; judge earnings including them.
+
+  - id: Q06
+    name: Beneish M-score in manipulator zone
+    pillar: cash_quality
+    severity: high
+    applies: [NF]
+    condition: "m('beneish_m_score') > -1.78"
+    values: {mscore: "m('beneish_m_score')", dsri: "m('beneish_dsri')", tata: "m('beneish_tata')", aqi: "m('beneish_aqi')"}
+    explanation: >
+      The Beneish-style M-score is {{ mscore|num }} (above -1.78). Drivers: DSRI {{ dsri|num }}, accruals/assets
+      {{ tata|num }}, AQI {{ aqi|num }}. This is a screen built on Screener proxies, not proof: read the notes to
+      accounts on revenue recognition and capitalisation.
+
+  - id: Q07
+    name: Weak cash conversion of EBITDA
+    pillar: cash_quality
+    severity: medium
+    applies: [NF]
+    condition: "all_last('cfo_to_ebitda', 2, '<', 0.5)"
+    values: {now: "m('cfo_to_ebitda')", prev: "m('cfo_to_ebitda', 1)"}
+    explanation: >
+      CFO was only {{ prev|pct }} and {{ now|pct }} of EBITDA in the last two years.
+
+  # ======================= 6 BALANCE SHEET =======================
+  - id: B01
+    name: Debt growing faster than EBITDA for three years
+    pillar: balance_sheet
+    severity: high
+    applies: [NF]
+    condition: "all_last('debt_vs_ebitda_growth', 3, '>', 0)"
+    values: {debt: "m('borrowings')", debt3: "m('borrowings', 3)", e: "m('ebitda')", e3: "m('ebitda', 3)"}
+    explanation: >
+      Borrowings have outgrown EBITDA for 3 consecutive years (debt {{ debt3|cr }} to {{ debt|cr }}; EBITDA {{ e3|cr }} to
+      {{ e|cr }}): leverage is rising faster than the capacity to service it.
+
+  - id: B02
+    name: High leverage
+    pillar: balance_sheet
+    severity: high
+    applies: [NF]
+    condition: "m('net_debt_to_ebitda') > 4"
+    values: {nde: "m('net_debt_to_ebitda')"}
+    explanation: >
+      Net debt is {{ nde|x }} EBITDA (above S&P's 'aggressive' 4x threshold).
+
+  - id: B03
+    name: Weak interest cover
+    pillar: balance_sheet
+    severity: high
+    applies: [NF]
+    condition: "m('interest_cover') < 2"
+    values: {ic: "m('interest_cover')"}
+    explanation: >
+      EBIT covers interest only {{ ic|x }} (below 2x maps to a BB-or-worse synthetic rating): little room for a profit dip.
+
+  - id: B04
+    name: Liquidity squeeze
+    pillar: balance_sheet
+    severity: medium
+    applies: [NF]
+    condition: "m('current_ratio_proxy') < 1.0 and m('cash_to_st_borrowings') < 0.2"
+    values: {cr: "m('current_ratio_proxy')", cash: "m('cash_to_st_borrowings')"}
+    explanation: >
+      Other assets cover other liabilities only {{ cr|x }} and cash covers debt {{ cash|x }}: short-term obligations depend
+      on refinancing.
+
+  - id: B05
+    name: Altman Z'' in distress zone
+    pillar: balance_sheet
+    severity: high
+    applies: [NF]
+    condition: "m('altman_z_india') < 4.35"
+    values: {z: "m('altman_z_india')", x1: "m('altman_x1')", x3: "m('altman_x3')"}
+    explanation: >
+      India-adapted Altman Z''-EM score is {{ z|num }} (distress zone < 4.35; working capital/assets {{ x1|num }},
+      EBIT/assets {{ x3|num }}).
+
+  - id: B06
+    name: Capital ratio falling while balance sheet balloons
+    pillar: balance_sheet
+    severity: high
+    applies: [BL]
+    condition: "chg('equity_to_assets', 1) < -0.01 and pchg('total_assets', 1) > 0.25"
+    values: {now: "m('equity_to_assets')", prev: "m('equity_to_assets', 1)", g: "pchg('total_assets', 1)"}
+    explanation: >
+      Total assets grew {{ g|pct }} in a year while equity/assets fell from {{ prev|pct }} to {{ now|pct }}: the lender is
+      growing faster than its capital, which is how most Indian lending blow-ups started.
+
+  - id: B07
+    name: Funding outgrowing equity
+    pillar: balance_sheet
+    severity: medium
+    applies: [BL]
+    condition: "m('funding_vs_equity_growth') > 0.20"
+    values: {d: "m('funding_vs_equity_growth')"}
+    explanation: >
+      Deposits + borrowings grew {{ d|pp }} faster than equity this year: leverage is rising quickly.
+
+  - id: B08
+    name: NBFC leverage high
+    pillar: balance_sheet
+    severity: medium
+    applies: [NBFC]
+    condition: "m('borrowings_to_equity') > 6"
+    values: {de: "m('borrowings_to_equity')"}
+    explanation: >
+      Borrowings are {{ de|x }} equity, close to RBI's 7x reference cap for base-layer NBFCs.
+
+  # ======================= 7 CAPITAL ALLOCATION =======================
+  - id: A01
+    name: Dilution while ROE falls
+    pillar: capital_allocation
+    severity: medium
+    applies: [ALL]
+    condition: "m('share_count_change') > 0.02 and chg('roe', 1) < 0"
+    values: {dil: "m('share_count_change')", droe: "chg('roe', 1)"}
+    explanation: >
+      Share count rose {{ dil|pct }} while ROE fell {{ droe|pp }}: new equity is being raised and deployed at lower returns.
+
+  - id: A02
+    name: Rising promoter pledge
+    pillar: capital_allocation
+    severity: high
+    applies: [ALL]
+    condition: "rising('promoter_pledge', 2) or m('promoter_pledge') > 0.25"
+    values: {now: "m('promoter_pledge')"}
+    explanation: >
+      Promoter pledge is {{ now|pct }} of promoter holding and/or has risen two periods running: a price fall can trigger
+      forced selling.
+
+  - id: A03
+    name: Promoters selling down
+    pillar: capital_allocation
+    severity: medium
+    applies: [ALL]
+    condition: "m('promoter_holding_change_3y') < -0.03"
+    values: {d: "m('promoter_holding_change_3y')", now: "m('promoter_holding')"}
+    explanation: >
+      Promoter holding changed {{ d|pp }} over 3 years to {{ now|pct }}.
+
+  - id: A04
+    name: Dividends funded by debt
+    pillar: capital_allocation
+    severity: medium
+    applies: [NF]
+    condition: "all_last('dividend_to_fcf', 3, '>', 1) and chg('net_debt', 3) > 0"
+    values: {div: "sum_last('dividend', 3)", fcf: "sum_last('fcf', 3)", nd: "chg('net_debt', 3)"}
+    explanation: >
+      Dividends ({{ div|cr }} over 3 years) exceeded FCF ({{ fcf|cr }}) every year while net debt rose {{ nd|cr }}:
+      payouts are being funded from the balance sheet.
+
+  - id: A05
+    name: Acquisition spend followed by falling ROIC
+    pillar: capital_allocation
+    severity: medium
+    applies: [NF]
+    condition: "m('acquisition_roic_delta_3y') < -0.03"
+    values: {d: "m('acquisition_roic_delta_3y')", spend: "m('non_capex_investing_3y')"}
+    explanation: >
+      Non-capex investing equal to {{ spend|pct }} of invested capital over 3 years was followed by a {{ d|pp }} change
+      in ROIC: acquisitions/investments are not earning their keep (yet).
+
+  - id: A06
+    name: Lender growing beyond its internal capital
+    pillar: capital_allocation
+    severity: high
+    applies: [BL]
+    condition: "m('growth_minus_icg') > 0.15"
+    values: {gap: "m('growth_minus_icg')", g: "pchg('total_assets', 1)", icg: "m('internal_capital_generation')"}
+    explanation: >
+      Assets grew {{ g|pct }} versus internal capital generation of {{ icg|pct }} ({{ gap|pp }} gap): growth must be funded by
+      fresh equity or thinner capital buffers.
+
+  - id: A07
+    name: Heavy reinvestment at sub-WACC returns
+    pillar: capital_allocation
+    severity: medium
+    applies: [NF]
+    condition: "m('reinvestment_rate') > 0.5 and m('incremental_roic_3y') < wacc"
+    values: {rr: "m('reinvestment_rate')", inc: "m('incremental_roic_3y')"}
+    explanation: >
+      The company reinvests {{ rr|pct }} of NOPAT but the last 3 years' incremental ROIC is {{ inc|pct }}, below WACC
+      ({{ wacc|pct }}): growth is destroying value; returning cash would be better.
+
+  # ======================= 8 VALUATION =======================
+  - id: V01
+    name: Priced for acceleration
+    pillar: valuation
+    severity: medium
+    applies: [NF]
+    condition: "m('implied_minus_delivered_growth') > 0.05"
+    values: {imp: "m('implied_growth_reverse_dcf')", gap: "m('implied_minus_delivered_growth')"}
+    explanation: >
+      Today's EV implies {{ imp|pct }} a year FCF growth for 10 years, {{ gap|pp }} above the growth delivered over the last 5
+      years: the price needs an acceleration that has not happened yet.
+
+  - id: V02
+    name: Rich versus its own history
+    pillar: valuation
+    severity: low
+    applies: [NF]
+    condition: "m('pe_percentile_10y') > 0.9 and m('ev_ebitda_percentile_10y') > 0.9"
+    values: {pe: "m('pe')", pep: "m('pe_percentile_10y')", eve: "m('ev_ebitda_percentile_10y')"}
+    explanation: >
+      P/E of {{ pe|x }} is at the {{ pep|pct(0) }} percentile of its own FY-end history and EV/EBITDA at the
+      {{ eve|pct(0) }} percentile.
+
+  - id: V03
+    name: P/B well above what returns justify
+    pillar: valuation
+    severity: medium
+    applies: [ALL]
+    condition: "m('pb_to_justified_pb') > 1.5"
+    values: {pb: "m('pb')", j: "m('justified_pb')", r: "m('pb_to_justified_pb')"}
+    explanation: >
+      P/B of {{ pb|x }} is {{ r|x }} the {{ j|x }} that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects
+      returns to rise.
+
+  - id: V04
+    name: EV/IC rich relative to ROIC/WACC
+    pillar: valuation
+    severity: low
+    applies: [NF]
+    condition: "m('ev_ic_to_roic_wacc') > 1.5"
+    values: {r: "m('ev_ic_to_roic_wacc')", evic: "m('ev_ic')"}
+    explanation: >
+      EV/IC is {{ evic|x }}, {{ r|x }} what current ROIC/WACC would support in steady state.
+
+  - id: V05
+    name: Financial rich versus own history
+    pillar: valuation
+    severity: low
+    applies: [FIN]
+    condition: "m('pe_percentile_10y') > 0.9 and m('pb_percentile_10y') > 0.9"
+    values: {pb: "m('pb')", pbp: "m('pb_percentile_10y')"}
+    explanation: >
+      P/B of {{ pb|x }} is at the {{ pbp|pct(0) }} percentile of its own history, and P/E above the 90th.
+
+  - id: V06
+    name: P/B implies faster growth than delivered (financials)
+    pillar: valuation
+    severity: medium
+    applies: [FIN]
+    condition: "m('implied_pb_growth_minus_delivered') > 0.05"
+    values: {imp: "m('implied_growth_pb')", gap: "m('implied_pb_growth_minus_delivered')"}
+    explanation: >
+      P/B implies {{ imp|pct }} perpetual growth, {{ gap|pp }} above book-value compounding delivered over 5 years.

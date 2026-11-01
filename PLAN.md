@@ -1,6 +1,6 @@
 # PLAN: Session 1, core engine
 
-**Status:** waiting for your OK. Only this file has been written so far.
+**Status:** approved 2026-11-01 (option 1a: Damodaran hosts allowed) and built in this session. Build notes are in section 12.
 
 ---
 
@@ -212,3 +212,14 @@ python -m engine rules                           # flag rules listing / docs/fla
 - The benchmarks are a 2026 snapshot, so they are look-ahead for old as-of runs. The rf history is optional.
 - No point-in-time vintages.
 - No HTML report or charts (a later session).
+
+---
+
+## 12. Build notes (changes from this plan)
+
+1. **Reverse DCF method.** The value-driver form planned in section 3 (growth-linked reinvestment over 10 years) cannot reach the EV of high-multiple stocks: Asian Paints at about 50x NOPAT has no solution. It was replaced by market-implied **FCF growth**: base FCF = NOPAT x (1 - gT/ROIC), grown at g for 10 years, then a Gordon terminal value. This is monotonic, so the solution is unique. See docs/methodology.md section 3.
+2. **Industry mapping** follows Damodaran's own classification of the universe companies (indname.xls, Jan 2026). Cement maps to *Construction Supplies*, real estate (DLF) to *Real Estate (General/Diversified)* and telecom (Bharti) to *Telecom (Wireless)*. *holdco* maps to *Diversified* because Damodaran puts ADANIENT in Retail (Distributors). Edit config/sectors.yaml to change any of these.
+3. **Bank ROA/NIM bands** use RBI's June-2025 FSR (SCB ROA 1.4%, NIM 3.5%). The June-2026 figures could not be retrieved; other bank bands are documented rules of thumb.
+4. **rf_history** is empty because historical FY-end G-sec yields were not retrievable. As-of runs use today's rf, and the report says so.
+5. **Extra driver tree:** EPS = revenue per share x net margin.
+6. **Scale:** 146 registered metrics (about 85 scored, the rest components or informational), 54 red-flag rules and 251 tests.
