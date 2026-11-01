@@ -1,0 +1,16 @@
+{
+  "ticker": "DMART",
+  "company": "AVENUE SUPERMARTS LTD",
+  "archetype": "retail",
+  "family": "non-financial",
+  "source_file": "DMART.xlsx",
+  "sha256": "b4e4c182bf39aa29ba282d03d6517dc8ef432ab879dbe63913a42da154bc89d7",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-09-30",
+  "consolidated_inferred": true,
+  "asof": null
+}

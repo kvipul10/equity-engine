@@ -1,0 +1,16 @@
+{
+  "ticker": "HAL",
+  "company": "HINDUSTAN AERONAUTICS LTD",
+  "archetype": "capital_goods_defence",
+  "family": "non-financial",
+  "source_file": "HAL.xlsx",
+  "sha256": "8636ec14fb8dcf61f617f8d4a71b14fc8d5c8d33f2d95dc5b67ed0c8751584ca",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-06-30",
+  "consolidated_inferred": false,
+  "asof": null
+}

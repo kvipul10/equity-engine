@@ -1,0 +1,16 @@
+{
+  "ticker": "BHARTIARTL",
+  "company": "BHARTI AIRTEL LTD",
+  "archetype": "telecom",
+  "family": "non-financial",
+  "source_file": "BHARTIARTL.xlsx",
+  "sha256": "b86911bdea97f079d364aac25cc733a85ed3ab692487d60839810ef5004a9d71",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-06-30",
+  "consolidated_inferred": true,
+  "asof": null
+}

@@ -1,0 +1,16 @@
+{
+  "ticker": "BAJFINANCE",
+  "company": "BAJAJ FINANCE LTD",
+  "archetype": "nbfc",
+  "family": "bank-like",
+  "source_file": "BAJFINANCE.xlsx",
+  "sha256": "2b5a22a1198b0859aa7df9861f05faeaadd26eb55db46df527ae21be4c85d898",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-09-30",
+  "consolidated_inferred": true,
+  "asof": null
+}

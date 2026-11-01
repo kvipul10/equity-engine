@@ -1,0 +1,16 @@
+{
+  "ticker": "NESTLEIND",
+  "company": "NESTLE INDIA LTD",
+  "archetype": "fmcg",
+  "family": "non-financial",
+  "source_file": "NESTLEIND.xlsx",
+  "sha256": "620af3ceb80d6eff0f7dfdfb77cd2d88951f66eaa23ed783ec54fd4e595aefb2",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-09-30",
+  "consolidated_inferred": false,
+  "asof": null
+}

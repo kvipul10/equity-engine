@@ -1,0 +1,16 @@
+{
+  "ticker": "YESBANK",
+  "company": "YES BANK LTD",
+  "archetype": "bank",
+  "family": "bank-like",
+  "source_file": "YESBANK.xlsx",
+  "sha256": "a97a2aeb512bb8195f1fae004ac3668d3c287d34f7754024d26a53835262a410",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-09-30",
+  "consolidated_inferred": false,
+  "asof": null
+}

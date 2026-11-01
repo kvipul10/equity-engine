@@ -1,0 +1,16 @@
+{
+  "ticker": "ADANIENT",
+  "company": "ADANI ENTERPRISES LTD",
+  "archetype": "holdco",
+  "family": "non-financial",
+  "source_file": "ADANIENT.xlsx",
+  "sha256": "d1fc932a1718da61231e6b5966a700fe7c14561cdb2c3eff9b0e23542964601c",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-09-30",
+  "consolidated_inferred": true,
+  "asof": null
+}

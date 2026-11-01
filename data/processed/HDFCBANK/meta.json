@@ -1,0 +1,16 @@
+{
+  "ticker": "HDFCBANK",
+  "company": "HDFC BANK LTD",
+  "archetype": "bank",
+  "family": "bank-like",
+  "source_file": "HDFCBANK.xlsx",
+  "sha256": "31dfcc3ec9a7fa948884cf0817ea3ec3efc42bb33c7522e69d01b6a81e6254a5",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-09-30",
+  "consolidated_inferred": true,
+  "asof": null
+}

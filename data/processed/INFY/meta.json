@@ -1,0 +1,16 @@
+{
+  "ticker": "INFY",
+  "company": "INFOSYS LTD",
+  "archetype": "it_services",
+  "family": "non-financial",
+  "source_file": "INFY.xlsx",
+  "sha256": "a3510de175415f2666d92577c0d9c8d914e0a36286546fdded8459248285b7f1",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-09-30",
+  "consolidated_inferred": true,
+  "asof": null
+}

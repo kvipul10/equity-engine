@@ -1,0 +1,16 @@
+{
+  "ticker": "DLF",
+  "company": "DLF LTD",
+  "archetype": "real_estate",
+  "family": "non-financial",
+  "source_file": "DLF.xlsx",
+  "sha256": "35dc6a45bfb97b8c2badcc1d1e17166d52f894e70f78c0a88d7552ea65475884",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-09-30",
+  "consolidated_inferred": true,
+  "asof": null
+}

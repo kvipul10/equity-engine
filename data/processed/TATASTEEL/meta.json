@@ -1,0 +1,16 @@
+{
+  "ticker": "TATASTEEL",
+  "company": "TATA STEEL LTD",
+  "archetype": "metals",
+  "family": "non-financial",
+  "source_file": "TATASTEEL.xlsx",
+  "sha256": "390ac484f2ef9a17e79c669cca5b0d6bec6c7a5a4f97c2d4d553481b847ac124",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-06-30",
+  "consolidated_inferred": true,
+  "asof": null
+}

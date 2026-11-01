@@ -1,0 +1,16 @@
+{
+  "ticker": "ASIANPAINT",
+  "company": "ASIAN PAINTS LTD",
+  "archetype": "consumer_manufacturing",
+  "family": "non-financial",
+  "source_file": "ASIANPAINT.xlsx",
+  "sha256": "e3cad0e61feab3b861358b178749c75e37428735d2c912435c2c42eabbdf1cf2",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-09-30",
+  "consolidated_inferred": true,
+  "asof": null
+}

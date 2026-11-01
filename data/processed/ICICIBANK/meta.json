@@ -1,0 +1,16 @@
+{
+  "ticker": "ICICIBANK",
+  "company": "ICICI BANK LTD",
+  "archetype": "bank",
+  "family": "bank-like",
+  "source_file": "ICICIBANK.xlsx",
+  "sha256": "36102589824d81ad30ca515954b13952de825159c78516e7c012eb39e7ddaf8d",
+  "screener_version": "2.1",
+  "units": "Rs crore",
+  "first_fy": "FY17",
+  "last_fy": "FY26",
+  "n_years": 10,
+  "latest_quarter": "2026-09-30",
+  "consolidated_inferred": true,
+  "asof": null
+}
