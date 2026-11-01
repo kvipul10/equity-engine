@@ -1,0 +1,30 @@
+metric,fiscal_year,value,unit,source_url,source_date,verified
+advances_cr,FY22,1369000,"Rs cr (approx, business update)",https://www.business-standard.com/article/news-cm/hdfc-bank-soars-after-q4-fy22-advances-climb-21-yoy-122040400512_1.html,2022-04-04,N
+advances_cr,FY25,2643500,Rs cr gross,https://bsmedia.business-standard.com/_media/bs/data/market-reports/equity-brokertips/2025-04/17452259940.26899900.pdf,2025-04,N
+advances_cr,FY26,2960000,Rs cr gross,https://www.business-standard.com/companies/quarterly-results/hdfc-bank-q4fy26-results-profit-up-9-pc-to-rs-19-221-cr-on-lower-provisions-126041800535_1.html,2026-04-18,N
+casa_pct,FY22,48.2,%,https://www.business-standard.com/article/news-cm/hdfc-bank-slips-after-q4-results-122041800150_1.html,2022-04-18,N
+casa_pct,FY23,44.4,%,https://www.business-standard.com/companies/results/hdfc-bank-q4-net-rises-20-to-rs-12-594-cr-gnpa-ratio-improves-to-1-12-123041500402_1.html,2023-04-15,N
+casa_pct,FY24,38.2,%,https://www.business-standard.com/amp/markets/capital-market-news/hdfc-bank-q4-pat-climbs-37-yoy-to-rs-16-512-cr-124042200223_1.html,2024-04-22,N
+casa_pct,FY25,34.8,%,https://www.business-standard.com/amp/markets/capital-market-news/hdfc-bank-gains-after-q4-pat-rises-7-yoy-to-rs-17-616-cr-nii-rises-10-125042100175_1.html,2025-04-21,N
+casa_pct,FY26,34.1,%,https://www.hdfc.bank.in/content/dam/hdfcbankpws/in/en/pdf/about-us/financial-results/2025-2026/quarter-4/press-release-march-2026.pdf,2026-04-18,N
+cet1_pct,FY24,16.3,%,https://www.business-standard.com/amp/markets/capital-market-news/hdfc-bank-q4-pat-climbs-37-yoy-to-rs-16-512-cr-124042200223_1.html,2024-04-22,N
+cet1_pct,FY25,17.2,%,https://www.business-standard.com/amp/markets/capital-market-news/hdfc-bank-gains-after-q4-pat-rises-7-yoy-to-rs-17-616-cr-nii-rises-10-125042100175_1.html,2025-04-21,N
+cet1_pct,FY26,17.3,%,https://www.hdfc.bank.in/content/dam/hdfcbankpws/in/en/pdf/about-us/financial-results/2025-2026/quarter-4/press-release-march-2026.pdf,2026-04-18,N
+crar_pct,FY23,19.3,%,https://www.business-standard.com/amp/markets/capital-market-news/hdfc-bank-q4-pat-climbs-37-yoy-to-rs-16-512-cr-124042200223_1.html,2024-04-22,N
+crar_pct,FY24,18.8,%,https://www.business-standard.com/amp/markets/capital-market-news/hdfc-bank-q4-pat-climbs-37-yoy-to-rs-16-512-cr-124042200223_1.html,2024-04-22,N
+crar_pct,FY25,19.6,%,https://www.business-standard.com/amp/markets/capital-market-news/hdfc-bank-gains-after-q4-pat-rises-7-yoy-to-rs-17-616-cr-nii-rises-10-125042100175_1.html,2025-04-21,N
+crar_pct,FY26,19.7,%,https://www.hdfc.bank.in/content/dam/hdfcbankpws/in/en/pdf/about-us/financial-results/2025-2026/quarter-4/press-release-march-2026.pdf,2026-04-18,N
+deposits_cr,FY23,1880000,Rs cr (stated as Rs 18.8 trn),https://www.business-standard.com/companies/results/hdfc-bank-q4-net-rises-20-to-rs-12-594-cr-gnpa-ratio-improves-to-1-12-123041500402_1.html,2023-04-15,N
+deposits_cr,FY24,2380000,Rs cr,https://www.icicidirect.com/research/equity/trending-news/hdfc-bank-quarterly-result-for-q4-2024,2024-04-20,N
+deposits_cr,FY26,3105000,Rs cr,https://www.hdfc.bank.in/content/dam/hdfcbankpws/in/en/pdf/about-us/financial-results/2025-2026/quarter-4/q4fy26-earnings-presentation.pdf,2026-04-18,N
+gnpa_pct,FY22,1.17,%,https://www.business-standard.com/companies/results/hdfc-bank-q4-net-rises-20-to-rs-12-594-cr-gnpa-ratio-improves-to-1-12-123041500402_1.html,2023-04-15,N
+gnpa_pct,FY23,1.12,%,https://www.business-standard.com/amp/markets/capital-market-news/hdfc-bank-q4-pat-climbs-37-yoy-to-rs-16-512-cr-124042200223_1.html,2024-04-22,N
+gnpa_pct,FY24,1.24,%,https://www.business-standard.com/amp/markets/capital-market-news/hdfc-bank-q4-pat-climbs-37-yoy-to-rs-16-512-cr-124042200223_1.html,2024-04-22,N
+gnpa_pct,FY25,1.33,%,https://www.business-standard.com/amp/companies/news/hdfc-bank-q4-results-net-profit-up-7-aided-by-lower-provisions-125041900424_1.html,2025-04-19,N
+gnpa_pct,FY26,1.15,%,https://www.hdfc.bank.in/content/dam/hdfcbankpws/in/en/pdf/about-us/financial-results/2025-2026/quarter-4/press-release-march-2026.pdf,2026-04-18,N
+nnpa_pct,FY22,0.32,%,https://www.business-standard.com/article/news-cm/hdfc-bank-slips-after-q4-results-122041800150_1.html,2022-04-18,N
+nnpa_pct,FY23,0.27,%,https://www.business-standard.com/amp/markets/capital-market-news/hdfc-bank-q4-pat-climbs-37-yoy-to-rs-16-512-cr-124042200223_1.html,2024-04-22,N
+nnpa_pct,FY24,0.33,%,https://www.business-standard.com/amp/markets/capital-market-news/hdfc-bank-q4-pat-climbs-37-yoy-to-rs-16-512-cr-124042200223_1.html,2024-04-22,N
+nnpa_pct,FY25,0.43,%,https://www.business-standard.com/amp/companies/news/hdfc-bank-q4-results-net-profit-up-7-aided-by-lower-provisions-125041900424_1.html,2025-04-19,N
+nnpa_pct,FY26,0.38,%,https://www.hdfc.bank.in/content/dam/hdfcbankpws/in/en/pdf/about-us/financial-results/2025-2026/quarter-4/press-release-march-2026.pdf,2026-04-18,N
+pcr_pct,FY25,67.9,%,https://bsmedia.business-standard.com/_media/bs/data/market-reports/equity-brokertips/2025-04/17452259940.26899900.pdf,2025-04,N

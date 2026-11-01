@@ -118,15 +118,18 @@ def test_scrambling_does_change_latest_run(pair):
     assert _strip(_analyse(a, "SYNTHCO", None))["metrics"]["roe"] != _strip(_analyse(b, "SYNTHCO", None))["metrics"]["roe"]
 
 
-def test_yesbank_asof_fy18_uses_only_fy17_fy18(real_cfg):
+def test_yesbank_asof_fy18_uses_only_data_up_to_fy18(real_cfg):
+    """Screener data covers FY17-FY18 at this as-of; manual KPIs (annual reports) extend the window back to FY14."""
     from engine.analysis import analyse
 
     rep = analyse("YESBANK", real_cfg, asof="FY18")
     assert rep["asof"]["data_window"] == "FY17-FY18"
+    assert rep["asof"]["manual_kpi_window"] == "FY14-FY18"
     assert rep["asof"]["price_basis"] == "fy_end_asof"
     assert rep["asof"]["latest_quarter_used"] is None
+    allowed = {f"FY{y}" for y in range(14, 19)}
     for m in rep["metrics"].values():
-        assert set(m["series"]) <= {"FY17", "FY18"}
+        assert set(m["series"]) <= allowed
     txt = json.dumps(_data_only(rep))
     for fy in ("FY19", "FY20", "FY21", "FY22", "FY23", "FY24", "FY25", "FY26"):
         assert fy not in txt
