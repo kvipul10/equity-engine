@@ -10,6 +10,7 @@ how_to_read: |
 manual_kpis:
   - {id: rd_expense_cr, unit: "Rs cr", required: true, description: "R&D expenditure for the year (P&L charge)", where: "Annual report / investor presentation"}
   - {id: us_revenue_cr, unit: "Rs cr", required: true, description: "US formulations revenue for the year", where: "Investor presentation, segment revenue"}
+  - {id: us_revenue_usd_mn, unit: "USD mn", required: false, description: "US formulations revenue for the year in US dollars (as reported)", where: "Results press release"}
   - {id: india_revenue_cr, unit: "Rs cr", required: true, description: "India formulations revenue for the year", where: "Investor presentation, segment revenue"}
   - {id: anda_pending_count, unit: "count", required: false, description: "ANDAs pending US FDA approval at 31 March", where: "Investor presentation / annual report"}
   - {id: fda_oai_count, unit: "count", required: false, description: "Plants under US FDA OAI status / warning letter at 31 March", where: "Annual report, regulatory section"}
@@ -20,8 +21,8 @@ metrics_add:
      equation: "US revenue / total revenue", meaning: "Exposure to US generics pricing and FDA risk."}
   - {id: india_share, name: "India share of revenue", pillar: growth, unit: pct, direction: neutral, formula: "kpi('india_revenue_cr') / f('revenue')",
      equation: "India revenue / total revenue", meaning: "Weight of the steadier domestic branded franchise."}
-  - {id: us_growth, name: "US revenue growth", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:us_revenue_cr', 1)",
-     equation: "US revenue_t / US revenue_t-1 - 1", meaning: "Growth of the US business."}
+  - {id: us_growth, name: "US revenue growth", pillar: growth, unit: pct, direction: higher, formula: "first_of(growth('kpi:us_revenue_usd_mn', 1), growth('kpi:us_revenue_cr', 1))",
+     equation: "US revenue_t / US revenue_t-1 - 1 (USD when reported, else Rs)", meaning: "Growth of the US business, in dollars when available so rupee moves do not flatter it."}
   - {id: india_growth, name: "India revenue growth", pillar: growth, unit: pct, direction: higher, formula: "growth('kpi:india_revenue_cr', 1)",
      equation: "India revenue_t / India revenue_t-1 - 1", meaning: "Growth of the domestic franchise vs the market."}
   - {id: anda_pipeline, name: "ANDAs pending", pillar: growth, unit: count, direction: higher, formula: "kpi('anda_pending_count')",

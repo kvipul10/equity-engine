@@ -33,7 +33,7 @@ Q_FLOWS = ["sales", "expenses", "other_income", "depreciation", "interest", "pbt
 PNL_COLS = [
     "period_end", "period_months", "annualised", "manual_only", "revenue", "raw_material", "change_in_inventory", "materials_cost",
     "power_fuel", "other_mfr", "cogs", "employee_cost", "selling_admin", "other_exp", "other_opex", "total_opex",
-    "ebitda", "other_income", "exceptional_est", "exceptional_tax", "other_income_core", "depreciation",
+    "ebitda", "other_income", "exceptional_est", "exceptional_tax", "tax_oneoff", "other_income_core", "depreciation",
     "operating_ebit", "interest", "pbt", "pbt_core", "tax", "tax_core", "minority_and_associates", "pat",
     "pat_core", "ebit_core", "dividend", "nii", "net_total_income", "benefits", "opex_ex_benefits",
 ]
@@ -42,7 +42,8 @@ BS_COLS = [
     "total_liabilities", "net_block", "cwip", "investments", "other_assets", "receivables", "inventory", "cash",
     "other_assets_rest", "total_assets", "invested_capital", "net_debt", "nwc",
 ]
-CF_COLS = ["period_end", "cfo", "cfi", "cff", "net_cash_flow", "capex_proxy", "capex_basis", "fcf", "non_capex_investing"]
+CF_COLS = ["period_end", "cfo", "cfi", "cff", "net_cash_flow", "capex_proxy", "capex_basis", "fcf", "non_capex_investing",
+           "treasury_shift", "acquisition_spend"]
 MARKET_COLS = ["period_end", "price", "adjusted_shares_cr", "market_cap", "ev"]
 SHARE_COLS = ["period_end", "shares_raw_cr", "face_value", "bonus_shares_cr", "adjusted_shares_cr", "adjustment_factor",
               "eps_core", "bvps", "revenue_per_share"]
@@ -374,6 +375,7 @@ def standardise(raw: RawExport, archetype: str, cfg: Config, manual: Optional[pd
     S["pbt_core"] = S["pbt"] - S["exceptional_est"]
     S["tax_core"] = S["tax"] - S["exceptional_tax"]
     S["pat_core"] = S["pat"] - S["exceptional_est"] + S["exceptional_tax"]
+    apply_tax_normalisation(S, notes, stat_tax, cfg.sector_of(archetype))
     S["ebit_core"] = S["pbt_core"] + S["interest"]
 
     # minority / associates
@@ -449,6 +451,11 @@ def standardise(raw: RawExport, archetype: str, cfg: Config, manual: Optional[pd
                        "FCF = CFO - capex proxy.")
     S["fcf"] = S["cfo"] - S["capex_proxy"]
     S["non_capex_investing"] = -S["cfi"] - S["capex_proxy"]
+    # Session 4: treasury moves inside investing (term deposits that Screener counts as cash, liquid-fund purchases held as
+    # investments) are not acquisitions. treasury_shift = change in (cash + investments) not explained by the net cash flow.
+    liquid = S["cash"].fillna(0.0) + S["investments"].fillna(0.0)
+    S["treasury_shift"] = liquid.diff() - S["net_cash_flow"]
+    S["acquisition_spend"] = (S["non_capex_investing"] - S["treasury_shift"]).clip(lower=0.0)
     for lab in labels:
         r = S.loc[lab, ["cfo", "cfi", "cff"]].sum() - S.loc[lab, "net_cash_flow"]
         if not pd.isna(r) and abs(r) > 1.0:
@@ -645,6 +652,49 @@ def _detect_step_changes(S: pd.DataFrame, labels: List[str], notes: _Notes) -> N
                                 f"large capital raise). Growth across {p}->{lab} may not be organic.", lab)
 
 
+def apply_tax_normalisation(S: pd.DataFrame, notes: "_Notes", stat_tax: float, sector) -> None:
+    """Normalise one-off tax unless the sector module switches it off (tax_normalisation: {apply: false, reason, ...}),
+    e.g. life insurers, whose effective tax rate has no stable normal."""
+    tn = getattr(sector, "tax_normalisation", None) or {}
+    if tn.get("apply", True):
+        _normalise_tax(S, notes, stat_tax)
+        return
+    S["tax_oneoff"] = 0.0
+    notes.add("exceptional", f"One-off tax normalisation is off for {sector.archetype}: {tn['reason']} Reported tax kept.")
+
+
+def _normalise_tax(S: pd.DataFrame, notes: "_Notes", stat_tax: float) -> None:
+    """One-off tax items (Session 4): a year whose effective tax rate on core PBT is negative, more than 15pp below or
+    more than 20pp above the company's own normal rate (median of its other years with 0-45% ETR; the statutory rate
+    when fewer than 3 such years) and where the gap is at least 5% of core PBT, gets core tax at the normal rate. The
+    difference (tax write-backs, deferred-tax recognition, one-off charges) leaves core PAT and is logged as a note."""
+    S["tax_oneoff"] = 0.0
+    etr = (S["tax_core"] / S["pbt_core"]).where(S["pbt_core"] > 0)
+    found = []
+    for lab in S.index:
+        e, pbt = etr.get(lab), S.loc[lab, "pbt_core"]
+        if pd.isna(e) or pd.isna(pbt) or pbt <= 0:
+            continue
+        others = etr.drop(lab)
+        others = others[(others >= 0) & (others <= 0.45)].dropna()
+        normal = float(others.median()) if len(others) >= 3 else stat_tax
+        low, high = e < 0 or e < normal - 0.15, e > normal + 0.20
+        gap = normal * pbt - S.loc[lab, "tax_core"]  # > 0: tax charge too low (credit); < 0: too high
+        if (low or high) and abs(gap) >= 0.05 * pbt:
+            found.append((lab, e, normal, pbt, gap))
+    if len(found) > 2:  # an erratic tax rate has no stable 'normal' to restore (e.g. loss-making foreign units)
+        notes.add("exceptional", f"Effective tax rate departs from its own norm in {len(found)} years "
+                                 f"({', '.join(f[0] for f in found)}): too erratic to normalise; reported tax kept.")
+        return
+    for lab, e, normal, pbt, gap in found:
+        S.loc[lab, "tax_oneoff"] = gap
+        S.loc[lab, "tax_core"] = S.loc[lab, "tax_core"] + gap
+        S.loc[lab, "pat_core"] = S.loc[lab, "pat_core"] - gap
+        kind = "write-back or deferred-tax credit" if gap > 0 else "one-off tax charge"
+        notes.add("exceptional", f"Tax rate {e:.0%} vs normal {normal:.0%} on core PBT {_fmt(pbt)}: {kind} of {_fmt(abs(gap))} "
+                                 f"treated as one-off; core PAT {'reduced' if gap > 0 else 'raised'} accordingly.", lab)
+
+
 def _standardise_quarters(raw: RawExport, notes: _Notes) -> pd.DataFrame:
     if raw.quarterly is None or raw.quarterly.empty:
         notes.add("quarterly", "No quarterly data in export (or none on/before the as-of date).")
@@ -704,7 +754,8 @@ def _compare_vintages(raw: RawExport, vintages: List[RawExport], notes: _Notes) 
 
 
 # ---------------------------------------------------------------------------------------------------------
-def load_standardised(ticker: str, cfg: Config, archetype: Optional[str] = None, asof: Optional[str] = None) -> Standardised:
+def load_standardised(ticker: str, cfg: Config, archetype: Optional[str] = None, asof: Optional[str] = None,
+                      fy_end: bool = False) -> Standardised:
     """Parse + (optionally truncate to as-of) + standardise. Always works from the raw file."""
     from .asof import truncate_manual, truncate_raw
 
@@ -717,8 +768,8 @@ def load_standardised(ticker: str, cfg: Config, archetype: Optional[str] = None,
     use_unverified = bool((cfg.scoring.get("manual") or {}).get("use_unverified", True))
     manual, prov = load_manual_full(paths.manual_file(ticker), use_unverified=use_unverified)
     vint = [parse_workbook(p, ticker) for p in find_vintages(paths.vintages_dir, ticker)]
-    if asof:
-        raw = truncate_raw(raw, asof)
+    if asof or fy_end:
+        raw = truncate_raw(raw, asof, fy_end=fy_end)
         manual = truncate_manual(manual, raw.asof_label)
         if raw.asof_label and len(prov):
             prov = prov[[fy_year(f) <= fy_year(raw.asof_label) for f in prov["fy"]]].reset_index(drop=True)

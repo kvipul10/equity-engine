@@ -136,29 +136,29 @@
     "text": "Destroys value: ROE 11.3% vs Ke 13.4% in FY26 -> economic profit Rs -356 cr. Economic profit was positive in 4 of 9 years; trend improving."
   },
   "overall": {
-    "score": 59.443774,
+    "score": 62.650212,
     "rag": "amber",
     "coverage": 1.0,
     "high_flags": 2,
-    "capped_by_flags": false,
+    "capped_by_flags": true,
     "weights_basis": "sector:insurance"
   },
   "pillars": {
     "growth": {
-      "score": 59.206727,
-      "rag": "amber",
+      "score": 63.356431,
+      "rag": "green",
       "weight": 20.0,
-      "n_scored": 19,
-      "n_metrics": 19,
+      "n_scored": 16,
+      "n_metrics": 16,
       "rag_counts": {
-        "green": 11,
+        "green": 10,
         "amber": 5,
-        "red": 3,
+        "red": 1,
         "n/a": 0
       },
       "capped_by_flags": [],
       "name": "1 Growth",
-      "summary": "1 Growth: AMBER (59/100, 19 scored metrics). Strongest: Revenue CAGR (full span, up to 10y) 14.0% (green), Latest quarter revenue YoY 18.3% (green). Weakest: Quarterly YoY growth trend -12.3pp (red), Revenue growth volatility 2.41 (red). Flags: G04.",
+      "summary": "1 Growth: GREEN (63/100, 16 scored metrics). Strongest: Revenue CAGR (full span, up to 10y) 14.0% (green), Latest quarter PAT YoY 16.4% (green). Weakest: VNB growth 1.8% (red), Revenue CAGR 5y 6.8% (amber).",
       "metrics": [
         "revenue_cagr_3y",
         "revenue_cagr_5y",
@@ -171,43 +171,39 @@
         "eps_cagr_10y",
         "bvps_cagr_5y",
         "assets_cagr_3y",
-        "revenue_growth_volatility",
         "pat_growth_volatility",
-        "q_revenue_yoy",
         "q_pat_yoy",
-        "q_revenue_yoy_trend",
         "vnb_growth",
         "ape_growth",
         "ev_growth"
       ],
-      "flags_triggered": [
-        "G04"
-      ]
+      "flags_triggered": []
     },
     "margins": {
-      "score": 47.013826,
-      "rag": "amber",
+      "score": 62.857143,
+      "rag": "green",
       "weight": 15.0,
-      "n_scored": 2,
-      "n_metrics": 5,
+      "n_scored": 1,
+      "n_metrics": 4,
       "rag_counts": {
         "green": 1,
         "amber": 0,
-        "red": 1,
+        "red": 0,
         "n/a": 3
       },
       "capped_by_flags": [],
       "name": "2 Margins",
-      "summary": "2 Margins: AMBER (47/100, 2 scored metrics). Strongest: VNB margin 24.2% (green), PAT margin 1.9% (red). Weakest: PAT margin 1.9% (red), VNB margin 24.2% (green).",
+      "summary": "2 Margins: GREEN (63/100, 1 scored metrics). Strongest: VNB margin 24.2% (green). Weakest: VNB margin 24.2% (green). Flags: IN03.",
       "metrics": [
-        "pat_margin",
         "benefits_ratio",
         "expense_ratio",
         "vnb_margin",
         "opex_ratio_reported",
         "combined_ratio"
       ],
-      "flags_triggered": []
+      "flags_triggered": [
+        "IN03"
+      ]
     },
     "capital_efficiency": {
       "score": null,
@@ -241,7 +237,7 @@
       },
       "capped_by_flags": [],
       "name": "4 Returns",
-      "summary": "4 Returns: RED (35/100, 3 scored metrics). Strongest: Operating RoEV 15.0% (amber), ROE - cost of equity -2.1pp (red). Weakest: Return on equity 11.3% (red), ROE - cost of equity -2.1pp (red). Flags: R02, R05.",
+      "summary": "4 Returns: RED (35/100, 3 scored metrics). Strongest: Operating RoEV 15.0% (amber), ROE - cost of equity -2.1pp (red). Weakest: Return on equity 11.3% (red), ROE - cost of equity -2.1pp (red). Flags: R05.",
       "metrics": [
         "roe",
         "roa",
@@ -259,7 +255,6 @@
         "operating_roev"
       ],
       "flags_triggered": [
-        "R02",
         "R05"
       ]
     },
@@ -286,7 +281,7 @@
     },
     "balance_sheet": {
       "score": 63.333333,
-      "rag": "green",
+      "rag": "amber",
       "weight": 15.0,
       "n_scored": 1,
       "n_metrics": 1,
@@ -296,13 +291,17 @@
         "red": 0,
         "n/a": 0
       },
-      "capped_by_flags": [],
+      "capped_by_flags": [
+        "IN01"
+      ],
       "name": "6 Balance sheet",
-      "summary": "6 Balance sheet: GREEN (63/100, 1 scored metrics). Strongest: Solvency ratio 177.0% (green). Weakest: Solvency ratio 177.0% (green).",
+      "summary": "6 Balance sheet: AMBER (63/100, 1 scored metrics). Strongest: Solvency ratio 177.0% (green). Weakest: Solvency ratio 177.0% (green). Flags: IN01.",
       "metrics": [
         "solvency_ratio"
       ],
-      "flags_triggered": []
+      "flags_triggered": [
+        "IN01"
+      ]
     },
     "capital_allocation": {
       "score": 69.554987,
@@ -1363,21 +1362,23 @@
   "flags": {
     "triggered": [
       {
-        "id": "R02",
-        "name": "ROE rising on leverage while margins fall",
-        "pillar": "returns",
+        "id": "IN01",
+        "name": "Solvency cushion thinning",
+        "pillar": "balance_sheet",
         "severity": "high",
-        "origin": "config/flags.yaml",
+        "origin": "config/sectors/insurance.yaml",
+        "suppresses": [
+          "solvency_ratio"
+        ],
         "status": "triggered",
         "values": {
-          "droe": 0.017145,
-          "dem": 5.086094,
-          "dnpm": -0.000257
+          "now": 1.77,
+          "d": -0.17
         },
-        "text": "ROE rose +1.7pp over 3 years, but only because the equity multiplier rose by 5.09x while the net margin fell -0.0pp: better returns are coming from more leverage, not a better business.",
-        "condition": "chg('roe', 3) > 0 and chg('equity_multiplier', 3) > 0 and chg('pat_margin', 3) < 0",
+        "text": "Solvency ratio is 177.0% (-17.0pp in a year; IRDAI control level 150%): growth or dividends may need fresh capital.",
+        "condition": "m('solvency_ratio') < 1.70 or chg('solvency_ratio', 1) < -0.15",
         "applies": [
-          "ALL"
+          "INS"
         ]
       },
       {
@@ -1398,36 +1399,48 @@
         ]
       },
       {
-        "id": "G04",
-        "name": "Erratic revenue growth",
-        "pillar": "growth",
-        "severity": "low",
-        "origin": "config/flags.yaml",
+        "id": "IN03",
+        "name": "VNB margin compressing",
+        "pillar": "margins",
+        "severity": "medium",
+        "origin": "config/sectors/insurance.yaml",
+        "suppresses": [
+          "vnb_margin"
+        ],
         "status": "triggered",
         "values": {
-          "vol": 2.412235
+          "now": 0.242,
+          "d": -0.021,
+          "d1": -0.014
         },
-        "text": "Annual revenue growth has a standard deviation 2.41x its mean over the last decade: growth is lumpy or cyclical, so trailing CAGRs are a poor guide to the future.",
-        "condition": "m('revenue_growth_volatility') > 1.5",
+        "text": "VNB margin fell -2.1pp over 2 years (-1.4pp in the latest year) to 24.2% (product mix, regulation or pricing pressure).",
+        "condition": "chg('vnb_margin', 1) < -0.01 or chg('vnb_margin', 2) < -0.02",
         "applies": [
-          "ALL"
+          "INS"
         ]
       }
     ],
     "clear": [
       "G01",
       "G02",
-      "G05",
       "G06",
       "R04",
       "A01",
       "V05",
-      "IN01",
       "IN02",
-      "IN03",
       "IN04"
     ],
     "not_evaluable": [
+      {
+        "id": "G04",
+        "name": "Erratic revenue growth",
+        "missing": "revenue_growth_volatility (not available for this company)"
+      },
+      {
+        "id": "G05",
+        "name": "Quarterly growth decelerating",
+        "missing": "q_revenue_yoy_trend (not available for this company)"
+      },
       {
         "id": "A02",
         "name": "Rising promoter pledge",
@@ -1456,8 +1469,8 @@
     ],
     "counts": {
       "high": 2,
-      "medium": 0,
-      "low": 1
+      "medium": 1,
+      "low": 0
     }
   },
   "metrics": {
@@ -3049,43 +3062,6 @@
       "note": null,
       "text": "Total assets CAGR 3y: 16.3% GREEN (level green vs band (red <= 4.0%, green >= 8.9%); trend deteriorating -1.8pp/yr)"
     },
-    "revenue_growth_volatility": {
-      "name": "Revenue growth volatility",
-      "pillar": "growth",
-      "role": "scored",
-      "unit": "ratio",
-      "direction": "lower",
-      "kind": "point",
-      "equation": "sd(g_t) / |mean(g_t)| over the last 10 annual growth rates (>= 4 needed); n/m if |mean| < 1%",
-      "formula": null,
-      "origin": "engine",
-      "meaning": "How erratic annual revenue growth is: standard deviation of yearly growth divided by its mean (lower = steadier).",
-      "value": 2.412235,
-      "value_text": "2.41",
-      "series": {},
-      "level": {
-        "score": 2.925514,
-        "basis": "band",
-        "rag": "red"
-      },
-      "trend": null,
-      "stability": null,
-      "composite": 2.925514,
-      "rag": "red",
-      "band": {
-        "red": 1.5,
-        "green": 0.5,
-        "origin": "config/bands.yaml (generic)",
-        "source_type": "indicative",
-        "source_url": null,
-        "as_of": "2026-11-01",
-        "rationale": "sd/mean of annual growth below 0.5 = steady compounding; above 1.5 = growth is mostly noise (cyclical or lumpy).",
-        "centre": null
-      },
-      "reason": null,
-      "note": null,
-      "text": "Revenue growth volatility: 2.41 RED (level red vs indicative band (green <= 0.50, red >= 1.50))"
-    },
     "pat_growth_volatility": {
       "name": "PAT growth volatility",
       "pillar": "growth",
@@ -3123,43 +3099,6 @@
       "note": null,
       "text": "PAT growth volatility: 0.95 AMBER (level amber vs indicative band (green <= 0.50, red >= 1.50))"
     },
-    "q_revenue_yoy": {
-      "name": "Latest quarter revenue YoY",
-      "pillar": "growth",
-      "role": "scored",
-      "unit": "pct",
-      "direction": "higher",
-      "kind": "point",
-      "equation": "Revenue_q / Revenue_q-4 - 1",
-      "formula": null,
-      "origin": "engine",
-      "meaning": "Revenue growth in the latest reported quarter versus the same quarter a year earlier.",
-      "value": 0.183332,
-      "value_text": "18.3%",
-      "series": {},
-      "level": {
-        "score": 100.0,
-        "basis": "band",
-        "rag": "green"
-      },
-      "trend": null,
-      "stability": null,
-      "composite": 100.0,
-      "rag": "green",
-      "band": {
-        "red": 0.04,
-        "green": 0.089,
-        "origin": "config/bands.yaml (generic)",
-        "source_type": "derived",
-        "source_url": null,
-        "as_of": null,
-        "rationale": "Growing slower than the 4% CPI target = shrinking in real terms (red); faster than India's nominal GDP (8.9% FY26) = gaining share of the economy (green). Inputs and sources in config/market.yaml (macro).",
-        "centre": null
-      },
-      "reason": null,
-      "note": null,
-      "text": "Latest quarter revenue YoY: 18.3% GREEN (level green vs band (red <= 4.0%, green >= 8.9%))"
-    },
     "q_pat_yoy": {
       "name": "Latest quarter PAT YoY",
       "pillar": "growth",
@@ -3196,105 +3135,6 @@
       "reason": null,
       "note": null,
       "text": "Latest quarter PAT YoY: 16.4% GREEN (level green vs band (red <= 4.0%, green >= 8.9%))"
-    },
-    "q_revenue_yoy_trend": {
-      "name": "Quarterly YoY growth trend",
-      "pillar": "growth",
-      "role": "scored",
-      "unit": "pp",
-      "direction": "higher",
-      "kind": "point",
-      "equation": "OLS slope of the last 4 values of (Revenue_q / Revenue_q-4 - 1), per quarter",
-      "formula": null,
-      "origin": "engine",
-      "meaning": "Is quarterly growth accelerating or decelerating? Slope of the last 4 quarterly YoY revenue growth prints.",
-      "value": -0.122941,
-      "value_text": "-12.3pp",
-      "series": {},
-      "level": {
-        "score": 0.0,
-        "basis": "band",
-        "rag": "red"
-      },
-      "trend": null,
-      "stability": null,
-      "composite": 0.0,
-      "rag": "red",
-      "band": {
-        "red": -0.01,
-        "green": 0.01,
-        "origin": "config/bands.yaml (generic)",
-        "source_type": "indicative",
-        "source_url": null,
-        "as_of": "2026-11-01",
-        "rationale": "YoY growth accelerating by >= 1pp per quarter = improving momentum; decelerating by >= 1pp per quarter = fading.",
-        "centre": null
-      },
-      "reason": null,
-      "note": null,
-      "text": "Quarterly YoY growth trend: -12.3pp RED (level red vs indicative band (red <= -1.0pp, green >= +1.0pp))"
-    },
-    "pat_margin": {
-      "name": "PAT margin",
-      "pillar": "margins",
-      "role": "scored",
-      "unit": "pct",
-      "direction": "higher",
-      "kind": "annual",
-      "equation": "core PAT / Revenue",
-      "formula": null,
-      "origin": "engine",
-      "meaning": "Owners' core net profit per rupee of revenue (net profit margin, NPM).",
-      "value": 0.019233,
-      "value_text": "1.9%",
-      "series": {
-        "FY17": 0.02894,
-        "FY18": 0.034321,
-        "FY19": 0.03289,
-        "FY20": 0.04416,
-        "FY21": 0.019026,
-        "FY22": 0.019768,
-        "FY23": 0.019489,
-        "FY24": 0.015511,
-        "FY25": 0.018683,
-        "FY26": 0.019233
-      },
-      "level": {
-        "score": 26.054614,
-        "basis": "band",
-        "rag": "red"
-      },
-      "trend": {
-        "slope_per_year": -0.000188,
-        "normalised_slope": -0.003753,
-        "n": 5,
-        "window": "FY22-FY26",
-        "score": 48.124467,
-        "label": "stable"
-      },
-      "stability": {
-        "cv": 0.187143,
-        "sd": 0.009357,
-        "n": 10,
-        "score": 58.584868,
-        "label": "moderate",
-        "window": "FY17-FY26"
-      },
-      "composite": 36.451615,
-      "rag": "red",
-      "band": {
-        "red": 0.027967,
-        "green": 0.067967,
-        "origin": "config/sector_benchmarks.yaml (insurance)",
-        "source_type": "external",
-        "source_url": "https://pages.stern.nyu.edu/~adamodar/pc/datasets/marginIndia.xls",
-        "as_of": "2026-01-05",
-        "rationale": "Damodaran India 'Net Margin' (Insurance (Life)); amber zone = centre +/- max(20%, 0.02)",
-        "centre": 0.047967
-      },
-      "reason": null,
-      "note": null,
-      "text": "PAT margin: 1.9% RED (level red vs band (red <= 2.8%, green >= 6.8%); trend stable -0.0pp/yr; moderate (CV 0.19))"
     },
     "benefits_ratio": {
       "name": "Benefits ratio",
@@ -4162,9 +4002,29 @@
         "reason": "Includes benefits and reserve changes; meaningless per rupee of policyholder assets"
       },
       {
+        "id": "pat_margin",
+        "name": "PAT margin",
+        "reason": "PAT over premium plus investment income mixes policyholder flows with shareholder profit; VNB margin is the margin measure"
+      },
+      {
         "id": "pb_to_justified_pb",
         "name": "P/B / justified P/B",
         "reason": "As justified P/B"
+      },
+      {
+        "id": "q_revenue_yoy",
+        "name": "Latest quarter revenue YoY",
+        "reason": "Sales include investment income on policyholders' funds (ULIP mark-to-market), so a quarter's revenue swings with markets; growth is read from APE/VNB"
+      },
+      {
+        "id": "q_revenue_yoy_trend",
+        "name": "Quarterly YoY growth trend",
+        "reason": "As latest-quarter revenue growth"
+      },
+      {
+        "id": "revenue_growth_volatility",
+        "name": "Revenue growth volatility",
+        "reason": "Volatility of revenue growth mostly measures investment-income swings, not business risk"
       },
       {
         "id": "yield_on_assets",
@@ -4326,12 +4186,13 @@
       "pe_percentile_10y",
       "persistency_13m",
       "persistency_61m",
-      "q_revenue_yoy_trend",
-      "revenue_growth_volatility",
       "share_count_change",
       "vnb_margin"
     ],
-    "sector_flags_triggered": [],
+    "sector_flags_triggered": [
+      "IN01",
+      "IN03"
+    ],
     "constants": {}
   },
   "manual_kpis": {
@@ -4699,6 +4560,11 @@
       "text": "Financial company: other income is core (fees, treasury), so no exceptional-item estimate is made."
     },
     {
+      "category": "exceptional",
+      "fy": null,
+      "text": "One-off tax normalisation is off for insurance: Life insurance profits are taxed at 12.5% under section 115B (shareholders' surplus is disputed between that and normal rates), and policyholders' surplus transfers move between accounts, so the effective tax rate on accounting PBT has no stable normal to restore. Reported tax kept."
+    },
+    {
       "category": "minority",
       "fy": null,
       "text": "No material minority/associate residual: export is standalone or has no minorities."
@@ -4740,7 +4606,7 @@
     }
   ],
   "findings": {
-    "verdict": "HDFC LIFE INSURANCE COMPANY LTD destroys value: ROE 11.3% vs Ke 13.4% in FY26. Overall AMBER (59/100); strongest pillar 8 Valuation, weakest 4 Returns; 2 high-severity flags.",
+    "verdict": "HDFC LIFE INSURANCE COMPANY LTD destroys value: ROE 11.3% vs Ke 13.4% in FY26. Overall AMBER (63/100); strongest pillar 8 Valuation, weakest 4 Returns; 2 high-severity flags.",
     "strengths": [
       {
         "kind": "metric",
@@ -4824,38 +4690,22 @@
       },
       {
         "kind": "metric",
-        "id": "solvency_ratio",
-        "pillar": "balance_sheet",
+        "id": "share_count_change",
+        "pillar": "capital_allocation",
         "rag": "green",
-        "severity": 0.2,
-        "confidence": 0.8,
-        "score": 0.16,
-        "name": "Solvency ratio",
-        "number": "177.0%",
-        "context": "GREEN vs band: red ≤ 150.0%, green ≥ 180.0%",
-        "trend": "",
+        "severity": 0.097775,
+        "confidence": 0.6,
+        "score": 0.058665,
+        "name": "Share count change",
+        "number": "0.2%",
+        "context": "GREEN vs band: red ≥ 3.0%, green ≤ 0.0%, indicative",
+        "trend": "improving −1.0 pts/yr over FY22-FY26",
         "chain": null,
         "chain_source": null,
-        "text": "Solvency ratio: 177.0% (GREEN vs band: red ≤ 150.0%, green ≥ 180.0%)"
+        "text": "Share count change: 0.2% (GREEN vs band: red ≥ 3.0%, green ≤ 0.0%, indicative); improving −1.0 pts/yr over FY22-FY26"
       }
     ],
     "weaknesses": [
-      {
-        "kind": "flag",
-        "id": "R02",
-        "pillar": "returns",
-        "severity_label": "high",
-        "severity": 1.0,
-        "confidence": 1.0,
-        "score": 1.0,
-        "name": "ROE rising on leverage while margins fall",
-        "covers": [
-          "equity_multiplier",
-          "pat_margin",
-          "roe"
-        ],
-        "text": "R02 ROE rising on leverage while margins fall: ROE rose +1.7pp over 3 years, but only because the equity multiplier rose by 5.09x while the net margin fell -0.0pp: better returns are coming from more leverage, not a better business."
-      },
       {
         "kind": "flag",
         "id": "R05",
@@ -4871,36 +4721,67 @@
         "text": "R05 ROE below cost of equity (financials): ROE (11.3%) has been below the cost of equity for 2 years (spread -2.1pp): the franchise is not earning its cost of capital."
       },
       {
-        "kind": "metric",
-        "id": "q_revenue_yoy_trend",
-        "pillar": "growth",
-        "rag": "red",
+        "kind": "flag",
+        "id": "IN01",
+        "pillar": "balance_sheet",
+        "severity_label": "high",
         "severity": 1.0,
-        "confidence": 0.36,
-        "score": 0.36,
-        "name": "Quarterly YoY growth trend",
-        "number": "−12.3pp",
-        "context": "RED vs band: red ≤ −1.0pp, green ≥ +1.0pp, indicative",
-        "trend": "",
-        "chain": null,
-        "chain_source": null,
-        "text": "Quarterly YoY growth trend: −12.3pp (RED vs band: red ≤ −1.0pp, green ≥ +1.0pp, indicative)"
+        "confidence": 0.8,
+        "score": 0.8,
+        "name": "Solvency cushion thinning",
+        "covers": [
+          "solvency_ratio"
+        ],
+        "text": "IN01 Solvency cushion thinning: Solvency ratio is 177.0% (-17.0pp in a year; IRDAI control level 150%): growth or dividends may need fresh capital."
+      },
+      {
+        "kind": "flag",
+        "id": "IN03",
+        "pillar": "margins",
+        "severity_label": "medium",
+        "severity": 0.6,
+        "confidence": 0.8,
+        "score": 0.48,
+        "name": "VNB margin compressing",
+        "covers": [
+          "vnb_margin"
+        ],
+        "text": "IN03 VNB margin compressing: VNB margin fell -2.1pp over 2 years (-1.4pp in the latest year) to 24.2% (product mix, regulation or pricing pressure)."
       },
       {
         "kind": "metric",
-        "id": "revenue_growth_volatility",
+        "id": "roe",
+        "pillar": "returns",
+        "rag": "red",
+        "severity": 0.358847,
+        "confidence": 0.9,
+        "score": 0.322962,
+        "name": "Return on equity",
+        "number": "11.3%",
+        "context": "RED vs band: red ≤ 13.4%, green ≥ 18.4%",
+        "trend": "stable +0.3 pts/yr over FY22-FY26",
+        "chain": "+1.7 pts over 3y; 161% from equity multiplier, partly offset by the other drivers; equity multiplier rose because other liabilities / equity (average) rose 15.68x → 20.65x",
+        "chain_source": {
+          "tree": "fin_roe",
+          "window": "3y"
+        },
+        "text": "Return on equity: 11.3% (RED vs band: red ≤ 13.4%, green ≥ 18.4%); stable +0.3 pts/yr over FY22-FY26; +1.7 pts over 3y; 161% from equity multiplier, partly offset by the other drivers; equity multiplier rose because other liabilities / equity (average) rose 15.68x → 20.65x"
+      },
+      {
+        "kind": "metric",
+        "id": "vnb_growth",
         "pillar": "growth",
         "rag": "red",
-        "severity": 0.94149,
-        "confidence": 0.36,
-        "score": 0.338936,
-        "name": "Revenue growth volatility",
-        "number": "2.41",
-        "context": "RED vs band: red ≥ 1.50, green ≤ 0.50, indicative",
+        "severity": 0.630304,
+        "confidence": 0.432,
+        "score": 0.272291,
+        "name": "VNB growth",
+        "number": "1.8%",
+        "context": "RED vs band: red ≤ 4.0%, green ≥ 8.9%",
         "trend": "",
         "chain": null,
         "chain_source": null,
-        "text": "Revenue growth volatility: 2.41 (RED vs band: red ≥ 1.50, green ≤ 0.50, indicative)"
+        "text": "VNB growth: 1.8% (RED vs band: red ≤ 4.0%, green ≥ 8.9%)"
       }
     ],
     "watch": [
@@ -4951,6 +4832,40 @@
         "chain": null,
         "chain_source": null,
         "text": "ROE - cost of equity: −2.1pp (RED vs band: red ≤ +0.0pp, green ≥ +5.0pp); improving +0.3 pts/yr over FY22-FY26"
+      },
+      {
+        "kind": "metric",
+        "id": "solvency_ratio",
+        "pillar": "balance_sheet",
+        "rag": "green",
+        "severity": 0.2,
+        "confidence": 0.8,
+        "score": 0.16,
+        "name": "Solvency ratio",
+        "number": "177.0%",
+        "context": "GREEN vs band: red ≤ 150.0%, green ≥ 180.0%",
+        "trend": "",
+        "chain": null,
+        "chain_source": null,
+        "text": "Solvency ratio: 177.0% (GREEN vs band: red ≤ 150.0%, green ≥ 180.0%); not counted as a strength while IN01 (Solvency cushion thinning) stands",
+        "suppressed_by": "IN01"
+      },
+      {
+        "kind": "metric",
+        "id": "vnb_margin",
+        "pillar": "margins",
+        "rag": "green",
+        "severity": 0.192857,
+        "confidence": 0.48,
+        "score": 0.092571,
+        "name": "VNB margin",
+        "number": "24.2%",
+        "context": "GREEN vs band: red ≤ 18.0%, green ≥ 25.0%, indicative",
+        "trend": "",
+        "chain": null,
+        "chain_source": null,
+        "text": "VNB margin: 24.2% (GREEN vs band: red ≤ 18.0%, green ≥ 25.0%, indicative); not counted as a strength while IN03 (VNB margin compressing) stands",
+        "suppressed_by": "IN03"
       }
     ],
     "bull": [
@@ -4989,20 +4904,20 @@
     ],
     "bear": [
       {
-        "ref": "R02",
-        "text": "R02 ROE rising on leverage while margins fall: ROE rose +1.7pp over 3 years, but only because the equity multiplier rose by 5.09x while the net margin fell -0.0pp: better returns are coming from more leverage, not a better business. [R02]"
-      },
-      {
         "ref": "R05",
         "text": "R05 ROE below cost of equity (financials): ROE (11.3%) has been below the cost of equity for 2 years (spread -2.1pp): the franchise is not earning its cost of capital. [R05]"
       },
       {
-        "ref": "q_revenue_yoy_trend",
-        "text": "Quarterly YoY growth trend: −12.3pp (RED vs band: red ≤ −1.0pp, green ≥ +1.0pp, indicative) [q_revenue_yoy_trend]"
+        "ref": "IN01",
+        "text": "IN01 Solvency cushion thinning: Solvency ratio is 177.0% (-17.0pp in a year; IRDAI control level 150%): growth or dividends may need fresh capital. [IN01]"
       },
       {
-        "ref": "revenue_growth_volatility",
-        "text": "Revenue growth volatility: 2.41 (RED vs band: red ≥ 1.50, green ≤ 0.50, indicative) [revenue_growth_volatility]"
+        "ref": "IN03",
+        "text": "IN03 VNB margin compressing: VNB margin fell -2.1pp over 2 years (-1.4pp in the latest year) to 24.2% (product mix, regulation or pricing pressure). [IN03]"
+      },
+      {
+        "ref": "roe",
+        "text": "Return on equity: 11.3% (RED vs band: red ≤ 13.4%, green ≥ 18.4%); stable +0.3 pts/yr over FY22-FY26; +1.7 pts over 3y; 161% from equity multiplier, partly offset by the other drivers; equity multiplier rose because other liabilities / equity (average) rose 15.68x → 20.65x [roe]"
       },
       {
         "ref": "economic_profit",
@@ -5057,6 +4972,16 @@
       "all_present_text": "All required KPIs for this archetype are present at FY26.",
       "not_evaluable": [
         {
+          "id": "G04",
+          "name": "Erratic revenue growth",
+          "missing": "revenue_growth_volatility (not available for this company)"
+        },
+        {
+          "id": "G05",
+          "name": "Quarterly growth decelerating",
+          "missing": "q_revenue_yoy_trend (not available for this company)"
+        },
+        {
           "id": "A02",
           "name": "Rising promoter pledge",
           "missing": "promoter_pledge FY24"
@@ -5090,6 +5015,7 @@
       "not_scored": [],
       "estimates": [
         "Financial company: other income is core (fees, treasury), so no exceptional-item estimate is made.",
+        "One-off tax normalisation is off for insurance: Life insurance profits are taxed at 12.5% under section 115B (shareholders' surplus is disputed between that and normal rates), and policyholders' surplus transfers move between accounts, so the effective tax rate on accounting PBT has no stable normal to restore. Reported tax kept.",
         "No material minority/associate residual: export is standalone or has no minorities.",
         "Capex is not in the export. Proxy = change in net block + change in CWIP + depreciation (includes acquired fixed assets and Ind AS 116 right-of-use additions; impairments and disposals understate it). FCF = CFO - capex proxy."
       ],

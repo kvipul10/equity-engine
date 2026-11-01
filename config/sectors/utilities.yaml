@@ -44,6 +44,17 @@ metrics_add:
   - {id: renewable_share, name: "Renewable share of capacity", pillar: growth, unit: pct, direction: neutral,
      formula: "kpi('renewable_capacity_mw') / kpi('installed_capacity_mw')", equation: "Renewable MW / total MW", meaning: "Shift of the asset base."}
 bands:
+  roe:
+    red: allowed_roe - 0.05
+    green: allowed_roe
+    source_type: derived
+    rationale: "A regulated utility earns the regulator's allowed RoE (CERC 15.5% post-tax, set to cover the cost of equity); judge ROE against it rather than a CAPM Ke from an industry beta."
+  capacity_growth_mw:
+    red: 0.0
+    green: 0.06
+    source_type: indicative
+    as_of: "2026-11-01"
+    rationale: "India's installed generation capacity has grown about 6-8% a year (CEA); faster capacity growth gains share of the regulated asset base."
   regulated_roe_gap:
     red: -0.03
     green: 0.0

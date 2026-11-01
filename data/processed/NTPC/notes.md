@@ -29,6 +29,8 @@
 
 ## exceptional
 - No exceptional items detected in other income (robust outlier test).
+- **FY19**: Tax rate -25% vs normal 25% on core PBT 11,255: write-back or deferred-tax credit of 5,583 treated as one-off; core PAT reduced accordingly.
+- **FY26**: Tax rate -12% vs normal 25% on core PBT 24,669: write-back or deferred-tax credit of 9,020 treated as one-off; core PAT reduced accordingly.
 
 ## minority
 - Net profit differs from PBT - tax in 10 of 10 years (latest -493): minority interest (negative) and share of associates/JVs (positive) sit between PBT and net profit, so the export is consolidated and net profit is the owners' share. Equity excludes minority interest (Screener includes NCI in Other Liabilities); ROIC/ROCE capital therefore omits NCI unless data/manual supplies minority_interest.

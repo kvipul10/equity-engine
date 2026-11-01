@@ -18,6 +18,7 @@
 
 ## exceptional
 - No exceptional items detected in other income (robust outlier test).
+- **FY22**: Tax rate 3% vs normal 25% on core PBT 5,225: write-back or deferred-tax credit of 1,186 treated as one-off; core PAT reduced accordingly.
 
 ## minority
 - No material minority/associate residual: export is standalone or has no minorities.

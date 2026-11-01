@@ -38,5 +38,5 @@
 - 10 quarters from 2024-06-30 to 2026-09-30 (Q1FY25-Q2FY27). Quarterly profit is as reported (no exceptional-item estimate).
 
 ## manual
-- Manual KPIs loaded: volume_growth_pct for FY24, FY25.
-- 2 manual KPI values: 0 verified against the primary document (Y), 2 from secondary sources (N). Provenance is in analysis.json (manual_kpis).
+- Manual KPIs loaded: volume_growth_pct for FY24, FY25, FY26.
+- 3 manual KPI values: 0 verified against the primary document (Y), 3 from secondary sources (N). Provenance is in analysis.json (manual_kpis).

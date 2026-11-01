@@ -36,22 +36,24 @@ def interest_cover(c: Ctx):
 
 @metric(id="current_ratio_proxy", name="Current ratio (Screener proxy)", pillar="balance_sheet", unit="x", direction="higher",
         applies="NF",
-        meaning="Short-term liquidity proxy: the export has no current/non-current split, so other assets / other liabilities is used "
-                "(Screener's own working-capital split). Excludes short-term debt (inside Borrowings).",
-        equation="Other assets / Other liabilities")
+        meaning="Short-term liquidity proxy: the export has no current/non-current split, so (other assets + investments) / other "
+                "liabilities is used. Investments are included because Indian companies hold treasury mainly in liquid funds and "
+                "bonds, which Screener reports under Investments, not Cash. Excludes short-term debt (inside Borrowings).",
+        equation="(Other assets + Investments) / Other liabilities")
 def current_ratio_proxy(c: Ctx):
-    return c.div(c.f("other_assets"), c.f("other_liabilities"), positive=True)
+    return c.div(c.f("other_assets") + c.f("investments").fillna(0.0), c.f("other_liabilities"), positive=True)
 
 
-@metric(id="cash_to_st_borrowings", name="Cash / short-term borrowings", pillar="balance_sheet", unit="x", direction="higher",
-        applies="NF",
-        meaning="Cash cover for debt falling due soon. Uses manual short_term_borrowings when supplied, otherwise total borrowings "
+@metric(id="cash_to_st_borrowings", name="Cash and investments / short-term borrowings", pillar="balance_sheet", unit="x",
+        direction="higher", applies="NF",
+        meaning="Liquid cover for debt falling due soon: cash plus investments (treasury is mostly held in liquid funds and bonds, "
+                "reported under Investments). Uses manual short_term_borrowings when supplied, otherwise total borrowings "
                 "(conservative: treats all debt as short-term).",
-        equation="Cash & bank / short-term borrowings (manual) or / Borrowings; = 99 when there is no debt")
+        equation="(Cash & bank + Investments) / short-term borrowings (manual) or / Borrowings; = 99 when there is no debt")
 def cash_to_st_borrowings(c: Ctx):
     st = c.manual_series("short_term_borrowings")
     den = st.where(st.notna(), c.f("borrowings"))
-    cash = c.f("cash")
+    cash = c.f("cash") + c.f("investments").fillna(0.0)
     out = (cash / den.where(den > 0)).clip(upper=CAP)
     return out.where(den > 0, np.where(cash.notna() & den.notna(), CAP, np.nan))
 

@@ -9,6 +9,11 @@ how_to_read: |
   Read VNB growth and VNB margin (profitability of new sales), persistency (do customers keep paying?) and solvency (can it fund growth?).
   Accounting P&L understates a growing insurer because new-business strain front-loads costs, so P/EV and operating RoEV matter more than P/E or P/B.
   For general insurers, a combined ratio above 100% means underwriting loses money and profits rely on investment income.
+tax_normalisation:
+  apply: false
+  reason: "Life insurance profits are taxed at 12.5% under section 115B (shareholders' surplus is disputed between that and normal rates), and policyholders' surplus transfers move between accounts, so the effective tax rate on accounting PBT has no stable normal to restore."
+  source_url: https://www.incometaxindia.gov.in/w/section-115b-1
+  as_of: "2026-11-01"
 pillar_names:
   cash_quality: "5 Cash and earnings quality (persistency)"
 pillar_weights: {growth: 20, margins: 15, capital_efficiency: 0, returns: 20, cash_quality: 15, balance_sheet: 15, capital_allocation: 5, valuation: 10}
@@ -20,6 +25,10 @@ metrics_off:
   - {id: equity_to_assets, reason: "Policyholder liabilities dominate the balance sheet; the solvency ratio is the capital measure"}
   - {id: justified_pb, reason: "Insurers are valued on embedded value; book-value models understate in-force value"}
   - {id: pb_to_justified_pb, reason: "As justified P/B"}
+  - {id: q_revenue_yoy, reason: "Sales include investment income on policyholders' funds (ULIP mark-to-market), so a quarter's revenue swings with markets; growth is read from APE/VNB"}
+  - {id: q_revenue_yoy_trend, reason: "As latest-quarter revenue growth"}
+  - {id: revenue_growth_volatility, reason: "Volatility of revenue growth mostly measures investment-income swings, not business risk"}
+  - {id: pat_margin, reason: "PAT over premium plus investment income mixes policyholder flows with shareholder profit; VNB margin is the margin measure"}
   - {id: implied_growth_pb, reason: "As justified P/B; P/EV is used instead"}
   - {id: implied_pb_growth_minus_delivered, reason: "As justified P/B"}
 
@@ -124,10 +133,12 @@ flags:
     pillar: balance_sheet
     severity: high
     applies: [INS]
-    condition: "m('solvency_ratio') < 1.70"
-    values: {now: "m('solvency_ratio')"}
+    # Session 4 validation: a fast fall (more than 15pp in a year) signals a coming capital raise even above 170%.
+    condition: "m('solvency_ratio') < 1.70 or chg('solvency_ratio', 1) < -0.15"
+    suppresses: [solvency_ratio]
+    values: {now: "m('solvency_ratio')", d: "chg('solvency_ratio', 1)"}
     explanation: >
-      Solvency ratio is {{ now|pct }}, within 20pp of IRDAI's 150% control level: growth or dividends may need fresh capital.
+      Solvency ratio is {{ now|pct }} ({{ d|pp }} in a year; IRDAI control level 150%): growth or dividends may need fresh capital.
   - id: IN02
     name: 13th-month persistency slipping
     pillar: cash_quality
@@ -142,10 +153,12 @@ flags:
     pillar: margins
     severity: medium
     applies: [INS]
-    condition: "chg('vnb_margin', 2) < -0.03"
-    values: {now: "m('vnb_margin')", d: "chg('vnb_margin', 2)"}
+    # Session 4 validation: a 1pp fall in one year is material for a life insurer (analysts re-rate on 100-150 bps).
+    condition: "chg('vnb_margin', 1) < -0.01 or chg('vnb_margin', 2) < -0.02"
+    suppresses: [vnb_margin]
+    values: {now: "m('vnb_margin')", d: "chg('vnb_margin', 2)", d1: "chg('vnb_margin', 1)"}
     explanation: >
-      VNB margin fell {{ d|pp }} over 2 years to {{ now|pct }} (product mix shift to low-margin ULIPs/group, or pricing pressure).
+      VNB margin fell {{ d|pp }} over 2 years ({{ d1|pp }} in the latest year) to {{ now|pct }} (product mix, regulation or pricing pressure).
   - id: IN04
     name: Rich P/EV with slow VNB growth
     pillar: valuation

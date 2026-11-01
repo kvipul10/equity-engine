@@ -2,7 +2,7 @@
 
 Files whose name starts with '_' are shared bases (not archetypes). Every archetype implicitly extends 'default'.
 Merge rules (child over parent):
-  scalars (family, subtype, damodaran_industries, evidence, how_to_read): child replaces parent
+  scalars (family, subtype, damodaran_industries, evidence, how_to_read, tax_normalisation): child replaces parent
   metrics_off / metrics_add / manual_kpis / flags: merged by 'id'; an entry {id: x, remove: true} deletes x
   bands / constants: merged by key; a null value deletes the inherited key
   drivers: {add: [...]} merged by tree id, {replace: {generic_tree: sector_tree}} merged by key
@@ -16,7 +16,7 @@ from typing import Dict, List, Optional
 
 import yaml
 
-SCALARS = ("family", "subtype", "damodaran_industries", "evidence", "how_to_read", "pillar_names")
+SCALARS = ("family", "subtype", "damodaran_industries", "evidence", "how_to_read", "pillar_names", "tax_normalisation")
 LISTS_BY_ID = ("metrics_off", "metrics_add", "manual_kpis", "flags")
 DICTS = ("bands", "constants")
 FAMILIES = ("non_financial", "bank_like", "insurance")
@@ -44,6 +44,7 @@ class Sector:
     drivers_replace: Dict[str, str] = field(default_factory=dict)
     pillar_weights: Optional[Dict[str, float]] = None
     pillar_names: Dict[str, str] = field(default_factory=dict)
+    tax_normalisation: Optional[Dict] = None                         # {apply: false, reason, source_url, as_of}
     lineage: List[str] = field(default_factory=list)
     file: str = ""
 
@@ -152,6 +153,10 @@ def resolve_all(raw: Dict[str, Dict]) -> Dict[str, Sector]:
         how = (r.get("how_to_read") or "").strip()
         if not how:
             raise SectorError(f"{name}: how_to_read is required")
+        tn = r.get("tax_normalisation")
+        if tn is not None and (not isinstance(tn, dict) or not isinstance(tn.get("apply"), bool) or not tn.get("reason")
+                               or not tn.get("source_url") or not tn.get("as_of")):
+            raise SectorError(f"{name}: tax_normalisation needs apply (true/false), reason, source_url and as_of")
         out[name] = Sector(
             archetype=name, family=fam, subtype=r.get("subtype"), damodaran_industries=list(r["damodaran_industries"]),
             evidence=r.get("evidence", ""), how_to_read=how,
@@ -161,6 +166,7 @@ def resolve_all(raw: Dict[str, Dict]) -> Dict[str, Sector]:
             bands=r.get("bands") or {}, constants=r.get("constants") or {}, flags=r.get("flags", []),
             drivers_add=(r.get("drivers") or {}).get("add", []), drivers_replace=(r.get("drivers") or {}).get("replace", {}),
             pillar_weights=r.get("pillar_weights"), pillar_names=r.get("pillar_names") or {},
+            tax_normalisation=r.get("tax_normalisation"),
             lineage=[x for x in r.get("lineage", []) if x], file=r.get("_file", ""),
         )
     return out

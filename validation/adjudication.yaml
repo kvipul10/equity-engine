@@ -1,0 +1,742 @@
+# Session 4 adjudication of every engine headline item (top strengths, top weaknesses, high/medium flags) in
+# validation/results.json for the test and blow-up companies, as of the final engine run.
+# verdict: ok (right on the reported numbers and not contradicted by the cited sources) or false_alarm (wrong:
+# a parsing or definition artefact, or contradicted by the pre-registered sources). cause uses the PLAN.md
+# categories: parsing, metric definition, threshold, missing sector logic, missing data.
+# Items that are signals of a matched pre-registered item of the same polarity are ok by construction.
+# Holdout companies (ICICIBANK, INFY, NESTLEIND, HAL) are not adjudicated (their details stay closed).
+TCS:
+  strengths:roe:
+    verdict: ok
+    reason: ROE 53% on reported equity; consistent with industry-leading margins (TCS-S1) and cash generation (TCS-S2).
+  strengths:roce:
+    verdict: ok
+    reason: ROCE 65% follows from the same margins and a cash-light model (TCS-S1).
+  strengths:ebit_margin:
+    verdict: ok
+    reason: Signal of matched pre-registered item TCS-S1 (Industry-leading operating margin (about 25% EBIT in Q4 FY26, a
+      four-y).
+  strengths:pat_margin:
+    verdict: ok
+    reason: Signal of matched pre-registered item TCS-S1 (Industry-leading operating margin (about 25% EBIT in Q4 FY26, a
+      four-y).
+  strengths:beneish_m_score:
+    verdict: ok
+    reason: Screen result (no manipulation signal); no source raises accounting concerns.
+  strengths:pat_cagr_5y:
+    verdict: ok
+    reason: Reported 5-year core PAT CAGR of 10.5%; the sources' concern is FY26 revenue (TCS-W1), not the 5-year profit record.
+  weaknesses:C01:
+    verdict: ok
+    reason: Receivable days rose three years running in the reported numbers; same build-up as IT04; not contradicted by sources.
+  weaknesses:IT01:
+    verdict: ok
+    reason: Signal of matched pre-registered item TCS-W3 (Attrition back up to about 13.7% (LTM) with rising AI and wage costs).
+  weaknesses:IT03:
+    verdict: ok
+    reason: 'Signal of matched pre-registered item TCS-W1 (Revenue growth stalled: FY26 USD revenue -0.5%, constant currency
+      -2.4).'
+  weaknesses:revenue_cagr_3y:
+    verdict: ok
+    reason: 'Signal of matched pre-registered item TCS-W1 (Revenue growth stalled: FY26 USD revenue -0.5%, constant currency
+      -2.4).'
+  flags:IT04:
+    verdict: ok
+    reason: DSO including unbilled rose from 104 to 117 days (reported); a working-capital fact, not contradicted.
+HDFCBANK:
+  strengths:cet1:
+    verdict: ok
+    reason: 'Signal of matched pre-registered item HDFCBANK-S3 (Well capitalised: CRAR about 19.7%, CET1 about 17.3%).'
+  strengths:crar:
+    verdict: ok
+    reason: 'Signal of matched pre-registered item HDFCBANK-S3 (Well capitalised: CRAR about 19.7%, CET1 about 17.3%).'
+  strengths:gnpa_ratio:
+    verdict: ok
+    reason: Signal of matched pre-registered item HDFCBANK-S1 (Robust and improving asset quality (GNPA about 1.15%)).
+  strengths:deposit_growth:
+    verdict: ok
+    reason: Signal of matched pre-registered item HDFCBANK-S2 (Strong deposit mobilisation (deposits +14.4% YoY), bringing
+      the CD rat).
+  strengths:nnpa_ratio:
+    verdict: ok
+    reason: Signal of matched pre-registered item HDFCBANK-S1 (Robust and improving asset quality (GNPA about 1.15%)).
+  strengths:roa:
+    verdict: ok
+    reason: RoA about 1.6% is the bank's reported profitability; consistent with strong asset quality (HDFCBANK-S1).
+  weaknesses:R05:
+    verdict: false_alarm
+    reason: ROE 13.7% is flagged below a Ke of about 15.8% (rf = 7.41% G-sec yield plus beta x a 6.92% ERP that already contains
+      India's country risk) is above the 12-13% cost of equity analysts use for HDFC Bank; the gap closes at a Damodaran-consistent
+      Ke (rf net of the 1.75% default spread). Sources do not call the bank value-destroying.
+    cause: metric definition
+  weaknesses:G05:
+    verdict: ok
+    reason: Quarterly revenue growth slowing is consistent with slow loan growth (HDFCBANK-W2) and weak NII growth (HDFCBANK-W1).
+  weaknesses:V03:
+    verdict: false_alarm
+    reason: Justified P/B of 0.9x rests on the same high Ke (Ke of about 15.8% (rf = 7.41% G-sec yield plus beta x a 6.92%
+      ERP that already contains India's country risk) is above the 12-13% cost of equity analysts use for HDFC Bank; the gap
+      closes at a Damodaran-consistent Ke (rf net of the 1.75% default spread)); P/B of 1.9x sits near the bottom of its own
+      10-year range.
+    cause: metric definition
+  weaknesses:BK06:
+    verdict: ok
+    reason: 'CASA ratio fell from 38.2% to 34.1% (reported KPI): costlier funding, consistent with NIM compression (HDFCBANK-W1).'
+  weaknesses:BK07:
+    verdict: ok
+    reason: Signal of matched pre-registered item HDFCBANK-W3 (Credit-deposit ratio still high (about 95%) after the HDFC
+      merger).
+  weaknesses:roe:
+    verdict: false_alarm
+    reason: 'The bank ROE band is anchored on Ke (red at 15.8%), so ROE 13.7% reads red for the same reason as R05: Ke of
+      about 15.8% (rf = 7.41% G-sec yield plus beta x a 6.92% ERP that already contains India''s country risk) is above the
+      12-13% cost of equity analysts use for HDFC Bank; the gap closes at a Damodaran-consistent Ke (rf net of the 1.75% default
+      spread).'
+    cause: metric definition
+BAJFINANCE:
+  strengths:revenue_cagr_3y:
+    verdict: ok
+    reason: Signal of matched pre-registered item BAJFINANCE-S1 (AUM growth of about 22% to Rs 5.1 lakh crore, guided 22-24%
+      for FY27).
+  strengths:assets_cagr_3y:
+    verdict: ok
+    reason: Signal of matched pre-registered item BAJFINANCE-S1 (AUM growth of about 22% to Rs 5.1 lakh crore, guided 22-24%
+      for FY27).
+  strengths:nnpa_ratio:
+    verdict: ok
+    reason: 'Signal of matched pre-registered item BAJFINANCE-S2 (Asset quality improving: credit cost down to about 1.6%
+      of AUM, lower ).'
+  strengths:crar:
+    verdict: ok
+    reason: CRAR 21.6% against the 15% NBFC minimum (reported).
+  strengths:roe:
+    verdict: ok
+    reason: Signal of matched pre-registered item BAJFINANCE-S3 (Strong earnings growth and returns (PAT +22%, high ROE/ROA)).
+  strengths:roa:
+    verdict: ok
+    reason: Signal of matched pre-registered item BAJFINANCE-S3 (Strong earnings growth and returns (PAT +22%, high ROE/ROA)).
+  weaknesses:M08:
+    verdict: ok
+    reason: Signal of matched pre-registered item BAJFINANCE-W1 (NIM compression (about 9.5%, slipping) as borrowing costs
+      rise).
+  weaknesses:R04:
+    verdict: ok
+    reason: ROE fell three years running (23.5% to about 19%) after the equity raise; still high (BAJFINANCE-S3) but falling,
+      consistent with NIM compression (BAJFINANCE-W1).
+  weaknesses:V03:
+    verdict: ok
+    reason: Signal of matched pre-registered item BAJFINANCE-W3 (Valuation rich relative to returns; growth/return targets
+      seen as opti).
+  weaknesses:q_revenue_yoy_trend:
+    verdict: ok
+    reason: Quarterly revenue growth decelerating about 1pp a quarter (reported); consistent with margin compression (BAJFINANCE-W1).
+HDFCLIFE:
+  strengths:pat_cagr_3y:
+    verdict: ok
+    reason: Reported PAT CAGR about 12%; sources focus on VNB, which is weak (HDFCLIFE-W2), not on accounting profit.
+  strengths:eps_cagr_3y:
+    verdict: ok
+    reason: As PAT CAGR (no dilution yet).
+  strengths:persistency_61m:
+    verdict: ok
+    reason: Signal of matched pre-registered item HDFCLIFE-S2 (Stable persistency (13th month about 85%, 61st month about
+      64%)).
+  strengths:pb_percentile_10y:
+    verdict: ok
+    reason: P/B at the bottom of its own history is a fact; consistent with the de-rating that follows weak VNB growth (HDFCLIFE-W2).
+  strengths:pe_percentile_10y:
+    verdict: ok
+    reason: As P/B percentile.
+  strengths:share_count_change:
+    verdict: ok
+    reason: No dilution in FY26 (reported share count); the capital need in HDFCLIFE-W3 is prospective.
+  weaknesses:R05:
+    verdict: ok
+    reason: Accounting RoE 11.3% is below Ke even at analysts' 12-13% cost of equity. Life insurers are judged on operating
+      RoEV (15%, amber), which the report shows.
+  weaknesses:IN01:
+    verdict: ok
+    reason: Signal of matched pre-registered item HDFCLIFE-W3 (Solvency down to 177% (from 194%), requiring a capital raise).
+  weaknesses:IN03:
+    verdict: ok
+    reason: Signal of matched pre-registered item HDFCLIFE-W1 (VNB margin compressed to 24.2% from 25.6% (surrender rules,
+      GST ITC, n).
+  weaknesses:roe:
+    verdict: ok
+    reason: 'As R05: accounting RoE 11.3% (reported) is low; operating RoEV is the primary measure.'
+  weaknesses:vnb_growth:
+    verdict: ok
+    reason: 'Signal of matched pre-registered item HDFCLIFE-W2 (Weak growth: FY26 VNB +2%, Q4 APE +0.4% (JPMorgan), Q4 VNB
+      -8%).'
+  weaknesses:q_pat_yoy:
+    verdict: ok
+    reason: Latest-quarter PAT growth of 4.7% (reported) is weak; consistent with weak growth (HDFCLIFE-W2).
+HINDUNILVR:
+  strengths:roic_wacc_spread:
+    verdict: ok
+    reason: ROIC well above WACC (reported capital base, goodwill included); not contradicted.
+  strengths:roe:
+    verdict: ok
+    reason: ROE 24% on reported equity (core profit, ice-cream demerger gain excluded); not contradicted.
+  strengths:pat_margin:
+    verdict: ok
+    reason: Core PAT margin 18.4% after removing the estimated Rs 4,283 cr exceptional gain; consistent with resilient margins
+      (HINDUNILVR-S2).
+  strengths:ebit_margin:
+    verdict: ok
+    reason: Signal of matched pre-registered item HINDUNILVR-S2 (High and resilient EBITDA margin (about 23.7%), Q4 margin
+      beat).
+  strengths:q_pat_yoy:
+    verdict: false_alarm
+    reason: Q4 PAT +21% includes the Nutritionalab stake-sale gain; analysts put core growth at about 4% (HINDUNILVR-W1).
+      Quarterly exceptional items are not separable in the export and this one is too small for the outlier test.
+    cause: missing data
+  strengths:net_debt_to_ebitda:
+    verdict: ok
+    reason: Net cash (reported).
+  weaknesses:C02:
+    verdict: ok
+    reason: Inventory days rose three years running (reported); not contradicted.
+  weaknesses:M02:
+    verdict: ok
+    reason: 'Other income 27% of PBT, mostly the estimated exceptional gain: consistent with ''headline PAT flattered by exceptional
+      items'' (HINDUNILVR-W1).'
+  weaknesses:V01:
+    verdict: ok
+    reason: Signal of matched pre-registered item HINDUNILVR-W3 (Valuation elevated relative to growth (Systematix Hold)).
+  weaknesses:V03:
+    verdict: ok
+    reason: Consistent with 'valuation elevated relative to growth' (HINDUNILVR-W3).
+  weaknesses:ebitda_cagr_3y:
+    verdict: ok
+    reason: '3-year EBITDA CAGR 2.1% (reported): slow multi-year growth, consistent with weak core profit growth (HINDUNILVR-W1).'
+  weaknesses:revenue_cagr_3y:
+    verdict: ok
+    reason: 3-year revenue CAGR 2.1% (reported, ice cream demerged in FY26); the Q4 acceleration (HINDUNILVR-S3) is a single
+      quarter.
+ASIANPAINT:
+  strengths:beneish_m_score:
+    verdict: ok
+    reason: Screen result; no accounting concern in sources.
+  strengths:ebit_margin:
+    verdict: ok
+    reason: EBIT margin 17.4%; consistent with margin expansion (ASIANPAINT-S1).
+  strengths:ebitda_margin:
+    verdict: ok
+    reason: 'Signal of matched pre-registered item ASIANPAINT-S1 (Margin expansion: consolidated PBDIT margin 19.4% vs 17.2%
+      (cost disci).'
+  strengths:accruals_ratio:
+    verdict: ok
+    reason: Cash earnings above accounting earnings (reported); not contradicted.
+  strengths:roe:
+    verdict: ok
+    reason: ROE 21% with a deteriorating trend noted in the line; not contradicted.
+  strengths:q_pat_yoy:
+    verdict: ok
+    reason: Signal of matched pre-registered item ASIANPAINT-S3 (Strong Q4 profit rebound (net profit up about 69%)).
+  weaknesses:R03:
+    verdict: ok
+    reason: Capital added over 3 years (new plants, white cement/VAM) earning below WACC; consistent with 'margins seen as
+      having peaked' (ASIANPAINT-W3).
+  weaknesses:V01:
+    verdict: ok
+    reason: Signal of matched pre-registered item ASIANPAINT-W3 (Premium valuation hard to justify; margins seen as having
+      peaked (PL H).
+  weaknesses:V03:
+    verdict: ok
+    reason: Consistent with 'premium valuation hard to justify' (ASIANPAINT-W3).
+  weaknesses:revenue_cagr_3y:
+    verdict: ok
+    reason: 'Signal of matched pre-registered item ASIANPAINT-W1 (Value growth lagging volume (price cuts, downtrading): weak
+      multi-year).'
+  weaknesses:eps_cagr_3y:
+    verdict: ok
+    reason: 3-year EPS CAGR 1.7% (reported); consistent with weak multi-year growth (ASIANPAINT-W1).
+  weaknesses:cwip_to_net_block:
+    verdict: ok
+    reason: CWIP at 19% of net block and rising (reported capex programme); not contradicted.
+TATASTEEL:
+  strengths:beneish_m_score:
+    verdict: ok
+    reason: Screen result; no accounting concern in sources.
+  strengths:accruals_ratio:
+    verdict: ok
+    reason: Cash earnings above accounting earnings (reported).
+  strengths:q_pat_yoy:
+    verdict: ok
+    reason: Signal of matched pre-registered item TATASTEEL-S1 (Earnings rebound led by India (Q4 PAT more than doubled; India
+      EBITDA ).
+  strengths:nwc_days:
+    verdict: ok
+    reason: Negative net working capital (reported).
+  strengths:q_revenue_yoy:
+    verdict: ok
+    reason: Q4 revenue +12.5% YoY; consistent with the India-led rebound (TATASTEEL-S1).
+  strengths:q_ebitda_margin_yoy_change:
+    verdict: ok
+    reason: Signal of matched pre-registered item TATASTEEL-S1 (Earnings rebound led by India (Q4 PAT more than doubled; India
+      EBITDA ).
+  weaknesses:R01:
+    verdict: ok
+    reason: ROIC below WACC for three years (reported); consistent with loss-making UK and Europe risks (TATASTEEL-W1, W2).
+  weaknesses:roe:
+    verdict: ok
+    reason: ROE 11.2% (reported), Europe drag.
+  weaknesses:B04:
+    verdict: false_alarm
+    reason: The export has no debt-maturity split, so all Rs 92,000 cr of borrowings count as short-term; Tata Steel is deleveraging
+      (TATASTEEL-S2) and no source raises liquidity.
+    cause: metric definition
+  weaknesses:G06:
+    verdict: ok
+    reason: Revenue declined 1.6% a year over 3 years (reported, steel prices off the FY23 peak).
+  weaknesses:V03:
+    verdict: ok
+    reason: Consistent with 'valuation high relative to the pace of Europe's recovery' (TATASTEEL-W3).
+  weaknesses:ebitda_cagr_3y:
+    verdict: ok
+    reason: 3-year EBITDA CAGR 2.1% (reported) from the FY23 cycle peak.
+ULTRACEMCO:
+  strengths:beneish_m_score:
+    verdict: ok
+    reason: Screen result; no accounting concern in sources.
+  strengths:ebitda_cagr_3y:
+    verdict: ok
+    reason: 3-year EBITDA CAGR 17% (reported, acquisitions included); consistent with volume growth (ULTRACEMCO-S1).
+  strengths:revenue_cagr_3y:
+    verdict: ok
+    reason: Signal of matched pre-registered item ULTRACEMCO-S1 (Volume growth about 9% YoY (record quarter), helped by acquisitions
+      an).
+  strengths:accruals_ratio:
+    verdict: ok
+    reason: Cash earnings above accounting earnings (reported).
+  strengths:nwc_days:
+    verdict: ok
+    reason: Negative net working capital (reported).
+  strengths:other_income_to_pbt:
+    verdict: ok
+    reason: Profit is operational (other income 4% of PBT).
+  weaknesses:R01:
+    verdict: ok
+    reason: ROIC below WACC for three years; consistent with acquisitions diluting returns (ULTRACEMCO-W2).
+  weaknesses:A04:
+    verdict: ok
+    reason: Dividends exceeded negative FCF while debt rose (reported); acquisitions and capex, consistent with ULTRACEMCO-W2.
+  weaknesses:M03:
+    verdict: ok
+    reason: Materials up 4.1pp of sales over 3 years; consistent with cost pressure (ULTRACEMCO-W1).
+  weaknesses:R03:
+    verdict: ok
+    reason: 'Signal of matched pre-registered item ULTRACEMCO-W2 (Acquisition integration risk: India Cements EBITDA only
+      about Rs 497/t).'
+  weaknesses:V03:
+    verdict: ok
+    reason: Price assumes returns will rise as acquisitions integrate; consistent with diluted returns (ULTRACEMCO-W2); no
+      source calls the stock cheap.
+  weaknesses:fcf_to_pat_5y:
+    verdict: ok
+    reason: Negative 5-year FCF after capex and acquisitions (reported); consistent with ULTRACEMCO-W2.
+SUNPHARMA:
+  strengths:ebitda_cagr_5y:
+    verdict: ok
+    reason: 5-year EBITDA CAGR 14% (reported); consistent with specialty scaling (SUNPHARMA-S1).
+  strengths:eps_cagr_5y:
+    verdict: ok
+    reason: As EBITDA CAGR.
+  strengths:roic:
+    verdict: ok
+    reason: ROIC 21% (reported); not contradicted.
+  strengths:roic_wacc_spread:
+    verdict: ok
+    reason: As ROIC.
+  strengths:ebit_margin:
+    verdict: ok
+    reason: EBIT margin 26%; consistent with gross-margin expansion (SUNPHARMA-S3).
+  strengths:altman_z_india:
+    verdict: ok
+    reason: Net-cash balance sheet; no distress.
+  weaknesses:V01:
+    verdict: ok
+    reason: Price implies FCF growth 6pp above delivered; consistent with muted FY27 guidance against a premium multiple (SUNPHARMA-W3);
+      no source calls it cheap.
+  weaknesses:V03:
+    verdict: ok
+    reason: As V01.
+  weaknesses:pat_growth_volatility:
+    verdict: ok
+    reason: PAT growth volatile across exceptional years (reported).
+  weaknesses:receivables_vs_revenue_growth:
+    verdict: ok
+    reason: Receivables grew 7.7pp faster than revenue (reported); not contradicted.
+  weaknesses:fcf_to_pat:
+    verdict: false_alarm
+    reason: Capex proxy (change in net block + CWIP + depreciation) counts the FY26 jump in net block from acquired intangibles
+      (Checkpoint and in-licensing) and the currency translation of overseas assets as capex, so FCF/PAT reads 0.25 while
+      CFO/PAT is about 1.1; acquisitions, not weak cash conversion.
+    cause: metric definition
+  weaknesses:q_ebitda_margin_yoy_change:
+    verdict: ok
+    reason: Signal of matched pre-registered item SUNPHARMA-W3 (EBITDA growth lagging sales (EBITDA +3% vs sales +13%) on
+      higher R&D a).
+MARUTI:
+  strengths:ebitda_cagr_5y:
+    verdict: ok
+    reason: 5-year EBITDA CAGR 32% from the FY21 low base (reported).
+  strengths:eps_cagr_5y:
+    verdict: ok
+    reason: As EBITDA CAGR.
+  strengths:incremental_roic_3y:
+    verdict: ok
+    reason: Incremental ROIC 40% (reported capital base excludes Rs 77,000 cr of investments); not contradicted.
+  strengths:roic_wacc_spread:
+    verdict: ok
+    reason: ROIC well above WACC on operating capital; consistent with a debt-free, cash-generative business (MARUTI-S3).
+  strengths:beneish_m_score:
+    verdict: ok
+    reason: Screen result; no accounting concern in sources.
+  strengths:interest_cover:
+    verdict: ok
+    reason: Signal of matched pre-registered item MARUTI-S3 (Debt-free balance sheet with strong cash generation (CFO about
+      Rs 19,1).
+  weaknesses:q_pat_yoy:
+    verdict: ok
+    reason: Signal of matched pre-registered item MARUTI-W1 (Margin squeeze and profit decline despite revenue growth (Q4
+      EBITDA ma).
+  weaknesses:fcf_to_pat_5y:
+    verdict: ok
+    reason: 5-year FCF/PAT 0.21 (reported); consistent with heavy capex of Rs 10,400 cr (MARUTI-W3).
+  weaknesses:pat_growth_volatility:
+    verdict: ok
+    reason: PAT growth volatile through the chip-shortage years (reported).
+  weaknesses:ev_ic_to_roic_wacc:
+    verdict: false_alarm
+    reason: Single-stage steady state at a 13.6% WACC and 6% perpetual growth treats any longer growth runway as overpricing;
+      the growth-aware reverse DCF (V01) does not flag Maruti and no source calls the valuation rich.
+    cause: metric definition
+  weaknesses:pb_to_justified_pb:
+    verdict: false_alarm
+    reason: Equity includes Rs 77,000 cr of treasury investments, which depresses ROE and the single-stage justified P/B;
+      the growth-aware test does not flag Maruti and no source calls the valuation rich.
+    cause: metric definition
+  weaknesses:cwip_to_net_block:
+    verdict: ok
+    reason: CWIP at 28.5% of net block (new plant); consistent with heavy capex (MARUTI-W3).
+BEL:
+  strengths:roe:
+    verdict: ok
+    reason: ROE 28% (reported); consistent with high margins (BEL-S2).
+  strengths:roce:
+    verdict: ok
+    reason: As ROE.
+  strengths:ebitda_cagr_3y:
+    verdict: ok
+    reason: 3-year EBITDA CAGR 25%; consistent with steady growth (BEL-S3).
+  strengths:eps_cagr_3y:
+    verdict: ok
+    reason: As EBITDA CAGR.
+  strengths:ebit_margin:
+    verdict: ok
+    reason: Signal of matched pre-registered item BEL-S2 (High margins (EBITDA about 29%; guided above 28%)).
+  strengths:altman_z_india:
+    verdict: ok
+    reason: Debt-free; no distress.
+  weaknesses:Q01:
+    verdict: ok
+    reason: 5-year CFO well below core PAT; consistent with deteriorating working capital (BEL-W2).
+  weaknesses:Q06:
+    verdict: false_alarm
+    reason: M-score above -1.78 is driven by receivable growth (DSRI 1.22) and accruals, the working-capital swing already
+      flagged by Q01/Q03/Q07 and BEL-W2; no source suggests manipulation at this defence PSU. Beneish weights government-customer
+      receivable swings heavily.
+    cause: metric definition
+  weaknesses:C07:
+    verdict: ok
+    reason: 'Signal of matched pre-registered item BEL-W2 (Working capital deteriorated: receivables up from 127 to 146 days).'
+  weaknesses:V01:
+    verdict: ok
+    reason: Signal of matched pre-registered item BEL-W3 (Premium valuation a risk for FY27).
+  weaknesses:V03:
+    verdict: ok
+    reason: Consistent with 'premium valuation a risk' (BEL-W3).
+  weaknesses:dividend_to_fcf:
+    verdict: ok
+    reason: Dividends exceed FCF while working capital absorbs cash; consistent with BEL-W2.
+  flags:Q03:
+    verdict: ok
+    reason: High accruals; consistent with BEL-W2.
+  flags:Q07:
+    verdict: ok
+    reason: CFO only 8-19% of EBITDA in two years; consistent with BEL-W2.
+DLF:
+  strengths:revenue_cagr_3y:
+    verdict: ok
+    reason: 3-year revenue CAGR 12.9% (reported).
+  strengths:exceptional_frequency_5y:
+    verdict: ok
+    reason: No exceptional year detected in 5 years (reported).
+  strengths:eps_cagr_3y:
+    verdict: ok
+    reason: Signal of matched pre-registered item DLF-S3 (Large bookings base (FY26 new sales bookings about Rs 20,100 crore)
+      an).
+  strengths:cfo_to_ebitda:
+    verdict: ok
+    reason: CFO 4.4x EBITDA (collections ahead of recognition); consistent with record collections (DLF-S2).
+  strengths:interest_cover:
+    verdict: ok
+    reason: Signal of matched pre-registered item DLF-S1 (Net cash of Rs 14,155 crore; development arm debt-free).
+  strengths:net_debt_to_ebitda:
+    verdict: ok
+    reason: Signal of matched pre-registered item DLF-S1 (Net cash of Rs 14,155 crore; development arm debt-free).
+  weaknesses:R01:
+    verdict: ok
+    reason: Accounting ROIC 6% below WACC for three years (profit on completion lags bookings); not contradicted by sources.
+  weaknesses:G01:
+    verdict: ok
+    reason: PAT CAGR 29% vs revenue 13% (reported); consistent with profit growth (DLF-S3) running ahead of recognised revenue.
+  weaknesses:G05:
+    verdict: ok
+    reason: Signal of matched pre-registered item DLF-W2 (Revenue recognition lagging bookings (Q4 revenue down about 42%
+      YoY)).
+  weaknesses:M02:
+    verdict: ok
+    reason: Other income 62% of PBT (reported); not contradicted.
+  weaknesses:ebitda_margin:
+    verdict: ok
+    reason: Signal of matched pre-registered item DLF-W3 (EBITDA margin dipped).
+  weaknesses:ev_ebitda_percentile_10y:
+    verdict: ok
+    reason: EV/EBITDA high versus its own history (fact); EBITDA depressed by the recognition lag (DLF-W2).
+NTPC:
+  strengths:beneish_m_score:
+    verdict: ok
+    reason: Screen result; no accounting concern in sources.
+  strengths:de_vs_normative:
+    verdict: ok
+    reason: Debt/equity 57% of the CERC normative 70:30; regulatory headroom (reported).
+  strengths:q_pat_yoy:
+    verdict: ok
+    reason: Signal of matched pre-registered item NTPC-S3 (Profit beat with improving efficiency (Q4 PAT +34%)).
+  strengths:cfo_to_pat_5y:
+    verdict: ok
+    reason: CFO 2.4x PAT over 5 years (depreciation-heavy regulated assets).
+  strengths:revenue_cagr_5y:
+    verdict: ok
+    reason: 5-year revenue CAGR 10.9% (reported); NTPC-W2 is about a flat Q4.
+  strengths:current_ratio_proxy:
+    verdict: ok
+    reason: Other assets and investments cover other liabilities 1.8x (reported).
+  weaknesses:B02:
+    verdict: ok
+    reason: Signal of matched pre-registered item NTPC-W3 (Heavy capex funded by borrowing (group capex Rs 49,000 crore) raising
+      ).
+  weaknesses:R01:
+    verdict: false_alarm
+    reason: 'ROIC below WACC: consolidated ROIC/ROE includes about Rs 1 lakh crore of CWIP that earns only after commissioning,
+      and FY26 core profit is cut by the one-off tax write-back without the regulatory income offset Screener does not separate;
+      analysts (NTPC-S2) cite a steady regulated core RoE of 16-17%.'
+    cause: missing sector logic
+  weaknesses:regulated_roe_gap:
+    verdict: false_alarm
+    reason: 'RoE 6pp below the allowed 15.5%: consolidated ROIC/ROE includes about Rs 1 lakh crore of CWIP that earns only
+      after commissioning, and FY26 core profit is cut by the one-off tax write-back without the regulatory income offset
+      Screener does not separate; analysts (NTPC-S2) cite a steady regulated core RoE of 16-17%.'
+    cause: missing sector logic
+  weaknesses:A04:
+    verdict: ok
+    reason: Dividends above FCF while net debt rose; consistent with capex funded by borrowing (NTPC-W3).
+  weaknesses:A07:
+    verdict: false_alarm
+    reason: 'Incremental ROIC below WACC on heavy reinvestment: consolidated ROIC/ROE includes about Rs 1 lakh crore of CWIP
+      that earns only after commissioning, and FY26 core profit is cut by the one-off tax write-back without the regulatory
+      income offset Screener does not separate; analysts (NTPC-S2) cite a steady regulated core RoE of 16-17%; new capacity
+      earns the regulated return once commissioned.'
+    cause: missing sector logic
+  weaknesses:C07:
+    verdict: ok
+    reason: Net working capital rose from 44 to 75 days (reported).
+  flags:V03:
+    verdict: false_alarm
+    reason: 'Justified P/B of 0.5x uses consolidated core ROE of 9.3%: consolidated ROIC/ROE includes about Rs 1 lakh crore
+      of CWIP that earns only after commissioning, and FY26 core profit is cut by the one-off tax write-back without the regulatory
+      income offset Screener does not separate; analysts (NTPC-S2) cite a steady regulated core RoE of 16-17%.'
+    cause: missing sector logic
+DMART:
+  strengths:revenue_cagr_3y:
+    verdict: ok
+    reason: Signal of matched pre-registered item DMART-S1 (Revenue growth about 19% driven by expansion).
+  strengths:beneish_m_score:
+    verdict: ok
+    reason: Screen result; no accounting concern in sources.
+  strengths:ebitda_cagr_5y:
+    verdict: ok
+    reason: 5-year EBITDA CAGR 24% (reported); consistent with store-led growth (DMART-S1, S2).
+  strengths:accruals_ratio:
+    verdict: ok
+    reason: Cash earnings above accounting earnings (reported).
+  strengths:altman_z_india:
+    verdict: ok
+    reason: Low leverage; no distress.
+  strengths:other_income_to_pbt:
+    verdict: ok
+    reason: Profit is operational.
+  weaknesses:A07:
+    verdict: ok
+    reason: Heavy reinvestment at incremental returns below WACC; consistent with slower turnover and store productivity (DMART-W3).
+  weaknesses:C06:
+    verdict: ok
+    reason: Capex 4.9x depreciation with falling fixed-asset turnover; consistent with DMART-W3.
+  weaknesses:Q02:
+    verdict: ok
+    reason: Negative FCF for three years during the store build-out; consistent with rising debt (DMART-W3).
+  weaknesses:R03:
+    verdict: ok
+    reason: Capital added earning below WACC; consistent with DMART-W3.
+  weaknesses:V03:
+    verdict: ok
+    reason: Consistent with valuation worries (DMART-W1).
+  weaknesses:roic_wacc_spread:
+    verdict: ok
+    reason: ROIC about 1.7pp below WACC with declining returns; consistent with DMART-W3.
+ADANIENT:
+  strengths:ebitda_cagr_5y:
+    verdict: ok
+    reason: Signal of matched pre-registered item ADANIENT-S1 (EBITDA growth led by airports (now the largest EBITDA contributor);
+      co).
+  strengths:revenue_cagr_5y:
+    verdict: ok
+    reason: 5-year revenue CAGR 20.5% (reported).
+  strengths:nwc_days:
+    verdict: ok
+    reason: Net working capital about zero days (reported).
+  strengths:cfo_to_pat_5y:
+    verdict: ok
+    reason: CFO 3.2x PAT over 5 years (depreciation and interest heavy); FCF is the problem, which Q02 flags.
+  strengths:dso:
+    verdict: ok
+    reason: Receivable days 46 (reported).
+  strengths:share_count_change:
+    verdict: false_alarm
+    reason: Screener's adjusted share basis restates all earlier years by 1.12x for the FY26 rights issue (Rs 24,930 cr, ADANIENT-W1),
+      so share-count change reads -0.1% while reported shares rose 12%.
+    cause: parsing
+  weaknesses:B02:
+    verdict: ok
+    reason: Signal of matched pre-registered item ADANIENT-W2 (Debt-laden balance sheet; net external debt rose in FY26 to
+      fund recor).
+  weaknesses:B03:
+    verdict: ok
+    reason: 'Signal of matched pre-registered item ADANIENT-W2 (Debt-laden balance sheet; net external debt rose in FY26 to
+      fund recor); ADANIENT-W3 (New assets not yet earning: Q4 net loss of Rs 221 crore on higher depr).'
+  weaknesses:R01:
+    verdict: ok
+    reason: 'Signal of matched pre-registered item ADANIENT-W3 (New assets not yet earning: Q4 net loss of Rs 221 crore on
+      higher depr).'
+  weaknesses:roe:
+    verdict: ok
+    reason: ROE 2.3%; consistent with low returns on new assets (ADANIENT-W3).
+  weaknesses:A04:
+    verdict: ok
+    reason: Dividends paid with negative FCF and rising debt; consistent with external funding needs (ADANIENT-W1).
+  weaknesses:A07:
+    verdict: ok
+    reason: 'Signal of matched pre-registered item ADANIENT-W3 (New assets not yet earning: Q4 net loss of Rs 221 crore on
+      higher depr).'
+  flags:C02:
+    verdict: ok
+    reason: Inventory days up three years running (reported).
+  flags:C03:
+    verdict: ok
+    reason: CWIP above 30% of net block for two years; consistent with new assets not yet earning (ADANIENT-W3).
+  flags:C06:
+    verdict: ok
+    reason: Signal of matched pre-registered item ADANIENT-W1 (Heavy capex strains free cash flow and needs continuous external
+      fundi).
+  flags:G06:
+    verdict: ok
+    reason: Revenue declined over 3 years (coal trading off its FY23 peak); ADANIENT-S3 is a single quarter.
+  flags:M02:
+    verdict: ok
+    reason: Other income 86% of PBT, mostly an estimated exceptional gain (stake sale); headline profit growth (ADANIENT-S2)
+      is flattered.
+  flags:Q02:
+    verdict: ok
+    reason: Signal of matched pre-registered item ADANIENT-W1 (Heavy capex strains free cash flow and needs continuous external
+      fundi).
+  flags:Q07:
+    verdict: ok
+    reason: Weak CFO/EBITDA; consistent with ADANIENT-W1.
+  flags:R03:
+    verdict: ok
+    reason: 'Signal of matched pre-registered item ADANIENT-W3 (New assets not yet earning: Q4 net loss of Rs 221 crore on
+      higher depr).'
+  flags:V03:
+    verdict: ok
+    reason: P/B 2.8x on ROE of 2.3%; consistent with low returns (ADANIENT-W3).
+BHARTIARTL:
+  strengths:revenue_cagr_5y:
+    verdict: ok
+    reason: 5-year revenue CAGR 16% (reported).
+  strengths:ebitda_cagr_5y:
+    verdict: ok
+    reason: 5-year EBITDA CAGR 21% (reported); consistent with strong FCF (BHARTIARTL-S3).
+  strengths:accruals_ratio:
+    verdict: ok
+    reason: Cash earnings well above accounting earnings; consistent with BHARTIARTL-S3.
+  strengths:pat_margin:
+    verdict: ok
+    reason: Core PAT margin 12.7% (one-off tax items removed).
+  strengths:beneish_m_score:
+    verdict: ok
+    reason: Screen result; no accounting concern in sources.
+  strengths:roe:
+    verdict: ok
+    reason: ROE 20% (core); not contradicted.
+  weaknesses:A01:
+    verdict: ok
+    reason: Adjusted share count rose 6.9% as partly-paid rights shares were paid up (cash received) while ROE fell 3.1pp
+      from the FY25 base; a fact, though the dilution dates from the 2021 issue.
+  weaknesses:G01:
+    verdict: ok
+    reason: Core PAT CAGR 47% vs revenue 15% (operating leverage, lower interest) is a reported fact.
+  weaknesses:V03:
+    verdict: ok
+    reason: P/B 7.3x prices rising returns, the consensus thesis (BHARTIARTL-S3); a valuation risk, not contradicted.
+  weaknesses:q_pat_yoy:
+    verdict: ok
+    reason: Signal of matched pre-registered item BHARTIARTL-W1 (Q4 profit down about 34% YoY (exceptional-gain base effect)).
+  weaknesses:ebitda_margin_sd_10y:
+    verdict: ok
+    reason: EBITDA margin volatile over 10 years (tariff-war years), a reported fact.
+  weaknesses:ev_ic_to_roic_wacc:
+    verdict: ok
+    reason: 'As V03: the market prices returns rising above WACC.'
+YESBANK:
+  strengths:cost_to_income_bank:
+    verdict: ok
+    reason: Cost-to-income 40.5% (reported); efficiency was not among the collapse causes.
+  weaknesses:A06:
+    verdict: ok
+    reason: 'Signal of matched pre-registered item YESBANK-W1 (Hyper loan growth far ahead of capital: advances +54% in FY18;
+      loan bo).'
+  weaknesses:B06:
+    verdict: ok
+    reason: 'Signal of matched pre-registered item YESBANK-W1 (Hyper loan growth far ahead of capital: advances +54% in FY18;
+      loan bo); YESBANK-W2 (Thin core capital for that growth (CET1 about 9-9.7%), dependent on fr).'
+  weaknesses:BK09:
+    verdict: ok
+    reason: 'RBI divergence (Rs 6,355 cr for FY17) far above reported GNPA: exactly YESBANK-W3. BK09 was added after pre-registration,
+      so W3 is not counted as matched.'
+  weaknesses:B07:
+    verdict: ok
+    reason: 'Signal of matched pre-registered item YESBANK-W1 (Hyper loan growth far ahead of capital: advances +54% in FY18;
+      loan bo).'
+  weaknesses:V03:
+    verdict: ok
+    reason: P/B 2.7x against returns overstated by under-provisioning; consistent with the warning signs in hindsight.
+  weaknesses:pat_margin:
+    verdict: ok
+    reason: PAT margin below band (reported).
+  flags:BK07:
+    verdict: ok
+    reason: Signal of matched pre-registered item YESBANK-W4 (Credit-deposit ratio climbing (70% in Mar-13 to about 100%+
+      by FY18-19).

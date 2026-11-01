@@ -20,6 +20,8 @@
 - **FY20**: Estimated exceptional item -39,345 (pre-tax, loss): other income -43.2% of sales vs normal 1.8% (median of other years). Core profit excludes it (tax effect at statutory rate). Override via data/manual (exceptional_items).
 - **FY21**: Estimated exceptional item -6,020 (pre-tax, loss): other income -4.2% of sales vs normal 1.8% (median of other years). Core profit excludes it (tax effect at statutory rate). Override via data/manual (exceptional_items).
 - **FY24**: Estimated exceptional item -5,720 (pre-tax, loss): other income -2.0% of sales vs normal 1.8% (median of other years). Core profit excludes it (tax effect at statutory rate). Override via data/manual (exceptional_items).
+- **FY21**: Tax rate 404% vs normal 28% on core PBT 2,589: one-off tax charge of 9,722 treated as one-off; core PAT raised accordingly.
+- **FY25**: Tax rate 2% vs normal 30% on core PBT 38,398: write-back or deferred-tax credit of 10,688 treated as one-off; core PAT reduced accordingly.
 
 ## minority
 - Net profit differs from PBT - tax in 10 of 10 years (latest -7,128): minority interest (negative) and share of associates/JVs (positive) sit between PBT and net profit, so the export is consolidated and net profit is the owners' share. Equity excludes minority interest (Screener includes NCI in Other Liabilities); ROIC/ROCE capital therefore omits NCI unless data/manual supplies minority_interest.

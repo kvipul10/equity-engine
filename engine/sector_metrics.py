@@ -29,7 +29,7 @@ from .expr import Missing, compile_expr, evaluate
 from .standardise import fy_year
 
 FORMULA_FUNCS = {"f", "kpi", "m", "avg", "growth", "cagr", "mean_last", "min_last", "max_last", "sum_last", "at_min",
-                 "slope_last", "mcap_now", "nan", "abs", "min", "max"}
+                 "slope_last", "mcap_now", "nan", "abs", "min", "max", "first_of"}
 NAN = float("nan")
 
 
@@ -168,7 +168,8 @@ class YearFuncs:
 
         return {"f": f, "kpi": kpi, "m": m, "avg": avg, "growth": growth, "cagr": cagr, "mean_last": mean_last,
                 "min_last": min_last, "max_last": max_last, "sum_last": sum_last, "at_min": at_min,
-                "slope_last": slope_last, "mcap_now": mcap_now, "nan": lambda: NAN, "abs": abs, "min": min, "max": max}
+                "slope_last": slope_last, "mcap_now": mcap_now, "nan": lambda: NAN, "abs": abs, "min": min, "max": max,
+                "first_of": lambda *a: next((x for x in a if not (isinstance(x, float) and x != x)), NAN)}  # lazy in expr.evaluate
 
 
 def make_func(mid: str, formula: str, kind: str, constants_by_archetype: Dict[str, Dict[str, float]]):

@@ -86,14 +86,15 @@ bands:
 
 flags:
   - id: IT01
-    name: Attrition high
+    name: Attrition high or rising
     pillar: capital_efficiency
     severity: medium
     applies: [it_services]
-    condition: "m('attrition') > 0.20"
-    values: {a: "m('attrition')"}
+    # Session 4 validation: analysts flag a rising trend from a moderate level (wage pressure follows), not only >20%.
+    condition: "m('attrition') > 0.20 or (rising('attrition', 2) and m('attrition') > 0.12)"
+    values: {a: "m('attrition')", d: "chg('attrition', 2)"}
     explanation: >
-      LTM attrition is {{ a|pct }}: replacement hiring and wage resets will pressure margins.
+      LTM attrition is {{ a|pct }} ({{ d|pp }} over 2 years): replacement hiring and wage resets will pressure margins.
   - id: IT02
     name: Utilisation slipping
     pillar: capital_efficiency

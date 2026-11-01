@@ -118,11 +118,11 @@
       "FY18": -13231.066796,
       "FY19": -20408.541883,
       "FY20": -20377.137093,
-      "FY21": -16107.166496,
+      "FY21": -14204.315166,
       "FY22": -7185.856295,
       "FY23": -2192.566246,
       "FY24": -5125.022269,
-      "FY25": 4078.870727,
+      "FY25": -6912.676508,
       "FY26": 10367.503081
     },
     "return_metric": "ROIC",
@@ -130,34 +130,34 @@
     "hurdle_metric": "WACC",
     "hurdle": 0.124693,
     "verdict": "creates value",
-    "positive_years": 2,
+    "positive_years": 1,
     "years": 9,
-    "text": "Creates value: ROIC 15.9% vs WACC 12.5% in FY26 -> economic profit Rs 10,368 cr. Economic profit was positive in 2 of 9 years; trend improving."
+    "text": "Creates value: ROIC 15.9% vs WACC 12.5% in FY26 -> economic profit Rs 10,368 cr. Economic profit was positive in 1 of 9 years; trend improving."
   },
   "overall": {
-    "score": 61.800475,
+    "score": 60.007624,
     "rag": "green",
     "coverage": 1.0,
-    "high_flags": 1,
+    "high_flags": 0,
     "capped_by_flags": false,
     "weights_basis": "non_financial"
   },
   "pillars": {
     "growth": {
-      "score": 76.207421,
+      "score": 76.035039,
       "rag": "green",
       "weight": 15.0,
-      "n_scored": 16,
+      "n_scored": 17,
       "n_metrics": 21,
       "rag_counts": {
-        "green": 13,
+        "green": 14,
         "amber": 1,
         "red": 2,
-        "n/a": 5
+        "n/a": 4
       },
       "capped_by_flags": [],
       "name": "1 Growth",
-      "summary": "1 Growth: GREEN (76/100, 16 scored metrics). Strongest: EBITDA CAGR (full span, up to 10y) 14.2% (green), PAT CAGR (full span, up to 10y) 24.2% (green). Weakest: PAT growth volatility 3.67 (red), Quarterly YoY growth trend -2.6pp (red). Flags: G01.",
+      "summary": "1 Growth: GREEN (76/100, 17 scored metrics). Strongest: EBITDA CAGR (full span, up to 10y) 14.2% (green), PAT CAGR (full span, up to 10y) 24.2% (green). Weakest: PAT growth volatility 3.27 (red), Quarterly YoY growth trend -2.6pp (red). Flags: G01.",
       "metrics": [
         "revenue_cagr_3y",
         "revenue_cagr_5y",
@@ -186,7 +186,7 @@
       ]
     },
     "margins": {
-      "score": 62.675086,
+      "score": 62.773456,
       "rag": "green",
       "weight": 15.0,
       "n_scored": 6,
@@ -232,7 +232,7 @@
       },
       "capped_by_flags": [],
       "name": "3 Capital efficiency",
-      "summary": "3 Capital efficiency: AMBER (60/100, 4 scored metrics). Strongest: CWIP / net block 3.2% (green), Invested-capital turnover 0.70x (green). Weakest: Receivable days (DSO) 14 days (amber), Net working capital days -215 days (amber).",
+      "summary": "3 Capital efficiency: AMBER (60/100, 4 scored metrics). Strongest: CWIP / net block 3.2% (green), Invested-capital turnover 0.70x (green). Weakest: Receivable days (DSO) 14 days (amber), Net working capital days -215 days (amber). Flags: TC03.",
       "metrics": [
         "asset_turnover",
         "fixed_asset_turnover",
@@ -252,23 +252,25 @@
         "other_liabilities_to_sales",
         "capex_intensity_reported"
       ],
-      "flags_triggered": []
+      "flags_triggered": [
+        "TC03"
+      ]
     },
     "returns": {
-      "score": 62.616416,
+      "score": 62.495604,
       "rag": "green",
       "weight": 20.0,
       "n_scored": 5,
       "n_metrics": 6,
       "rag_counts": {
-        "green": 3,
-        "amber": 2,
+        "green": 2,
+        "amber": 3,
         "red": 0,
         "n/a": 1
       },
       "capped_by_flags": [],
       "name": "4 Returns",
-      "summary": "4 Returns: GREEN (63/100, 5 scored metrics). Strongest: Return on equity 20.3% (green), Incremental ROIC 3y 29.4% (green). Weakest: Return on capital employed 19.9% (amber), ROIC - WACC +3.5pp (amber).",
+      "summary": "4 Returns: GREEN (62/100, 5 scored metrics). Strongest: Return on equity 20.3% (green), Incremental ROIC 3y 29.4% (green). Weakest: Return on capital employed 19.9% (amber), Return on invested capital 15.9% (amber).",
       "metrics": [
         "roe",
         "roa",
@@ -288,7 +290,7 @@
       "flags_triggered": []
     },
     "cash_quality": {
-      "score": 72.301259,
+      "score": 69.65631,
       "rag": "green",
       "weight": 15.0,
       "n_scored": 9,
@@ -301,7 +303,7 @@
       },
       "capped_by_flags": [],
       "name": "5 Cash and earnings quality",
-      "summary": "5 Cash and earnings quality: GREEN (72/100, 9 scored metrics). Strongest: Accruals ratio -18.2% (green), FCF / PAT 1.86 (green). Weakest: FCF / PAT (5y cumulative) 0.26 (amber), Receivables growth - revenue growth -15.0pp (green).",
+      "summary": "5 Cash and earnings quality: GREEN (70/100, 9 scored metrics). Strongest: Accruals ratio -18.2% (green), FCF / PAT 1.86 (green). Weakest: FCF / PAT (5y cumulative) 0.30 (amber), Receivables growth - revenue growth -15.0pp (green).",
       "metrics": [
         "cfo_to_ebitda",
         "fcf_to_pat",
@@ -324,7 +326,7 @@
       "flags_triggered": []
     },
     "balance_sheet": {
-      "score": 57.882156,
+      "score": 57.490152,
       "rag": "amber",
       "weight": 10.0,
       "n_scored": 7,
@@ -337,7 +339,7 @@
       },
       "capped_by_flags": [],
       "name": "6 Balance sheet",
-      "summary": "6 Balance sheet: AMBER (58/100, 7 scored metrics). Strongest: Debt growth - EBITDA growth -45.5pp (green), Net debt / EBITDA 1.42x (green). Weakest: Current ratio (Screener proxy) 0.53x (red), Altman Z''-EM (India-adapted) 4.21 (amber). Flags: B04, B05.",
+      "summary": "6 Balance sheet: AMBER (57/100, 7 scored metrics). Strongest: Debt growth - EBITDA growth -45.5pp (green), Net debt / EBITDA 1.42x (green). Weakest: Current ratio (Screener proxy) 0.63x (red), Cash and investments / short-term borrowings 0.25x (amber).",
       "metrics": [
         "net_debt_to_ebitda",
         "net_debt_to_equity",
@@ -353,10 +355,7 @@
         "lease_share_of_debt",
         "spectrum_share_of_debt"
       ],
-      "flags_triggered": [
-        "B04",
-        "B05"
-      ]
+      "flags_triggered": []
     },
     "capital_allocation": {
       "score": 47.81362,
@@ -381,6 +380,7 @@
         "shareholder_yield",
         "dividend_to_fcf",
         "non_capex_investing_3y",
+        "acquisition_spend_3y",
         "acquisition_roic_delta_3y",
         "promoter_holding",
         "promoter_holding_change_3y",
@@ -391,20 +391,20 @@
       ]
     },
     "valuation": {
-      "score": 34.558824,
+      "score": 21.342383,
       "rag": "red",
       "weight": 10.0,
-      "n_scored": 7,
+      "n_scored": 6,
       "n_metrics": 7,
       "rag_counts": {
-        "green": 2,
+        "green": 1,
         "amber": 0,
         "red": 5,
-        "n/a": 0
+        "n/a": 1
       },
       "capped_by_flags": [],
       "name": "8 Valuation",
-      "summary": "8 Valuation: RED (35/100, 7 scored metrics). Strongest: Implied - delivered growth -16.2pp (green), P/E percentile vs own history 25.0% (green). Weakest: P/B / justified P/B 3.63x (red), (EV/IC) / (ROIC/WACC) 3.67x (red). Flags: V03, V04.",
+      "summary": "8 Valuation: RED (21/100, 6 scored metrics). Strongest: P/E percentile vs own history 12.5% (green), P/B percentile vs own history 80.0% (red). Weakest: P/B / justified P/B 4.61x (red), EV/IC / justified EV/IC 4.88x (red). Flags: V03, V04.",
       "metrics": [
         "pe",
         "pe_percentile_10y",
@@ -448,8 +448,8 @@
         "equity_multiplier": 5.555626
       },
       "FY25": {
-        "roe": 0.34295,
-        "pat_margin": 0.193982,
+        "roe": 0.233719,
+        "pat_margin": 0.132198,
         "asset_turnover": 0.365324,
         "equity_multiplier": 4.839396
       },
@@ -489,9 +489,9 @@
         "equity_multiplier": 5.555626
       },
       "FY25": {
-        "roe": 0.34295,
-        "attributable_factor": 0.895276,
-        "tax_burden": 0.976114,
+        "roe": 0.233719,
+        "attributable_factor": 0.853502,
+        "tax_burden": 0.697775,
         "interest_burden": 0.638354,
         "ebit_margin": 0.347731,
         "asset_turnover": 0.365324,
@@ -518,40 +518,40 @@
           "status": "ok",
           "from": "FY25",
           "to": "FY26",
-          "root_from": 0.34295,
+          "root_from": 0.233719,
           "root_to": 0.203215,
-          "root_change": -0.139735,
+          "root_change": -0.030504,
           "residual": -0.0,
           "inexact_nodes": [],
           "intermediate": {
             "pat_margin": {
-              "change": -0.067449,
-              "contribution": -0.114085,
-              "share_of_root": 0.816436,
+              "change": -0.005664,
+              "contribution": -0.009552,
+              "share_of_root": 0.313127,
               "method": "log"
             },
             "ebit_margin": {
               "change": -0.031444,
-              "contribution": -0.025308,
-              "share_of_root": 0.181112,
+              "contribution": -0.020673,
+              "share_of_root": 0.6777,
               "method": "shift-share"
             },
             "ebitda_margin": {
               "change": 0.06055,
-              "contribution": 0.048733,
-              "share_of_root": -0.348754,
+              "contribution": 0.039808,
+              "share_of_root": -1.304995,
               "method": "shift-share"
             },
             "asset_turnover": {
               "change": 0.036385,
-              "contribution": 0.025351,
-              "share_of_root": -0.181424,
+              "contribution": 0.020708,
+              "share_of_root": -0.678865,
               "method": "inverse-sum (log)"
             },
             "equity_multiplier": {
               "change": -0.841435,
-              "contribution": -0.051002,
-              "share_of_root": 0.364987,
+              "contribution": -0.041661,
+              "share_of_root": 1.365738,
               "method": "shift-share"
             }
           },
@@ -559,61 +559,61 @@
             {
               "driver": "oi_core_to_sales",
               "name": "Core other income / sales",
-              "contribution": -0.084977,
-              "share_of_root": 0.608132,
+              "contribution": -0.069414,
+              "share_of_root": 2.275556,
               "own_change": -0.105582,
               "own_change_text": "-10.6pp",
               "path": "roe > pat_margin > ebit_margin > oi_core_to_sales",
-              "text": "Core other income / sales (-10.6pp) -> -8.5pp (61% of the change)"
-            },
-            {
-              "driver": "tax_burden",
-              "name": "Tax burden",
-              "contribution": -0.070808,
-              "share_of_root": 0.506729,
-              "own_change": -0.227369,
-              "own_change_text": "-0.227",
-              "path": "roe > pat_margin > tax_burden",
-              "text": "Tax burden (-0.227) -> -7.1pp (51% of the change)"
+              "text": "Core other income / sales (-10.6pp) -> -6.9pp (228% of the change)"
             },
             {
               "driver": "other_expenses_pct",
               "name": "Other expenses % of sales",
-              "contribution": 0.048302,
-              "share_of_root": -0.345668,
+              "contribution": 0.039455,
+              "share_of_root": -1.293448,
               "own_change": -0.060014,
               "own_change_text": "-6.0pp",
               "path": "roe > pat_margin > ebit_margin > ebitda_margin > other_expenses_pct",
-              "text": "Other expenses % of sales (-6.0pp) -> +4.8pp (-35% of the change)"
+              "text": "Other expenses % of sales (-6.0pp) -> +3.9pp (-129% of the change)"
             },
             {
               "driver": "debt_to_equity_avg",
               "name": "Borrowings / equity (average)",
-              "contribution": -0.038579,
-              "share_of_root": 0.276088,
+              "contribution": -0.031513,
+              "share_of_root": 1.033087,
               "own_change": -0.636488,
               "own_change_text": "-0.64x",
               "path": "roe > equity_multiplier > debt_to_equity_avg",
-              "text": "Borrowings / equity (average) (-0.64x) -> -3.9pp (28% of the change)"
+              "text": "Borrowings / equity (average) (-0.64x) -> -3.2pp (103% of the change)"
             },
             {
               "driver": "attributable_factor",
               "name": "Attributable-profit factor",
-              "contribution": -0.033652,
-              "share_of_root": 0.240823,
-              "own_change": -0.106009,
-              "own_change_text": "-0.106",
+              "contribution": -0.017066,
+              "share_of_root": 0.559464,
+              "own_change": -0.064236,
+              "own_change_text": "-0.064",
               "path": "roe > pat_margin > attributable_factor",
-              "text": "Attributable-profit factor (-0.106) -> -3.4pp (24% of the change)"
+              "text": "Attributable-profit factor (-0.064) -> -1.7pp (56% of the change)"
+            },
+            {
+              "driver": "tax_burden",
+              "name": "Tax burden",
+              "contribution": 0.015377,
+              "share_of_root": -0.504094,
+              "own_change": 0.050969,
+              "own_change_text": "+0.051",
+              "path": "roe > pat_margin > tax_burden",
+              "text": "Tax burden (+0.051) -> +1.5pp (-50% of the change)"
             }
           ],
           "nodes": {
             "roe": {
               "name": "Return on equity",
-              "t0": 0.34295,
+              "t0": 0.233719,
               "t1": 0.203215,
-              "change": -0.139735,
-              "contribution": -0.139735,
+              "change": -0.030504,
+              "contribution": -0.030504,
               "share_of_root": 1.0,
               "path": "roe",
               "leaf": false,
@@ -621,33 +621,33 @@
             },
             "pat_margin": {
               "name": "PAT margin",
-              "t0": 0.193982,
+              "t0": 0.132198,
               "t1": 0.126534,
-              "change": -0.067449,
-              "contribution": -0.114085,
-              "share_of_root": 0.816436,
+              "change": -0.005664,
+              "contribution": -0.009552,
+              "share_of_root": 0.313127,
               "path": "roe > pat_margin",
               "leaf": false,
               "unit": "pct"
             },
             "attributable_factor": {
               "name": "Attributable-profit factor",
-              "t0": 0.895276,
+              "t0": 0.853502,
               "t1": 0.789266,
-              "change": -0.106009,
-              "contribution": -0.033652,
-              "share_of_root": 0.240823,
+              "change": -0.064236,
+              "contribution": -0.017066,
+              "share_of_root": 0.559464,
               "path": "roe > pat_margin > attributable_factor",
               "leaf": true,
               "unit": "ratio"
             },
             "tax_burden": {
               "name": "Tax burden",
-              "t0": 0.976114,
+              "t0": 0.697775,
               "t1": 0.748744,
-              "change": -0.227369,
-              "contribution": -0.070808,
-              "share_of_root": 0.506729,
+              "change": 0.050969,
+              "contribution": 0.015377,
+              "share_of_root": -0.504094,
               "path": "roe > pat_margin > tax_burden",
               "leaf": true,
               "unit": "ratio"
@@ -657,8 +657,8 @@
               "t0": 0.638354,
               "t1": 0.676968,
               "change": 0.038614,
-              "contribution": 0.015682,
-              "share_of_root": -0.112228,
+              "contribution": 0.01281,
+              "share_of_root": -0.419943,
               "path": "roe > pat_margin > interest_burden",
               "leaf": true,
               "unit": "ratio"
@@ -668,8 +668,8 @@
               "t0": 0.347731,
               "t1": 0.316287,
               "change": -0.031444,
-              "contribution": -0.025308,
-              "share_of_root": 0.181112,
+              "contribution": -0.020673,
+              "share_of_root": 0.6777,
               "path": "roe > pat_margin > ebit_margin",
               "leaf": false,
               "unit": "pct"
@@ -679,8 +679,8 @@
               "t0": 0.49172,
               "t1": 0.552269,
               "change": 0.06055,
-              "contribution": 0.048733,
-              "share_of_root": -0.348754,
+              "contribution": 0.039808,
+              "share_of_root": -1.304995,
               "path": "roe > pat_margin > ebit_margin > ebitda_margin",
               "leaf": false,
               "unit": "pct"
@@ -701,8 +701,8 @@
               "t0": 0.036471,
               "t1": 0.035935,
               "change": -0.000536,
-              "contribution": 0.000431,
-              "share_of_root": -0.003086,
+              "contribution": 0.000352,
+              "share_of_root": -0.011547,
               "path": "roe > pat_margin > ebit_margin > ebitda_margin > employee_pct",
               "leaf": true,
               "unit": "pct"
@@ -712,8 +712,8 @@
               "t0": 0.47181,
               "t1": 0.411796,
               "change": -0.060014,
-              "contribution": 0.048302,
-              "share_of_root": -0.345668,
+              "contribution": 0.039455,
+              "share_of_root": -1.293448,
               "path": "roe > pat_margin > ebit_margin > ebitda_margin > other_expenses_pct",
               "leaf": true,
               "unit": "pct"
@@ -723,8 +723,8 @@
               "t0": 0.263435,
               "t1": 0.249846,
               "change": -0.013588,
-              "contribution": 0.010936,
-              "share_of_root": -0.078265,
+              "contribution": 0.008933,
+              "share_of_root": -0.29286,
               "path": "roe > pat_margin > ebit_margin > dep_to_sales",
               "leaf": true,
               "unit": "pct"
@@ -734,8 +734,8 @@
               "t0": 0.119447,
               "t1": 0.013864,
               "change": -0.105582,
-              "contribution": -0.084977,
-              "share_of_root": 0.608132,
+              "contribution": -0.069414,
+              "share_of_root": 2.275556,
               "path": "roe > pat_margin > ebit_margin > oi_core_to_sales",
               "leaf": true,
               "unit": "pct"
@@ -745,8 +745,8 @@
               "t0": 0.365324,
               "t1": 0.401708,
               "change": 0.036385,
-              "contribution": 0.025351,
-              "share_of_root": -0.181424,
+              "contribution": 0.020708,
+              "share_of_root": -0.678865,
               "path": "roe > asset_turnover",
               "leaf": false,
               "unit": "x"
@@ -756,8 +756,8 @@
               "t0": 1.99951,
               "t1": 1.883667,
               "change": -0.115844,
-              "contribution": 0.011845,
-              "share_of_root": -0.084769,
+              "contribution": 0.009676,
+              "share_of_root": -0.317194,
               "path": "roe > asset_turnover > nb_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
@@ -767,8 +767,8 @@
               "t0": 0.080651,
               "t1": 0.05673,
               "change": -0.023921,
-              "contribution": 0.002446,
-              "share_of_root": -0.017504,
+              "contribution": 0.001998,
+              "share_of_root": -0.0655,
               "path": "roe > asset_turnover > cwip_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
@@ -778,8 +778,8 @@
               "t0": 0.108219,
               "t1": 0.058632,
               "change": -0.049587,
-              "contribution": 0.00507,
-              "share_of_root": -0.036285,
+              "contribution": 0.004142,
+              "share_of_root": -0.135775,
               "path": "roe > asset_turnover > investments_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
@@ -789,8 +789,8 @@
               "t0": 0.035215,
               "t1": 0.036577,
               "change": 0.001361,
-              "contribution": -0.000139,
-              "share_of_root": 0.000996,
+              "contribution": -0.000114,
+              "share_of_root": 0.003728,
               "path": "roe > asset_turnover > receivables_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
@@ -800,8 +800,8 @@
               "t0": 0.002357,
               "t1": 0.002495,
               "change": 0.000137,
-              "contribution": -1.4e-05,
-              "share_of_root": 0.0001,
+              "contribution": -1.1e-05,
+              "share_of_root": 0.000376,
               "path": "roe > asset_turnover > inventory_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
@@ -811,8 +811,8 @@
               "t0": 0.095557,
               "t1": 0.111618,
               "change": 0.016061,
-              "contribution": -0.001642,
-              "share_of_root": 0.011753,
+              "contribution": -0.001341,
+              "share_of_root": 0.043978,
               "path": "roe > asset_turnover > cash_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
@@ -822,8 +822,8 @@
               "t0": 0.41579,
               "t1": 0.339651,
               "change": -0.076139,
-              "contribution": 0.007785,
-              "share_of_root": -0.055715,
+              "contribution": 0.006359,
+              "share_of_root": -0.208478,
               "path": "roe > asset_turnover > other_assets_rest_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
@@ -833,8 +833,8 @@
               "t0": 4.839396,
               "t1": 3.997961,
               "change": -0.841435,
-              "contribution": -0.051002,
-              "share_of_root": 0.364987,
+              "contribution": -0.041661,
+              "share_of_root": 1.365738,
               "path": "roe > equity_multiplier",
               "leaf": false,
               "unit": "x"
@@ -844,8 +844,8 @@
               "t0": 2.193433,
               "t1": 1.556945,
               "change": -0.636488,
-              "contribution": -0.038579,
-              "share_of_root": 0.276088,
+              "contribution": -0.031513,
+              "share_of_root": 1.033087,
               "path": "roe > equity_multiplier > debt_to_equity_avg",
               "leaf": true,
               "unit": "x"
@@ -855,14 +855,14 @@
               "t0": 1.645963,
               "t1": 1.441016,
               "change": -0.204947,
-              "contribution": -0.012422,
-              "share_of_root": 0.088899,
+              "contribution": -0.010147,
+              "share_of_root": 0.332651,
               "path": "roe > equity_multiplier > other_liab_to_equity_avg",
               "leaf": true,
               "unit": "x"
             }
           },
-          "text": "Return on equity moved from 34.3% to 20.3% (FY25->FY26). Largest drivers: Core other income / sales (-10.6pp) -> -8.5pp (61% of the change); Tax burden (-0.227) -> -7.1pp (51% of the change); Other expenses % of sales (-6.0pp) -> +4.8pp (-35% of the change)."
+          "text": "Return on equity moved from 23.4% to 20.3% (FY25->FY26). Largest drivers: Core other income / sales (-10.6pp) -> -6.9pp (228% of the change); Other expenses % of sales (-6.0pp) -> +3.9pp (-129% of the change); Borrowings / equity (average) (-0.64x) -> -3.2pp (103% of the change)."
         },
         "3y": {
           "status": "ok",
@@ -1215,8 +1215,354 @@
           "text": "Return on equity moved from 11.6% to 20.3% (FY23->FY26). Largest drivers: Interest burden (+0.215) -> +5.9pp (68% of the change); Borrowings / equity (average) (-1.19x) -> -3.9pp (-45% of the change); Attributable-profit factor (+0.110) -> +2.3pp (27% of the change)."
         },
         "5y": {
-          "status": "n/a",
-          "reason": "missing values for attributable_factor at FY21 or FY26"
+          "status": "ok",
+          "from": "FY21",
+          "to": "FY26",
+          "root_from": -0.012576,
+          "root_to": 0.203215,
+          "root_change": 0.215791,
+          "residual": 0.0,
+          "inexact_nodes": [],
+          "intermediate": {
+            "pat_margin": {
+              "change": 0.135039,
+              "contribution": 0.21132,
+              "share_of_root": 0.97928,
+              "method": "shapley"
+            },
+            "ebit_margin": {
+              "change": 0.14057,
+              "contribution": 0.02021,
+              "share_of_root": 0.093653,
+              "method": "shift-share"
+            },
+            "ebitda_margin": {
+              "change": 0.102252,
+              "contribution": 0.014701,
+              "share_of_root": 0.068124,
+              "method": "shift-share"
+            },
+            "asset_turnover": {
+              "change": 0.115668,
+              "contribution": 0.029763,
+              "share_of_root": 0.137926,
+              "method": "inverse-sum (log)"
+            },
+            "equity_multiplier": {
+              "change": -1.171189,
+              "contribution": -0.025292,
+              "share_of_root": -0.117206,
+              "method": "shift-share"
+            }
+          },
+          "top_drivers": [
+            {
+              "driver": "attributable_factor",
+              "name": "Attributable-profit factor",
+              "contribution": 0.155096,
+              "share_of_root": 0.718731,
+              "own_change": 1.248448,
+              "own_change_text": "+1.248",
+              "path": "roe > pat_margin > attributable_factor",
+              "text": "Attributable-profit factor (+1.248) -> +15.5pp (72% of the change)"
+            },
+            {
+              "driver": "interest_burden",
+              "name": "Interest burden",
+              "contribution": 0.034327,
+              "share_of_root": 0.159076,
+              "own_change": 0.530533,
+              "own_change_text": "+0.531",
+              "path": "roe > pat_margin > interest_burden",
+              "text": "Interest burden (+0.531) -> +3.4pp (16% of the change)"
+            },
+            {
+              "driver": "debt_to_equity_avg",
+              "name": "Borrowings / equity (average)",
+              "contribution": -0.015727,
+              "share_of_root": -0.072882,
+              "own_change": -0.728279,
+              "own_change_text": "-0.73x",
+              "path": "roe > equity_multiplier > debt_to_equity_avg",
+              "text": "Borrowings / equity (average) (-0.73x) -> -1.6pp (-7% of the change)"
+            },
+            {
+              "driver": "other_expenses_pct",
+              "name": "Other expenses % of sales",
+              "contribution": 0.013988,
+              "share_of_root": 0.06482,
+              "own_change": -0.097292,
+              "own_change_text": "-9.7pp",
+              "path": "roe > pat_margin > ebit_margin > ebitda_margin > other_expenses_pct",
+              "text": "Other expenses % of sales (-9.7pp) -> +1.4pp (6% of the change)"
+            },
+            {
+              "driver": "other_assets_rest_to_sales",
+              "name": "Other assets (loans, advances, other) / sales",
+              "contribution": 0.011955,
+              "share_of_root": 0.055399,
+              "own_change": -0.40433,
+              "own_change_text": "-148 days of sales",
+              "path": "roe > asset_turnover > other_assets_rest_to_sales",
+              "text": "Other assets (loans, advances, other) / sales (-148 days of sales) -> +1.2pp (6% of the change)"
+            }
+          ],
+          "nodes": {
+            "roe": {
+              "name": "Return on equity",
+              "t0": -0.012576,
+              "t1": 0.203215,
+              "change": 0.215791,
+              "contribution": 0.215791,
+              "share_of_root": 1.0,
+              "path": "roe",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "pat_margin": {
+              "name": "PAT margin",
+              "t0": -0.008505,
+              "t1": 0.126534,
+              "change": 0.135039,
+              "contribution": 0.21132,
+              "share_of_root": 0.97928,
+              "path": "roe > pat_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "attributable_factor": {
+              "name": "Attributable-profit factor",
+              "t0": -0.459181,
+              "t1": 0.789266,
+              "change": 1.248448,
+              "contribution": 0.155096,
+              "share_of_root": 0.718731,
+              "path": "roe > pat_margin > attributable_factor",
+              "leaf": true,
+              "unit": "ratio"
+            },
+            "tax_burden": {
+              "name": "Tax burden",
+              "t0": 0.719868,
+              "t1": 0.748744,
+              "change": 0.028876,
+              "contribution": 0.001687,
+              "share_of_root": 0.007819,
+              "path": "roe > pat_margin > tax_burden",
+              "leaf": true,
+              "unit": "ratio"
+            },
+            "interest_burden": {
+              "name": "Interest burden",
+              "t0": 0.146435,
+              "t1": 0.676968,
+              "change": 0.530533,
+              "contribution": 0.034327,
+              "share_of_root": 0.159076,
+              "path": "roe > pat_margin > interest_burden",
+              "leaf": true,
+              "unit": "ratio"
+            },
+            "ebit_margin": {
+              "name": "EBIT margin",
+              "t0": 0.175718,
+              "t1": 0.316287,
+              "change": 0.14057,
+              "contribution": 0.02021,
+              "share_of_root": 0.093653,
+              "path": "roe > pat_margin > ebit_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "ebitda_margin": {
+              "name": "EBITDA margin",
+              "t0": 0.450018,
+              "t1": 0.552269,
+              "change": 0.102252,
+              "contribution": 0.014701,
+              "share_of_root": 0.068124,
+              "path": "roe > pat_margin > ebit_margin > ebitda_margin",
+              "leaf": false,
+              "unit": "pct"
+            },
+            "materials_pct": {
+              "name": "Materials % of sales",
+              "t0": 0.0,
+              "t1": 0.0,
+              "change": 0.0,
+              "contribution": -0.0,
+              "share_of_root": -0.0,
+              "path": "roe > pat_margin > ebit_margin > ebitda_margin > materials_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "employee_pct": {
+              "name": "Employee cost % of sales",
+              "t0": 0.040894,
+              "t1": 0.035935,
+              "change": -0.004959,
+              "contribution": 0.000713,
+              "share_of_root": 0.003304,
+              "path": "roe > pat_margin > ebit_margin > ebitda_margin > employee_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "other_expenses_pct": {
+              "name": "Other expenses % of sales",
+              "t0": 0.509088,
+              "t1": 0.411796,
+              "change": -0.097292,
+              "contribution": 0.013988,
+              "share_of_root": 0.06482,
+              "path": "roe > pat_margin > ebit_margin > ebitda_margin > other_expenses_pct",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "dep_to_sales": {
+              "name": "Depreciation / sales",
+              "t0": 0.292244,
+              "t1": 0.249846,
+              "change": -0.042398,
+              "contribution": 0.006096,
+              "share_of_root": 0.028247,
+              "path": "roe > pat_margin > ebit_margin > dep_to_sales",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "oi_core_to_sales": {
+              "name": "Core other income / sales",
+              "t0": 0.017944,
+              "t1": 0.013864,
+              "change": -0.00408,
+              "contribution": -0.000587,
+              "share_of_root": -0.002718,
+              "path": "roe > pat_margin > ebit_margin > oi_core_to_sales",
+              "leaf": true,
+              "unit": "pct"
+            },
+            "asset_turnover": {
+              "name": "Asset turnover",
+              "t0": 0.28604,
+              "t1": 0.401708,
+              "change": 0.115668,
+              "contribution": 0.029763,
+              "share_of_root": 0.137926,
+              "path": "roe > asset_turnover",
+              "leaf": false,
+              "unit": "x"
+            },
+            "nb_to_sales": {
+              "name": "Net block / sales",
+              "t0": 2.249821,
+              "t1": 1.883667,
+              "change": -0.366155,
+              "contribution": 0.010826,
+              "share_of_root": 0.050169,
+              "path": "roe > asset_turnover > nb_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "cwip_to_sales": {
+              "name": "CWIP / sales",
+              "t0": 0.049738,
+              "t1": 0.05673,
+              "change": 0.006992,
+              "contribution": -0.000207,
+              "share_of_root": -0.000958,
+              "path": "roe > asset_turnover > cwip_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "investments_to_sales": {
+              "name": "Investments / sales",
+              "t0": 0.263512,
+              "t1": 0.058632,
+              "change": -0.20488,
+              "contribution": 0.006058,
+              "share_of_root": 0.028072,
+              "path": "roe > asset_turnover > investments_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "receivables_to_sales": {
+              "name": "Receivables / sales",
+              "t0": 0.040965,
+              "t1": 0.036577,
+              "change": -0.004389,
+              "contribution": 0.00013,
+              "share_of_root": 0.000601,
+              "path": "roe > asset_turnover > receivables_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "inventory_to_sales": {
+              "name": "Inventory / sales",
+              "t0": 0.002102,
+              "t1": 0.002495,
+              "change": 0.000393,
+              "contribution": -1.2e-05,
+              "share_of_root": -5.4e-05,
+              "path": "roe > asset_turnover > inventory_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "cash_to_sales": {
+              "name": "Cash & bank / sales",
+              "t0": 0.145896,
+              "t1": 0.111618,
+              "change": -0.034278,
+              "contribution": 0.001013,
+              "share_of_root": 0.004697,
+              "path": "roe > asset_turnover > cash_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "other_assets_rest_to_sales": {
+              "name": "Other assets (loans, advances, other) / sales",
+              "t0": 0.743981,
+              "t1": 0.339651,
+              "change": -0.40433,
+              "contribution": 0.011955,
+              "share_of_root": 0.055399,
+              "path": "roe > asset_turnover > other_assets_rest_to_sales",
+              "leaf": true,
+              "unit": "days_of_sales"
+            },
+            "equity_multiplier": {
+              "name": "Equity multiplier",
+              "t0": 5.16915,
+              "t1": 3.997961,
+              "change": -1.171189,
+              "contribution": -0.025292,
+              "share_of_root": -0.117206,
+              "path": "roe > equity_multiplier",
+              "leaf": false,
+              "unit": "x"
+            },
+            "debt_to_equity_avg": {
+              "name": "Borrowings / equity (average)",
+              "t0": 2.285224,
+              "t1": 1.556945,
+              "change": -0.728279,
+              "contribution": -0.015727,
+              "share_of_root": -0.072882,
+              "path": "roe > equity_multiplier > debt_to_equity_avg",
+              "leaf": true,
+              "unit": "x"
+            },
+            "other_liab_to_equity_avg": {
+              "name": "Other liabilities / equity (average)",
+              "t0": 1.883926,
+              "t1": 1.441016,
+              "change": -0.44291,
+              "contribution": -0.009565,
+              "share_of_root": -0.044324,
+              "path": "roe > equity_multiplier > other_liab_to_equity_avg",
+              "leaf": true,
+              "unit": "x"
+            }
+          },
+          "text": "Return on equity moved from -1.3% to 20.3% (FY21->FY26). Largest drivers: Attributable-profit factor (+1.248) -> +15.5pp (72% of the change); Interest burden (+0.531) -> +3.4pp (16% of the change); Borrowings / equity (average) (-0.73x) -> -1.6pp (-7% of the change)."
         }
       },
       "origin": "config/drivers.yaml"
@@ -1229,96 +1575,96 @@
           "status": "ok",
           "from": "FY25",
           "to": "FY26",
-          "root_from": 0.139051,
+          "root_from": 0.099401,
           "root_to": 0.159255,
-          "root_change": 0.020204,
+          "root_change": 0.059854,
           "residual": -0.0,
           "inexact_nodes": [],
           "intermediate": {
             "nopat_margin": {
-              "change": 0.003605,
-              "contribution": 0.00239,
-              "share_of_root": 0.11831,
+              "change": 0.067146,
+              "contribution": 0.044665,
+              "share_of_root": 0.746228,
               "method": "log"
             },
             "operating_margin": {
               "change": 0.074138,
-              "contribution": 0.041882,
-              "share_of_root": 2.072988,
+              "contribution": 0.035712,
+              "share_of_root": 0.596656,
               "method": "shift-share"
             },
             "ebitda_margin": {
               "change": 0.06055,
-              "contribution": 0.034206,
-              "share_of_root": 1.693044,
+              "contribution": 0.029167,
+              "share_of_root": 0.487299,
               "method": "shift-share"
             },
             "ic_turnover": {
               "change": 0.079289,
-              "contribution": 0.017814,
-              "share_of_root": 0.88169,
+              "contribution": 0.015189,
+              "share_of_root": 0.253772,
               "method": "inverse-sum (log)"
             }
           },
           "top_drivers": [
             {
-              "driver": "nopat_tax_factor",
-              "name": "NOPAT tax factor",
-              "contribution": -0.039492,
-              "share_of_root": -1.954678,
-              "own_change": -0.227369,
-              "own_change_text": "-0.227",
-              "path": "roic > nopat_margin > nopat_tax_factor",
-              "text": "NOPAT tax factor (-0.227) -> -3.9pp (-195% of the change)"
-            },
-            {
               "driver": "other_expenses_pct",
               "name": "Other expenses % of sales",
-              "contribution": 0.033903,
-              "share_of_root": 1.678063,
+              "contribution": 0.028909,
+              "share_of_root": 0.482987,
               "own_change": -0.060014,
               "own_change_text": "-6.0pp",
               "path": "roic > nopat_margin > operating_margin > ebitda_margin > other_expenses_pct",
-              "text": "Other expenses % of sales (-6.0pp) -> +3.4pp (168% of the change)"
+              "text": "Other expenses % of sales (-6.0pp) -> +2.9pp (48% of the change)"
             },
             {
               "driver": "nb_to_sales",
               "name": "Net block / sales",
-              "contribution": 0.011422,
-              "share_of_root": 0.565347,
+              "contribution": 0.00974,
+              "share_of_root": 0.162721,
               "own_change": -0.115844,
               "own_change_text": "-42 days of sales",
               "path": "roic > ic_turnover > nb_to_sales",
-              "text": "Net block / sales (-42 days of sales) -> +1.1pp (57% of the change)"
+              "text": "Net block / sales (-42 days of sales) -> +1.0pp (16% of the change)"
+            },
+            {
+              "driver": "nopat_tax_factor",
+              "name": "NOPAT tax factor",
+              "contribution": 0.008952,
+              "share_of_root": 0.149572,
+              "own_change": 0.050969,
+              "own_change_text": "+0.051",
+              "path": "roic > nopat_margin > nopat_tax_factor",
+              "text": "NOPAT tax factor (+0.051) -> +0.9pp (15% of the change)"
             },
             {
               "driver": "dep_to_sales",
               "name": "Depreciation / sales",
-              "contribution": 0.007676,
-              "share_of_root": 0.379944,
+              "contribution": 0.006545,
+              "share_of_root": 0.109357,
               "own_change": -0.013588,
               "own_change_text": "-1.4pp",
               "path": "roic > nopat_margin > operating_margin > dep_to_sales",
-              "text": "Depreciation / sales (-1.4pp) -> +0.8pp (38% of the change)"
+              "text": "Depreciation / sales (-1.4pp) -> +0.7pp (11% of the change)"
             },
             {
               "driver": "other_assets_rest_to_sales",
               "name": "Other assets (loans, advances, other) / sales",
-              "contribution": 0.007507,
-              "share_of_root": 0.371579,
+              "contribution": 0.006401,
+              "share_of_root": 0.106949,
               "own_change": -0.076139,
               "own_change_text": "-28 days of sales",
               "path": "roic > ic_turnover > other_assets_rest_to_sales",
-              "text": "Other assets (loans, advances, other) / sales (-28 days of sales) -> +0.8pp (37% of the change)"
+              "text": "Other assets (loans, advances, other) / sales (-28 days of sales) -> +0.6pp (11% of the change)"
             }
           ],
           "nodes": {
             "roic": {
               "name": "Return on invested capital",
-              "t0": 0.139051,
+              "t0": 0.099401,
               "t1": 0.159255,
-              "change": 0.020204,
-              "contribution": 0.020204,
+              "change": 0.059854,
+              "contribution": 0.059854,
               "share_of_root": 1.0,
               "path": "roic",
               "leaf": false,
@@ -1326,22 +1672,22 @@
             },
             "nopat_margin": {
               "name": "NOPAT margin",
-              "t0": 0.222832,
+              "t0": 0.159292,
               "t1": 0.226437,
-              "change": 0.003605,
-              "contribution": 0.00239,
-              "share_of_root": 0.11831,
+              "change": 0.067146,
+              "contribution": 0.044665,
+              "share_of_root": 0.746228,
               "path": "roic > nopat_margin",
               "leaf": false,
               "unit": "pct"
             },
             "nopat_tax_factor": {
               "name": "NOPAT tax factor",
-              "t0": 0.976114,
+              "t0": 0.697775,
               "t1": 0.748744,
-              "change": -0.227369,
-              "contribution": -0.039492,
-              "share_of_root": -1.954678,
+              "change": 0.050969,
+              "contribution": 0.008952,
+              "share_of_root": 0.149572,
               "path": "roic > nopat_margin > nopat_tax_factor",
               "leaf": true,
               "unit": "ratio"
@@ -1351,8 +1697,8 @@
               "t0": 0.228285,
               "t1": 0.302423,
               "change": 0.074138,
-              "contribution": 0.041882,
-              "share_of_root": 2.072988,
+              "contribution": 0.035712,
+              "share_of_root": 0.596656,
               "path": "roic > nopat_margin > operating_margin",
               "leaf": false,
               "unit": "pct"
@@ -1362,8 +1708,8 @@
               "t0": 0.49172,
               "t1": 0.552269,
               "change": 0.06055,
-              "contribution": 0.034206,
-              "share_of_root": 1.693044,
+              "contribution": 0.029167,
+              "share_of_root": 0.487299,
               "path": "roic > nopat_margin > operating_margin > ebitda_margin",
               "leaf": false,
               "unit": "pct"
@@ -1384,8 +1730,8 @@
               "t0": 0.036471,
               "t1": 0.035935,
               "change": -0.000536,
-              "contribution": 0.000303,
-              "share_of_root": 0.014981,
+              "contribution": 0.000258,
+              "share_of_root": 0.004312,
               "path": "roic > nopat_margin > operating_margin > ebitda_margin > employee_pct",
               "leaf": true,
               "unit": "pct"
@@ -1395,8 +1741,8 @@
               "t0": 0.47181,
               "t1": 0.411796,
               "change": -0.060014,
-              "contribution": 0.033903,
-              "share_of_root": 1.678063,
+              "contribution": 0.028909,
+              "share_of_root": 0.482987,
               "path": "roic > nopat_margin > operating_margin > ebitda_margin > other_expenses_pct",
               "leaf": true,
               "unit": "pct"
@@ -1406,8 +1752,8 @@
               "t0": 0.263435,
               "t1": 0.249846,
               "change": -0.013588,
-              "contribution": 0.007676,
-              "share_of_root": 0.379944,
+              "contribution": 0.006545,
+              "share_of_root": 0.109357,
               "path": "roic > nopat_margin > operating_margin > dep_to_sales",
               "leaf": true,
               "unit": "pct"
@@ -1417,8 +1763,8 @@
               "t0": 0.624017,
               "t1": 0.703306,
               "change": 0.079289,
-              "contribution": 0.017814,
-              "share_of_root": 0.88169,
+              "contribution": 0.015189,
+              "share_of_root": 0.253772,
               "path": "roic > ic_turnover",
               "leaf": false,
               "unit": "x"
@@ -1428,8 +1774,8 @@
               "t0": 1.99951,
               "t1": 1.883667,
               "change": -0.115844,
-              "contribution": 0.011422,
-              "share_of_root": 0.565347,
+              "contribution": 0.00974,
+              "share_of_root": 0.162721,
               "path": "roic > ic_turnover > nb_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
@@ -1439,8 +1785,8 @@
               "t0": 0.080651,
               "t1": 0.05673,
               "change": -0.023921,
-              "contribution": 0.002359,
-              "share_of_root": 0.116743,
+              "contribution": 0.002011,
+              "share_of_root": 0.033601,
               "path": "roic > ic_turnover > cwip_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
@@ -1450,8 +1796,8 @@
               "t0": 0.035215,
               "t1": 0.036577,
               "change": 0.001361,
-              "contribution": -0.000134,
-              "share_of_root": -0.006644,
+              "contribution": -0.000114,
+              "share_of_root": -0.001912,
               "path": "roic > ic_turnover > receivables_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
@@ -1461,8 +1807,8 @@
               "t0": 0.002357,
               "t1": 0.002495,
               "change": 0.000137,
-              "contribution": -1.4e-05,
-              "share_of_root": -0.00067,
+              "contribution": -1.2e-05,
+              "share_of_root": -0.000193,
               "path": "roic > ic_turnover > inventory_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
@@ -1472,8 +1818,8 @@
               "t0": 0.41579,
               "t1": 0.339651,
               "change": -0.076139,
-              "contribution": 0.007507,
-              "share_of_root": 0.371579,
+              "contribution": 0.006401,
+              "share_of_root": 0.106949,
               "path": "roic > ic_turnover > other_assets_rest_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
@@ -1483,14 +1829,14 @@
               "t0": 0.931003,
               "t1": 0.897262,
               "change": -0.033741,
-              "contribution": -0.003327,
-              "share_of_root": -0.164665,
+              "contribution": -0.002837,
+              "share_of_root": -0.047395,
               "path": "roic > ic_turnover > other_liabilities_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
             }
           },
-          "text": "Return on invested capital moved from 13.9% to 15.9% (FY25->FY26). Largest drivers: NOPAT tax factor (-0.227) -> -3.9pp (-195% of the change); Other expenses % of sales (-6.0pp) -> +3.4pp (168% of the change); Net block / sales (-42 days of sales) -> +1.1pp (57% of the change)."
+          "text": "Return on invested capital moved from 9.9% to 15.9% (FY25->FY26). Largest drivers: Other expenses % of sales (-6.0pp) -> +2.9pp (48% of the change); Net block / sales (-42 days of sales) -> +1.0pp (16% of the change); NOPAT tax factor (+0.051) -> +0.9pp (15% of the change)."
         },
         "3y": {
           "status": "ok",
@@ -1763,34 +2109,34 @@
           "status": "ok",
           "from": "FY21",
           "to": "FY26",
-          "root_from": 0.052229,
+          "root_from": 0.062664,
           "root_to": 0.159255,
-          "root_change": 0.107025,
+          "root_change": 0.096591,
           "residual": 0.0,
           "inexact_nodes": [],
           "intermediate": {
             "nopat_margin": {
-              "change": 0.131773,
-              "contribution": 0.083724,
-              "share_of_root": 0.782282,
+              "change": 0.112861,
+              "contribution": 0.071455,
+              "share_of_root": 0.739767,
               "method": "log"
             },
             "operating_margin": {
               "change": 0.144649,
-              "contribution": 0.062463,
-              "share_of_root": 0.583631,
+              "contribution": 0.067382,
+              "share_of_root": 0.697601,
               "method": "shift-share"
             },
             "ebitda_margin": {
               "change": 0.102252,
-              "contribution": 0.044155,
-              "share_of_root": 0.412564,
+              "contribution": 0.047632,
+              "share_of_root": 0.493129,
               "method": "shift-share"
             },
             "ic_turnover": {
               "change": 0.151571,
-              "contribution": 0.023301,
-              "share_of_root": 0.217718,
+              "contribution": 0.025136,
+              "share_of_root": 0.260233,
               "method": "inverse-sum (log)"
             }
           },
@@ -1798,61 +2144,61 @@
             {
               "driver": "other_expenses_pct",
               "name": "Other expenses % of sales",
-              "contribution": 0.042013,
-              "share_of_root": 0.392555,
+              "contribution": 0.045322,
+              "share_of_root": 0.469212,
               "own_change": -0.097292,
               "own_change_text": "-9.7pp",
               "path": "roic > nopat_margin > operating_margin > ebitda_margin > other_expenses_pct",
-              "text": "Other expenses % of sales (-9.7pp) -> +4.2pp (39% of the change)"
+              "text": "Other expenses % of sales (-9.7pp) -> +4.5pp (47% of the change)"
             },
             {
               "driver": "other_assets_rest_to_sales",
               "name": "Other assets (loans, advances, other) / sales",
-              "contribution": 0.02412,
-              "share_of_root": 0.225366,
+              "contribution": 0.026019,
+              "share_of_root": 0.269374,
               "own_change": -0.40433,
               "own_change_text": "-148 days of sales",
               "path": "roic > ic_turnover > other_assets_rest_to_sales",
-              "text": "Other assets (loans, advances, other) / sales (-148 days of sales) -> +2.4pp (23% of the change)"
+              "text": "Other assets (loans, advances, other) / sales (-148 days of sales) -> +2.6pp (27% of the change)"
             },
             {
               "driver": "other_liabilities_to_sales",
               "name": "Other liabilities / sales",
-              "contribution": -0.022482,
-              "share_of_root": -0.210065,
+              "contribution": -0.024253,
+              "share_of_root": -0.251086,
               "own_change": -0.376879,
               "own_change_text": "-138 days of sales",
               "path": "roic > ic_turnover > other_liabilities_to_sales",
-              "text": "Other liabilities / sales (-138 days of sales) -> -2.2pp (-21% of the change)"
+              "text": "Other liabilities / sales (-138 days of sales) -> -2.4pp (-25% of the change)"
             },
             {
               "driver": "nb_to_sales",
               "name": "Net block / sales",
-              "contribution": 0.021843,
-              "share_of_root": 0.204088,
+              "contribution": 0.023562,
+              "share_of_root": 0.243941,
               "own_change": -0.366155,
               "own_change_text": "-134 days of sales",
               "path": "roic > ic_turnover > nb_to_sales",
-              "text": "Net block / sales (-134 days of sales) -> +2.2pp (20% of the change)"
+              "text": "Net block / sales (-134 days of sales) -> +2.4pp (24% of the change)"
             },
             {
-              "driver": "nopat_tax_factor",
-              "name": "NOPAT tax factor",
-              "contribution": 0.021261,
-              "share_of_root": 0.198651,
-              "own_change": 0.148744,
-              "own_change_text": "+0.149",
-              "path": "roic > nopat_margin > nopat_tax_factor",
-              "text": "NOPAT tax factor (+0.149) -> +2.1pp (20% of the change)"
+              "driver": "dep_to_sales",
+              "name": "Depreciation / sales",
+              "contribution": 0.01975,
+              "share_of_root": 0.204473,
+              "own_change": -0.042398,
+              "own_change_text": "-4.2pp",
+              "path": "roic > nopat_margin > operating_margin > dep_to_sales",
+              "text": "Depreciation / sales (-4.2pp) -> +2.0pp (20% of the change)"
             }
           ],
           "nodes": {
             "roic": {
               "name": "Return on invested capital",
-              "t0": 0.052229,
+              "t0": 0.062664,
               "t1": 0.159255,
-              "change": 0.107025,
-              "contribution": 0.107025,
+              "change": 0.096591,
+              "contribution": 0.096591,
               "share_of_root": 1.0,
               "path": "roic",
               "leaf": false,
@@ -1860,22 +2206,22 @@
             },
             "nopat_margin": {
               "name": "NOPAT margin",
-              "t0": 0.094664,
+              "t0": 0.113576,
               "t1": 0.226437,
-              "change": 0.131773,
-              "contribution": 0.083724,
-              "share_of_root": 0.782282,
+              "change": 0.112861,
+              "contribution": 0.071455,
+              "share_of_root": 0.739767,
               "path": "roic > nopat_margin",
               "leaf": false,
               "unit": "pct"
             },
             "nopat_tax_factor": {
               "name": "NOPAT tax factor",
-              "t0": 0.6,
+              "t0": 0.719868,
               "t1": 0.748744,
-              "change": 0.148744,
-              "contribution": 0.021261,
-              "share_of_root": 0.198651,
+              "change": 0.028876,
+              "contribution": 0.004073,
+              "share_of_root": 0.042166,
               "path": "roic > nopat_margin > nopat_tax_factor",
               "leaf": true,
               "unit": "ratio"
@@ -1885,8 +2231,8 @@
               "t0": 0.157773,
               "t1": 0.302423,
               "change": 0.144649,
-              "contribution": 0.062463,
-              "share_of_root": 0.583631,
+              "contribution": 0.067382,
+              "share_of_root": 0.697601,
               "path": "roic > nopat_margin > operating_margin",
               "leaf": false,
               "unit": "pct"
@@ -1896,8 +2242,8 @@
               "t0": 0.450018,
               "t1": 0.552269,
               "change": 0.102252,
-              "contribution": 0.044155,
-              "share_of_root": 0.412564,
+              "contribution": 0.047632,
+              "share_of_root": 0.493129,
               "path": "roic > nopat_margin > operating_margin > ebitda_margin",
               "leaf": false,
               "unit": "pct"
@@ -1918,8 +2264,8 @@
               "t0": 0.040894,
               "t1": 0.035935,
               "change": -0.004959,
-              "contribution": 0.002142,
-              "share_of_root": 0.020009,
+              "contribution": 0.00231,
+              "share_of_root": 0.023917,
               "path": "roic > nopat_margin > operating_margin > ebitda_margin > employee_pct",
               "leaf": true,
               "unit": "pct"
@@ -1929,8 +2275,8 @@
               "t0": 0.509088,
               "t1": 0.411796,
               "change": -0.097292,
-              "contribution": 0.042013,
-              "share_of_root": 0.392555,
+              "contribution": 0.045322,
+              "share_of_root": 0.469212,
               "path": "roic > nopat_margin > operating_margin > ebitda_margin > other_expenses_pct",
               "leaf": true,
               "unit": "pct"
@@ -1940,8 +2286,8 @@
               "t0": 0.292244,
               "t1": 0.249846,
               "change": -0.042398,
-              "contribution": 0.018309,
-              "share_of_root": 0.171067,
+              "contribution": 0.01975,
+              "share_of_root": 0.204473,
               "path": "roic > nopat_margin > operating_margin > dep_to_sales",
               "leaf": true,
               "unit": "pct"
@@ -1951,8 +2297,8 @@
               "t0": 0.551735,
               "t1": 0.703306,
               "change": 0.151571,
-              "contribution": 0.023301,
-              "share_of_root": 0.217718,
+              "contribution": 0.025136,
+              "share_of_root": 0.260233,
               "path": "roic > ic_turnover",
               "leaf": false,
               "unit": "x"
@@ -1962,8 +2308,8 @@
               "t0": 2.249821,
               "t1": 1.883667,
               "change": -0.366155,
-              "contribution": 0.021843,
-              "share_of_root": 0.204088,
+              "contribution": 0.023562,
+              "share_of_root": 0.243941,
               "path": "roic > ic_turnover > nb_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
@@ -1973,8 +2319,8 @@
               "t0": 0.049738,
               "t1": 0.05673,
               "change": 0.006992,
-              "contribution": -0.000417,
-              "share_of_root": -0.003897,
+              "contribution": -0.00045,
+              "share_of_root": -0.004658,
               "path": "roic > ic_turnover > cwip_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
@@ -1984,8 +2330,8 @@
               "t0": 0.040965,
               "t1": 0.036577,
               "change": -0.004389,
-              "contribution": 0.000262,
-              "share_of_root": 0.002446,
+              "contribution": 0.000282,
+              "share_of_root": 0.002924,
               "path": "roic > ic_turnover > receivables_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
@@ -1995,8 +2341,8 @@
               "t0": 0.002102,
               "t1": 0.002495,
               "change": 0.000393,
-              "contribution": -2.3e-05,
-              "share_of_root": -0.000219,
+              "contribution": -2.5e-05,
+              "share_of_root": -0.000262,
               "path": "roic > ic_turnover > inventory_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
@@ -2006,8 +2352,8 @@
               "t0": 0.743981,
               "t1": 0.339651,
               "change": -0.40433,
-              "contribution": 0.02412,
-              "share_of_root": 0.225366,
+              "contribution": 0.026019,
+              "share_of_root": 0.269374,
               "path": "roic > ic_turnover > other_assets_rest_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
@@ -2017,14 +2363,14 @@
               "t0": 1.274142,
               "t1": 0.897262,
               "change": -0.376879,
-              "contribution": -0.022482,
-              "share_of_root": -0.210065,
+              "contribution": -0.024253,
+              "share_of_root": -0.251086,
               "path": "roic > ic_turnover > other_liabilities_to_sales",
               "leaf": true,
               "unit": "days_of_sales"
             }
           },
-          "text": "Return on invested capital moved from 5.2% to 15.9% (FY21->FY26). Largest drivers: Other expenses % of sales (-9.7pp) -> +4.2pp (39% of the change); Other assets (loans, advances, other) / sales (-148 days of sales) -> +2.4pp (23% of the change); Other liabilities / sales (-138 days of sales) -> -2.2pp (-21% of the change)."
+          "text": "Return on invested capital moved from 6.3% to 15.9% (FY21->FY26). Largest drivers: Other expenses % of sales (-9.7pp) -> +4.5pp (47% of the change); Other assets (loans, advances, other) / sales (-148 days of sales) -> +2.6pp (27% of the change); Other liabilities / sales (-138 days of sales) -> -2.4pp (-25% of the change)."
         }
       },
       "origin": "config/drivers.yaml"
@@ -2037,58 +2383,58 @@
           "status": "ok",
           "from": "FY25",
           "to": "FY26",
-          "root_from": 58.84867,
+          "root_from": 40.105103,
           "root_to": 43.812181,
-          "root_change": -15.036489,
+          "root_change": 3.707077,
           "residual": 0.0,
           "inexact_nodes": [],
           "intermediate": {
             "revenue_per_share": {
               "change": 42.877669,
-              "contribution": 6.737113,
-              "share_of_root": -0.448051,
+              "contribution": 5.543353,
+              "share_of_root": 1.495343,
               "method": "log"
             }
           },
           "top_drivers": [
             {
-              "driver": "pat_margin",
-              "name": "PAT margin",
-              "contribution": -21.773602,
-              "share_of_root": 1.448051,
-              "own_change": -0.067449,
-              "own_change_text": "-6.7pp",
-              "path": "eps_core > pat_margin",
-              "text": "PAT margin (-6.7pp) -> -21.77 (145% of the change)"
-            },
-            {
               "driver": "revenue",
               "name": "revenue",
-              "contribution": 10.116987,
-              "share_of_root": -0.672829,
+              "contribution": 8.324342,
+              "share_of_root": 2.245527,
               "own_change": 37987.6,
               "own_change_text": "+37,988 cr",
               "path": "eps_core > revenue_per_share > revenue",
-              "text": "revenue (+37,988 cr) -> 10.12 (-67% of the change)"
+              "text": "revenue (+37,988 cr) -> 8.32 (225% of the change)"
             },
             {
               "driver": "adjusted_shares_cr",
               "name": "adjusted_shares_cr",
-              "contribution": -3.379875,
-              "share_of_root": 0.224778,
+              "contribution": -2.780989,
+              "share_of_root": -0.750184,
               "own_change": 39.1,
               "own_change_text": "+39.100",
               "path": "eps_core > revenue_per_share > adjusted_shares_cr",
-              "text": "adjusted_shares_cr (+39.100) -> -3.38 (22% of the change)"
+              "text": "adjusted_shares_cr (+39.100) -> -2.78 (-75% of the change)"
+            },
+            {
+              "driver": "pat_margin",
+              "name": "PAT margin",
+              "contribution": -1.836275,
+              "share_of_root": -0.495343,
+              "own_change": -0.005664,
+              "own_change_text": "-0.6pp",
+              "path": "eps_core > pat_margin",
+              "text": "PAT margin (-0.6pp) -> -1.84 (-50% of the change)"
             }
           ],
           "nodes": {
             "eps_core": {
               "name": "eps_core",
-              "t0": 58.84867,
+              "t0": 40.105103,
               "t1": 43.812181,
-              "change": -15.036489,
-              "contribution": -15.036489,
+              "change": 3.707077,
+              "contribution": 3.707077,
               "share_of_root": 1.0,
               "path": "eps_core",
               "leaf": false,
@@ -2099,8 +2445,8 @@
               "t0": 303.371039,
               "t1": 346.248708,
               "change": 42.877669,
-              "contribution": 6.737113,
-              "share_of_root": -0.448051,
+              "contribution": 5.543353,
+              "share_of_root": 1.495343,
               "path": "eps_core > revenue_per_share",
               "leaf": false,
               "unit": "num"
@@ -2110,8 +2456,8 @@
               "t0": 172985.2,
               "t1": 210972.8,
               "change": 37987.6,
-              "contribution": 10.116987,
-              "share_of_root": -0.672829,
+              "contribution": 8.324342,
+              "share_of_root": 2.245527,
               "path": "eps_core > revenue_per_share > revenue",
               "leaf": true,
               "unit": "inr_cr"
@@ -2121,25 +2467,25 @@
               "t0": 570.21,
               "t1": 609.31,
               "change": 39.1,
-              "contribution": -3.379875,
-              "share_of_root": 0.224778,
+              "contribution": -2.780989,
+              "share_of_root": -0.750184,
               "path": "eps_core > revenue_per_share > adjusted_shares_cr",
               "leaf": true,
               "unit": "num"
             },
             "pat_margin": {
               "name": "PAT margin",
-              "t0": 0.193982,
+              "t0": 0.132198,
               "t1": 0.126534,
-              "change": -0.067449,
-              "contribution": -21.773602,
-              "share_of_root": 1.448051,
+              "change": -0.005664,
+              "contribution": -1.836275,
+              "share_of_root": -0.495343,
               "path": "eps_core > pat_margin",
               "leaf": true,
               "unit": "pct"
             }
           },
-          "text": "eps_core moved from 58.85 to 43.81 (FY25->FY26). Largest drivers: PAT margin (-6.7pp) -> -21.77 (145% of the change); revenue (+37,988 cr) -> 10.12 (-67% of the change); adjusted_shares_cr (+39.100) -> -3.38 (22% of the change)."
+          "text": "eps_core moved from 40.11 to 43.81 (FY25->FY26). Largest drivers: revenue (+37,988 cr) -> 8.32 (225% of the change); adjusted_shares_cr (+39.100) -> -2.78 (-75% of the change); PAT margin (-0.6pp) -> -1.84 (-50% of the change)."
         },
         "3y": {
           "status": "ok",
@@ -2253,16 +2599,16 @@
           "status": "ok",
           "from": "FY21",
           "to": "FY26",
-          "root_from": -17.977098,
+          "root_from": -1.454351,
           "root_to": 43.812181,
-          "root_change": 61.789279,
+          "root_change": 45.266532,
           "residual": -0.0,
           "inexact_nodes": [],
           "intermediate": {
             "revenue_per_share": {
               "change": 175.258445,
-              "contribution": 1.875146,
-              "share_of_root": 0.030347,
+              "contribution": 10.342736,
+              "share_of_root": 0.228485,
               "method": "log"
             }
           },
@@ -2270,41 +2616,41 @@
             {
               "driver": "pat_margin",
               "name": "PAT margin",
-              "contribution": 59.914133,
-              "share_of_root": 0.969653,
-              "own_change": 0.231669,
-              "own_change_text": "+23.2pp",
+              "contribution": 34.923797,
+              "share_of_root": 0.771515,
+              "own_change": 0.135039,
+              "own_change_text": "+13.5pp",
               "path": "eps_core > pat_margin",
-              "text": "PAT margin (+23.2pp) -> 59.91 (97% of the change)"
+              "text": "PAT margin (+13.5pp) -> 34.92 (77% of the change)"
             },
             {
               "driver": "revenue",
               "name": "revenue",
-              "contribution": 1.967818,
-              "share_of_root": 0.031847,
+              "contribution": 10.853886,
+              "share_of_root": 0.239777,
               "own_change": 110357.0,
               "own_change_text": "+110,357 cr",
               "path": "eps_core > revenue_per_share > revenue",
-              "text": "revenue (+110,357 cr) -> 1.97 (3% of the change)"
+              "text": "revenue (+110,357 cr) -> 10.85 (24% of the change)"
             },
             {
               "driver": "adjusted_shares_cr",
               "name": "adjusted_shares_cr",
-              "contribution": -0.092672,
-              "share_of_root": -0.0015,
+              "contribution": -0.511151,
+              "share_of_root": -0.011292,
               "own_change": 20.88,
               "own_change_text": "+20.880",
               "path": "eps_core > revenue_per_share > adjusted_shares_cr",
-              "text": "adjusted_shares_cr (+20.880) -> -0.09 (-0% of the change)"
+              "text": "adjusted_shares_cr (+20.880) -> -0.51 (-1% of the change)"
             }
           ],
           "nodes": {
             "eps_core": {
               "name": "eps_core",
-              "t0": -17.977098,
+              "t0": -1.454351,
               "t1": 43.812181,
-              "change": 61.789279,
-              "contribution": 61.789279,
+              "change": 45.266532,
+              "contribution": 45.266532,
               "share_of_root": 1.0,
               "path": "eps_core",
               "leaf": false,
@@ -2315,8 +2661,8 @@
               "t0": 170.990262,
               "t1": 346.248708,
               "change": 175.258445,
-              "contribution": 1.875146,
-              "share_of_root": 0.030347,
+              "contribution": 10.342736,
+              "share_of_root": 0.228485,
               "path": "eps_core > revenue_per_share",
               "leaf": false,
               "unit": "num"
@@ -2326,8 +2672,8 @@
               "t0": 100615.8,
               "t1": 210972.8,
               "change": 110357.0,
-              "contribution": 1.967818,
-              "share_of_root": 0.031847,
+              "contribution": 10.853886,
+              "share_of_root": 0.239777,
               "path": "eps_core > revenue_per_share > revenue",
               "leaf": true,
               "unit": "inr_cr"
@@ -2337,25 +2683,25 @@
               "t0": 588.43,
               "t1": 609.31,
               "change": 20.88,
-              "contribution": -0.092672,
-              "share_of_root": -0.0015,
+              "contribution": -0.511151,
+              "share_of_root": -0.011292,
               "path": "eps_core > revenue_per_share > adjusted_shares_cr",
               "leaf": true,
               "unit": "num"
             },
             "pat_margin": {
               "name": "PAT margin",
-              "t0": -0.105135,
+              "t0": -0.008505,
               "t1": 0.126534,
-              "change": 0.231669,
-              "contribution": 59.914133,
-              "share_of_root": 0.969653,
+              "change": 0.135039,
+              "contribution": 34.923797,
+              "share_of_root": 0.771515,
               "path": "eps_core > pat_margin",
               "leaf": true,
               "unit": "pct"
             }
           },
-          "text": "eps_core moved from -17.98 to 43.81 (FY21->FY26). Largest drivers: PAT margin (+23.2pp) -> 59.91 (97% of the change); revenue (+110,357 cr) -> 1.97 (3% of the change); adjusted_shares_cr (+20.880) -> -0.09 (-0% of the change)."
+          "text": "eps_core moved from -1.45 to 43.81 (FY21->FY26). Largest drivers: PAT margin (+13.5pp) -> 34.92 (77% of the change); revenue (+110,357 cr) -> 10.85 (24% of the change); adjusted_shares_cr (+20.880) -> -0.51 (-1% of the change)."
         }
       },
       "origin": "config/drivers.yaml"
@@ -2363,24 +2709,6 @@
   },
   "flags": {
     "triggered": [
-      {
-        "id": "B05",
-        "name": "Altman Z'' in distress zone",
-        "pillar": "balance_sheet",
-        "severity": "high",
-        "origin": "config/flags.yaml",
-        "status": "triggered",
-        "values": {
-          "z": 4.212745,
-          "x1": -0.171823,
-          "x3": 0.122353
-        },
-        "text": "India-adapted Altman Z''-EM score is 4.21 (distress zone < 4.35; working capital/assets -0.17, EBIT/assets 0.12).",
-        "condition": "m('altman_z_india') < 4.35",
-        "applies": [
-          "NF"
-        ]
-      },
       {
         "id": "A01",
         "name": "Dilution while ROE falls",
@@ -2390,29 +2718,12 @@
         "status": "triggered",
         "values": {
           "dil": 0.068571,
-          "droe": -0.139735
+          "droe": -0.030504
         },
-        "text": "Share count rose 6.9% while ROE fell -14.0pp: new equity is being raised and deployed at lower returns.",
+        "text": "Share count rose 6.9% while ROE fell -3.1pp: new equity is being raised and deployed at lower returns.",
         "condition": "m('share_count_change') > 0.02 and chg('roe', 1) < 0",
         "applies": [
           "ALL"
-        ]
-      },
-      {
-        "id": "B04",
-        "name": "Liquidity squeeze",
-        "pillar": "balance_sheet",
-        "severity": "medium",
-        "origin": "config/flags.yaml",
-        "status": "triggered",
-        "values": {
-          "cr": 0.533571,
-          "cash": 0.15545
-        },
-        "text": "Other assets cover other liabilities only 0.5x and cash covers debt 0.2x: short-term obligations depend on refinancing.",
-        "condition": "m('current_ratio_proxy') < 1.0 and m('cash_to_st_borrowings') < 0.2",
-        "applies": [
-          "NF"
         ]
       },
       {
@@ -2441,11 +2752,11 @@
         "status": "triggered",
         "values": {
           "pb": 8.264696,
-          "j": 2.279154,
-          "r": 3.626213
+          "j": 1.79423,
+          "r": 4.606265
         },
-        "text": "P/B of 8.3x is 3.6x the 2.3x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise.",
-        "condition": "m('pb_to_justified_pb') > 1.5",
+        "text": "P/B of 8.3x is 4.6x the 1.8x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise.",
+        "condition": "m('pb_to_justified_pb') > 1.5 and first_of(m('implied_minus_delivered_growth'), 1.0) > 0",
         "applies": [
           "ALL"
         ]
@@ -2467,6 +2778,22 @@
         ]
       },
       {
+        "id": "TC03",
+        "name": "Capex intensity very high",
+        "pillar": "capital_efficiency",
+        "severity": "low",
+        "origin": "config/sectors/telecom.yaml",
+        "status": "triggered",
+        "values": {
+          "c": 0.343733
+        },
+        "text": "Capex (balance-sheet proxy) is 34.4% of revenue.",
+        "condition": "m('capex_to_sales') > 0.30",
+        "applies": [
+          "telecom"
+        ]
+      },
+      {
         "id": "V04",
         "name": "EV/IC rich relative to ROIC/WACC",
         "pillar": "valuation",
@@ -2474,11 +2801,11 @@
         "origin": "config/flags.yaml",
         "status": "triggered",
         "values": {
-          "r": 3.666944,
+          "r": 4.880297,
           "evic": 4.668316
         },
-        "text": "EV/IC is 4.7x, 3.7x what current ROIC/WACC would support in steady state.",
-        "condition": "m('ev_ic_to_roic_wacc') > 1.5",
+        "text": "EV/IC is 4.7x, 4.9x the (ROIC - g)/(WACC - g) that current returns support at sustainable growth, and the market prices more growth than the company has delivered.",
+        "condition": "m('ev_ic_to_roic_wacc') > 1.5 and first_of(m('implied_minus_delivered_growth'), 1.0) > 0",
         "applies": [
           "NF"
         ]
@@ -2514,13 +2841,12 @@
       "B01",
       "B02",
       "B03",
+      "B04",
       "A04",
       "A07",
-      "V01",
       "V02",
       "TC01",
-      "TC02",
-      "TC03"
+      "TC02"
     ],
     "not_evaluable": [
       {
@@ -2552,12 +2878,17 @@
         "id": "A05",
         "name": "Acquisition spend followed by falling ROIC",
         "missing": "acquisition_roic_delta_3y FY26"
+      },
+      {
+        "id": "V01",
+        "name": "Priced for acceleration",
+        "missing": "implied_minus_delivered_growth FY26"
       }
     ],
     "counts": {
-      "high": 1,
-      "medium": 4,
-      "low": 2
+      "high": 0,
+      "medium": 3,
+      "low": 3
     }
   },
   "metrics": {
@@ -2579,11 +2910,11 @@
         "FY18": 0.016045,
         "FY19": 0.00581,
         "FY20": -0.036889,
-        "FY21": -0.155451,
+        "FY21": -0.012576,
         "FY22": 0.067803,
         "FY23": 0.115821,
         "FY24": 0.147224,
-        "FY25": 0.34295,
+        "FY25": 0.233719,
         "FY26": 0.203215
       },
       "level": {
@@ -2592,22 +2923,22 @@
         "rag": "green"
       },
       "trend": {
-        "slope_per_year": 0.049795,
-        "normalised_slope": 0.283891,
+        "slope_per_year": 0.038872,
+        "normalised_slope": 0.253146,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 99.659067,
+        "score": 99.371268,
         "label": "improving"
       },
       "stability": {
-        "cv": 1.851174,
-        "sd": 0.145323,
+        "cv": 1.189386,
+        "sd": 0.097817,
         "n": 9,
-        "score": 0.504645,
+        "score": 3.343186,
         "label": "volatile",
         "window": "FY18-FY26"
       },
-      "composite": 72.242602,
+      "composite": 72.596433,
       "rag": "green",
       "band": {
         "red": 0.135085,
@@ -2621,7 +2952,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Return on equity: 20.3% GREEN (level green vs band (red <= 13.5%, green >= 18.5%); trend improving +5.0pp/yr; volatile (CV 1.85))"
+      "text": "Return on equity: 20.3% GREEN (level green vs band (red <= 13.5%, green >= 18.5%); trend improving +3.9pp/yr; volatile (CV 1.19))"
     },
     "roa": {
       "name": "Return on assets",
@@ -2641,27 +2972,27 @@
         "FY18": 0.004562,
         "FY19": 0.001564,
         "FY20": -0.008656,
-        "FY21": -0.030073,
+        "FY21": -0.002433,
         "FY22": 0.01206,
         "FY23": 0.020715,
         "FY24": 0.0265,
-        "FY25": 0.070866,
+        "FY25": 0.048295,
         "FY26": 0.05083
       },
       "level": null,
       "trend": {
-        "slope_per_year": 0.012769,
-        "normalised_slope": 0.255381,
+        "slope_per_year": 0.010512,
+        "normalised_slope": 0.210238,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 99.398588,
+        "score": 98.529514,
         "label": "improving"
       },
       "stability": {
-        "cv": 0.609885,
-        "sd": 0.030494,
+        "cv": 0.429018,
+        "sd": 0.021451,
         "n": 9,
-        "score": 17.507736,
+        "score": 29.3533,
         "label": "volatile",
         "window": "FY18-FY26"
       },
@@ -2752,11 +3083,11 @@
         "FY18": 0.046225,
         "FY19": 0.019962,
         "FY20": 0.037386,
-        "FY21": 0.052229,
+        "FY21": 0.062664,
         "FY22": 0.086939,
         "FY23": 0.114741,
         "FY24": 0.1056,
-        "FY25": 0.139051,
+        "FY25": 0.099401,
         "FY26": 0.159255
       },
       "level": {
@@ -2765,23 +3096,23 @@
         "rag": "amber"
       },
       "trend": {
-        "slope_per_year": 0.016894,
-        "normalised_slope": 0.139485,
+        "slope_per_year": 0.012929,
+        "normalised_slope": 0.114227,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 94.211682,
+        "score": 90.758841,
         "label": "improving"
       },
       "stability": {
-        "cv": 0.573339,
-        "sd": 0.048504,
+        "cv": 0.539553,
+        "sd": 0.043894,
         "n": 9,
-        "score": 19.434689,
+        "score": 21.40425,
         "label": "volatile",
         "window": "FY18-FY26"
       },
-      "composite": 60.132433,
-      "rag": "green",
+      "composite": 59.564657,
+      "rag": "amber",
       "band": {
         "red": 0.125094,
         "green": 0.175094,
@@ -2794,7 +3125,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Return on invested capital: 15.9% GREEN (level amber vs band (red <= 12.5%, green >= 17.5%); trend improving +1.7pp/yr; volatile (CV 0.57))"
+      "text": "Return on invested capital: 15.9% AMBER (level amber vs band (red <= 12.5%, green >= 17.5%); trend improving +1.3pp/yr; volatile (CV 0.54))"
     },
     "roic_wacc_spread": {
       "name": "ROIC - WACC",
@@ -2814,11 +3145,11 @@
         "FY18": -0.08445,
         "FY19": -0.123272,
         "FY20": -0.114132,
-        "FY21": -0.088325,
+        "FY21": -0.077891,
         "FY22": -0.038416,
         "FY23": -0.009732,
         "FY24": -0.020222,
-        "FY25": 0.014714,
+        "FY25": -0.024936,
         "FY26": 0.034561
       },
       "level": {
@@ -2827,22 +3158,22 @@
         "rag": "amber"
       },
       "trend": {
-        "slope_per_year": 0.01704,
-        "normalised_slope": 0.852,
+        "slope_per_year": 0.013075,
+        "normalised_slope": 0.653749,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 99.999996,
+        "score": 99.99979,
         "label": "improving"
       },
       "stability": {
-        "cv": 1.196848,
-        "sd": 0.057086,
+        "cv": 1.026102,
+        "sd": 0.052273,
         "n": 9,
-        "score": 3.272663,
+        "score": 5.330529,
         "label": "volatile",
         "window": "FY18-FY26"
       },
-      "composite": 59.31548,
+      "composite": 59.624109,
       "rag": "amber",
       "band": {
         "red": 0.0,
@@ -2856,7 +3187,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "ROIC - WACC: +3.5pp AMBER (level amber vs band (red <= +0.0pp, green >= +5.0pp); trend improving +1.7pp/yr; volatile (CV 1.20))"
+      "text": "ROIC - WACC: +3.5pp AMBER (level amber vs band (red <= +0.0pp, green >= +5.0pp); trend improving +1.3pp/yr; volatile (CV 1.03))"
     },
     "incremental_roic_3y": {
       "name": "Incremental ROIC 3y",
@@ -2876,11 +3207,11 @@
         "FY18": null,
         "FY19": null,
         "FY20": null,
-        "FY21": 0.088847,
+        "FY21": 0.162917,
         "FY22": 0.602737,
         "FY23": 0.410098,
-        "FY24": 0.242532,
-        "FY25": 0.24717,
+        "FY24": 0.21576,
+        "FY25": 0.125255,
         "FY26": 0.293558
       },
       "level": {
@@ -2889,22 +3220,22 @@
         "rag": "green"
       },
       "trend": {
-        "slope_per_year": -0.078129,
-        "normalised_slope": -0.217496,
+        "slope_per_year": -0.09032,
+        "normalised_slope": -0.274128,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 1.274346,
+        "score": 0.414146,
         "label": "deteriorating"
       },
       "stability": {
-        "cv": 0.557345,
-        "sd": 0.175094,
+        "cv": 0.593289,
+        "sd": 0.179008,
         "n": 6,
-        "score": 20.343378,
+        "score": 18.357883,
         "label": "volatile",
         "window": "FY21-FY26"
       },
-      "composite": 63.370093,
+      "composite": 62.857219,
       "rag": "green",
       "band": {
         "red": 0.125094,
@@ -2918,7 +3249,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Incremental ROIC 3y: 29.4% GREEN (level green vs band (red <= 12.5%, green >= 17.5%); trend deteriorating -7.8pp/yr; volatile (CV 0.56))"
+      "text": "Incremental ROIC 3y: 29.4% GREEN (level green vs band (red <= 12.5%, green >= 17.5%); trend deteriorating -9.0pp/yr; volatile (CV 0.59))"
     },
     "attributable_factor": {
       "name": "Attributable-profit factor",
@@ -2938,28 +3269,28 @@
         "FY18": 0.50332,
         "FY19": 0.242667,
         "FY20": null,
-        "FY21": null,
+        "FY21": -0.459181,
         "FY22": 0.512318,
         "FY23": 0.679224,
         "FY24": 0.915019,
-        "FY25": 0.895276,
+        "FY25": 0.853502,
         "FY26": 0.789266
       },
       "level": null,
       "trend": {
-        "slope_per_year": 0.076995,
-        "normalised_slope": 0.101547,
+        "slope_per_year": 0.072818,
+        "normalised_slope": 0.097107,
         "n": 5,
         "window": "FY22-FY26",
         "score": null,
         "label": "rising"
       },
       "stability": {
-        "cv": 0.356674,
-        "sd": 0.242225,
-        "n": 8,
+        "cv": 0.799436,
+        "sd": 0.438092,
+        "n": 9,
         "score": null,
-        "label": "moderate",
+        "label": "volatile",
         "window": "FY17-FY26"
       },
       "composite": null,
@@ -2987,28 +3318,28 @@
         "FY18": 0.66835,
         "FY19": null,
         "FY20": null,
-        "FY21": -3.035482,
+        "FY21": 0.719868,
         "FY22": 0.665316,
         "FY23": 0.741961,
         "FY24": 0.697775,
-        "FY25": 0.976114,
+        "FY25": 0.697775,
         "FY26": 0.748744
       },
       "level": null,
       "trend": {
-        "slope_per_year": 0.040101,
-        "normalised_slope": 0.052352,
+        "slope_per_year": 0.012267,
+        "normalised_slope": 0.01727,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 74.020752,
-        "label": "improving"
+        "score": 58.550184,
+        "label": "stable"
       },
       "stability": {
-        "cv": 5.302821,
-        "sd": 1.333625,
+        "cv": 0.092104,
+        "sd": 0.063194,
         "n": 8,
-        "score": 2.6e-05,
-        "label": "volatile",
+        "score": 76.862311,
+        "label": "stable",
         "window": "FY17-FY26"
       },
       "composite": null,
@@ -3232,27 +3563,27 @@
         "FY18": 0.66835,
         "FY19": 0.74832,
         "FY20": 0.74832,
-        "FY21": 0.6,
+        "FY21": 0.719868,
         "FY22": 0.665316,
         "FY23": 0.741961,
         "FY24": 0.697775,
-        "FY25": 0.976114,
+        "FY25": 0.697775,
         "FY26": 0.748744
       },
       "level": null,
       "trend": {
-        "slope_per_year": 0.040101,
-        "normalised_slope": 0.052352,
+        "slope_per_year": 0.012267,
+        "normalised_slope": 0.01727,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 74.020752,
-        "label": "improving"
+        "score": 58.550184,
+        "label": "stable"
       },
       "stability": {
-        "cv": 0.149016,
-        "sd": 0.107215,
+        "cv": 0.06911,
+        "sd": 0.048629,
         "n": 10,
-        "score": 65.327353,
+        "score": 82.081438,
         "label": "stable",
         "window": "FY17-FY26"
       },
@@ -3281,27 +3612,27 @@
         "FY18": 0.087637,
         "FY19": 0.040911,
         "FY20": 0.076251,
-        "FY21": 0.094664,
+        "FY21": 0.113576,
         "FY22": 0.139536,
         "FY23": 0.185786,
         "FY24": 0.178442,
-        "FY25": 0.222832,
+        "FY25": 0.159292,
         "FY26": 0.226437
       },
       "level": null,
       "trend": {
-        "slope_per_year": 0.021085,
-        "normalised_slope": 0.11062,
+        "slope_per_year": 0.014731,
+        "normalised_slope": 0.082805,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 90.135769,
+        "score": 83.971371,
         "label": "improving"
       },
       "stability": {
-        "cv": 0.482003,
-        "sd": 0.065083,
+        "cv": 0.439487,
+        "sd": 0.057381,
         "n": 10,
-        "score": 25.229601,
+        "score": 28.488249,
         "label": "volatile",
         "window": "FY17-FY26"
       },
@@ -3330,25 +3661,25 @@
         "FY18": 0.377204,
         "FY19": 4.54998,
         "FY20": 1.637198,
-        "FY21": -0.344609,
+        "FY21": -0.287227,
         "FY22": 0.778936,
         "FY23": 2.468818,
         "FY24": -0.281798,
-        "FY25": 1.429098,
+        "FY25": 1.999156,
         "FY26": -0.200234
       },
       "level": null,
       "trend": {
-        "slope_per_year": -0.299806,
-        "normalised_slope": -0.357353,
+        "slope_per_year": -0.2428,
+        "normalised_slope": -0.254781,
         "n": 5,
         "window": "FY22-FY26",
         "score": null,
         "label": "falling"
       },
       "stability": {
-        "cv": 1.381861,
-        "sd": 1.599057,
+        "cv": 1.31672,
+        "sd": 1.615474,
         "n": 9,
         "score": null,
         "label": "volatile",
@@ -3383,21 +3714,21 @@
         "FY22": 0.394134,
         "FY23": 0.271904,
         "FY24": 0.391804,
-        "FY25": 0.276561,
+        "FY25": 0.405815,
         "FY26": 0.547838
       },
       "level": null,
       "trend": {
-        "slope_per_year": 0.031207,
-        "normalised_slope": 0.082897,
+        "slope_per_year": 0.044132,
+        "normalised_slope": 0.109699,
         "n": 5,
         "window": "FY22-FY26",
         "score": null,
         "label": "rising"
       },
       "stability": {
-        "cv": 1.105711,
-        "sd": 0.880447,
+        "cv": 1.071699,
+        "sd": 0.870679,
         "n": 8,
         "score": null,
         "label": "volatile",
@@ -3653,6 +3984,48 @@
       "note": null,
       "text": "Non-capex investing (3y, % of IC): -24.4% [informational (neutral direction)]"
     },
+    "acquisition_spend_3y": {
+      "name": "Acquisition-like spend (3y, % of IC)",
+      "pillar": "capital_allocation",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "sum3(max(0, -CFI - capex proxy - (change in cash + investments - net cash flow))) / IC_t-3",
+      "formula": null,
+      "origin": "engine",
+      "meaning": "Investing outflows beyond capex that did not end up as cash or investments on the balance sheet (stakes and businesses bought), over 3 years, relative to opening invested capital. Treasury moves are netted out.",
+      "value": 0.064633,
+      "value_text": "6.5%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": 0.008119,
+        "FY21": 0.0,
+        "FY22": 0.0,
+        "FY23": 0.0,
+        "FY24": 0.091989,
+        "FY25": 0.085964,
+        "FY26": 0.064633
+      },
+      "level": null,
+      "trend": {
+        "slope_per_year": 0.021523,
+        "normalised_slope": 0.430461,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": null,
+        "label": "rising"
+      },
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": null,
+      "text": "Acquisition-like spend (3y, % of IC): 6.5% [informational (neutral direction)]"
+    },
     "acquisition_roic_delta_3y": {
       "name": "ROIC change after acquisition spend",
       "pillar": "capital_allocation",
@@ -3660,10 +4033,10 @@
       "unit": "pp",
       "direction": "higher",
       "kind": "annual",
-      "equation": "ROIC_t - ROIC_t-3 if non_capex_investing_3y > 10%, else n/a",
+      "equation": "ROIC_t - ROIC_t-3 if acquisition_spend_3y > 10%, else n/a",
       "formula": null,
       "origin": "engine",
-      "meaning": "When a company spent materially beyond capex (> 10% of IC over 3 years), did ROIC subsequently rise or fall?",
+      "meaning": "When a company spent materially on acquisitions (> 10% of IC over 3 years, treasury moves excluded), did ROIC subsequently rise or fall?",
       "value": null,
       "value_text": "n/a",
       "series": {
@@ -4013,46 +4386,46 @@
       "unit": "x",
       "direction": "higher",
       "kind": "annual",
-      "equation": "Other assets / Other liabilities",
+      "equation": "(Other assets + Investments) / Other liabilities",
       "formula": null,
       "origin": "engine",
-      "meaning": "Short-term liquidity proxy: the export has no current/non-current split, so other assets / other liabilities is used (Screener's own working-capital split). Excludes short-term debt (inside Borrowings).",
-      "value": 0.533571,
-      "value_text": "0.53x",
+      "meaning": "Short-term liquidity proxy: the export has no current/non-current split, so (other assets + investments) / other liabilities is used. Investments are included because Indian companies hold treasury mainly in liquid funds and bonds, which Screener reports under Investments, not Cash. Excludes short-term debt (inside Borrowings).",
+      "value": 0.627652,
+      "value_text": "0.63x",
       "series": {
-        "FY17": 0.502098,
-        "FY18": 0.530359,
-        "FY19": 0.620008,
-        "FY20": 0.748416,
-        "FY21": 0.714551,
-        "FY22": 0.654692,
-        "FY23": 0.601416,
-        "FY24": 0.624686,
-        "FY25": 0.561085,
-        "FY26": 0.533571
+        "FY17": 0.751127,
+        "FY18": 0.765725,
+        "FY19": 0.823582,
+        "FY20": 0.93894,
+        "FY21": 0.939124,
+        "FY22": 0.889532,
+        "FY23": 0.835175,
+        "FY24": 0.843526,
+        "FY25": 0.593942,
+        "FY26": 0.627652
       },
       "level": {
-        "score": 2.238046,
+        "score": 8.510117,
         "basis": "band",
         "rag": "red"
       },
       "trend": {
-        "slope_per_year": -0.028257,
-        "normalised_slope": -0.028257,
+        "slope_per_year": -0.076499,
+        "normalised_slope": -0.076499,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 36.235774,
-        "label": "stable"
+        "score": 17.799579,
+        "label": "deteriorating"
       },
       "stability": {
-        "cv": 0.080752,
-        "sd": 0.080752,
+        "cv": 0.118361,
+        "sd": 0.118361,
         "n": 10,
-        "score": 79.396146,
+        "score": 71.307107,
         "label": "stable",
         "window": "FY17-FY26"
       },
-      "composite": 22.311193,
+      "composite": 20.252031,
       "rag": "red",
       "band": {
         "red": 1.0,
@@ -4066,55 +4439,55 @@
       },
       "reason": null,
       "note": null,
-      "text": "Current ratio (Screener proxy): 0.53x RED (level red vs indicative band (red <= 1.00x, green >= 1.50x); trend stable -0.03x/yr; stable (CV 0.08))"
+      "text": "Current ratio (Screener proxy): 0.63x RED (level red vs indicative band (red <= 1.00x, green >= 1.50x); trend deteriorating -0.08x/yr; stable (CV 0.12))"
     },
     "cash_to_st_borrowings": {
-      "name": "Cash / short-term borrowings",
+      "name": "Cash and investments / short-term borrowings",
       "pillar": "balance_sheet",
       "role": "scored",
       "unit": "x",
       "direction": "higher",
       "kind": "annual",
-      "equation": "Cash & bank / short-term borrowings (manual) or / Borrowings; = 99 when there is no debt",
+      "equation": "(Cash & bank + Investments) / short-term borrowings (manual) or / Borrowings; = 99 when there is no debt",
       "formula": null,
       "origin": "engine",
-      "meaning": "Cash cover for debt falling due soon. Uses manual short_term_borrowings when supplied, otherwise total borrowings (conservative: treats all debt as short-term).",
-      "value": 0.15545,
-      "value_text": "0.16x",
+      "meaning": "Liquid cover for debt falling due soon: cash plus investments (treasury is mostly held in liquid funds and bonds, reported under Investments). Uses manual short_term_borrowings when supplied, otherwise total borrowings (conservative: treats all debt as short-term).",
+      "value": 0.252176,
+      "value_text": "0.25x",
       "series": {
-        "FY17": 0.04752,
-        "FY18": 0.059915,
-        "FY19": 0.064292,
-        "FY20": 0.107218,
-        "FY21": 0.082723,
-        "FY22": 0.079529,
-        "FY23": 0.059369,
-        "FY24": 0.075791,
-        "FY25": 0.078261,
-        "FY26": 0.15545
+        "FY17": 0.181167,
+        "FY18": 0.205052,
+        "FY19": 0.189551,
+        "FY20": 0.279091,
+        "FY21": 0.251967,
+        "FY22": 0.252498,
+        "FY23": 0.20517,
+        "FY24": 0.222374,
+        "FY25": 0.105589,
+        "FY26": 0.252176
       },
       "level": {
-        "score": 31.477094,
+        "score": 35.507325,
         "basis": "band",
-        "rag": "red"
+        "rag": "amber"
       },
       "trend": {
-        "slope_per_year": 0.017073,
-        "normalised_slope": 0.017073,
+        "slope_per_year": -0.010023,
+        "normalised_slope": -0.010023,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 58.454753,
+        "score": 45.005407,
         "label": "stable"
       },
       "stability": {
-        "cv": 0.030881,
-        "sd": 0.030881,
+        "cv": 0.049747,
+        "sd": 0.049747,
         "n": 10,
-        "score": 91.554991,
+        "score": 86.750525,
         "label": "stable",
         "window": "FY17-FY26"
       },
-      "composite": 47.233193,
+      "composite": 45.568325,
       "rag": "amber",
       "band": {
         "red": 0.2,
@@ -4128,7 +4501,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Cash / short-term borrowings: 0.16x AMBER (level red vs indicative band (red <= 0.20x, green >= 1.00x); trend stable 0.02x/yr; stable (CV 0.03))"
+      "text": "Cash and investments / short-term borrowings: 0.25x AMBER (level amber vs indicative band (red <= 0.20x, green >= 1.00x); trend stable -0.01x/yr; stable (CV 0.05))"
     },
     "debt_vs_ebitda_growth": {
       "name": "Debt growth - EBITDA growth",
@@ -4534,7 +4907,7 @@
         "FY22": 0.257115,
         "FY23": -5.737955,
         "FY24": 3.913528,
-        "FY25": -0.789663,
+        "FY25": -1.15872,
         "FY26": 1.862177
       },
       "level": {
@@ -4543,22 +4916,22 @@
         "rag": "green"
       },
       "trend": {
-        "slope_per_year": 0.815842,
-        "normalised_slope": 4.079208,
+        "slope_per_year": 0.778936,
+        "normalised_slope": 3.89468,
         "n": 5,
         "window": "FY22-FY26",
         "score": 100.0,
         "label": "improving"
       },
       "stability": {
-        "cv": 2.89685,
-        "sd": 14.123756,
+        "cv": 2.862386,
+        "sd": 14.10664,
         "n": 7,
-        "score": 0.025437,
+        "score": 0.028069,
         "label": "volatile",
         "window": "FY18-FY26"
       },
-      "composite": 85.003816,
+      "composite": 85.00421,
       "rag": "green",
       "band": {
         "red": 0.2,
@@ -4572,7 +4945,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "FCF / PAT: 1.86 GREEN (level green vs indicative band (red <= 0.20, green >= 0.80); trend improving 0.82/yr; volatile (CV 2.90))"
+      "text": "FCF / PAT: 1.86 GREEN (level green vs indicative band (red <= 0.20, green >= 0.80); trend improving 0.78/yr; volatile (CV 2.86))"
     },
     "fcf_to_pat_5y": {
       "name": "FCF / PAT (5y cumulative)",
@@ -4585,35 +4958,42 @@
       "formula": null,
       "origin": "engine",
       "meaning": "Free cash flow conversion over a full cycle (5 years), smoothing lumpy capex.",
-      "value": 0.264676,
-      "value_text": "0.26",
+      "value": 0.302949,
+      "value_text": "0.30",
       "series": {
         "FY17": null,
         "FY18": null,
         "FY19": null,
         "FY20": null,
         "FY21": null,
-        "FY22": null,
-        "FY23": null,
-        "FY24": -0.935908,
-        "FY25": -0.088483,
-        "FY26": 0.264676
+        "FY22": -9.442473,
+        "FY23": -7.550925,
+        "FY24": -0.497425,
+        "FY25": -0.090325,
+        "FY26": 0.302949
       },
       "level": {
-        "score": 30.389689,
+        "score": 33.57909,
         "basis": "band",
-        "rag": "red"
+        "rag": "amber"
       },
       "trend": {
-        "slope_per_year": 0.600292,
-        "normalised_slope": 2.370466,
-        "n": 3,
-        "window": "FY24-FY26",
-        "score": 100.0,
+        "slope_per_year": 2.695144,
+        "normalised_slope": 0.779926,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 99.999983,
         "label": "improving"
       },
-      "stability": null,
-      "composite": 50.86331,
+      "stability": {
+        "cv": 1.348167,
+        "sd": 4.658779,
+        "n": 5,
+        "score": 2.123922,
+        "label": "volatile",
+        "window": "FY22-FY26"
+      },
+      "composite": 45.466038,
       "rag": "amber",
       "band": {
         "red": 0.3,
@@ -4627,7 +5007,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "FCF / PAT (5y cumulative): 0.26 AMBER (level red vs indicative band (red <= 0.30, green >= 0.70); trend improving 0.60/yr)"
+      "text": "FCF / PAT (5y cumulative): 0.30 AMBER (level amber vs indicative band (red <= 0.30, green >= 0.70); trend improving 2.70/yr; volatile (CV 1.35))"
     },
     "cfo_to_pat_5y": {
       "name": "CFO / PAT (5y cumulative)",
@@ -4640,19 +5020,19 @@
       "formula": null,
       "origin": "engine",
       "meaning": "Operating cash flow conversion of profits over 5 years: below 60% means profits are not turning into cash.",
-      "value": 4.962236,
-      "value_text": "4.96",
+      "value": 5.679787,
+      "value_text": "5.68",
       "series": {
         "FY17": null,
         "FY18": null,
         "FY19": null,
         "FY20": null,
-        "FY21": null,
-        "FY22": null,
-        "FY23": null,
-        "FY24": 24.078661,
-        "FY25": 7.306312,
-        "FY26": 4.962236
+        "FY21": 84.4125,
+        "FY22": 79.023762,
+        "FY23": 21.960804,
+        "FY24": 12.797546,
+        "FY25": 7.45844,
+        "FY26": 5.679787
       },
       "level": {
         "score": 100.0,
@@ -4660,15 +5040,22 @@
         "rag": "green"
       },
       "trend": {
-        "slope_per_year": -9.558212,
-        "normalised_slope": -0.788909,
-        "n": 3,
-        "window": "FY24-FY26",
-        "score": 1.4e-05,
+        "slope_per_year": -16.119031,
+        "normalised_slope": -0.635006,
+        "n": 5,
+        "window": "FY22-FY26",
+        "score": 0.000305,
         "label": "deteriorating"
       },
-      "stability": null,
-      "composite": 70.588239,
+      "stability": {
+        "cv": 1.036227,
+        "sd": 36.498144,
+        "n": 6,
+        "score": 5.178527,
+        "label": "volatile",
+        "window": "FY21-FY26"
+      },
+      "composite": 60.776855,
       "rag": "green",
       "band": {
         "red": 0.6,
@@ -4682,7 +5069,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "CFO / PAT (5y cumulative): 4.96 GREEN (level green vs indicative band (red <= 0.60, green >= 0.90); trend deteriorating -9.56/yr)"
+      "text": "CFO / PAT (5y cumulative): 5.68 GREEN (level green vs indicative band (red <= 0.60, green >= 0.90); trend deteriorating -16.12/yr; volatile (CV 1.04))"
     },
     "accruals_ratio": {
       "name": "Accruals ratio",
@@ -6531,7 +6918,7 @@
         "FY22": 1.182119,
         "FY23": null,
         "FY24": null,
-        "FY25": 0.990493,
+        "FY25": 0.751654,
         "FY26": 0.473398
       },
       "level": {
@@ -6540,15 +6927,15 @@
         "rag": "green"
       },
       "trend": {
-        "slope_per_year": -0.151033,
-        "normalised_slope": -0.171239,
+        "slope_per_year": -0.169405,
+        "normalised_slope": -0.211126,
         "n": 3,
         "window": "FY22-FY26",
-        "score": 3.153016,
+        "score": 1.444986,
         "label": "deteriorating"
       },
       "stability": null,
-      "composite": 71.515593,
+      "composite": 71.013231,
       "rag": "green",
       "band": {
         "red": 0.04,
@@ -6562,7 +6949,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "PAT CAGR 3y: 47.3% GREEN (level green vs band (red <= 4.0%, green >= 8.9%); trend deteriorating -15.1pp/yr)"
+      "text": "PAT CAGR 3y: 47.3% GREEN (level green vs band (red <= 4.0%, green >= 8.9%); trend deteriorating -16.9pp/yr)"
     },
     "pat_cagr_5y": {
       "name": "PAT CAGR 5y",
@@ -6674,7 +7061,7 @@
         "FY22": 1.133218,
         "FY23": null,
         "FY24": null,
-        "FY25": 1.011472,
+        "FY25": 0.770116,
         "FY26": 0.430402
       },
       "level": {
@@ -6683,15 +7070,15 @@
         "rag": "green"
       },
       "trend": {
-        "slope_per_year": -0.144522,
-        "normalised_slope": -0.168369,
+        "slope_per_year": -0.163088,
+        "normalised_slope": -0.209648,
         "n": 3,
         "window": "FY22-FY26",
-        "score": 3.333052,
+        "score": 1.487677,
         "label": "deteriorating"
       },
       "stability": null,
-      "composite": 71.568545,
+      "composite": 71.025787,
       "rag": "green",
       "band": {
         "red": 0.04,
@@ -6705,7 +7092,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "EPS CAGR 3y: 43.0% GREEN (level green vs band (red <= 4.0%, green >= 8.9%); trend deteriorating -14.5pp/yr)"
+      "text": "EPS CAGR 3y: 43.0% GREEN (level green vs band (red <= 4.0%, green >= 8.9%); trend deteriorating -16.3pp/yr)"
     },
     "eps_cagr_5y": {
       "name": "EPS CAGR 5y",
@@ -6843,8 +7230,8 @@
       "formula": null,
       "origin": "engine",
       "meaning": "How erratic annual core-profit growth is (sd / mean of yearly growth).",
-      "value": 3.668015,
-      "value_text": "3.67",
+      "value": 3.265172,
+      "value_text": "3.27",
       "series": {},
       "level": {
         "score": 0.0,
@@ -6867,7 +7254,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "PAT growth volatility: 3.67 RED (level red vs indicative band (green <= 0.50, red >= 1.50))"
+      "text": "PAT growth volatility: 3.27 RED (level red vs indicative band (green <= 0.50, red >= 1.50))"
     },
     "organic_capital_share_3y": {
       "name": "Organic share of capital deployed 3y",
@@ -7177,11 +7564,11 @@
         "FY18": 0.013299,
         "FY19": 0.005069,
         "FY20": -0.031303,
-        "FY21": -0.105135,
+        "FY21": -0.008505,
         "FY22": 0.036508,
         "FY23": 0.05998,
         "FY24": 0.078323,
-        "FY25": 0.193982,
+        "FY25": 0.132198,
         "FY26": 0.126534
       },
       "level": {
@@ -7190,22 +7577,22 @@
         "rag": "green"
       },
       "trend": {
-        "slope_per_year": 0.031405,
-        "normalised_slope": 0.317017,
+        "slope_per_year": 0.025227,
+        "normalised_slope": 0.29094,
         "n": 5,
         "window": "FY22-FY26",
-        "score": 99.823939,
+        "score": 99.703761,
         "label": "improving"
       },
       "stability": {
-        "cv": 1.648315,
-        "sd": 0.082416,
+        "cv": 1.094822,
+        "sd": 0.054741,
         "n": 10,
-        "score": 0.900955,
+        "score": 4.380251,
         "label": "volatile",
         "window": "FY17-FY26"
       },
-      "composite": 85.091128,
+      "composite": 85.582978,
       "rag": "green",
       "band": {
         "red": -0.003758,
@@ -7219,7 +7606,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "PAT margin: 12.7% GREEN (level green vs band (red <= -0.4%, green >= 3.6%); trend improving +3.1pp/yr; volatile (CV 1.65))"
+      "text": "PAT margin: 12.7% GREEN (level green vs band (red <= -0.4%, green >= 3.6%); trend improving +2.5pp/yr; volatile (CV 1.09))"
     },
     "employee_pct": {
       "name": "Employee cost % of sales",
@@ -7669,17 +8056,17 @@
         "FY18": -13231.066796,
         "FY19": -20408.541883,
         "FY20": -20377.137093,
-        "FY21": -16107.166496,
+        "FY21": -14204.315166,
         "FY22": -7185.856295,
         "FY23": -2192.566246,
         "FY24": -5125.022269,
-        "FY25": 4078.870727,
+        "FY25": -6912.676508,
         "FY26": 10367.503081
       },
       "level": null,
       "trend": {
-        "slope_per_year": 4137.815572,
-        "normalised_slope": 362.514715,
+        "slope_per_year": 3038.660849,
+        "normalised_slope": 1.375132,
         "n": 5,
         "window": "FY22-FY26",
         "score": 100.0,
@@ -7715,7 +8102,7 @@
         "FY22": 104.405563,
         "FY23": 50.033548,
         "FY24": 59.145291,
-        "FY25": 29.455211,
+        "FY25": 43.221432,
         "FY26": 42.604885
       },
       "level": null,
@@ -7739,17 +8126,17 @@
       "formula": null,
       "origin": "engine",
       "meaning": "Where today's P/E sits within the company's own FY-end history (0% = cheapest ever, 100% = richest). Needs >= 5 years.",
-      "value": 0.25,
-      "value_text": "25.0%",
+      "value": 0.125,
+      "value_text": "12.5%",
       "series": {},
       "level": {
-        "score": 74.509804,
+        "score": 86.764706,
         "basis": "band",
         "rag": "green"
       },
       "trend": null,
       "stability": null,
-      "composite": 74.509804,
+      "composite": 86.764706,
       "rag": "green",
       "band": {
         "red": 0.67,
@@ -7763,7 +8150,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "P/E percentile vs own history: 25.0% GREEN (level green vs indicative band (green <= 33.0%, red >= 67.0%))"
+      "text": "P/E percentile vs own history: 12.5% GREEN (level green vs indicative band (green <= 33.0%, red >= 67.0%))"
     },
     "pb": {
       "name": "P/B",
@@ -7988,12 +8375,12 @@
       "unit": "pct",
       "direction": "neutral",
       "kind": "point",
-      "equation": "solve g: EV = sum_{t=1..10} F0(1+g)^t/(1+WACC)^t + F10(1+gT)/((WACC-gT)(1+WACC)^10), F0 = NOPAT0 x (1 - gT/RONIC), RONIC = 3y avg ROIC (capped at 100%)",
+      "equation": "solve g: EV = sum_{t=1..10} F0(1+g)^t/(1+WACC)^t + F10(1+gT)/((WACC-gT)(1+WACC)^10), F0 = NOPAT0 x (1 - gT/RONIC), RONIC = 3y avg ROIC (capped at 100%); n/m if RONIC <= WACC",
       "formula": null,
       "origin": "engine",
       "meaning": "Annual free-cash-flow growth for the next 10 years that today's enterprise value implies, starting from the steady-state FCF the business generates at its 3-year average ROIC, then growing at the terminal rate.",
-      "value": 0.218414,
-      "value_text": "21.8%",
+      "value": null,
+      "value_text": "n/a",
       "series": {},
       "level": null,
       "trend": null,
@@ -8002,8 +8389,8 @@
       "rag": "n/a",
       "band": null,
       "reason": "informational (neutral direction)",
-      "note": "solved; EV 1,378,041 cr, NOPAT 47,772 cr, base FCF 26,483 cr, WACC 12.51%, RONIC 13.5%, terminal g 6.0%, 10y",
-      "text": "Reverse-DCF implied FCF growth (10y): 21.8% [informational (neutral direction)] Note: solved; EV 1,378,041 cr, NOPAT 47,772 cr, base FCF 26,483 cr, WACC 12.51%, RONIC 13.5%, terminal g 6.0%, 10y"
+      "note": "n/m: ROIC 12.1% <= WACC 12.51%: growth at these returns adds no value, so the price implies rising returns (see P/B and EV/IC versus justified)",
+      "text": "Reverse-DCF implied FCF growth (10y): n/a [informational (neutral direction)] Note: n/m: ROIC 12.1% <= WACC 12.51%: growth at these returns adds no value, so the price implies rising returns (see P/B and EV/IC versus justified)"
     },
     "implied_minus_delivered_growth": {
       "name": "Implied - delivered growth",
@@ -8016,18 +8403,14 @@
       "formula": null,
       "origin": "engine",
       "meaning": "How much faster the market expects NOPAT to grow than it did over the last 5 years (positive = priced for acceleration).",
-      "value": -0.162175,
-      "value_text": "-16.2pp",
+      "value": null,
+      "value_text": "n/a",
       "series": {},
-      "level": {
-        "score": 100.0,
-        "basis": "band",
-        "rag": "green"
-      },
+      "level": null,
       "trend": null,
       "stability": null,
-      "composite": 100.0,
-      "rag": "green",
+      "composite": null,
+      "rag": "n/a",
       "band": {
         "red": 0.05,
         "green": 0.0,
@@ -8038,9 +8421,9 @@
         "rationale": "Price requiring 5pp+ faster growth than delivered over the last 5 years = expectations risk; at or below delivered = undemanding.",
         "centre": null
       },
-      "reason": null,
+      "reason": "no value for the as-of year",
       "note": null,
-      "text": "Implied - delivered growth: -16.2pp GREEN (level green vs indicative band (green <= +0.0pp, red >= +5.0pp))"
+      "text": "Implied - delivered growth: n/a [no value for the as-of year]"
     },
     "justified_pb": {
       "name": "Justified P/B",
@@ -8053,8 +8436,8 @@
       "formula": null,
       "origin": "engine",
       "meaning": "P/B a single-stage residual-income model supports: (ROE - g) / (Ke - g) with sustainable ROE and growth.",
-      "value": 2.279154,
-      "value_text": "2.28x",
+      "value": 1.79423,
+      "value_text": "1.79x",
       "series": {},
       "level": null,
       "trend": null,
@@ -8063,8 +8446,8 @@
       "rag": "n/a",
       "band": null,
       "reason": "informational (neutral direction)",
-      "note": "ROE 23.1%, g 6.0%, Ke 13.51%",
-      "text": "Justified P/B: 2.28x [informational (neutral direction)] Note: ROE 23.1%, g 6.0%, Ke 13.51%"
+      "note": "ROE 19.5%, g 6.0%, Ke 13.51%",
+      "text": "Justified P/B: 1.79x [informational (neutral direction)] Note: ROE 19.5%, g 6.0%, Ke 13.51%"
     },
     "pb_to_justified_pb": {
       "name": "P/B / justified P/B",
@@ -8077,8 +8460,8 @@
       "formula": null,
       "origin": "engine",
       "meaning": "Market P/B relative to what returns justify: above 1 = paying for more than current ROE supports.",
-      "value": 3.626213,
-      "value_text": "3.63x",
+      "value": 4.606265,
+      "value_text": "4.61x",
       "series": {},
       "level": {
         "score": 0.0,
@@ -8101,7 +8484,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "P/B / justified P/B: 3.63x RED (level red vs indicative band (green <= 1.00x, red >= 1.50x))"
+      "text": "P/B / justified P/B: 4.61x RED (level red vs indicative band (green <= 1.00x, red >= 1.50x))"
     },
     "ev_ic": {
       "name": "EV / invested capital",
@@ -8128,18 +8511,18 @@
       "text": "EV / invested capital: 4.67x [informational (neutral direction)]"
     },
     "ev_ic_to_roic_wacc": {
-      "name": "(EV/IC) / (ROIC/WACC)",
+      "name": "EV/IC / justified EV/IC",
       "pillar": "valuation",
       "role": "scored",
       "unit": "x",
       "direction": "lower",
       "kind": "point",
-      "equation": "(EV / IC) / (ROIC / WACC), ROIC = latest, WACC = current",
+      "equation": "(EV / IC) / ((ROIC - g) / (WACC - g)); ROIC = 3y avg, g = min(ROIC x 3y avg reinvestment rate, terminal g)",
       "formula": null,
       "origin": "engine",
-      "meaning": "In a no-growth steady state EV/IC = ROIC/WACC. Above 1 = the market pays for growth or improvement beyond today's returns; below 1 = priced for decline.",
-      "value": 3.666944,
-      "value_text": "3.67x",
+      "meaning": "Market EV/IC relative to the steady-state EV/IC that current returns support with sustainable growth ((ROIC - g)/(WACC - g), the value-driver formula; = ROIC/WACC when g = 0). Above 1 = paying for growth or rising returns beyond the steady state; below 1 = priced for decline.",
+      "value": 4.880297,
+      "value_text": "4.88x",
       "series": {},
       "level": {
         "score": 0.0,
@@ -8161,8 +8544,8 @@
         "centre": null
       },
       "reason": null,
-      "note": null,
-      "text": "(EV/IC) / (ROIC/WACC): 3.67x RED (level red vs indicative band (green <= 1.00x, red >= 1.50x))"
+      "note": "justified EV/IC 0.96x = (ROIC 12.1% - g 4.0%) / (WACC 12.51% - g)",
+      "text": "EV/IC / justified EV/IC: 4.88x RED (level red vs indicative band (green <= 1.00x, red >= 1.50x)) Note: justified EV/IC 0.96x = (ROIC 12.1% - g 4.0%) / (WACC 12.51% - g)"
     },
     "arpu": {
       "name": "ARPU (India mobile)",
@@ -8224,15 +8607,28 @@
         "FY25": 0.172249,
         "FY26": 0.04898
       },
-      "level": null,
+      "level": {
+        "score": 74.14966,
+        "basis": "band",
+        "rag": "green"
+      },
       "trend": null,
       "stability": null,
-      "composite": null,
-      "rag": "n/a",
-      "band": null,
-      "reason": "no sourced band and fewer than 4 same-archetype peers: level not scored",
+      "composite": 74.14966,
+      "rag": "green",
+      "band": {
+        "red": 0.0,
+        "green": 0.04,
+        "origin": "config/sectors/telecom.yaml",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "ARPU growth above CPI inflation (RBI target, config/market.yaml) is real pricing power; below zero is price erosion.",
+        "centre": null
+      },
+      "reason": null,
       "note": null,
-      "text": "ARPU growth: 4.9% [no sourced band and fewer than 4 same-archetype peers: level not scored]"
+      "text": "ARPU growth: 4.9% GREEN (level green vs band (red <= 0.0%, green >= 4.0%))"
     },
     "subscriber_growth": {
       "name": "Subscriber growth",
@@ -8542,7 +8938,6 @@
       "exceptional_size_5y",
       "fcf_to_pat",
       "fcf_to_pat_5y",
-      "implied_minus_delivered_growth",
       "net_debt_to_equity",
       "organic_capital_share_3y",
       "other_income_to_pbt",
@@ -8556,7 +8951,9 @@
       "revenue_growth_volatility",
       "share_count_change"
     ],
-    "sector_flags_triggered": [],
+    "sector_flags_triggered": [
+      "TC03"
+    ],
     "constants": {}
   },
   "manual_kpis": {
@@ -8628,6 +9025,16 @@
       "text": "Estimated exceptional item -5,720 (pre-tax, loss): other income -2.0% of sales vs normal 1.8% (median of other years). Core profit excludes it (tax effect at statutory rate). Override via data/manual (exceptional_items)."
     },
     {
+      "category": "exceptional",
+      "fy": "FY21",
+      "text": "Tax rate 404% vs normal 28% on core PBT 2,589: one-off tax charge of 9,722 treated as one-off; core PAT raised accordingly."
+    },
+    {
+      "category": "exceptional",
+      "fy": "FY25",
+      "text": "Tax rate 2% vs normal 30% on core PBT 38,398: write-back or deferred-tax credit of 10,688 treated as one-off; core PAT reduced accordingly."
+    },
+    {
       "category": "minority",
       "fy": null,
       "text": "Net profit differs from PBT - tax in 10 of 10 years (latest -7,128): minority interest (negative) and share of associates/JVs (positive) sit between PBT and net profit, so the export is consolidated and net profit is the owners' share. Equity excludes minority interest (Screener includes NCI in Other Liabilities); ROIC/ROCE capital therefore omits NCI unless data/manual supplies minority_interest."
@@ -8674,7 +9081,7 @@
     }
   ],
   "findings": {
-    "verdict": "BHARTI AIRTEL LTD creates value: ROIC 15.9% vs WACC 12.5% in FY26. Overall GREEN (62/100); strongest pillar 1 Growth, weakest 8 Valuation; 1 high-severity flag.",
+    "verdict": "BHARTI AIRTEL LTD creates value: ROIC 15.9% vs WACC 12.5% in FY26. Overall GREEN (60/100); strongest pillar 1 Growth, weakest 8 Valuation.",
     "strengths": [
       {
         "kind": "metric",
@@ -8729,19 +9136,19 @@
         "id": "pat_margin",
         "pillar": "margins",
         "rag": "green",
-        "severity": 0.526367,
+        "severity": 0.533745,
         "confidence": 1.0,
-        "score": 0.526367,
+        "score": 0.533745,
         "name": "PAT margin",
         "number": "12.7%",
         "context": "GREEN vs band: red ≤ −0.4%, green ≥ 3.6%",
-        "trend": "improving +3.1 pts/yr over FY22-FY26",
+        "trend": "improving +2.5 pts/yr over FY22-FY26",
         "chain": "+6.7 pts over 3y; 51% from interest burden; interest burden rose 0.46 → 0.68",
         "chain_source": {
           "tree": "roe_dupont",
           "window": "3y"
         },
-        "text": "PAT margin: 12.7% (GREEN vs band: red ≤ −0.4%, green ≥ 3.6%); improving +3.1 pts/yr over FY22-FY26; +6.7 pts over 3y; 51% from interest burden; interest burden rose 0.46 → 0.68"
+        "text": "PAT margin: 12.7% (GREEN vs band: red ≤ −0.4%, green ≥ 3.6%); improving +2.5 pts/yr over FY22-FY26; +6.7 pts over 3y; 51% from interest burden; interest burden rose 0.46 → 0.68"
       },
       {
         "kind": "metric",
@@ -8764,36 +9171,22 @@
         "id": "roe",
         "pillar": "returns",
         "rag": "green",
-        "severity": 0.444852,
+        "severity": 0.451929,
         "confidence": 0.9,
-        "score": 0.400367,
+        "score": 0.406736,
         "name": "Return on equity",
         "number": "20.3%",
         "context": "GREEN vs band: red ≤ 13.5%, green ≥ 18.5%",
-        "trend": "improving +5.0 pts/yr over FY22-FY26",
+        "trend": "improving +3.9 pts/yr over FY22-FY26",
         "chain": "+8.7 pts over 3y; 133% from PAT margin, partly offset by the other drivers; PAT margin rose because interest burden rose 0.46 → 0.68",
         "chain_source": {
           "tree": "roe_dupont",
           "window": "3y"
         },
-        "text": "Return on equity: 20.3% (GREEN vs band: red ≤ 13.5%, green ≥ 18.5%); improving +5.0 pts/yr over FY22-FY26; +8.7 pts over 3y; 133% from PAT margin, partly offset by the other drivers; PAT margin rose because interest burden rose 0.46 → 0.68"
+        "text": "Return on equity: 20.3% (GREEN vs band: red ≤ 13.5%, green ≥ 18.5%); improving +3.9 pts/yr over FY22-FY26; +8.7 pts over 3y; 133% from PAT margin, partly offset by the other drivers; PAT margin rose because interest burden rose 0.46 → 0.68"
       }
     ],
     "weaknesses": [
-      {
-        "kind": "flag",
-        "id": "B05",
-        "pillar": "balance_sheet",
-        "severity_label": "high",
-        "severity": 1.0,
-        "confidence": 1.0,
-        "score": 1.0,
-        "name": "Altman Z'' in distress zone",
-        "covers": [
-          "altman_z_india"
-        ],
-        "text": "B05 Altman Z'' in distress zone: India-adapted Altman Z''-EM score is 4.21 (distress zone < 4.35; working capital/assets -0.17, EBIT/assets 0.12)."
-      },
       {
         "kind": "flag",
         "id": "A01",
@@ -8807,22 +9200,7 @@
           "roe",
           "share_count_change"
         ],
-        "text": "A01 Dilution while ROE falls: Share count rose 6.9% while ROE fell -14.0pp: new equity is being raised and deployed at lower returns."
-      },
-      {
-        "kind": "flag",
-        "id": "B04",
-        "pillar": "balance_sheet",
-        "severity_label": "medium",
-        "severity": 0.6,
-        "confidence": 1.0,
-        "score": 0.6,
-        "name": "Liquidity squeeze",
-        "covers": [
-          "cash_to_st_borrowings",
-          "current_ratio_proxy"
-        ],
-        "text": "B04 Liquidity squeeze: Other assets cover other liabilities only 0.5x and cash covers debt 0.2x: short-term obligations depend on refinancing."
+        "text": "A01 Dilution while ROE falls: Share count rose 6.9% while ROE fell -3.1pp: new equity is being raised and deployed at lower returns."
       },
       {
         "kind": "flag",
@@ -8849,9 +9227,10 @@
         "score": 0.6,
         "name": "P/B well above what returns justify",
         "covers": [
+          "implied_minus_delivered_growth",
           "pb_to_justified_pb"
         ],
-        "text": "V03 P/B well above what returns justify: P/B of 8.3x is 3.6x the 2.3x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+        "text": "V03 P/B well above what returns justify: P/B of 8.3x is 4.6x the 1.8x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
       },
       {
         "kind": "metric",
@@ -8862,12 +9241,44 @@
         "confidence": 0.36,
         "score": 0.27,
         "name": "PAT growth volatility",
-        "number": "3.67",
+        "number": "3.27",
         "context": "RED vs band: red ≥ 1.50, green ≤ 0.50, indicative",
         "trend": "",
         "chain": null,
         "chain_source": null,
-        "text": "PAT growth volatility: 3.67 (RED vs band: red ≥ 1.50, green ≤ 0.50, indicative)"
+        "text": "PAT growth volatility: 3.27 (RED vs band: red ≥ 1.50, green ≤ 0.50, indicative)"
+      },
+      {
+        "kind": "metric",
+        "id": "ebitda_margin_sd_10y",
+        "pillar": "margins",
+        "rag": "red",
+        "severity": 0.716632,
+        "confidence": 0.36,
+        "score": 0.257987,
+        "name": "EBITDA margin volatility (sd)",
+        "number": "+7.8pp",
+        "context": "RED vs band: red ≥ +5.0pp, green ≤ +2.0pp, indicative",
+        "trend": "",
+        "chain": null,
+        "chain_source": null,
+        "text": "EBITDA margin volatility (sd): +7.8pp (RED vs band: red ≥ +5.0pp, green ≤ +2.0pp, indicative)"
+      },
+      {
+        "kind": "metric",
+        "id": "ev_ic_to_roic_wacc",
+        "pillar": "valuation",
+        "rag": "red",
+        "severity": 0.5,
+        "confidence": 0.36,
+        "score": 0.18,
+        "name": "EV/IC / justified EV/IC",
+        "number": "4.88x",
+        "context": "RED vs band: red ≥ 1.50x, green ≤ 1.00x, indicative",
+        "trend": "",
+        "chain": null,
+        "chain_source": null,
+        "text": "EV/IC / justified EV/IC: 4.88x (RED vs band: red ≥ 1.50x, green ≤ 1.00x, indicative)"
       }
     ],
     "watch": [
@@ -8876,16 +9287,16 @@
         "id": "incremental_roic_3y",
         "pillar": "returns",
         "rag": "green",
-        "severity": 0.974513,
+        "severity": 0.991717,
         "confidence": 0.9,
-        "score": 0.877062,
+        "score": 0.892545,
         "name": "Incremental ROIC 3y",
         "number": "29.4%",
         "context": "GREEN vs band: red ≤ 12.5%, green ≥ 17.5%",
-        "trend": "deteriorating −7.8 pts/yr over FY22-FY26",
+        "trend": "deteriorating −9.0 pts/yr over FY22-FY26",
         "chain": null,
         "chain_source": null,
-        "text": "Incremental ROIC 3y: 29.4% (GREEN vs band: red ≤ 12.5%, green ≥ 17.5%); deteriorating −7.8 pts/yr over FY22-FY26"
+        "text": "Incremental ROIC 3y: 29.4% (GREEN vs band: red ≤ 12.5%, green ≥ 17.5%); deteriorating −9.0 pts/yr over FY22-FY26"
       },
       {
         "kind": "metric",
@@ -8921,19 +9332,35 @@
       },
       {
         "kind": "metric",
+        "id": "cfo_to_pat_5y",
+        "pillar": "cash_quality",
+        "rag": "green",
+        "severity": 0.749995,
+        "confidence": 0.6,
+        "score": 0.449997,
+        "name": "CFO / PAT (5y cumulative)",
+        "number": "5.68",
+        "context": "GREEN vs band: red ≤ 0.60, green ≥ 0.90, indicative",
+        "trend": "deteriorating −16.12/yr over FY22-FY26",
+        "chain": null,
+        "chain_source": null,
+        "text": "CFO / PAT (5y cumulative): 5.68 (GREEN vs band: red ≤ 0.60, green ≥ 0.90, indicative); deteriorating −16.12/yr over FY22-FY26"
+      },
+      {
+        "kind": "metric",
         "id": "pat_cagr_3y",
         "pillar": "growth",
         "rag": "green",
-        "severity": 0.702705,
+        "severity": 0.728325,
         "confidence": 0.54,
-        "score": 0.379461,
+        "score": 0.393296,
         "name": "PAT CAGR 3y",
         "number": "47.3%",
         "context": "GREEN vs band: red ≤ 4.0%, green ≥ 8.9%",
-        "trend": "deteriorating −15.1 pts/yr over FY22-FY26",
+        "trend": "deteriorating −16.9 pts/yr over FY22-FY26",
         "chain": null,
         "chain_source": null,
-        "text": "PAT CAGR 3y: 47.3% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%); deteriorating −15.1 pts/yr over FY22-FY26"
+        "text": "PAT CAGR 3y: 47.3% (GREEN vs band: red ≤ 4.0%, green ≥ 8.9%); deteriorating −16.9 pts/yr over FY22-FY26"
       },
       {
         "kind": "flag",
@@ -8948,20 +9375,6 @@
           "ebitda_margin_sd_10y"
         ],
         "text": "M07 Volatile margins: EBITDA margin has a standard deviation of +7.8pp over the last decade: weak pricing power or commodity exposure."
-      },
-      {
-        "kind": "flag",
-        "id": "V04",
-        "pillar": "valuation",
-        "severity_label": "low",
-        "severity": 0.3,
-        "confidence": 1.0,
-        "score": 0.3,
-        "name": "EV/IC rich relative to ROIC/WACC",
-        "covers": [
-          "ev_ic_to_roic_wacc"
-        ],
-        "text": "V04 EV/IC rich relative to ROIC/WACC: EV/IC is 4.7x, 3.7x what current ROIC/WACC would support in steady state."
       }
     ],
     "bull": [
@@ -8979,41 +9392,41 @@
       },
       {
         "ref": "pat_margin",
-        "text": "PAT margin: 12.7% (GREEN vs band: red ≤ −0.4%, green ≥ 3.6%); improving +3.1 pts/yr over FY22-FY26; +6.7 pts over 3y; 51% from interest burden; interest burden rose 0.46 → 0.68 [pat_margin]"
+        "text": "PAT margin: 12.7% (GREEN vs band: red ≤ −0.4%, green ≥ 3.6%); improving +2.5 pts/yr over FY22-FY26; +6.7 pts over 3y; 51% from interest burden; interest burden rose 0.46 → 0.68 [pat_margin]"
       },
       {
         "ref": "economic_profit",
-        "text": "Creates value: ROIC 15.9% vs WACC 12.5%; economic profit Rs 10,368 cr in FY26, positive in 2 of 9 years [economic_profit]"
+        "text": "Creates value: ROIC 15.9% vs WACC 12.5%; economic profit Rs 10,368 cr in FY26, positive in 1 of 9 years [economic_profit]"
       },
       {
         "ref": "pe_percentile_10y",
-        "text": "P/E 42.60x sits at the 25th percentile of its own 10-year history [pe_percentile_10y]"
+        "text": "P/E 42.60x sits at the 12th percentile of its own 10-year history [pe_percentile_10y]"
       },
       {
         "ref": "ev_ebitda",
         "text": "EV/EBITDA 11.01x vs Damodaran India industry 16.19x (Telecom (Wireless)) [ev_ebitda]"
       },
       {
-        "ref": "implied_minus_delivered_growth",
-        "text": "Market implies 21.8% FCF growth for 10 years vs 38.1% delivered (gap −16.2 pts) [implied_minus_delivered_growth]"
+        "ref": "roe_dupont",
+        "text": "Largest positive driver of return on equity over 3y: Interest burden (+0.215) -> +5.9pp (68% of the change) [roe_dupont]"
       }
     ],
     "bear": [
       {
-        "ref": "B05",
-        "text": "B05 Altman Z'' in distress zone: India-adapted Altman Z''-EM score is 4.21 (distress zone < 4.35; working capital/assets -0.17, EBIT/assets 0.12). [B05]"
-      },
-      {
         "ref": "A01",
-        "text": "A01 Dilution while ROE falls: Share count rose 6.9% while ROE fell -14.0pp: new equity is being raised and deployed at lower returns. [A01]"
-      },
-      {
-        "ref": "B04",
-        "text": "B04 Liquidity squeeze: Other assets cover other liabilities only 0.5x and cash covers debt 0.2x: short-term obligations depend on refinancing. [B04]"
+        "text": "A01 Dilution while ROE falls: Share count rose 6.9% while ROE fell -3.1pp: new equity is being raised and deployed at lower returns. [A01]"
       },
       {
         "ref": "G01",
         "text": "G01 Profit growth far ahead of revenue growth: Core PAT compounded at 47.3% a year over 3 years while revenue grew 14.9%. Growth driven by margin expansion or lower costs rarely compounds for long; check whether the margin gain is structural or cyclical. [G01]"
+      },
+      {
+        "ref": "V03",
+        "text": "V03 P/B well above what returns justify: P/B of 8.3x is 4.6x the 1.8x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise. [V03]"
+      },
+      {
+        "ref": "pat_growth_volatility",
+        "text": "PAT growth volatility: 3.27 (RED vs band: red ≥ 1.50, green ≤ 0.50, indicative) [pat_growth_volatility]"
       },
       {
         "ref": "pb_percentile_10y",
@@ -9127,6 +9540,11 @@
           "id": "A05",
           "name": "Acquisition spend followed by falling ROIC",
           "missing": "acquisition_roic_delta_3y FY26"
+        },
+        {
+          "id": "V01",
+          "name": "Priced for acceleration",
+          "missing": "implied_minus_delivered_growth FY26"
         }
       ],
       "unverified": {
@@ -9139,6 +9557,8 @@
         "Estimated exceptional item -39,345 (pre-tax, loss): other income -43.2% of sales vs normal 1.8% (median of other years). Core profit excludes it (tax effect at statutory rate). Override via data/manual (exceptional_items).",
         "Estimated exceptional item -6,020 (pre-tax, loss): other income -4.2% of sales vs normal 1.8% (median of other years). Core profit excludes it (tax effect at statutory rate). Override via data/manual (exceptional_items).",
         "Estimated exceptional item -5,720 (pre-tax, loss): other income -2.0% of sales vs normal 1.8% (median of other years). Core profit excludes it (tax effect at statutory rate). Override via data/manual (exceptional_items).",
+        "Tax rate 404% vs normal 28% on core PBT 2,589: one-off tax charge of 9,722 treated as one-off; core PAT raised accordingly.",
+        "Tax rate 2% vs normal 30% on core PBT 38,398: write-back or deferred-tax credit of 10,688 treated as one-off; core PAT reduced accordingly.",
         "Net profit differs from PBT - tax in 10 of 10 years (latest -7,128): minority interest (negative) and share of associates/JVs (positive) sit between PBT and net profit, so the export is consolidated and net profit is the owners' share. Equity excludes minority interest (Screener includes NCI in Other Liabilities); ROIC/ROCE capital therefore omits NCI unless data/manual supplies minority_interest.",
         "Capex is not in the export. Proxy = change in net block + change in CWIP + depreciation (includes acquired fixed assets and Ind AS 116 right-of-use additions; impairments and disposals understate it). FCF = CFO - capex proxy.",
         "Ind AS 116 (leases) visible in FY20, the first period starting on/after 1-Apr-2019: depreciation/sales +5.2%, other opex/sales -9.6%, interest/sales +2.8% vs FY19. Lease rentals moved out of operating costs into depreciation and interest, so EBITDA margins before and after FY20 are not comparable; lease liabilities sit inside Borrowings."

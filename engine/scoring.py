@@ -249,3 +249,62 @@ def roll_up(metric_results: Dict[str, Dict], family: str, cfg: Config, triggered
     overall = {"score": score, "rag": rag, "coverage": (sum(w for _, w in avail) / total_w) if total_w else 0.0,
                "high_flags": n_high, "capped_by_flags": capped, "weights_basis": fam_key}
     return pillars, overall
+
+
+# ---------------------------------------------------------------------------------------------- mergers (Session 4)
+def materiality_exclusions(results: Dict[str, Dict], rules: List[Dict]) -> List[str]:
+    """config/scoring.yaml: materiality. A metric is scored only when the quantity it judges is material: when the gate
+    metric's latest value is below `min`, the metric keeps its value but gets no RAG (reason recorded)."""
+    out = []
+    for rule in rules or []:
+        r, g = results.get(rule["metric"]), results.get(rule["gate"])
+        if not r or r.get("rag") is None or not g or g.get("value") is None:
+            continue
+        v = float(g["value"])
+        if v < float(rule["min"]):
+            r.update({"level": None, "composite": None, "rag": None,
+                      "reason": f"{rule['reason']} ({rule['gate']} {v:.2f} < {float(rule['min']):g})"})
+            out.append(rule["metric"])
+    return out
+
+
+def merger_window_flags(flags: List[Dict], rules: List[Dict], merged: List[str]) -> List[Dict]:
+    """A triggered flag whose condition reads a growth metric that merger_exclusions un-scored becomes not_evaluable:
+    its comparison spans the same share-paid merger, so it measures the deal, not the business."""
+    import re
+
+    conds = {r["id"]: r["condition"] for r in rules}
+    out = []
+    for f in flags:
+        hit = sorted(set(re.findall(r"['\"]([A-Za-z0-9_:]+)['\"]", conds.get(f["id"], ""))) & set(merged))
+        if f["status"] == "triggered" and hit:
+            f = {k: v for k, v in f.items() if k not in ("values", "text", "suppresses")}
+            f.update(status="not_evaluable", missing=f"window spans a share-paid merger ({', '.join(hit)} not scored)")
+        out.append(f)
+    return out
+
+
+def merger_exclusions(results: Dict[str, Dict], notes: List[Dict], last_fy: str) -> List[str]:
+    """Growth CAGRs whose window spans a merger or balance-sheet step change (standardisation note category
+    'merger') are not scored: that growth is largely inorganic, so it is neither an organic strength nor weakness.
+    Returns the metric ids that were un-scored."""
+    import re
+
+    # only the "paid in shares" step (assets +40% with share count +10%): a plain asset jump can be leases or a capital raise
+    years = sorted({n["fy"] for n in notes if n.get("category") == "merger" and n.get("fy") and "paid in shares" in n.get("text", "")},
+                   key=fy_year)
+    if not years:
+        return []
+    t = fy_year(last_fy)
+    out = []
+    for mid, r in results.items():
+        m = re.search(r"_cagr_(\d+)y$", mid)
+        if not m or r.get("rag") is None:
+            continue
+        n = int(m.group(1))
+        hit = [y for y in years if t - n < fy_year(y) <= t]
+        if hit:
+            r.update({"level": None, "composite": None, "rag": None,
+                      "reason": f"window spans a merger or balance-sheet step change ({', '.join(hit)}): growth largely inorganic, not scored"})
+            out.append(mid)
+    return out

@@ -1,0 +1,927 @@
+# Pre-registered expectations (Session 4). Written from cited analyst/press commentary BEFORE the engine is run or
+# compared; committed before any comparison (see git log). Signals were chosen from the metric registry and flag list
+# by meaning (docs/metrics.md, docs/flags.md), not from engine outputs.
+#
+# strengths: matched if any signal metric is GREEN at the as-of year.
+# weaknesses: matched if any signal metric is RED, or AMBER with a deteriorating trend, or any signal flag fired.
+# tag: financial (visible in the Screener financials) | kpi (needs a manual KPI) | qualitative (not a number).
+# Disclosure: earlier sessions produced reports and parts of the TCS, HDFC Bank, DLF, Tata Steel and Yes Bank outputs
+# were seen; every item below rests on the cited sources, not on those outputs.
+version: 1
+companies:
+  TCS:
+    archetype: it_services
+    role: test
+    asof: FY26
+    strengths:
+      - id: TCS-S1
+        claim: "Industry-leading operating margin (about 25% EBIT in Q4 FY26, a four-year high)"
+        tag: financial
+        signals: {metrics: [ebit_margin, ebitda_margin, operating_margin, pat_margin], flags: []}
+        sources:
+          - {url: "https://www.outlookbusiness.com/markets/tcs-shares-fall-2-despite-strong-q4-results", date: "2026-04-10", what: "operating margin at a four-year high of 25.3%"}
+          - {url: "https://www.whalesbook.com/news/English/tech/TCS-Q4-AI-Revenue-Soars-But-Analysts-Split-on-Margin-Outlook/69d86b4ae0ea10058db5365a", date: "2026-04-10", what: "margin outlook debated after a strong quarter"}
+      - id: TCS-S2
+        claim: "Strong cash generation (operating cash flow above 100% of net profit)"
+        tag: financial
+        signals: {metrics: [cfo_to_pat_5y, fcf_to_pat_5y, fcf_to_pat, cfo_to_ebitda], flags: []}
+        sources:
+          - {url: "https://blog.liquide.life/tcs-q4-results-2026-dividend-share-price-target-analysis/", date: "2026-04-10", what: "OCF about 107% of Q4 net profit"}
+      - id: TCS-S3
+        claim: "Record deal wins: Q4 TCV about USD 12 bn, FY26 order book TCV about USD 40.7 bn"
+        tag: kpi
+        signals: {metrics: [book_to_bill, deal_tcv_growth], flags: []}
+        sources:
+          - {url: "https://www.swastika.co.in/blog/tcs-q4-fy26-review-record-deal-wins-vs-weak-bfsi---what-should-investors-focus-on", date: "2026-04", what: "record deal wins vs weak BFSI"}
+    weaknesses:
+      - id: TCS-W1
+        claim: "Revenue growth stalled: FY26 USD revenue -0.5%, constant currency -2.4%"
+        tag: financial
+        signals: {metrics: [revenue_cagr_3y, cc_growth, q_revenue_yoy, revenue_cagr_5y], flags: [IT03, G06]}
+        sources:
+          - {url: "https://www.outlookbusiness.com/markets/tcs-shares-fall-2-despite-strong-q4-results", date: "2026-04-10", what: "brokerages flag growth concerns; FY26 dollar revenue down 0.5%"}
+          - {url: "https://www.businesstoday.in/amp/markets/stocks/story/tcs-share-price-target-at-rs-3350-15-brokerages-share-views-post-q4-results-524986-2026-04-10", date: "2026-04-10", what: "18 brokerages on growth visibility"}
+      - id: TCS-W2
+        claim: "BFSI weakness and uncertain demand recovery (flat BFSI deal bookings)"
+        tag: qualitative
+        signals: {metrics: [], flags: []}
+        sources:
+          - {url: "https://www.swastika.co.in/blog/tcs-q4-fy26-review-record-deal-wins-vs-weak-bfsi---what-should-investors-focus-on", date: "2026-04", what: "weak BFSI"}
+      - id: TCS-W3
+        claim: "Attrition back up to about 13.7% (LTM) with rising AI and wage costs"
+        tag: kpi
+        signals: {metrics: [attrition, employee_pct], flags: [IT01, M04]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/tech/TCS-Q4-Results-Strong-But-Rising-AI-Costs-and-Attrition-Raise-Concerns/69d799bfe1f61dfbf512b8b3", date: "2026-04-09", what: "rising AI costs and attrition raise concerns"}
+  HDFCBANK:
+    archetype: bank
+    role: test
+    asof: FY26
+    strengths:
+      - id: HDFCBANK-S1
+        claim: "Robust and improving asset quality (GNPA about 1.15%)"
+        tag: kpi
+        signals: {metrics: [gnpa_ratio, nnpa_ratio, credit_cost], flags: []}
+        sources:
+          - {url: "https://www.jmfinancialservices.in/blogs-and-articles/hdfc-bank-q4-fy26-results-profit-jumps-9percent-indian-rupee13-dividend-announced", date: "2026-04-18", what: "GNPA 1.15%"}
+          - {url: "https://www.businesstoday.in/markets/stocks/story/buy-hdfc-bank-shares-chairman-exit-behind-us-target-prices-post-q4-results-526399-2026-04-20", date: "2026-04-20", what: "MOFSL: asset quality robust"}
+      - id: HDFCBANK-S2
+        claim: "Strong deposit mobilisation (deposits +14.4% YoY), bringing the CD ratio down"
+        tag: kpi
+        signals: {metrics: [deposit_growth], flags: []}
+        sources:
+          - {url: "https://www.businesstoday.in/markets/stocks/story/buy-hdfc-bank-shares-chairman-exit-behind-us-target-prices-post-q4-results-526399-2026-04-20", date: "2026-04-20", what: "deposits grew 14.4% YoY; CD ratio fell to 94.6%"}
+      - id: HDFCBANK-S3
+        claim: "Well capitalised: CRAR about 19.7%, CET1 about 17.3%"
+        tag: kpi
+        signals: {metrics: [crar, cet1, equity_to_assets], flags: []}
+        sources:
+          - {url: "https://www.hdfc.bank.in/content/dam/hdfcbankpws/in/en/discover-more/news-room/press-release/2026/press-release-march-2026.pdf", date: "2026-04-18", what: "bank's Q4 FY26 release: CRAR 19.7%, CET1 17.3%"}
+    weaknesses:
+      - id: HDFCBANK-W1
+        claim: "Net interest margin compression and weak NII growth (NIM about 3.4%, NII +3-4% YoY)"
+        tag: financial
+        signals: {metrics: [nii_to_assets, nim_reported, nii_cagr_3y], flags: [M08]}
+        sources:
+          - {url: "https://www.plindia.com/?p=28866", date: "2026-04-20", what: "PL Capital cuts core profit forecasts on NIM miss and softer fees"}
+          - {url: "https://www.jmfinancialservices.in/blogs-and-articles/hdfc-bank-q4-fy26-results-profit-jumps-9percent-indian-rupee13-dividend-announced", date: "2026-04-18", what: "NIM 3.38%, NII growth 3.2%"}
+      - id: HDFCBANK-W2
+        claim: "Loan growth slow versus peers (ICICI advances +15.8%), retail growth modest"
+        tag: kpi
+        signals: {metrics: [loan_growth, q_revenue_yoy], flags: []}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/bankingfinance/HDFC-Bank-Profit-Rises-91percent-Shares-Slip-on-Slowing-Income-Growth/69e5d4e3bca97ee1069353ca", date: "2026-04-18", what: "slowing income growth; loan growth slower than ICICI"}
+      - id: HDFCBANK-W3
+        claim: "Credit-deposit ratio still high (about 95%) after the HDFC merger"
+        tag: kpi
+        signals: {metrics: [cd_ratio], flags: [BK07]}
+        sources:
+          - {url: "https://www.businesstoday.in/markets/stocks/story/buy-hdfc-bank-shares-chairman-exit-behind-us-target-prices-post-q4-results-526399-2026-04-20", date: "2026-04-20", what: "CD ratio 94.6%"}
+  BAJFINANCE:
+    archetype: nbfc
+    role: test
+    asof: FY26
+    strengths:
+      - id: BAJFINANCE-S1
+        claim: "AUM growth of about 22% to Rs 5.1 lakh crore, guided 22-24% for FY27"
+        tag: kpi
+        signals: {metrics: [aum_growth, assets_cagr_3y, revenue_cagr_3y], flags: []}
+        sources:
+          - {url: "https://www.plindia.com/news/bajaj-finance-q4fy26-net-profit-rises-22/", date: "2026-04-29", what: "PAT +22%, AUM Rs 5.1 lakh crore"}
+          - {url: "https://upstox.com/news/market-news/stocks/bajaj-finance-shares-jump-over-4-post-q4-earnings-what-is-driving-street-optimism/article-192960/", date: "2026-04-30", what: "analysts bullish on earnings growth and stable FY27 outlook"}
+      - id: BAJFINANCE-S2
+        claim: "Asset quality improving: credit cost down to about 1.6% of AUM, lower GNPA"
+        tag: kpi
+        signals: {metrics: [credit_cost_aum, gnpa_ratio, nnpa_ratio], flags: []}
+        sources:
+          - {url: "https://pre.sharekhan.com/news/earning/details/bajaj-finance-q4fy2026/all", date: "2026-04-29", what: "Sharekhan: annualised credit cost 1.57%, down 66 bps YoY"}
+      - id: BAJFINANCE-S3
+        claim: "Strong earnings growth and returns (PAT +22%, high ROE/ROA)"
+        tag: financial
+        signals: {metrics: [pat_cagr_3y, pat_cagr_5y, roe, roa, eps_cagr_3y], flags: []}
+        sources:
+          - {url: "https://upstox.com/news/market-news/stocks/bajaj-finance-shares-jump-over-4-post-q4-earnings-what-is-driving-street-optimism/article-192960/", date: "2026-04-30", what: "strong earnings growth"}
+    weaknesses:
+      - id: BAJFINANCE-W1
+        claim: "NIM compression (about 9.5%, slipping) as borrowing costs rise"
+        tag: financial
+        signals: {metrics: [nii_to_assets, spread], flags: [NB05, M08]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/bankingfinance/Bajaj-Finance-Growth-Marred-by-NIM-Squeeze-and-Succession-Woes/69f8b4359d1c906648247fb1", date: "2026-05", what: "growth marred by NIM squeeze"}
+          - {url: "https://www.plindia.com/?p=30130", date: "2026-04-30", what: "PL Capital expects NIM compression as bond yields harden"}
+      - id: BAJFINANCE-W2
+        claim: "Rising cost of borrowing and a shrinking deposit book (deposits -4% YoY)"
+        tag: kpi
+        signals: {metrics: [cost_of_borrowing, cost_of_funds, deposit_share], flags: [NB05]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/bankingfinance/Bajaj-Finance-Sees-22percent-Q4-Profit-Jump-Sector-Headwinds-Test-Growth/69f355f108235f0c2a21825b", date: "2026-04-30", what: "sector headwinds, rising borrowing costs"}
+          - {url: "https://www.business-standard.com/markets/capital-market-news/bajaj-finance-q4-deposits-drop-4-yoy-aum-crosses-rs-5-lakh-crore-126040400204_1.html", date: "2026-04-04", what: "deposit book declined 4% YoY"}
+      - id: BAJFINANCE-W3
+        claim: "Valuation rich relative to returns; growth/return targets seen as optimistic (Macquarie, Bernstein underperform)"
+        tag: financial
+        signals: {metrics: [pb_to_justified_pb, implied_pb_growth_minus_delivered, pb_percentile_10y], flags: [V03, V05, V06]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/bankingfinance/Bajaj-Finance-Reports-Strong-Profit-Amid-Valuation-and-Sector-Worries/69f2e8e208235f0c2a1d337b", date: "2026-04-30", what: "valuation and sector worries"}
+  HDFCLIFE:
+    archetype: insurance
+    role: test
+    asof: FY26
+    strengths:
+      - id: HDFCLIFE-S1
+        claim: "Embedded value growth of about 12% with operating RoEV about 15%"
+        tag: kpi
+        signals: {metrics: [ev_growth, operating_roev], flags: []}
+        sources:
+          - {url: "https://www.hdfclife.com/content/dam/hdfclifeinsurancecompany/about-us/pdf/investor-relations/financial-information/Quarterly-financial-results/HDFC-Life-12M-FY2026-Press-Release.pdf", date: "2026-04-16", what: "EV Rs 62,139 crore; operating RoEV 15.0%"}
+      - id: HDFCLIFE-S2
+        claim: "Stable persistency (13th month about 85%, 61st month about 64%)"
+        tag: kpi
+        signals: {metrics: [persistency_13m, persistency_61m], flags: []}
+        sources:
+          - {url: "https://www.hdfclife.com/content/dam/hdfclifeinsurancecompany/about-us/pdf/investor-relations/financial-information/Quarterly-financial-results/HDFC-Life-12M-FY2026-Press-Release.pdf", date: "2026-04-16", what: "persistency ratios stable"}
+      - id: HDFCLIFE-S3
+        claim: "Protection sales surged"
+        tag: qualitative
+        signals: {metrics: [], flags: []}
+        sources:
+          - {url: "https://www.whalesbook.com/news/undefined/insurance/HDFC-Life-falls-on-Q4-miss-protection-sales-surge-capital-boost-planned/69e0cdc67bc5659bb5b08c8c", date: "2026-04-16", what: "protection sales surge"}
+    weaknesses:
+      - id: HDFCLIFE-W1
+        claim: "VNB margin compressed to 24.2% from 25.6% (surrender rules, GST ITC, non-par mix)"
+        tag: kpi
+        signals: {metrics: [vnb_margin], flags: [IN03]}
+        sources:
+          - {url: "https://www.businesstoday.in/markets/stocks/story/up-to-36-upside-hdfc-life-share-price-target-raised-post-q4-results-dividend-2026-heres-why-526125-2026-04-17", date: "2026-04-17", what: "FY26 VNB margin 24.2% vs 25.6%"}
+          - {url: "https://www.barodaetrade.com/Reports/HDFCLife-Q4FY26ResultReview17Apr26-Research.pdf", date: "2026-04-17", what: "margin contraction of 140 bps"}
+      - id: HDFCLIFE-W2
+        claim: "Weak growth: FY26 VNB +2%, Q4 APE +0.4% (JPMorgan), Q4 VNB -8%"
+        tag: kpi
+        signals: {metrics: [vnb_growth, ape_growth], flags: [IN04]}
+        sources:
+          - {url: "https://upstox.com/news/market-news/stocks/hdfc-life-shares-fall-4-on-missing-vnb-growth-estimate-dividend-declared-check-q4-numbers/article-192298/", date: "2026-04-17", what: "VNB growth missed; JPMorgan cut target"}
+      - id: HDFCLIFE-W3
+        claim: "Solvency down to 177% (from 194%), requiring a capital raise"
+        tag: kpi
+        signals: {metrics: [solvency_ratio], flags: [IN01]}
+        sources:
+          - {url: "https://www.multibagg.ai/market-pulse/articles/hdfc-life-q4-fy26-solvency-cmo2ehetjr3ibph0jmxnyzy73", date: "2026-04-16", what: "solvency 177%; capital raise planned"}
+  HINDUNILVR:
+    archetype: fmcg
+    role: test
+    asof: FY26
+    strengths:
+      - id: HINDUNILVR-S1
+        claim: "Volume recovery: underlying volume growth about 6% in Q4 FY26 (best in 12 quarters), 4% for FY26"
+        tag: kpi
+        signals: {metrics: [volume_growth], flags: []}
+        sources:
+          - {url: "https://chanakyanipothi.com/latest-news/hul-q4-results-fy26-profit-volume-growth-analysis/", date: "2026-04-30", what: "volume growth 6%"}
+          - {url: "https://scanx.trade/stock-market-news/companies/hul-q4-fy26-earnings-call-8-revenue-growth-marks-highest-quarterly-performance-in-12-quarters/39734794", date: "2026-04-30", what: "highest quarterly growth in 12 quarters"}
+      - id: HINDUNILVR-S2
+        claim: "High and resilient EBITDA margin (about 23.7%), Q4 margin beat"
+        tag: financial
+        signals: {metrics: [ebitda_margin, ebit_margin, gross_margin], flags: []}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/consumer-products/HUL-Beats-Q4-Estimates-With-Margin-Surprise-Declares-Dividend/69f2e40108235f0c2a1d20e2", date: "2026-04-30", what: "margin surprise; EBITDA margin 23.7%"}
+      - id: HINDUNILVR-S3
+        claim: "Revenue growth accelerating (Q4 +8% YoY)"
+        tag: financial
+        signals: {metrics: [q_revenue_yoy, q_revenue_yoy_trend], flags: []}
+        sources:
+          - {url: "https://www.whalesbook.com/corporate-news/English/consumer-products/HUL-Q4-FY26-Revenue-Rises-8percent-Profit-Jumps-20percent-Driven-by-Strong-Volumes/69f2e6ce08235f0c2a1d2b63", date: "2026-04-30", what: "revenue +8%"}
+    weaknesses:
+      - id: HINDUNILVR-W1
+        claim: "Core profit growth weak (about +4% excluding the Nutritionalab stake-sale gain); headline PAT flattered by exceptional items"
+        tag: financial
+        signals: {metrics: [pat_cagr_3y, eps_cagr_3y, exceptional_size_5y, exceptional_frequency_5y], flags: [Q05]}
+        sources:
+          - {url: "https://chanakyanipothi.com/latest-news/hul-q4-results-fy26-profit-volume-growth-analysis/", date: "2026-04-30", what: "profit surges 21% on exceptional gains; core PAT up about 4%"}
+      - id: HINDUNILVR-W2
+        claim: "Margin pressure from input costs (palm oil, crude-linked) and higher expenses"
+        tag: financial
+        signals: {metrics: [gross_margin_change_1y, q_ebitda_margin_yoy_change, materials_pct, gm_commodity_pass_through], flags: [M01, M03, FM04]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/brokerage-reports/HUL-Revenue-Jumps-8percent-Amid-Margin-Squeeze-and-Valuation-Worries/69f5f79f9d1c9066481da574", date: "2026-05", what: "margin squeeze"}
+          - {url: "https://www.multibagg.ai/market-pulse/articles/hul-target-2026-nuvama-cuts-cmoqmofb378u5p50jnmj78yg8", date: "2026-05", what: "Nuvama cut target on higher expenses and lower margin"}
+      - id: HINDUNILVR-W3
+        claim: "Valuation elevated relative to growth (Systematix Hold)"
+        tag: financial
+        signals: {metrics: [pe_percentile_10y, ev_ebitda_percentile_10y, implied_minus_delivered_growth, ev_ic_to_roic_wacc], flags: [V01, V02, V04]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/consumer-products/HUL-Posts-Strong-6percent-Growth-Amid-High-Valuation-Worries/69f9b3f0d87e3288bea9388a", date: "2026-05", what: "high valuation worries"}
+  ASIANPAINT:
+    archetype: consumer_manufacturing
+    role: test
+    asof: FY26
+    strengths:
+      - id: ASIANPAINT-S1
+        claim: "Margin expansion: consolidated PBDIT margin 19.4% vs 17.2% (cost discipline, raw-material deflation)"
+        tag: financial
+        signals: {metrics: [ebitda_margin, gross_margin, q_ebitda_margin_yoy_change, gross_margin_change_1y], flags: []}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/consumer-products/Asian-Paints-Q4-Surge-Margin-Expansion-vs-Sector-Reality/6a1cf0f9cc8b4288bbd01ca7", date: "2026-05", what: "margin expansion"}
+          - {url: "https://www.plindia.com/pl-research/asian-paints-apnt-in-q4fy26-result-update-steady-growth-outlook-but-margins-have-peaked-out-hold/", date: "2026-05", what: "PL: steady growth outlook"}
+      - id: ASIANPAINT-S2
+        claim: "Decorative volume growth recovered to about 12% in Q4 FY26"
+        tag: kpi
+        signals: {metrics: [volume_growth], flags: []}
+        sources:
+          - {url: "https://www.indmoney.com/blog/stocks/is-asian-paints-growth-making-a-comeback", date: "2026-05", what: "volume growth 12.4%, value 10.2%"}
+      - id: ASIANPAINT-S3
+        claim: "Strong Q4 profit rebound (net profit up about 69%)"
+        tag: financial
+        signals: {metrics: [q_pat_yoy], flags: []}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/consumer-products/Asian-Paints-Q4-Profit-Jumps-69percent-Amidst-Geopolitical-Caution/6a19661949974139aecee88f", date: "2026-05", what: "Q4 profit +69%"}
+    weaknesses:
+      - id: ASIANPAINT-W1
+        claim: "Value growth lagging volume (price cuts, downtrading): weak multi-year revenue growth"
+        tag: financial
+        signals: {metrics: [revenue_cagr_3y, revenue_cagr_5y, price_mix_growth, ebitda_cagr_3y, pat_cagr_3y], flags: [G06]}
+        sources:
+          - {url: "https://www.indmoney.com/blog/stocks/is-asian-paints-growth-making-a-comeback", date: "2026-05", what: "volume 12.4% vs value 10.2%; growth comeback question"}
+      - id: ASIANPAINT-W2
+        claim: "Unprecedented competition (Birla Opus, JSW Paints) threatening market share and pricing"
+        tag: qualitative
+        signals: {metrics: [], flags: []}
+        sources:
+          - {url: "https://www.plindia.com/pl-research/asian-paints-apnt-in-q4fy26-result-update-steady-growth-outlook-but-margins-have-peaked-out-hold/", date: "2026-05", what: "competition from Birla Opus, JSW Akzo, JK Cement has not eased"}
+      - id: ASIANPAINT-W3
+        claim: "Premium valuation hard to justify; margins seen as having peaked (PL Hold)"
+        tag: financial
+        signals: {metrics: [pe_percentile_10y, ev_ebitda_percentile_10y, implied_minus_delivered_growth, ev_ic_to_roic_wacc], flags: [V01, V02, V04]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/brokerage-reports/Asian-Paints-Rally-Hits-Resistance-Analysts-Weigh-Margin-Risks/6a1d149dcc8b4288bbd03856", date: "2026-05", what: "premium valuation some analysts find hard to justify"}
+  TATASTEEL:
+    archetype: metals
+    role: test
+    asof: FY26
+    strengths:
+      - id: TATASTEEL-S1
+        claim: "Earnings rebound led by India (Q4 PAT more than doubled; India EBITDA margin at a 15-year high)"
+        tag: financial
+        signals: {metrics: [q_pat_yoy, q_ebitda_margin_yoy_change, ebitda_per_tonne_vs_avg, ebitda_cagr_3y], flags: []}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/industrial-goodsservices/Tata-Steel-India-Growth-Powers-Results-Europe-Woes-Loom-Valuation-Focus/6a0a654c591776c1328943be", date: "2026-05-18", what: "India growth powers results"}
+          - {url: "https://insights.dsij.in/appmindshare/tata-group-backed-steel-company-reports-q4fy26-results-pat-jumps-147-announces-rs-4-per-share-dividend-id021-57166", date: "2026-05-15", what: "PAT +147%"}
+      - id: TATASTEEL-S2
+        claim: "Deleveraging: net debt cut by Rs 2,285 crore to Rs 80,144 crore; net debt/EBITDA 2.3x"
+        tag: financial
+        signals: {metrics: [debt_vs_ebitda_growth, net_debt_to_ebitda], flags: []}
+        sources:
+          - {url: "https://www.inkl.com/news/tata-steel-q4-net-more-than-doubles-on-india-strength-europe-recovery", date: "2026-05-15", what: "net debt down to Rs 80,144 crore, 2.3x EBITDA"}
+      - id: TATASTEEL-S3
+        claim: "European turnaround under way (Netherlands EBITDA Rs 624 crore vs Rs 132 crore)"
+        tag: qualitative
+        signals: {metrics: [], flags: []}
+        sources:
+          - {url: "https://www.inkl.com/news/tata-steel-q4-net-more-than-doubles-on-india-strength-europe-recovery", date: "2026-05-15", what: "Europe recovery"}
+    weaknesses:
+      - id: TATASTEEL-W1
+        claim: "UK business still loss-making (EBITDA loss Rs 591 crore in Q4)"
+        tag: qualitative
+        signals: {metrics: [], flags: []}
+        sources:
+          - {url: "https://www.multibagg.ai/market-pulse/articles/tata-steel-q4-fy26-europe-risk-cmpb1zy960brlnv0jjcu8868o", date: "2026-05", what: "UK losses narrowed but large; Europe risk"}
+      - id: TATASTEEL-W2
+        claim: "Dutch emissions/permit and steel-price risks in Europe"
+        tag: qualitative
+        signals: {metrics: [], flags: []}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/industrial-goodsservices/Tata-Steel-India-Profit-Surge-Meets-Dutch-Permit-Risk/6a07f6d1e125a601ebe2d766", date: "2026-05-16", what: "Dutch permit risk"}
+      - id: TATASTEEL-W3
+        claim: "Valuation high relative to the pace of Europe's recovery"
+        tag: financial
+        signals: {metrics: [pb_percentile_10y, ev_ebitda_percentile_10y, pe_percentile_10y, implied_minus_delivered_growth, ev_ic_to_roic_wacc], flags: [V01, V02, V04]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/industrial-goodsservices/Tata-Steel-India-Growth-Powers-Results-Europe-Woes-Loom-Valuation-Focus/6a0a654c591776c1328943be", date: "2026-05-18", what: "high valuation needs careful assessment"}
+  ULTRACEMCO:
+    archetype: cement
+    role: test
+    asof: FY26
+    strengths:
+      - id: ULTRACEMCO-S1
+        claim: "Volume growth about 9% YoY (record quarter), helped by acquisitions and capacity crossing 200 mtpa"
+        tag: financial
+        signals: {metrics: [revenue_cagr_3y, q_revenue_yoy, revenue_cagr_5y], flags: []}
+        sources:
+          - {url: "https://www.business-standard.com/markets/news/ultratech-cement-q4-results-analyst-outlook-cost-pressure-risks-126042800361_1.html", date: "2026-04-28", what: "volume +9% YoY to 44.7 mt; JM Financial: strong operating performance"}
+      - id: ULTRACEMCO-S2
+        claim: "EBITDA per tonne up 11% YoY to about Rs 1,253 (better realisations, cost cuts of Rs 185/t)"
+        tag: kpi
+        signals: {metrics: [ebitda_per_tonne, ebitda_per_tonne_vs_avg], flags: []}
+        sources:
+          - {url: "https://www.business-standard.com/markets/news/ultratech-cement-q4-results-analyst-outlook-cost-pressure-risks-126042800361_1.html", date: "2026-04-28", what: "EBITDA/t Rs 1,253, +11% YoY"}
+      - id: ULTRACEMCO-S3
+        claim: "Conservative balance sheet (debt/equity about 0.33x)"
+        tag: financial
+        signals: {metrics: [net_debt_to_equity, net_debt_to_ebitda, interest_cover], flags: []}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/industrial-goodsservices/UltraTech-Cement-Posts-Strong-Quarter-Amid-Sector-Headwinds/69f239b108235f0c2a1be34b", date: "2026-04-29", what: "debt-to-equity conservative at 0.33-0.34x"}
+    weaknesses:
+      - id: ULTRACEMCO-W1
+        claim: "Cost pressure squeezing margins (operating margin 20% vs 22%; fuel and packaging costs to rise)"
+        tag: financial
+        signals: {metrics: [q_ebitda_margin_yoy_change, ebitda_margin], flags: [M01, M05]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/industrial-goodsservices/UltraTech-Cement-Q4-Sales-Surge-Profit-Squeezed-by-Rising-Costs/69f02f2735c37de4af34d945", date: "2026-04-28", what: "profit squeezed by rising costs"}
+      - id: ULTRACEMCO-W2
+        claim: "Acquisition integration risk: India Cements EBITDA only about Rs 497/t, diluting returns"
+        tag: financial
+        signals: {metrics: [incremental_roic_3y, acquisition_roic_delta_3y, roic_wacc_spread, roce], flags: [A05, R03]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/industrial-goodsservices/UltraTech-Cement-Posts-Strong-Quarter-Amid-Sector-Headwinds/69f239b108235f0c2a1be34b", date: "2026-04-29", what: "integration of acquired companies carries execution risk"}
+      - id: ULTRACEMCO-W3
+        claim: "Industry overcapacity fears and weak cement prices in some regions"
+        tag: qualitative
+        signals: {metrics: [], flags: []}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/industrial-goodsservices/UltraTech-Cement-Tops-Q4-Estimates-Record-Dividend-Overcapacity-Fears-Rise/69f239b108235f0c2a1be34b", date: "2026-04-29", what: "overcapacity fears rise"}
+  SUNPHARMA:
+    archetype: pharma
+    role: test
+    asof: FY26
+    strengths:
+      - id: SUNPHARMA-S1
+        claim: "Specialty (innovative medicines: Ilumya, Winlevi, Cequa, Leqselvi) scaling up"
+        tag: qualitative
+        signals: {metrics: [], flags: []}
+        sources:
+          - {url: "https://www.businesstoday.in/amp/markets/stocks/story/sun-pharma-shares-near-52-week-high-still-a-buy-post-q4-results-532983-2026-05-23", date: "2026-05-23", what: "HDFC Securities: specialty scale-up to offset soft US generics"}
+      - id: SUNPHARMA-S2
+        claim: "India formulations growing well (new launches, in-licensing; FY26 India sales +14%)"
+        tag: kpi
+        signals: {metrics: [india_growth, india_share], flags: []}
+        sources:
+          - {url: "https://www.businesstoday.in/amp/markets/stocks/story/sun-pharma-shares-near-52-week-high-still-a-buy-post-q4-results-532983-2026-05-23", date: "2026-05-23", what: "India business: new launches, in-licensing"}
+          - {url: "https://sunpharma.com/wp-content/uploads/2026/05/Press-Release-Sun-Pharma-Q4FY26-Financial-Result.pdf", date: "2026-05-22", what: "India formulation sales up 14%"}
+      - id: SUNPHARMA-S3
+        claim: "Gross margin expanded (+118 bps YoY) and Q4 profit up 26%"
+        tag: financial
+        signals: {metrics: [gross_margin, q_pat_yoy, materials_pct], flags: []}
+        sources:
+          - {url: "https://www.businesstoday.in/amp/markets/stocks/story/sun-pharma-shares-near-52-week-high-still-a-buy-post-q4-results-532983-2026-05-23", date: "2026-05-23", what: "gross margin +118 bps"}
+          - {url: "https://www.freepressjournal.in/business/sun-pharma-reports-14-revenue-growth-to-14612-crore-net-profit-up-26-in-q4", date: "2026-05-22", what: "net profit +26% in Q4"}
+    weaknesses:
+      - id: SUNPHARMA-W1
+        claim: "US generics declining (pricing pressure; FY26 US sales about -1%)"
+        tag: kpi
+        signals: {metrics: [us_growth], flags: [PH02]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/brokerage-reports/Sun-Pharma-Faces-US-Generics-Pressure-Despite-Specialty-Growth/6a139e34b979113840c96686", date: "2026-05-22", what: "US generics pressure"}
+          - {url: "https://www.sahi.com/news/sun-pharma-posts-26-q4-profit-jump-to-2-710-crore-us-sales-dip-1-1-1685-PE1_COR", date: "2026-05-22", what: "US sales dip"}
+      - id: SUNPHARMA-W2
+        claim: "FDA compliance issues at Halol, Mohali and Dadra limit US launches"
+        tag: qualitative
+        signals: {metrics: [], flags: [PH03]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/healthcarebiotech/Sun-Pharma-Q4-Profit-Rises-But-Margin-Pressure-and-US-Stalls-Dampen-Outlook/6a13d33eb979113840c98625", date: "2026-05-22", what: "compliance issues at three key sites"}
+      - id: SUNPHARMA-W3
+        claim: "EBITDA growth lagging sales (EBITDA +3% vs sales +13%) on higher R&D and specialty costs; muted FY27 guidance"
+        tag: financial
+        signals: {metrics: [q_ebitda_margin_yoy_change, ebitda_cagr_3y, rd_pct, other_expenses_pct], flags: [M05, M06, M01]}
+        sources:
+          - {url: "https://www.businesstoday.in/amp/markets/stocks/story/sun-pharma-shares-near-52-week-high-still-a-buy-post-q4-results-532983-2026-05-23", date: "2026-05-23", what: "EBITDA +3% YoY despite 13% sales growth"}
+          - {url: "https://www.whalesbook.com/news/English/healthcarebiotech/Sun-Pharma-Q4-Profit-Rises-But-Margin-Pressure-and-US-Stalls-Dampen-Outlook/6a13d33eb979113840c98625", date: "2026-05-22", what: "declining margins, conservative guidance"}
+  MARUTI:
+    archetype: auto
+    role: test
+    asof: FY26
+    strengths:
+      - id: MARUTI-S1
+        claim: "Record volumes and revenue (Q4 revenue +29%; highest-ever quarterly volume)"
+        tag: financial
+        signals: {metrics: [q_revenue_yoy, revenue_cagr_3y, volume_growth_units], flags: []}
+        sources:
+          - {url: "https://www.bajajbroking.in/share-market-news/maruti-suzuki-q4-fy26-results-revenue-up-28-9-percent-profit-under-pressure-rs140-dividend", date: "2026-04-28", what: "revenue up 28.9%"}
+          - {url: "https://www.autocarpro.in/NEWS/maruti-suzuki-posts-record-fy26-revenue-but-profit-stays-flat-as-costs-climb-132294", date: "2026-04-28", what: "record FY26 revenue"}
+      - id: MARUTI-S2
+        claim: "Exports surging (+61% in Q4, 30%+ in FY26)"
+        tag: qualitative
+        signals: {metrics: [], flags: []}
+        sources:
+          - {url: "https://www.businesstoday.in/markets/stocks/story/should-you-buy-maruti-suzuki-shares-post-q4-results-check-target-price-recommendation-rationale-528008-2026-04-29", date: "2026-04-29", what: "exports +61.3%"}
+      - id: MARUTI-S3
+        claim: "Debt-free balance sheet with strong cash generation (CFO about Rs 19,100 crore)"
+        tag: financial
+        signals: {metrics: [net_debt_to_equity, net_debt_to_ebitda, interest_cover, cfo_to_pat_5y, altman_z_india], flags: []}
+        sources:
+          - {url: "https://www.autocarpro.in/news/maruti-suzuki-reports-record-year-costs-dent-profit-132282", date: "2026-04-28", what: "debt-free; strong cash generation gives flexibility"}
+    weaknesses:
+      - id: MARUTI-W1
+        claim: "Margin squeeze and profit decline despite revenue growth (Q4 EBITDA margin 12.3%, PAT -7%; FY26 profit flat)"
+        tag: financial
+        signals: {metrics: [q_ebitda_margin_yoy_change, q_pat_yoy, pat_cagr_3y], flags: [M01, M06, G05]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/auto/Maruti-Suzuki-Revenue-Soars-Profit-Dips-on-Margin-Squeeze/69f2251608235f0c2a18505e", date: "2026-04-28", what: "profit dips on margin squeeze"}
+          - {url: "https://www.multibagg.ai/market-pulse/articles/maruti-suzuki-q4-margins-pressure-cmok7b2fqahnipg0j3aui4x38", date: "2026-04-29", what: "margin pressure"}
+      - id: MARUTI-W2
+        claim: "Domestic market share near a 13-year low as demand shifts to SUVs (Jefferies)"
+        tag: qualitative
+        signals: {metrics: [], flags: []}
+        sources:
+          - {url: "https://www.businesstoday.in/markets/stocks/story/should-you-buy-maruti-suzuki-shares-post-q4-results-check-target-price-recommendation-rationale-528008-2026-04-29", date: "2026-04-29", what: "Jefferies: market share at a 13-year low"}
+      - id: MARUTI-W3
+        claim: "Rising costs: shrinking gross margin, heavy capex (Rs 10,400 crore) and depreciation up 20%"
+        tag: financial
+        signals: {metrics: [gross_margin, materials_pct, dep_to_sales, capex_to_depreciation, capex_to_sales], flags: [M03, C06]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/auto/Maruti-Suzuki-Q4-Revenue-Soars-But-Profit-Shrinks-on-Rising-Costs/69f1d79908235f0c2a16ddd9", date: "2026-04-28", what: "profit shrinks on rising costs; shrinking gross margins"}
+          - {url: "https://www.autocarpro.in/news/maruti-suzuki-reports-record-year-costs-dent-profit-132282", date: "2026-04-28", what: "capex Rs 10,397.6 crore; depreciation +20.2%"}
+  BEL:
+    archetype: capital_goods_defence
+    role: test
+    asof: FY26
+    strengths:
+      - id: BEL-S1
+        claim: "Strong order book (about Rs 73,900 crore, about 2.7x revenue) giving 2-3 years of visibility"
+        tag: kpi
+        signals: {metrics: [order_book_to_revenue, book_to_bill_orders, opening_order_book], flags: []}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/industrial-goods-and-services/BEL-Stock-Gains-Goldman-Sachs-Reiterates-Buy-Sets-Rs-475-Target/6a0d2f6d920520825bc62061", date: "2026-05-20", what: "order book 2.7x; Goldman Buy"}
+      - id: BEL-S2
+        claim: "High margins (EBITDA about 29%; guided above 28%)"
+        tag: financial
+        signals: {metrics: [ebitda_margin, ebit_margin, pat_margin], flags: []}
+        sources:
+          - {url: "https://ticker.finology.in/discover/market-update/bel-q4-fy26-results-analysis", date: "2026-05-19", what: "Q4 EBITDA margin 29.2%"}
+      - id: BEL-S3
+        claim: "Steady revenue growth (FY26 about +16%; FY27 guidance above 15%)"
+        tag: financial
+        signals: {metrics: [revenue_cagr_3y, revenue_cagr_5y, q_revenue_yoy], flags: []}
+        sources:
+          - {url: "https://www.psuconnect.in/financial/bel-results-2026-what-investors-should-know-after-navratna-psus-16-revenue-growtth", date: "2026-05-19", what: "16% revenue growth"}
+    weaknesses:
+      - id: BEL-W1
+        claim: "Margin dip (Q4 EBITDA margin 29.2% vs 30.8%) on mix and costs"
+        tag: financial
+        signals: {metrics: [q_ebitda_margin_yoy_change], flags: [M01]}
+        sources:
+          - {url: "https://hdfcsky.com/news/bel-share-price-falls-q4-results-margin-cost-concerns", date: "2026-05-19", what: "share falls on margin and cost concerns"}
+      - id: BEL-W2
+        claim: "Working capital deteriorated: receivables up from 127 to 146 days"
+        tag: financial
+        signals: {metrics: [dso, nwc_days, receivables_vs_revenue_growth, cash_conversion_cycle], flags: [C01, C07, Q04]}
+        sources:
+          - {url: "https://bsmedia.business-standard.com/_media/bs/data/market-reports/equity-brokertips/2026-05/17792538440.04051900.pdf", date: "2026-05", what: "receivables 127 -> 146 days"}
+      - id: BEL-W3
+        claim: "Premium valuation a risk for FY27"
+        tag: financial
+        signals: {metrics: [pe_percentile_10y, ev_ebitda_percentile_10y, implied_minus_delivered_growth, ev_ic_to_roic_wacc], flags: [V01, V02, V04]}
+        sources:
+          - {url: "https://blog.liquide.life/bel-q4-results-2026-share-price-target-dividend/", date: "2026-05-19", what: "premium valuations a risk"}
+  DLF:
+    archetype: real_estate
+    role: test
+    asof: FY26
+    strengths:
+      - id: DLF-S1
+        claim: "Net cash of Rs 14,155 crore; development arm debt-free"
+        tag: financial
+        signals: {metrics: [net_debt_to_equity, net_debt_to_presales, net_debt_to_ebitda, interest_cover], flags: []}
+        sources:
+          - {url: "https://www.whalesbook.com/corporate-news/English/real-estate/DLF-Hits-indian-rupee14155-Cr-Net-Cash-as-Development-Arm-Goes-Debt-Free-in-FY26/6a0b2b1acfe07c0307e6a068", date: "2026-05-18", what: "net cash Rs 14,155 crore"}
+      - id: DLF-S2
+        claim: "Record collections (over Rs 13,500 crore, +15%) and strong cash generation"
+        tag: kpi
+        signals: {metrics: [cfo_to_collections, collections_to_presales, cfo_to_presales, cfo_to_pat_5y, fcf_to_pat_5y], flags: []}
+        sources:
+          - {url: "https://quartr.com/companies/dlf-ltd_4901", date: "2026-05", what: "record collections over Rs 13,500 crore, +15%"}
+          - {url: "https://www.whalesbook.com/news/English/real-estate/DLF-Pivots-to-Profit-Cash-Focus-Amidst-Soft-FY26-Bookings/6a070b5ee125a601ebdb6c2f", date: "2026-05-15", what: "Nuvama Buy on improved cash generation"}
+      - id: DLF-S3
+        claim: "Large bookings base (FY26 new sales bookings about Rs 20,100 crore) and profit growth (FY26 PAT +16%)"
+        tag: kpi
+        signals: {metrics: [presales_to_revenue, pat_cagr_3y, eps_cagr_3y], flags: []}
+        sources:
+          - {url: "https://www.angelone.in/news/stocks/dlf-share-price-in-focus-net-profit-rises-in-fy26-results-dividend-increased", date: "2026-05-14", what: "FY26 net profit +16%"}
+          - {url: "https://www.investywise.com/?p=85283", date: "2026-05", what: "FY26 sales bookings Rs 20,143 crore"}
+    weaknesses:
+      - id: DLF-W1
+        claim: "Pre-sales soft: FY26 bookings down about 5% and at the low end of guidance (Citi)"
+        tag: kpi
+        signals: {metrics: [presales_growth], flags: [RE04]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/real-estate/DLF-Pivots-to-Profit-Cash-Focus-Amidst-Soft-FY26-Bookings/6a070b5ee125a601ebdb6c2f", date: "2026-05-15", what: "soft FY26 bookings, -5%"}
+      - id: DLF-W2
+        claim: "Revenue recognition lagging bookings (Q4 revenue down about 42% YoY)"
+        tag: financial
+        signals: {metrics: [q_revenue_yoy, revenue_cagr_3y, revenue_growth_volatility], flags: [G04, G05]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/real-estate/DLF-Navigates-Q4-Dip-Full-Year-Strength-Signals-Resilience/6a04d0249444064ed0882904", date: "2026-05-14", what: "Q4 revenue drop about 42% YoY"}
+      - id: DLF-W3
+        claim: "EBITDA margin dipped"
+        tag: financial
+        signals: {metrics: [q_ebitda_margin_yoy_change, ebitda_margin], flags: [M01, M07]}
+        sources:
+          - {url: "https://www.whalesbook.com/corporate-news/English/real-estate/DLF-FY26-indian-rupee20143-Cr-Bookings-indian-rupee4408-Cr-Profit-Margin-Dip-Sparks-Concern/6a04b3ba9444064ed077b84d", date: "2026-05-14", what: "margin dip sparks concern"}
+  NTPC:
+    archetype: utilities
+    role: test
+    asof: FY26
+    strengths:
+      - id: NTPC-S1
+        claim: "Capacity growth: group added 9.6 GW in FY26; regulated equity up to Rs 1.20 trillion"
+        tag: kpi
+        signals: {metrics: [capacity_growth_mw, regulated_equity_growth, renewable_share], flags: []}
+        sources:
+          - {url: "https://informistmedia.com/EquityWire/51292/Earnings-Review-NTPC-Q4-PAT-growth-highest-in-20-qtrs-aided-by-tax-writeback", date: "2026-05-23", what: "group additions 9.62 GW; regulated equity Rs 1.20 tn"}
+      - id: NTPC-S2
+        claim: "Steady regulated core RoE of 16-17% (Nuvama top pick)"
+        tag: financial
+        signals: {metrics: [roe, regulated_roe_gap, roic_wacc_spread], flags: []}
+        sources:
+          - {url: "https://www.businesstoday.in/markets/stocks/story/engineers-india-shares-climb-5-ntpc-green-ntpc-drop-up-to-4-targets-for-three-psus-post-q4-results-533092-2026-05-25", date: "2026-05-25", what: "Nuvama: steady-state core RoE 16-17%"}
+      - id: NTPC-S3
+        claim: "Profit beat with improving efficiency (Q4 PAT +34%)"
+        tag: financial
+        signals: {metrics: [q_pat_yoy, pat_cagr_3y], flags: []}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/energy/NTPC-Profit-Jumps-34percent-on-Strong-Efficiency-Beats-Estimates/6a11957be28c1d234359f338", date: "2026-05-23", what: "profit +34% on efficiency"}
+    weaknesses:
+      - id: NTPC-W1
+        claim: "Profit beat flattered by a one-off tax write-back; core earnings growth modest"
+        tag: financial
+        signals: {metrics: [exceptional_size_5y, tax_burden, eps_cagr_3y], flags: [Q05, G01]}
+        sources:
+          - {url: "https://informistmedia.com/EquityWire/51292/Earnings-Review-NTPC-Q4-PAT-growth-highest-in-20-qtrs-aided-by-tax-writeback", date: "2026-05-23", what: "PAT aided by tax write-back of INR 87.37 bn"}
+      - id: NTPC-W2
+        claim: "Flat revenue (Q4 revenue -0.3%); near-term growth challenges"
+        tag: financial
+        signals: {metrics: [q_revenue_yoy, revenue_cagr_3y], flags: [G05, G06]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/energy/NTPC-Profit-Jumps-34percent-on-Strong-Efficiency-Beats-Estimates/6a11957be28c1d234359f338", date: "2026-05-23", what: "revenue dipped 0.3%"}
+      - id: NTPC-W3
+        claim: "Heavy capex funded by borrowing (group capex Rs 49,000 crore) raising finance costs"
+        tag: financial
+        signals: {metrics: [net_debt_to_ebitda, net_debt_to_equity, capex_to_sales, debt_vs_ebitda_growth, interest_cover], flags: [B01, B02, UT03]}
+        sources:
+          - {url: "https://informistmedia.com/EquityWire/51292/Earnings-Review-NTPC-Q4-PAT-growth-highest-in-20-qtrs-aided-by-tax-writeback", date: "2026-05-23", what: "group capex INR 490.68 bn"}
+          - {url: "https://univest.in/blogs/ntpc-q4-results-2026", date: "2026-05", what: "finance costs as NTPC borrows to fund capex"}
+  DMART:
+    archetype: retail
+    role: test
+    asof: FY26
+    strengths:
+      - id: DMART-S1
+        claim: "Revenue growth about 19% driven by expansion"
+        tag: financial
+        signals: {metrics: [q_revenue_yoy, revenue_cagr_3y, revenue_cagr_5y], flags: []}
+        sources:
+          - {url: "https://www.angelone.in/news/stocks/avenue-supermarts-q4-fy26-results-net-profit-rises-19-percent-yoy-to-rs-657-crore-revenue-jumps-to-rs-17684-crore", date: "2026-05-02", what: "revenue +18.9%, PAT +19%"}
+          - {url: "https://www.whalesbook.com/news/English/brokerage-reports/D-Mart-Revenue-Up-19percent-on-Expansion-Valuation-Margin-Pressures-Persist/69f822069d1c90664820b42a", date: "2026-05-04", what: "revenue up 19% on expansion"}
+      - id: DMART-S2
+        claim: "Fastest store-addition year: crossed 500 stores (58 added in Q4, 85 in FY26)"
+        tag: kpi
+        signals: {metrics: [store_growth, store_additions], flags: []}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/consumer-products/DMarts-Q4-Revenue-Jumps-19percent-Hits-500-Stores-Amid-Valuation-Worries/69f4645008235f0c2a3ec8c1", date: "2026-05-02", what: "hits 500 stores"}
+      - id: DMART-S3
+        claim: "Profit growth about 19% with stable-to-better margins (EBITDA margin up about 37 bps per one brokerage)"
+        tag: financial
+        signals: {metrics: [q_pat_yoy, q_ebitda_margin_yoy_change], flags: []}
+        sources:
+          - {url: "https://bsmedia.business-standard.com/_media/bs/data/market-reports/equity-brokertips/2026-05/17778740390.12902300.pdf", date: "2026-05", what: "brokerage note: EBITDA margin +37 bps; execution intact"}
+    weaknesses:
+      - id: DMART-W1
+        claim: "Valuation worries (Jefferies and ICICI Securities Hold)"
+        tag: financial
+        signals: {metrics: [pe_percentile_10y, ev_ebitda_percentile_10y, implied_minus_delivered_growth, ev_ic_to_roic_wacc], flags: [V01, V02, V04]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/consumer-products/DMart-Q4-Results-Show-Strong-Growth-But-Valuation-Worries-Divide-Analysts/69d279ac31d4f2ab48091d4f", date: "2026-05", what: "valuation worries divide analysts"}
+          - {url: "https://www.zeebiz.com/markets/stocks/news-dmart-shares-slip-4-despite-19-profit-jump-is-it-a-buying-opportunity-394799", date: "2026-05-04", what: "Jefferies Hold"}
+      - id: DMART-W2
+        claim: "Costs and competition (incl. quick commerce) squeezing gross margins"
+        tag: financial
+        signals: {metrics: [gross_margin, ebitda_margin, ebitda_margin_pre_ind_as116], flags: [M01, M05, RT03]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/consumer-products/DMart-Sees-19percent-Revenue-Jump-But-Costs-and-Competition-Squeeze-Margins/69d3cfe131d4f2ab480c8082", date: "2026-05", what: "costs and competition squeeze margins"}
+      - id: DMART-W3
+        claim: "Rising debt, higher inventory and slower turnover / store productivity"
+        tag: financial
+        signals: {metrics: [dio, inventory_to_sales, asset_turnover, revenue_per_sqft, net_debt_to_equity], flags: [C02, C04, RT02]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/consumer-products/Avenue-Supermarts-DMART-Stock-Dips-Amid-Debt-and-Inventory-Concerns/69f9bbd8d87e3288bea977bb", date: "2026-05", what: "debt and inventory concerns; slower turnover"}
+  ADANIENT:
+    archetype: holdco
+    role: test
+    asof: FY26
+    strengths:
+      - id: ADANIENT-S1
+        claim: "EBITDA growth led by airports (now the largest EBITDA contributor); consolidated FY26 EBITDA about Rs 16,464 crore"
+        tag: financial
+        signals: {metrics: [ebitda_cagr_3y, ebitda_cagr_5y], flags: []}
+        sources:
+          - {url: "https://www.adanienterprises.com/-/media/Project/Enterprises/Investors/Investor-Downloads/Result-Press-Release-Dynamic/Q4-FY26---Press-Release.pdf", date: "2026-04-30", what: "FY26 consolidated EBITDA"}
+          - {url: "https://ticker.finology.in/discover/market-update/adani-enterprises-q3-fy26-results-analysis", date: "2026-02", what: "airports largest EBITDA contributor"}
+      - id: ADANIENT-S2
+        claim: "Headline FY26 net profit up about 31%"
+        tag: financial
+        signals: {metrics: [pat_cagr_3y, eps_cagr_3y, pat_cagr_5y], flags: []}
+        sources:
+          - {url: "https://www.newkerala.com/news/a/adani-enterprises-posts-31-pc-net-profit-growth-621.htm", date: "2026-04-30", what: "FY26 net profit +31%"}
+      - id: ADANIENT-S3
+        claim: "Revenue growth (Q4 revenue +20%)"
+        tag: financial
+        signals: {metrics: [q_revenue_yoy, revenue_cagr_3y], flags: []}
+        sources:
+          - {url: "https://www.outlookbusiness.com/corporate/adani-enterprises-q4-fy26-revenue-up-20-new-assets-drag-company-to-221-cr-net-loss", date: "2026-04-30", what: "revenue up 20%"}
+    weaknesses:
+      - id: ADANIENT-W1
+        claim: "Heavy capex strains free cash flow and needs continuous external funding (rights issue Rs 24,930 crore, QIP Rs 15,000 crore)"
+        tag: financial
+        signals: {metrics: [fcf_to_pat_5y, fcf_to_pat, capex_to_sales, organic_capital_share_3y, share_count_change], flags: [Q02, G03, C06]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/industrial-goodsservices/Adani-Enterprises-Posts-March-Quarter-Loss-on-Higher-Infrastructure-Costs/69f3527a08235f0c2a214112", date: "2026-04-30", what: "capex will continue to strain FCF and need funding"}
+      - id: ADANIENT-W2
+        claim: "Debt-laden balance sheet; net external debt rose in FY26 to fund record capex"
+        tag: financial
+        signals: {metrics: [net_debt_to_ebitda, net_debt_to_equity, debt_vs_ebitda_growth, standalone_debt_to_equity, interest_cover], flags: [B01, B02, B03, HC01]}
+        sources:
+          - {url: "https://upstox.com/news/market-news/stocks/adani-group-firms-post-record-16-bn-capex-all-time-high-ebitda-in-fy-26-check-how-stocks-fared/article-194682/", date: "2026-05", what: "record capex; net debt rose"}
+          - {url: "https://www.pulse.bot/finance/news/adani-enterprises-posts-22071-crore-loss-in-q4-fy26-034f82a8-b5f8-4b95-a85e-1d9e35d857f7/", date: "2026-04-30", what: "debt-laden balance sheet warrants close monitoring"}
+      - id: ADANIENT-W3
+        claim: "New assets not yet earning: Q4 net loss of Rs 221 crore on higher depreciation and interest; low returns on capital"
+        tag: financial
+        signals: {metrics: [q_pat_yoy, roic_wacc_spread, incremental_roic_3y, roce, interest_cover], flags: [R01, R03, A07, B03]}
+        sources:
+          - {url: "https://www.outlookbusiness.com/corporate/adani-enterprises-q4-fy26-revenue-up-20-new-assets-drag-company-to-221-cr-net-loss", date: "2026-04-30", what: "new assets drag company to a net loss"}
+  BHARTIARTL:
+    archetype: telecom
+    role: test
+    asof: FY26
+    strengths:
+      - id: BHARTIARTL-S1
+        claim: "ARPU growth (Rs 257 vs Rs 245) on tariff hikes and premiumisation"
+        tag: kpi
+        signals: {metrics: [arpu_growth, arpu], flags: []}
+        sources:
+          - {url: "https://www.business-standard.com/markets/capital-market-news/bharti-airtel-q4-pat-tumbles-34-yoy-to-rs-7-325-cr-126051301273_1.html", date: "2026-05-13", what: "ARPU Rs 257 vs Rs 245"}
+          - {url: "https://www.business-standard.com/markets/news/premiumisation-tariff-hikes-expected-to-sustain-airtel-s-earnings-momentum-126080601588_1.html", date: "2026-08-06", what: "premiumisation and tariff hikes sustain momentum"}
+      - id: BHARTIARTL-S2
+        claim: "High and growing EBITDA (consolidated margin about 58%, revenue +16%)"
+        tag: financial
+        signals: {metrics: [ebitda_margin, ebitda_cagr_3y, revenue_cagr_3y], flags: []}
+        sources:
+          - {url: "https://www.business-standard.com/markets/capital-market-news/bharti-airtel-q4-pat-tumbles-34-yoy-to-rs-7-325-cr-126051301273_1.html", date: "2026-05-13", what: "EBITDA Rs 32,038 crore, 57.8% margin; revenue +15.7%"}
+      - id: BHARTIARTL-S3
+        claim: "Strong free cash flow and deleveraging (Motilal: about Rs 1.3 trillion FCF over FY26-28, net cash ex-leases by FY28)"
+        tag: financial
+        signals: {metrics: [fcf_to_pat_5y, fcf_to_pat, debt_vs_ebitda_growth, cfo_to_ebitda], flags: []}
+        sources:
+          - {url: "https://www.business-standard.com/markets/news/bharti-airtel-share-price-nse-bse-correction-overdone-say-analysts-tariff-hikes-jio-ipo-key-triggers-126030200184_1.html", date: "2026-03-02", what: "Motilal Oswal FCF and net-cash view"}
+    weaknesses:
+      - id: BHARTIARTL-W1
+        claim: "Q4 profit down about 34% YoY (exceptional-gain base effect)"
+        tag: financial
+        signals: {metrics: [q_pat_yoy, exceptional_frequency_5y, exceptional_size_5y], flags: [Q05]}
+        sources:
+          - {url: "https://www.business-standard.com/markets/capital-market-news/bharti-airtel-q4-pat-tumbles-34-yoy-to-rs-7-325-cr-126051301273_1.html", date: "2026-05-13", what: "Q4 PAT tumbles 34% YoY"}
+      - id: BHARTIARTL-W2
+        claim: "High capex intensity (Q4 capex about Rs 13,500 crore; expected to moderate only in FY27)"
+        tag: financial
+        signals: {metrics: [capex_intensity_reported, capex_to_sales, capex_to_depreciation], flags: [TC03]}
+        sources:
+          - {url: "https://www.business-standard.com/markets/news/bharti-airtel-dips-4-sees-sharpest-intra-day-fall-in-3-months-here-s-why-126022400248_1.html", date: "2026-02-24", what: "BNP: capex to moderate in FY27"}
+      - id: BHARTIARTL-W3
+        claim: "Leverage including leases and spectrum dues still significant (net cash ex-leases only expected by FY28)"
+        tag: financial
+        signals: {metrics: [net_debt_to_ebitda, net_debt_to_equity, lease_share_of_debt, spectrum_share_of_debt], flags: [TC02, B02]}
+        sources:
+          - {url: "https://www.business-standard.com/markets/news/bharti-airtel-share-price-nse-bse-correction-overdone-say-analysts-tariff-hikes-jio-ipo-key-triggers-126030200184_1.html", date: "2026-03-02", what: "net cash excluding leases only by FY28"}
+  ICICIBANK:
+    archetype: bank
+    role: peer
+    holdout: true
+    asof: FY26
+    strengths:
+      - id: ICICIBANK-S1
+        claim: "Best-in-class asset quality (NNPA about 0.33%, GNPA about 1.4%, low credit costs)"
+        tag: kpi
+        signals: {metrics: [gnpa_ratio, nnpa_ratio, credit_cost, pcr], flags: []}
+        sources:
+          - {url: "https://blog.liquide.life/icici-bank-q4-results-2026-analysis-share-price-target/", date: "2026-04-18", what: "NNPA 0.33%; asset quality"}
+          - {url: "https://www.angelone.in/news/stocks/icici-bank-q4-fy26-results-net-profit-rises-8-5-percent-rs-2-dividend-announced", date: "2026-04-18", what: "GNPA declined"}
+      - id: ICICIBANK-S2
+        claim: "High profitability (RoA above 2.3%)"
+        tag: financial
+        signals: {metrics: [roa, roe, roe_ke_spread], flags: []}
+        sources:
+          - {url: "https://www.multibagg.ai/market-pulse/articles/icici-bank-q4fy26-brokerage-targets-cmo6qy52g8lpiph0jhhrzuxg7", date: "2026-04-19", what: "Buy thesis on RoA above 2.3%"}
+      - id: ICICIBANK-S3
+        claim: "Loan growth rebounded to about 15.8% YoY"
+        tag: kpi
+        signals: {metrics: [loan_growth, assets_cagr_3y], flags: []}
+        sources:
+          - {url: "https://www.jmfinancialservices.in/market-news-and-insights/1686241", date: "2026-04-18", what: "credit growth about 15.8%"}
+    weaknesses:
+      - id: ICICIBANK-W1
+        claim: "Margin pressure (NIM expected to decline as rates fall)"
+        tag: financial
+        signals: {metrics: [nii_to_assets, nim_reported, nii_cagr_3y], flags: [M08]}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/brokerage-reports/ICICI-Bank-Q4-Profit-Surges-85percent-Faces-Margin-Pressure/69e5b1afbca97ee10692fe45", date: "2026-04-19", what: "faces margin pressure"}
+      - id: ICICIBANK-W2
+        claim: "Weak operating profit growth (about +3% YoY) as expenses jumped 12%"
+        tag: financial
+        signals: {metrics: [cost_to_income, bank_opex_to_assets, opex_to_assets, q_pat_yoy], flags: []}
+        sources:
+          - {url: "https://www.kotakneo.com/uploads/ICICI_Bank_One_Pager_Q4_Result_Update_29_May26_14fdb794a1.pdf", date: "2026-05-29", what: "operating profit growth about 3% YoY"}
+          - {url: "https://www.whalesbook.com/news/English/bankingfinance/ICICI-Bank-Profit-Rises-85percent-as-Expenses-Jump-12percent/69e3778371f6be70c53c4a80", date: "2026-04-18", what: "expenses jump 12%"}
+      - id: ICICIBANK-W3
+        claim: "High market expectations hard to meet (valuation)"
+        tag: financial
+        signals: {metrics: [pb_to_justified_pb, implied_pb_growth_minus_delivered, pb_percentile_10y], flags: [V03, V05, V06]}
+        sources:
+          - {url: "https://www.kotakneo.com/uploads/ICICI_Bank_One_Pager_Q4_Result_Update_29_May26_14fdb794a1.pdf", date: "2026-05-29", what: "high expectations that are hard to meet"}
+  INFY:
+    archetype: it_services
+    role: peer
+    holdout: true
+    asof: FY26
+    strengths:
+      - id: INFY-S1
+        claim: "Healthy operating margin (about 21%; FY27 guided 20-22%)"
+        tag: financial
+        signals: {metrics: [ebit_margin, operating_margin, ebitda_margin], flags: []}
+        sources:
+          - {url: "https://www.outlookbusiness.com/corporate/infosys-posts-28-qoq-jump-in-profit-to-8501-cr-in-q4-fy26", date: "2026-04-23", what: "margins expanding to 21%"}
+      - id: INFY-S2
+        claim: "Large deal wins of USD 14.9 bn in FY26 (+24%)"
+        tag: kpi
+        signals: {metrics: [deal_tcv_growth, book_to_bill], flags: []}
+        sources:
+          - {url: "https://www.bajajbroking.in/share-market-news/infosys-ltd-q4-fy26-profit-up-20-91-percent-14-9-billion-dollar-deals-revenue-guidance-at-1-5-percent-to-3-5-percent-for-fy27", date: "2026-04-23", what: "USD 14.9 bn deals, +24%"}
+      - id: INFY-S3
+        claim: "Profit growth (Q4 net profit +21% YoY)"
+        tag: financial
+        signals: {metrics: [q_pat_yoy], flags: []}
+        sources:
+          - {url: "https://www.angelone.in/news/stocks/infosys-q4-results-net-profit-jumps-21-percent-to-rs-8501-crore-announced-final-dividend-rs-25", date: "2026-04-23", what: "net profit +21%"}
+    weaknesses:
+      - id: INFY-W1
+        claim: "Slow growth: FY26 constant-currency growth about 3%, weak FY27 guidance of 1.5-3.5%"
+        tag: financial
+        signals: {metrics: [revenue_cagr_3y, cc_growth, q_revenue_yoy], flags: [IT03]}
+        sources:
+          - {url: "https://www.outlookbusiness.com/markets/infosys-slides-5-post-results-weak-guidance-offsets-profit-growth", date: "2026-04-24", what: "weak guidance offsets profit growth"}
+      - id: INFY-W2
+        claim: "Margin pressure ahead from wage hikes and AI productivity pass-through ('AI deflation')"
+        tag: qualitative
+        signals: {metrics: [], flags: []}
+        sources:
+          - {url: "https://bsmedia.business-standard.com/_media/bs/data/market-reports/equity-brokertips/2026-04/17770201200.85965100.pdf", date: "2026-04", what: "AI deflation begins to bite; margin pressure"}
+      - id: INFY-W3
+        claim: "Rising competitive intensity in AI-led services; weakness at a large European client"
+        tag: qualitative
+        signals: {metrics: [], flags: []}
+        sources:
+          - {url: "https://finance.yahoo.com/markets/stocks/articles/infosys-ltd-infy-q4-2026-070516803.html", date: "2026-04-24", what: "competitive intensity; large European manufacturing client"}
+  NESTLEIND:
+    archetype: fmcg
+    role: peer
+    holdout: true
+    asof: FY26
+    strengths:
+      - id: NESTLEIND-S1
+        claim: "Volume-led revenue growth (FY26 sales +14.9%; Q4 +22.6% with mid-teens volume growth)"
+        tag: financial
+        signals: {metrics: [q_revenue_yoy, revenue_cagr_3y, volume_growth], flags: []}
+        sources:
+          - {url: "https://www.whalesbook.com/news/English/consumer-products/Nestle-Indias-Volume-Surge-Drives-23percent-Revenue-Growth-Amid-Margin-Fears/69e85fdbbca97ee1069e8deb", date: "2026-04-22", what: "volume surge drives 23% revenue growth"}
+          - {url: "https://www.whalesbook.com/corporate-news/English/consumer-products/Nestle-India-FY26-Sales-Rise-149percent-to-indian-rupee23071-Cr-PAT-Grows-69percent/6a22a352c75ed156cfa19c13", date: "2026-06", what: "FY26 sales +14.9%"}
+      - id: NESTLEIND-S2
+        claim: "High EBITDA margin (Q4 26.3%, beat expectations of compression)"
+        tag: financial
+        signals: {metrics: [ebitda_margin, ebit_margin, pat_margin], flags: []}
+        sources:
+          - {url: "https://www.outlookbusiness.com/markets/nestle-india-hits-52-week-high-as-q4-profit-jumps-27", date: "2026-04-22", what: "EBITDA margin 26.3%"}
+      - id: NESTLEIND-S3
+        claim: "Q4 profit up about 26-27%"
+        tag: financial
+        signals: {metrics: [q_pat_yoy], flags: []}
+        sources:
+          - {url: "https://www.outlookbusiness.com/markets/nestle-india-hits-52-week-high-as-q4-profit-jumps-27", date: "2026-04-22", what: "Q4 profit +27%"}
+    weaknesses:
+      - id: NESTLEIND-W1
+        claim: "Gross margin down about 140 bps in FY26 (palm oil and input costs absorbed for volume); FY26 PAT only +6.9%"
+        tag: financial
+        signals: {metrics: [gross_margin, gross_margin_change_1y, materials_pct, pat_cagr_3y], flags: [M03, FM04]}
+        sources:
+          - {url: "https://bsmedia.business-standard.com/_media/bs/data/market-reports/equity-brokertips/2026-04/17770200120.33680300.pdf", date: "2026-04", what: "gross margins down 140 bps YoY in FY26 to 55.3%"}
+          - {url: "https://www.whalesbook.com/news/English/consumer-products/Nestle-India-Absorbs-Costs-for-Volume-Ignoring-Peers-Price-Hikes/69fb600ed27867b982d4cff6", date: "2026-05", what: "absorbs costs for volume"}
+      - id: NESTLEIND-W2
+        claim: "Valuation a concern (Jefferies)"
+        tag: financial
+        signals: {metrics: [pe_percentile_10y, ev_ebitda_percentile_10y, implied_minus_delivered_growth, ev_ic_to_roic_wacc], flags: [V01, V02, V04]}
+        sources:
+          - {url: "https://www.sahi.com/blogs/nestle-india-shares-surge-over-8-after-q4-fy-26-results-beat-estimates-5-final-dividend-announced", date: "2026-04-23", what: "Jefferies cites valuations as a concern"}
+      - id: NESTLEIND-W3
+        claim: "Heavy capacity capex (about Rs 3,900 crore, new Odisha factory) weighing on near-term margins and returns"
+        tag: financial
+        signals: {metrics: [capex_to_sales, capex_to_depreciation, cwip_to_net_block, fcf_to_pat], flags: [C03, C06]}
+        sources:
+          - {url: "https://www.business-standard.com/amp/markets/news/near-term-recovery-margin-expansion-key-for-nestle-india-125072501402_1.html", date: "2025-07-25", what: "Rs 3,900 crore manufacturing investment weighs on near-term margins"}
+  HAL:
+    archetype: capital_goods_defence
+    role: peer
+    holdout: true
+    asof: FY26
+    strengths:
+      - id: HAL-S1
+        claim: "Massive order book (about Rs 2.54 lakh crore, about 7.7x revenue)"
+        tag: kpi
+        signals: {metrics: [order_book_to_revenue, book_to_bill_orders, order_book_growth], flags: []}
+        sources:
+          - {url: "https://www.indmoney.com/blog/stocks/can-hal-convert-its-massive-order-book-into-revenue-what-q4-fy-26-numbers-really-tell-investors", date: "2026-05", what: "order book about Rs 2.54 lakh crore vs revenue about Rs 33,000 crore"}
+      - id: HAL-S2
+        claim: "Profit growth (FY26 PAT Rs 9,116 crore vs Rs 8,364 crore)"
+        tag: financial
+        signals: {metrics: [pat_cagr_3y, pat_cagr_5y, eps_cagr_3y], flags: []}
+        sources:
+          - {url: "https://www.indmoney.com/blog/stocks/can-hal-convert-its-massive-order-book-into-revenue-what-q4-fy-26-numbers-really-tell-investors", date: "2026-05", what: "FY26 net profit Rs 9,116 crore"}
+      - id: HAL-S3
+        claim: "Programme mix (LCA Tejas, ALH, engine MRO) supports revenue visibility"
+        tag: qualitative
+        signals: {metrics: [], flags: []}
+        sources:
+          - {url: "https://www.indmoney.com/blog/stocks/can-hal-convert-its-massive-order-book-into-revenue-what-q4-fy-26-numbers-really-tell-investors", date: "2026-05", what: "order book composition"}
+    weaknesses:
+      - id: HAL-W1
+        claim: "Slow conversion of the order book (Q4 revenue +2%, FY26 about +7%): execution bottlenecks"
+        tag: financial
+        signals: {metrics: [q_revenue_yoy, revenue_cagr_3y, execution_rate], flags: [CG01]}
+        sources:
+          - {url: "https://www.indmoney.com/blog/stocks/can-hal-convert-its-massive-order-book-into-revenue-what-q4-fy-26-numbers-really-tell-investors", date: "2026-05", what: "rising order book with slow revenue growth signals execution bottlenecks"}
+      - id: HAL-W2
+        claim: "Engine supply (deliveries) constraining production"
+        tag: qualitative
+        signals: {metrics: [], flags: []}
+        sources:
+          - {url: "https://www.indmoney.com/blog/stocks/can-hal-convert-its-massive-order-book-into-revenue-what-q4-fy-26-numbers-really-tell-investors", date: "2026-05", what: "engine deliveries critical"}
+      - id: HAL-W3
+        claim: "Lumpy, year-end-loaded revenue recognition (Q4 profit +125% QoQ)"
+        tag: financial
+        signals: {metrics: [revenue_growth_volatility, pat_growth_volatility], flags: [G04]}
+        sources:
+          - {url: "https://www.indmoney.com/blog/stocks/can-hal-convert-its-massive-order-book-into-revenue-what-q4-fy-26-numbers-really-tell-investors", date: "2026-05", what: "sequential profit surge from year-end recognition of large contracts"}
+  YESBANK:
+    archetype: bank
+    role: blowup
+    asof: FY18
+    note: "Warning signs visible in reported financials up to FY18, before the 2019-20 collapse (moratorium March 2020)."
+    strengths: []
+    weaknesses:
+      - id: YESBANK-W1
+        claim: "Hyper loan growth far ahead of capital: advances +54% in FY18; loan book +81% since the March 2017 equity raise"
+        tag: financial
+        signals: {metrics: [loan_growth, assets_cagr_3y, growth_minus_icg, funding_vs_equity_growth], flags: [A06, BK05, B06, B07]}
+        sources:
+          - {url: "https://www.angelone.in/get-html-report/AngelBrokingResearch_YES%20Bank_IC_180718.html", date: "2018-07-18", what: "advances up about 54% in FY18, mainly corporate"}
+          - {url: "https://app.researchpool.com/provider/idfc-securities/yes-bank-yesb-yes-banks-q2fy19-results-underperformer-miss-even-without-the-diverg", date: "2018-10", what: "IDFC: loan book +81% since last equity issue; CET1 at 9%"}
+      - id: YESBANK-W2
+        claim: "Thin core capital for that growth (CET1 about 9-9.7%), dependent on fresh equity raising"
+        tag: kpi
+        signals: {metrics: [cet1, crar, equity_to_assets], flags: [BK03, B06]}
+        sources:
+          - {url: "https://app.researchpool.com/provider/idfc-securities/yes-bank-yesb-yes-banks-q2fy19-results-underperformer-miss-even-without-the-diverg", date: "2018-10", what: "CET1 at 9%: must raise capital or slow growth"}
+          - {url: "https://www.scribd.com/document/587744136/Yes-Bank", date: "2020", what: "CET1 8.4% vs 7.375% mandated"}
+      - id: YESBANK-W3
+        claim: "Reported asset quality unreliable: RBI divergence for FY16 (NPA Rs 749 crore reported vs Rs 4,926 crore assessed) and FY17 (Rs 6,355 crore under-reported)"
+        tag: kpi
+        signals: {metrics: [gnpa_ratio, nnpa_ratio, pcr], flags: [BK01, BK02]}
+        sources:
+          - {url: "https://ir.iimcal.ac.in:8443/jspui/bitstream/123456789/3996/1/Yes%20Bank%2c%20No%20Governance.pdf", date: "2020", what: "divergence in 2016, 2017 and 2019"}
+          - {url: "https://www.outlookindia.com/amp/story/business/business-news-yes-bank-crisis-was-apparent-for-years-but-regulatory-oversight-was-lacking-news-302945", date: "2020-03", what: "crisis apparent for years; FY16 NPA revised from Rs 749 crore to Rs 4,926 crore"}
+      - id: YESBANK-W4
+        claim: "Credit-deposit ratio climbing (70% in Mar-13 to about 100%+ by FY18-19): funding stretched"
+        tag: financial
+        signals: {metrics: [cd_ratio], flags: [BK07]}
+        sources:
+          - {url: "https://ir.iimcal.ac.in:8443/jspui/bitstream/123456789/3996/1/Yes%20Bank%2c%20No%20Governance.pdf", date: "2020", what: "CD ratio 70% (Mar-13) to 106% (Mar-19)"}
+      - id: YESBANK-W5
+        claim: "Concentration in large, stressed corporate borrowers"
+        tag: qualitative
+        signals: {metrics: [], flags: []}
+        sources:
+          - {url: "https://www.isas.nus.edu.sg/wp-content/uploads/2020/03/ISAS-Briefs-No.-756.pdf", date: "2020-03", what: "large corporate exposures"}
+          - {url: "https://ifsa-network.com/publications/from-trust-to-turmoil-the-yes-bank-financial-scam/", date: "2020", what: "over-dependence on a few large borrowers"}

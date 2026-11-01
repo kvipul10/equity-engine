@@ -18,6 +18,7 @@
 
 ## exceptional
 - **FY18**: Estimated exceptional item 9,134 (pre-tax, gain): other income 145.0% of sales vs normal 8.8% (median of other years). Core profit excludes it (tax effect at statutory rate). Override via data/manual (exceptional_items).
+- Effective tax rate departs from its own norm in 3 years (FY20, FY25, FY26): too erratic to normalise; reported tax kept.
 
 ## minority
 - Net profit differs from PBT - tax in 10 of 10 years (latest 1,793): minority interest (negative) and share of associates/JVs (positive) sit between PBT and net profit, so the export is consolidated and net profit is the owners' share. Equity excludes minority interest (Screener includes NCI in Other Liabilities); ROIC/ROCE capital therefore omits NCI unless data/manual supplies minority_interest.

@@ -90,6 +90,8 @@ EXPECTED = {
     "cost_to_income_bank": ("SYNTHBK", opex_ex_prov / (b_nii[5] + T.b_oi[5])),
     "credit_cost": ("SYNTHBK", 85 / ((9600 + 10800) / 2)),
     "gnpa_ratio": ("SYNTHBK", 0.034), "nnpa_ratio": ("SYNTHBK", 0.013), "pcr": ("SYNTHBK", 0.58),
+    # max divergence over FY24-FY26 (300, FY25 only) / (GNPA 3.4% x advances 10,800) = 300 / 367.2
+    "npa_divergence_share": ("SYNTHBK", 300 / (0.034 * 10800)),
     "provisions_to_ppop": ("SYNTHBK", 85 / (b_nii[5] + T.b_oi[5] - opex_ex_prov)),
     "slippage_ratio": ("SYNTHBK", 0.026), "crar": ("SYNTHBK", 0.126), "cet1": ("SYNTHBK", 0.10), "casa_ratio": ("SYNTHBK", 0.355),
     "cd_ratio": ("SYNTHBK", 10800 / 13600),
@@ -138,6 +140,7 @@ EXPECTED = {
     # real estate
     "presales_growth": ("SYNTHRE", 2500 / 2600 - 1), "presales_to_revenue": ("SYNTHRE", 2500 / T.rev[9]),
     "collections_to_presales": ("SYNTHRE", 1650 / 2500), "cfo_to_collections": ("SYNTHRE", T.cfo[9] / 1650),
+    "collections_to_presales_3y": ("SYNTHRE", 1650 / ((2400 + 2600 + 2500) / 3)),   # FY26 collections / avg FY24-26 pre-sales
     "cfo_to_presales": ("SYNTHRE", T.cfo[9] / 2500), "inventory_months": ("SYNTHRE", 5600 / (2500 / 12)),
     "net_debt_to_presales": ("SYNTHRE", T.nd[9] / 2500),
     # utilities
@@ -260,7 +263,8 @@ def test_nbfc_inherits_bank_and_overrides(reps, scfg):
     assert s.lineage == ["default", "bank", "nbfc"]
     assert "casa_pct" not in s.manual_kpis and "aum_cr" in s.manual_kpis
     assert "nii_to_assets" not in s.bands and s.bands["crar"]["red"] == 0.15
-    assert s.bands["pcr"]["_origin"] == "config/sectors/bank.yaml"   # inherited band keeps its true origin
+    assert s.bands["credit_cost"]["_origin"] == "config/sectors/bank.yaml"   # inherited band keeps its true origin
+    assert s.bands["pcr"]["_origin"] == "config/sectors/nbfc.yaml" and s.bands["pcr"]["green"] == 0.65  # NBFC's own band
     trig = {f["id"] for f in reps["SYNTHNB"]["flags"]["triggered"]}
     assert {"NB02", "NB03", "NB04"} <= trig
     assert "bank_dupont" in reps["SYNTHNB"]["drivers"]
@@ -488,3 +492,12 @@ def test_kpi_coverage_report_matches_files(real_cfg):
     md = coverage_markdown(real_cfg)
     assert md.startswith("# Manual KPI coverage") and "| YESBANK | bank |" in md
     assert (REPO / "data" / "manual" / "COVERAGE.md").read_text() == md, "COVERAGE.md is stale: run python -m engine kpi-coverage"
+
+
+def test_bk09_npa_divergence_fires(reps):
+    rep = reps["SYNTHBK"]
+    fired = {f["id"]: f for f in rep["flags"]["triggered"]}
+    assert "BK09" in fired and fired["BK09"]["severity"] == "high"
+    assert rep["metrics"]["npa_divergence_share"]["rag"] == "red"
+    # a bank without the disclosure: the metric is n/a, the rule is not evaluable (never a false trigger)
+    assert "BK09" not in {f["id"] for f in reps["SYNTHBKNP"]["flags"]["triggered"]}

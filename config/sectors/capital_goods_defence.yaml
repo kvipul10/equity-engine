@@ -27,7 +27,7 @@ metrics_add:
 bands:
   order_book_to_revenue:
     red: 2.0
-    green: 3.0
+    green: 2.5
     source_type: indicative
     as_of: "2026-11-01"
     rationale: "Defence and engineering majors typically carry 2.5-5 years of revenue in their order books; under 2x leaves little visibility."

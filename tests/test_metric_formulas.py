@@ -112,6 +112,13 @@ g_j = min(roe3 * (1 - payout3), 0.06)
 JPB = (roe3 - g_j) / (KE - g_j)
 PB_NOW = MCAP_NOW / eq[9]
 ncx3 = sum(-cfi[k] - capex[k] for k in (7, 8, 9)) / ic[6]
+# acquisition-like spend: non-capex investing net of the change in (cash + investments) the net cash flow does not explain
+ncf = [cfo[k] + cfi[k] + CO["cff"][k] for k in range(N)]
+acq = [None] + [max(0.0, (-cfi[k] - capex[k]) - ((cash[k] + inv[k]) - (cash[k - 1] + inv[k - 1]) - ncf[k])) for k in range(1, N)]
+acq3 = sum(acq[k] for k in (7, 8, 9)) / ic[6]          # (40 + 55 + 70) / IC_FY23 = 15.9%
+# justified EV/IC (value driver): (ROIC3 - g) / (WACC - g), g = min(ROIC3 x avg reinvestment (clipped 0-1), 6%)
+reinv = [None] + [(capex[k] - dep[k] + (nwc[k] - nwc[k - 1])) / nopat[k] for k in range(1, N)]
+g_ev = min(ronic * st.mean(max(0.0, min(1.0, r)) for r in reinv[7:10]), 0.06)
 growth = [rev[k] / rev[k - 1] - 1 for k in range(1, N)]
 pgrowth = [pat_c[k] / pat_c[k - 1] - 1 for k in range(1, N)]
 yoy = [qs[k] / qs[k - 4] - 1 for k in range(6, 10)]
@@ -171,7 +178,7 @@ CO_EXPECTED = {
     "beneish_m_score": -4.84 + 0.920 * dsri + 0.528 * gmi + 0.404 * aqi + 0.892 * sgi + 0.115 * depi - 0.172 * sgai + 4.679 * tata - 0.327 * lvgi,
     # ---- balance sheet
     "net_debt_to_ebitda": nd[9] / ebitda[9], "net_debt_to_equity": nd[9] / eq[9], "interest_cover": ebit[9] / intr[9],
-    "current_ratio_proxy": oa[9] / ol[9], "cash_to_st_borrowings": cash[9] / bor[9],
+    "current_ratio_proxy": (oa[9] + inv[9]) / ol[9], "cash_to_st_borrowings": (cash[9] + inv[9]) / bor[9],
     "debt_vs_ebitda_growth": (bor[9] / bor[8] - 1) - (ebitda[9] / ebitda[8] - 1),
     "altman_x1": x1, "altman_x2": x2, "altman_x3": x3, "altman_x4": x4,
     "altman_z_india": 3.25 + 6.56 * x1 + 3.26 * x2 + 6.72 * x3 + 1.05 * x4,
@@ -181,8 +188,8 @@ CO_EXPECTED = {
     "buyback_estimate": (10.2 - 10.0) * (210 + 200) / 2,
     "shareholder_yield": (div[9] + (10.2 - 10.0) * (210 + 200) / 2) / mcap[9],
     "dividend_to_fcf": div[9] / fcf[9],
-    "non_capex_investing_3y": ncx3,
-    "acquisition_roic_delta_3y": roic[9] - roic[6],      # ncx3 > 10% so the metric is defined
+    "non_capex_investing_3y": ncx3, "acquisition_spend_3y": acq3,
+    "acquisition_roic_delta_3y": roic[9] - roic[6],      # acq3 > 10% so the metric is defined
     "promoter_holding": 0.55, "promoter_holding_change_3y": 0.55 - 0.60, "promoter_pledge": 0.12,
     # ---- valuation
     "pe": MCAP_NOW / TTM_PAT,
@@ -191,7 +198,7 @@ CO_EXPECTED = {
     "ev_ebitda": EV_NOW / TTM_EBITDA, "ev_ebitda_percentile_10y": pct_rank([ev[k] / ebitda[k] for k in range(N)], EV_NOW / TTM_EBITDA),
     "ev_sales": EV_NOW / TTM_REV, "ev_sales_percentile_10y": pct_rank([ev[k] / rev[k] for k in range(N)], EV_NOW / TTM_REV),
     "justified_pb": JPB, "pb_to_justified_pb": PB_NOW / JPB,
-    "ev_ic": EV_NOW / ic[9], "ev_ic_to_roic_wacc": (EV_NOW / ic[9]) / (ROIC_EXPECTED_FY26 / WACC_NOW),
+    "ev_ic": EV_NOW / ic[9], "ev_ic_to_roic_wacc": (EV_NOW / ic[9]) / ((ronic - g_ev) / (WACC_NOW - g_ev)),
     # implied_growth_reverse_dcf / implied_minus_delivered_growth: checked by re-pricing below
 }
 # a few checks in earlier years (series correctness, exceptional-item adjustment, opening balances)
