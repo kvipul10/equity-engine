@@ -1,7 +1,8 @@
 {
  "sets": [
   "test",
-  "blowup"
+  "blowup",
+  "holdout"
  ],
  "by_set": {
   "test": {
@@ -21,9 +22,9 @@
     "rate": 0.8823529411764706
    },
    "headline": {
-    "n": 44,
+    "n": 46,
     "d": 96,
-    "rate": 0.4583333333333333
+    "rate": 0.4791666666666667
    },
    "strengths": {
     "n": 41,
@@ -38,19 +39,19 @@
   },
   "blowup": {
    "all": {
-    "n": 2,
+    "n": 3,
     "d": 5,
-    "rate": 0.4
+    "rate": 0.6
    },
    "excl_qualitative": {
-    "n": 2,
+    "n": 3,
     "d": 4,
-    "rate": 0.5
+    "rate": 0.75
    },
    "excl_qualitative_and_missing_data": {
-    "n": 2,
-    "d": 3,
-    "rate": 0.6666666666666666
+    "n": 3,
+    "d": 4,
+    "rate": 0.75
    },
    "headline": {
     "n": 2,
@@ -63,28 +64,60 @@
     "rate": null
    },
    "weaknesses": {
-    "n": 2,
+    "n": 3,
     "d": 5,
-    "rate": 0.4
+    "rate": 0.6
+   }
+  },
+  "holdout": {
+   "all": {
+    "n": 15,
+    "d": 24,
+    "rate": 0.625
+   },
+   "excl_qualitative": {
+    "n": 15,
+    "d": 20,
+    "rate": 0.75
+   },
+   "excl_qualitative_and_missing_data": {
+    "n": 15,
+    "d": 20,
+    "rate": 0.75
+   },
+   "headline": {
+    "n": 9,
+    "d": 24,
+    "rate": 0.375
+   },
+   "strengths": {
+    "n": 10,
+    "d": 12,
+    "rate": 0.8333333333333334
+   },
+   "weaknesses": {
+    "n": 5,
+    "d": 12,
+    "rate": 0.4166666666666667
    }
   }
  },
  "by_archetype": {
   "blowup:bank": {
    "all": {
-    "n": 2,
+    "n": 3,
     "d": 5,
-    "rate": 0.4
+    "rate": 0.6
    },
    "excl_qualitative": {
-    "n": 2,
+    "n": 3,
     "d": 4,
-    "rate": 0.5
+    "rate": 0.75
    },
    "excl_qualitative_and_missing_data": {
-    "n": 2,
-    "d": 3,
-    "rate": 0.6666666666666666
+    "n": 3,
+    "d": 4,
+    "rate": 0.75
    },
    "headline": {
     "n": 2,
@@ -97,9 +130,137 @@
     "rate": null
    },
    "weaknesses": {
-    "n": 2,
+    "n": 3,
     "d": 5,
-    "rate": 0.4
+    "rate": 0.6
+   }
+  },
+  "holdout:bank": {
+   "all": {
+    "n": 4,
+    "d": 6,
+    "rate": 0.6666666666666666
+   },
+   "excl_qualitative": {
+    "n": 4,
+    "d": 6,
+    "rate": 0.6666666666666666
+   },
+   "excl_qualitative_and_missing_data": {
+    "n": 4,
+    "d": 6,
+    "rate": 0.6666666666666666
+   },
+   "headline": {
+    "n": 3,
+    "d": 6,
+    "rate": 0.5
+   },
+   "strengths": {
+    "n": 3,
+    "d": 3,
+    "rate": 1.0
+   },
+   "weaknesses": {
+    "n": 1,
+    "d": 3,
+    "rate": 0.3333333333333333
+   }
+  },
+  "holdout:capital_goods_defence": {
+   "all": {
+    "n": 3,
+    "d": 6,
+    "rate": 0.5
+   },
+   "excl_qualitative": {
+    "n": 3,
+    "d": 4,
+    "rate": 0.75
+   },
+   "excl_qualitative_and_missing_data": {
+    "n": 3,
+    "d": 4,
+    "rate": 0.75
+   },
+   "headline": {
+    "n": 1,
+    "d": 6,
+    "rate": 0.16666666666666666
+   },
+   "strengths": {
+    "n": 2,
+    "d": 3,
+    "rate": 0.6666666666666666
+   },
+   "weaknesses": {
+    "n": 1,
+    "d": 3,
+    "rate": 0.3333333333333333
+   }
+  },
+  "holdout:fmcg": {
+   "all": {
+    "n": 5,
+    "d": 6,
+    "rate": 0.8333333333333334
+   },
+   "excl_qualitative": {
+    "n": 5,
+    "d": 6,
+    "rate": 0.8333333333333334
+   },
+   "excl_qualitative_and_missing_data": {
+    "n": 5,
+    "d": 6,
+    "rate": 0.8333333333333334
+   },
+   "headline": {
+    "n": 4,
+    "d": 6,
+    "rate": 0.6666666666666666
+   },
+   "strengths": {
+    "n": 3,
+    "d": 3,
+    "rate": 1.0
+   },
+   "weaknesses": {
+    "n": 2,
+    "d": 3,
+    "rate": 0.6666666666666666
+   }
+  },
+  "holdout:it_services": {
+   "all": {
+    "n": 3,
+    "d": 6,
+    "rate": 0.5
+   },
+   "excl_qualitative": {
+    "n": 3,
+    "d": 4,
+    "rate": 0.75
+   },
+   "excl_qualitative_and_missing_data": {
+    "n": 3,
+    "d": 4,
+    "rate": 0.75
+   },
+   "headline": {
+    "n": 1,
+    "d": 6,
+    "rate": 0.16666666666666666
+   },
+   "strengths": {
+    "n": 2,
+    "d": 3,
+    "rate": 0.6666666666666666
+   },
+   "weaknesses": {
+    "n": 1,
+    "d": 3,
+    "rate": 0.3333333333333333
    }
   },
   "test:auto": {
@@ -343,9 +504,9 @@
     "rate": 1.0
    },
    "headline": {
-    "n": 3,
+    "n": 4,
     "d": 6,
-    "rate": 0.5
+    "rate": 0.6666666666666666
    },
    "strengths": {
     "n": 2,
@@ -503,9 +664,9 @@
     "rate": 1.0
    },
    "headline": {
-    "n": 3,
+    "n": 4,
     "d": 6,
-    "rate": 0.5
+    "rate": 0.6666666666666666
    },
    "strengths": {
     "n": 3,
@@ -618,24 +779,24 @@
  "by_tag": {
   "financial": {
    "all": {
-    "n": 52,
+    "n": 53,
     "d": 60,
-    "rate": 0.8666666666666667
+    "rate": 0.8833333333333333
    },
    "excl_qualitative": {
-    "n": 52,
+    "n": 53,
     "d": 60,
-    "rate": 0.8666666666666667
+    "rate": 0.8833333333333333
    },
    "excl_qualitative_and_missing_data": {
-    "n": 52,
-    "d": 59,
-    "rate": 0.8813559322033898
+    "n": 53,
+    "d": 60,
+    "rate": 0.8833333333333333
    },
    "headline": {
-    "n": 34,
+    "n": 35,
     "d": 60,
-    "rate": 0.5666666666666667
+    "rate": 0.5833333333333334
    },
    "strengths": {
     "n": 25,
@@ -643,9 +804,9 @@
     "rate": 0.9615384615384616
    },
    "weaknesses": {
-    "n": 27,
+    "n": 28,
     "d": 34,
-    "rate": 0.7941176470588235
+    "rate": 0.8235294117647058
    }
   },
   "kpi": {
@@ -665,9 +826,9 @@
     "rate": 0.8620689655172413
    },
    "headline": {
-    "n": 12,
+    "n": 13,
     "d": 29,
-    "rate": 0.41379310344827586
+    "rate": 0.4482758620689655
    },
    "strengths": {
     "n": 16,
@@ -714,27 +875,31 @@
   }
  },
  "false_alarms": {
-  "n": 2,
-  "headline_items": 219,
-  "reviewed": 0,
+  "n": 16,
+  "headline_items": 254,
+  "reviewed": 209,
   "by_company": {
    "TCS": 0,
-   "HDFCBANK": 0,
+   "HDFCBANK": 3,
    "BAJFINANCE": 0,
    "HDFCLIFE": 0,
-   "HINDUNILVR": 0,
+   "HINDUNILVR": 1,
    "ASIANPAINT": 0,
-   "TATASTEEL": 0,
+   "TATASTEEL": 1,
    "ULTRACEMCO": 0,
-   "SUNPHARMA": 0,
-   "MARUTI": 0,
-   "BEL": 0,
+   "SUNPHARMA": 1,
+   "MARUTI": 2,
+   "BEL": 1,
    "DLF": 0,
-   "NTPC": 1,
+   "NTPC": 5,
    "DMART": 0,
-   "ADANIENT": 0,
+   "ADANIENT": 1,
    "BHARTIARTL": 0,
-   "YESBANK": 1
+   "ICICIBANK": 0,
+   "INFY": 1,
+   "NESTLEIND": 0,
+   "HAL": 0,
+   "YESBANK": 0
   }
  },
  "companies": {
@@ -910,18 +1075,8 @@
     },
     {
      "list": "weaknesses",
-     "id": "debt_vs_ebitda_growth",
-     "text": "Debt growth - EBITDA growth: +12.7pp (RED vs band: red \u2265 +10.0pp, green \u2264 +0.0pp, indicative); deteriorating +7.8 pts/yr over FY22-FY26"
-    },
-    {
-     "list": "weaknesses",
      "id": "revenue_cagr_3y",
      "text": "Revenue CAGR 3y: 5.8% (RED vs band: red \u2264 4.0%, green \u2265 8.9%); deteriorating \u22121.0 pts/yr over FY22-FY26"
-    },
-    {
-     "list": "weaknesses",
-     "id": "ev_ic_to_roic_wacc",
-     "text": "(EV/IC) / (ROIC/WACC): 1.82x (RED vs band: red \u2265 1.50x, green \u2264 1.00x, indicative)"
     },
     {
      "list": "flags",
@@ -930,7 +1085,7 @@
     }
    ],
    "false_alarms": [],
-   "reviewed": 0
+   "reviewed": 11
   },
   "HDFCBANK": {
    "archetype": "bank",
@@ -1007,7 +1162,7 @@
      "hits": [],
      "evidence": [
       "nii_to_assets AMBER 3.5% (stable)",
-      "nim_reported n/a (n/a in FY26: missing nim_pct FY26 (manual KPI))",
+      "nim_reported AMBER 3.4%",
       "nii_cagr_3y UNSCORED 20.6% (improving)",
       "flag M08 clear"
      ]
@@ -1087,18 +1242,13 @@
     },
     {
      "list": "weaknesses",
-     "id": "G02",
-     "text": "G02 Per-share growth lagging profit growth (dilution): Core PAT grew 19.0% a year over 5 years but EPS only 11.3%: new shares issued (QIPs, rights, share-swap mergers, ESOPs) captured part of the profit growth that shareholders would otherwise have kept."
-    },
-    {
-     "list": "weaknesses",
      "id": "G05",
      "text": "G05 Quarterly growth decelerating: Year-on-year revenue growth has slowed by -2.2pp per quarter over the last four quarters and the latest quarter grew only 0.5%."
     },
     {
      "list": "weaknesses",
      "id": "V03",
-     "text": "V03 P/B well above what returns justify: P/B of 1.9x is 2.1x the 0.9x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+     "text": "V03 P/B well above what returns justify: P/B of 1.9x is 2.1x the 0.9x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
     },
     {
      "list": "weaknesses",
@@ -1109,10 +1259,40 @@
      "list": "weaknesses",
      "id": "BK07",
      "text": "BK07 Lending more than the deposit base supports: Credit-deposit ratio is 95.3%: growth relies on borrowings or will be constrained by deposit mobilisation."
+    },
+    {
+     "list": "weaknesses",
+     "id": "roe",
+     "text": "Return on equity: 13.7% (RED vs band: red \u2264 15.8%, green \u2265 20.8%); deteriorating \u22120.9 pts/yr over FY22-FY26; \u22123.4 pts over 3y; 85% from return on assets; return on assets fell because operating cost / average assets rose 2.7% \u2192 4.4%"
     }
    ],
-   "false_alarms": [],
-   "reviewed": 0
+   "false_alarms": [
+    {
+     "source": "review",
+     "id": "R05",
+     "list": "weaknesses",
+     "text": "R05 ROE below cost of equity (financials): ROE (13.7%) has been below the cost of equity for 2 years (spread -2.0pp): the franchise is not earning its cost of capital.",
+     "reason": "ROE 13.7% is flagged below a Ke of about 15.8% (rf = 7.41% G-sec yield plus beta x a 6.92% ERP that already contains India's country risk) is above the 12-13% cost of equity analysts use for HDFC Bank; the gap closes at a Damodaran-consistent Ke (rf net of the 1.75% default spread). Sources do not call the bank value-destroying.",
+     "cause": "metric definition"
+    },
+    {
+     "source": "review",
+     "id": "V03",
+     "list": "weaknesses",
+     "text": "V03 P/B well above what returns justify: P/B of 1.9x is 2.1x the 0.9x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise.",
+     "reason": "Justified P/B of 0.9x rests on the same high Ke (Ke of about 15.8% (rf = 7.41% G-sec yield plus beta x a 6.92% ERP that already contains India's country risk) is above the 12-13% cost of equity analysts use for HDFC Bank; the gap closes at a Damodaran-consistent Ke (rf net of the 1.75% default spread)); P/B of 1.9x sits near the bottom of its own 10-year range.",
+     "cause": "metric definition"
+    },
+    {
+     "source": "review",
+     "id": "roe",
+     "list": "weaknesses",
+     "text": "Return on equity: 13.7% (RED vs band: red \u2264 15.8%, green \u2265 20.8%); deteriorating \u22120.9 pts/yr over FY22-FY26; \u22123.4 pts over 3y; 85% from return on assets; return on assets fell because operating cost / average assets rose 2.7% \u2192 4.4%",
+     "reason": "The bank ROE band is anchored on Ke (red at 15.8%), so ROE 13.7% reads red for the same reason as R05: Ke of about 15.8% (rf = 7.41% G-sec yield plus beta x a 6.92% ERP that already contains India's country risk) is above the 12-13% cost of equity analysts use for HDFC Bank; the gap closes at a Damodaran-consistent Ke (rf net of the 1.75% default spread).",
+     "cause": "metric definition"
+    }
+   ],
+   "reviewed": 12
   },
   "BAJFINANCE": {
    "archetype": "nbfc",
@@ -1290,21 +1470,16 @@
     {
      "list": "weaknesses",
      "id": "V03",
-     "text": "V03 P/B well above what returns justify: P/B of 4.4x is 1.8x the 2.5x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+     "text": "V03 P/B well above what returns justify: P/B of 4.4x is 1.8x the 2.5x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
     },
     {
      "list": "weaknesses",
      "id": "q_revenue_yoy_trend",
      "text": "Quarterly YoY growth trend: \u22121.0pp (RED vs band: red \u2264 \u22121.0pp, green \u2265 +1.0pp, indicative)"
-    },
-    {
-     "list": "weaknesses",
-     "id": "pcr",
-     "text": "Provision coverage ratio: 60.0% (RED vs band: red \u2264 60.0%, green \u2265 70.0%)"
     }
    ],
    "false_alarms": [],
-   "reviewed": 0
+   "reviewed": 10
   },
   "HDFCLIFE": {
    "archetype": "insurance",
@@ -1385,7 +1560,7 @@
      "claim": "Weak growth: FY26 VNB +2%, Q4 APE +0.4% (JPMorgan), Q4 VNB -8%",
      "status": "match",
      "matched": true,
-     "headline": false,
+     "headline": true,
      "contradicted": false,
      "blocked": false,
      "hits": [
@@ -1439,18 +1614,13 @@
     },
     {
      "list": "strengths",
-     "id": "solvency_ratio",
-     "text": "Solvency ratio: 177.0% (GREEN vs band: red \u2264 150.0%, green \u2265 180.0%)"
-    },
-    {
-     "list": "strengths",
      "id": "pe_percentile_10y",
      "text": "P/E percentile vs own history: 12.5% (GREEN vs band: red \u2265 67.0%, green \u2264 33.0%, indicative)"
     },
     {
-     "list": "weaknesses",
-     "id": "R02",
-     "text": "R02 ROE rising on leverage while margins fall: ROE rose +1.7pp over 3 years, but only because the equity multiplier rose by 5.09x while the net margin fell -0.0pp: better returns are coming from more leverage, not a better business."
+     "list": "strengths",
+     "id": "share_count_change",
+     "text": "Share count change: 0.2% (GREEN vs band: red \u2265 3.0%, green \u2264 0.0%, indicative); improving \u22121.0 pts/yr over FY22-FY26"
     },
     {
      "list": "weaknesses",
@@ -1464,22 +1634,27 @@
     },
     {
      "list": "weaknesses",
-     "id": "q_revenue_yoy",
-     "text": "Latest quarter revenue YoY: \u221217.8% (RED vs band: red \u2264 4.0%, green \u2265 8.9%)"
-    },
-    {
-     "list": "weaknesses",
      "id": "IN03",
      "text": "IN03 VNB margin compressing: VNB margin fell -2.1pp over 2 years (-1.4pp in the latest year) to 24.2% (product mix, regulation or pricing pressure)."
     },
     {
      "list": "weaknesses",
-     "id": "revenue_growth_volatility",
-     "text": "Revenue growth volatility: 2.41 (RED vs band: red \u2265 1.50, green \u2264 0.50, indicative)"
+     "id": "roe",
+     "text": "Return on equity: 11.3% (RED vs band: red \u2264 13.4%, green \u2265 18.4%); stable +0.3 pts/yr over FY22-FY26; +1.7 pts over 3y; 161% from equity multiplier, partly offset by the other drivers; equity multiplier rose because other liabilities / equity (average) rose 15.68x \u2192 20.65x"
+    },
+    {
+     "list": "weaknesses",
+     "id": "vnb_growth",
+     "text": "VNB growth: 1.8% (RED vs band: red \u2264 4.0%, green \u2265 8.9%)"
+    },
+    {
+     "list": "weaknesses",
+     "id": "q_pat_yoy",
+     "text": "Latest quarter PAT YoY: 4.7% (RED vs band: red \u2264 4.0%, green \u2265 8.9%)"
     }
    ],
    "false_alarms": [],
-   "reviewed": 0
+   "reviewed": 12
   },
   "HINDUNILVR": {
    "archetype": "fmcg",
@@ -1605,7 +1780,7 @@
       "pe_percentile_10y GREEN 0.0%",
       "ev_ebitda_percentile_10y GREEN 11.1%",
       "implied_minus_delivered_growth RED +12.5pp",
-      "ev_ic_to_roic_wacc RED 4.68x",
+      "ev_ic_to_roic_wacc RED 4.64x",
       "flag V01 fired",
       "flag V02 clear",
       "flag V04 fired"
@@ -1661,7 +1836,7 @@
     {
      "list": "weaknesses",
      "id": "V03",
-     "text": "V03 P/B well above what returns justify: P/B of 9.9x is 5.0x the 2.0x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+     "text": "V03 P/B well above what returns justify: P/B of 9.9x is 5.0x the 2.0x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
     },
     {
      "list": "weaknesses",
@@ -1674,8 +1849,17 @@
      "text": "Revenue CAGR 3y: 2.1% (RED vs band: red \u2264 4.0%, green \u2265 8.9%); deteriorating \u22122.6 pts/yr over FY22-FY26"
     }
    ],
-   "false_alarms": [],
-   "reviewed": 0
+   "false_alarms": [
+    {
+     "source": "review",
+     "id": "q_pat_yoy",
+     "list": "strengths",
+     "text": "Latest quarter PAT YoY: 21.4% (GREEN vs band: red \u2264 4.0%, green \u2265 8.9%)",
+     "reason": "Q4 PAT +21% includes the Nutritionalab stake-sale gain; analysts put core growth at about 4% (HINDUNILVR-W1). Quarterly exceptional items are not separable in the export and this one is too small for the outlier test.",
+     "cause": "missing data"
+    }
+   ],
+   "reviewed": 12
   },
   "ASIANPAINT": {
    "archetype": "consumer_manufacturing",
@@ -1796,7 +1980,7 @@
       "pe_percentile_10y GREEN 0.0%",
       "ev_ebitda_percentile_10y GREEN 0.0%",
       "implied_minus_delivered_growth RED +17.4pp",
-      "ev_ic_to_roic_wacc RED 5.85x",
+      "ev_ic_to_roic_wacc RED 3.21x",
       "flag V01 fired",
       "flag V02 clear",
       "flag V04 fired"
@@ -1836,11 +2020,6 @@
     },
     {
      "list": "weaknesses",
-     "id": "B01",
-     "text": "B01 Debt growing faster than EBITDA for three years: Borrowings have outgrown EBITDA for 3 consecutive years (debt Rs 1,933 cr to Rs 3,929 cr; EBITDA Rs 6,260 cr to Rs 6,700 cr): leverage is rising faster than the capacity to service it."
-    },
-    {
-     "list": "weaknesses",
      "id": "R03",
      "text": "R03 New capital earning below its cost: Invested capital grew 33.9% over 3 years but the capital added earned only 0.5% (WACC 11.8%): incremental investment is diluting returns."
     },
@@ -1852,7 +2031,7 @@
     {
      "list": "weaknesses",
      "id": "V03",
-     "text": "V03 P/B well above what returns justify: P/B of 9.7x is 3.2x the 3.0x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+     "text": "V03 P/B well above what returns justify: P/B of 9.7x is 3.2x the 3.0x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
     },
     {
      "list": "weaknesses",
@@ -1863,10 +2042,15 @@
      "list": "weaknesses",
      "id": "eps_cagr_3y",
      "text": "EPS CAGR 3y: 1.7% (RED vs band: red \u2264 4.0%, green \u2265 8.9%); deteriorating \u22122.9 pts/yr over FY22-FY26"
+    },
+    {
+     "list": "weaknesses",
+     "id": "cwip_to_net_block",
+     "text": "CWIP / net block: 19.2% (RED vs band: red \u2265 30.0%, green \u2264 10.0%, indicative); deteriorating +1.9 pts/yr over FY22-FY26"
     }
    ],
    "false_alarms": [],
-   "reviewed": 0
+   "reviewed": 12
   },
   "TATASTEEL": {
    "archetype": "metals",
@@ -1965,18 +2149,16 @@
       "pb_percentile_10y",
       "ev_ebitda_percentile_10y",
       "pe_percentile_10y",
-      "implied_minus_delivered_growth",
       "ev_ic_to_roic_wacc",
-      "V01",
       "V04"
      ],
      "evidence": [
       "pb_percentile_10y RED 100.0%",
       "ev_ebitda_percentile_10y RED 77.8%",
       "pe_percentile_10y RED 75.0%",
-      "implied_minus_delivered_growth RED +55.0pp",
-      "ev_ic_to_roic_wacc RED 2.61x",
-      "flag V01 fired",
+      "implied_minus_delivered_growth n/a (no value for the as-of year)",
+      "ev_ic_to_roic_wacc RED 4.75x",
+      "flag V01 not evaluable",
       "flag V02 clear",
       "flag V04 fired"
      ]
@@ -2026,7 +2208,7 @@
     {
      "list": "weaknesses",
      "id": "B04",
-     "text": "B04 Liquidity squeeze: Other assets cover other liabilities only 0.8x and cash covers debt 0.1x: short-term obligations depend on refinancing."
+     "text": "B04 Liquidity squeeze: Other assets and investments cover other liabilities only 0.9x and cash and investments cover debt 0.2x: short-term obligations depend on refinancing."
     },
     {
      "list": "weaknesses",
@@ -2035,17 +2217,26 @@
     },
     {
      "list": "weaknesses",
-     "id": "V01",
-     "text": "V01 Priced for acceleration: Today's EV implies 58.7% a year FCF growth for 10 years, +55.0pp above the growth delivered over the last 5 years: the price needs an acceleration that has not happened yet."
+     "id": "V03",
+     "text": "V03 P/B well above what returns justify: P/B of 2.3x is 8.0x the 0.3x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
     },
     {
      "list": "weaknesses",
-     "id": "V03",
-     "text": "V03 P/B well above what returns justify: P/B of 2.3x is 8.0x the 0.3x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+     "id": "ebitda_cagr_3y",
+     "text": "EBITDA CAGR 3y: 2.1% (RED vs band: red \u2264 4.0%, green \u2265 8.9%); deteriorating \u221210.4 pts/yr over FY22-FY26"
     }
    ],
-   "false_alarms": [],
-   "reviewed": 0
+   "false_alarms": [
+    {
+     "source": "review",
+     "id": "B04",
+     "list": "weaknesses",
+     "text": "B04 Liquidity squeeze: Other assets and investments cover other liabilities only 0.9x and cash and investments cover debt 0.2x: short-term obligations depend on refinancing.",
+     "reason": "The export has no debt-maturity split, so all Rs 92,000 cr of borrowings count as short-term; Tata Steel is deleveraging (TATASTEEL-S2) and no source raises liquidity.",
+     "cause": "metric definition"
+    }
+   ],
+   "reviewed": 12
   },
   "ULTRACEMCO": {
    "archetype": "cement",
@@ -2086,7 +2277,7 @@
      "hits": [],
      "evidence": [
       "ebitda_per_tonne AMBER 1102.39",
-      "ebitda_per_tonne_vs_avg n/a (n/a in FY26: missing ebitda_per_tonne: 2 of 3 years available)"
+      "ebitda_per_tonne_vs_avg N/A 6.1%"
      ]
     },
     {
@@ -2211,11 +2402,6 @@
     },
     {
      "list": "weaknesses",
-     "id": "B04",
-     "text": "B04 Liquidity squeeze: Other assets cover other liabilities only 0.7x and cash covers debt 0.1x: short-term obligations depend on refinancing."
-    },
-    {
-     "list": "weaknesses",
      "id": "M03",
      "text": "M03 Materials cost creeping up: Materials rose +4.1pp of sales over 3 years to 19.4%: input inflation is not being passed on, or the mix is shifting to lower-margin products."
     },
@@ -2226,17 +2412,17 @@
     },
     {
      "list": "weaknesses",
-     "id": "V01",
-     "text": "V01 Priced for acceleration: Today's EV implies 28.9% a year FCF growth for 10 years, +20.0pp above the growth delivered over the last 5 years: the price needs an acceleration that has not happened yet."
+     "id": "V03",
+     "text": "V03 P/B well above what returns justify: P/B of 4.1x is 5.9x the 0.7x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
     },
     {
-     "list": "flags",
-     "id": "V03",
-     "text": "V03 P/B well above what returns justify: P/B of 4.1x is 5.9x the 0.7x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+     "list": "weaknesses",
+     "id": "fcf_to_pat_5y",
+     "text": "FCF / PAT (5y cumulative): -0.39 (RED vs band: red \u2264 0.30, green \u2265 0.70, indicative); deteriorating \u22120.09/yr over FY22-FY26"
     }
    ],
    "false_alarms": [],
-   "reviewed": 0
+   "reviewed": 12
   },
   "SUNPHARMA": {
    "archetype": "pharma",
@@ -2390,7 +2576,7 @@
     {
      "list": "weaknesses",
      "id": "V03",
-     "text": "V03 P/B well above what returns justify: P/B of 5.0x is 3.5x the 1.4x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+     "text": "V03 P/B well above what returns justify: P/B of 5.0x is 3.5x the 1.4x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
     },
     {
      "list": "weaknesses",
@@ -2413,8 +2599,17 @@
      "text": "Latest quarter EBITDA margin change YoY: \u22121.6pp (RED vs band: red \u2264 \u22121.0pp, green \u2265 +1.0pp, indicative)"
     }
    ],
-   "false_alarms": [],
-   "reviewed": 0
+   "false_alarms": [
+    {
+     "source": "review",
+     "id": "fcf_to_pat",
+     "list": "weaknesses",
+     "text": "FCF / PAT: 0.25 (RED vs band: red \u2264 0.20, green \u2265 0.80, indicative); stable \u22120.01/yr over FY22-FY26",
+     "reason": "Capex proxy (change in net block + CWIP + depreciation) counts the FY26 jump in net block from acquired intangibles (Checkpoint and in-licensing) and the currency translation of overseas assets as capex, so FCF/PAT reads 0.25 while CFO/PAT is about 1.1; acquisitions, not weak cash conversion.",
+     "cause": "metric definition"
+    }
+   ],
+   "reviewed": 12
   },
   "MARUTI": {
    "archetype": "auto",
@@ -2570,11 +2765,6 @@
     },
     {
      "list": "weaknesses",
-     "id": "V03",
-     "text": "V03 P/B well above what returns justify: P/B of 3.6x is 3.4x the 1.1x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
-    },
-    {
-     "list": "weaknesses",
      "id": "q_pat_yoy",
      "text": "Latest quarter PAT YoY: \u22126.4% (RED vs band: red \u2264 4.0%, green \u2265 8.9%)"
     },
@@ -2591,16 +2781,38 @@
     {
      "list": "weaknesses",
      "id": "ev_ic_to_roic_wacc",
-     "text": "(EV/IC) / (ROIC/WACC): 4.14x (RED vs band: red \u2265 1.50x, green \u2264 1.00x, indicative)"
+     "text": "EV/IC / justified EV/IC: 2.86x (RED vs band: red \u2265 1.50x, green \u2264 1.00x, indicative)"
     },
     {
      "list": "weaknesses",
-     "id": "current_ratio_proxy",
-     "text": "Current ratio (Screener proxy): 0.67x (RED vs band: red \u2264 1.00x, green \u2265 1.50x, indicative); deteriorating \u22120.04x/yr over FY22-FY26"
+     "id": "pb_to_justified_pb",
+     "text": "P/B / justified P/B: 3.36x (RED vs band: red \u2265 1.50x, green \u2264 1.00x, indicative)"
+    },
+    {
+     "list": "weaknesses",
+     "id": "cwip_to_net_block",
+     "text": "CWIP / net block: 28.5% (RED vs band: red \u2265 30.0%, green \u2264 10.0%, indicative); deteriorating +2.3 pts/yr over FY22-FY26"
     }
    ],
-   "false_alarms": [],
-   "reviewed": 0
+   "false_alarms": [
+    {
+     "source": "review",
+     "id": "ev_ic_to_roic_wacc",
+     "list": "weaknesses",
+     "text": "EV/IC / justified EV/IC: 2.86x (RED vs band: red \u2265 1.50x, green \u2264 1.00x, indicative)",
+     "reason": "Single-stage steady state at a 13.6% WACC and 6% perpetual growth treats any longer growth runway as overpricing; the growth-aware reverse DCF (V01) does not flag Maruti and no source calls the valuation rich.",
+     "cause": "metric definition"
+    },
+    {
+     "source": "review",
+     "id": "pb_to_justified_pb",
+     "list": "weaknesses",
+     "text": "P/B / justified P/B: 3.36x (RED vs band: red \u2265 1.50x, green \u2264 1.00x, indicative)",
+     "reason": "Equity includes Rs 77,000 cr of treasury investments, which depresses ROE and the single-stage justified P/B; the growth-aware test does not flag Maruti and no source calls the valuation rich.",
+     "cause": "metric definition"
+    }
+   ],
+   "reviewed": 12
   },
   "BEL": {
    "archetype": "capital_goods_defence",
@@ -2735,7 +2947,7 @@
       "pe_percentile_10y RED 100.0%",
       "ev_ebitda_percentile_10y RED 100.0%",
       "implied_minus_delivered_growth RED +11.4pp",
-      "ev_ic_to_roic_wacc RED 7.47x",
+      "ev_ic_to_roic_wacc RED 4.15x",
       "flag V01 fired",
       "flag V02 fired",
       "flag V04 fired"
@@ -2785,11 +2997,6 @@
     },
     {
      "list": "weaknesses",
-     "id": "A05",
-     "text": "A05 Acquisition spend followed by falling ROIC: Non-capex investing equal to 20.4% of invested capital over 3 years was followed by a -19.7pp change in ROIC: acquisitions/investments are not earning their keep (yet)."
-    },
-    {
-     "list": "weaknesses",
      "id": "C07",
      "text": "C07 Working capital bloating: Net working capital rose from 28 days to 130 days of sales over 3 years, absorbing cash that would otherwise be free cash flow."
     },
@@ -2801,7 +3008,12 @@
     {
      "list": "weaknesses",
      "id": "V03",
-     "text": "V03 P/B well above what returns justify: P/B of 12.2x is 6.6x the 1.8x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+     "text": "V03 P/B well above what returns justify: P/B of 12.2x is 6.6x the 1.8x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
+    },
+    {
+     "list": "weaknesses",
+     "id": "dividend_to_fcf",
+     "text": "Dividends / FCF: 3.02 (RED vs band: red \u2265 1.20, green \u2264 0.70, indicative)"
     },
     {
      "list": "flags",
@@ -2814,8 +3026,17 @@
      "text": "Q07 Weak cash conversion of EBITDA: CFO was only 8.3% and 19.1% of EBITDA in the last two years."
     }
    ],
-   "false_alarms": [],
-   "reviewed": 0
+   "false_alarms": [
+    {
+     "source": "review",
+     "id": "Q06",
+     "list": "weaknesses",
+     "text": "Q06 Beneish M-score in manipulator zone: The Beneish-style M-score is -1.71 (above -1.78). Drivers: DSRI 1.22, accruals/assets 0.10, AQI 0.84. This is a screen built on Screener proxies, not proof: read the notes to accounts on revenue recognition and capitalisation.",
+     "reason": "M-score above -1.78 is driven by receivable growth (DSRI 1.22) and accruals, the working-capital swing already flagged by Q01/Q03/Q07 and BEL-W2; no source suggests manipulation at this defence PSU. Beneish weights government-customer receivable swings heavily.",
+     "cause": "metric definition"
+    }
+   ],
+   "reviewed": 14
   },
   "DLF": {
    "archetype": "real_estate",
@@ -2862,7 +3083,7 @@
      ],
      "evidence": [
       "cfo_to_collections GREEN 0.47",
-      "collections_to_presales RED 0.67",
+      "collections_to_presales N/A 0.67",
       "cfo_to_presales N/A 0.32",
       "cfo_to_pat_5y GREEN 1.28 (deteriorating)",
       "fcf_to_pat_5y GREEN 1.28 (deteriorating)"
@@ -2937,7 +3158,7 @@
      "claim": "EBITDA margin dipped",
      "status": "match",
      "matched": true,
-     "headline": false,
+     "headline": true,
      "contradicted": false,
      "blocked": false,
      "hits": [
@@ -2991,11 +3212,6 @@
     },
     {
      "list": "weaknesses",
-     "id": "RE01",
-     "text": "RE01 Bookings not converting to cash: Collections were only 67.1% of the year's pre-sales: bookings are not turning into cash (stretched buyers, slow construction or cancellations)."
-    },
-    {
-     "list": "weaknesses",
      "id": "G01",
      "text": "G01 Profit growth far ahead of revenue growth: Core PAT compounded at 29.4% a year over 3 years while revenue grew 12.9%. Growth driven by margin expansion or lower costs rarely compounds for long; check whether the margin gain is structural or cyclical."
     },
@@ -3011,17 +3227,17 @@
     },
     {
      "list": "weaknesses",
-     "id": "V01",
-     "text": "V01 Priced for acceleration: Today's EV implies 58.0% a year FCF growth for 10 years, +49.8pp above the growth delivered over the last 5 years: the price needs an acceleration that has not happened yet."
+     "id": "ebitda_margin",
+     "text": "EBITDA margin: 17.7% (RED vs band: red \u2264 23.6%, green \u2265 35.4%); deteriorating \u22123.0 pts/yr over FY22-FY26; \u221212.6 pts over 3y; 114% from other expenses % of sales, partly offset by the other drivers; other expenses % of sales rose 60.1% \u2192 74.5%"
     },
     {
-     "list": "flags",
-     "id": "V03",
-     "text": "V03 P/B well above what returns justify: P/B of 2.7x is 7.1x the 0.4x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+     "list": "weaknesses",
+     "id": "ev_ebitda_percentile_10y",
+     "text": "EV/EBITDA percentile vs own history: 77.8% (RED vs band: red \u2265 67.0%, green \u2264 33.0%, indicative)"
     }
    ],
    "false_alarms": [],
-   "reviewed": 0
+   "reviewed": 12
   },
   "NTPC": {
    "archetype": "utilities",
@@ -3179,8 +3395,8 @@
     },
     {
      "list": "strengths",
-     "id": "altman_z_india",
-     "text": "Altman Z''-EM (India-adapted): 5.99 (GREEN vs band: red \u2264 4.35, green \u2265 5.85); stable +0.12/yr over FY22-FY26"
+     "id": "current_ratio_proxy",
+     "text": "Current ratio (Screener proxy): 1.84x (GREEN vs band: red \u2264 1.00x, green \u2265 1.50x, indicative); improving +0.10x/yr over FY22-FY26"
     },
     {
      "list": "weaknesses",
@@ -3214,13 +3430,8 @@
     },
     {
      "list": "flags",
-     "id": "V01",
-     "text": "V01 Priced for acceleration: Today's EV implies 38.7% a year FCF growth for 10 years, +31.0pp above the growth delivered over the last 5 years: the price needs an acceleration that has not happened yet."
-    },
-    {
-     "list": "flags",
      "id": "V03",
-     "text": "V03 P/B well above what returns justify: P/B of 1.8x is 3.3x the 0.5x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+     "text": "V03 P/B well above what returns justify: P/B of 1.8x is 3.3x the 0.5x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
     }
    ],
    "false_alarms": [
@@ -3233,9 +3444,41 @@
       "regulated_roe_gap RED -6.2pp",
       "roic_wacc_spread RED -6.3pp (stable)"
      ]
+    },
+    {
+     "source": "review",
+     "id": "R01",
+     "list": "weaknesses",
+     "text": "R01 ROIC below WACC for three years: ROIC has been below WACC for 3 consecutive years (latest ROIC 6.4%, spread -6.3pp): the business is destroying value on the capital it employs, and growth makes this worse.",
+     "reason": "ROIC below WACC: consolidated ROIC/ROE includes about Rs 1 lakh crore of CWIP that earns only after commissioning, and FY26 core profit is cut by the one-off tax write-back without the regulatory income offset Screener does not separate; analysts (NTPC-S2) cite a steady regulated core RoE of 16-17%.",
+     "cause": "missing sector logic"
+    },
+    {
+     "source": "review",
+     "id": "regulated_roe_gap",
+     "list": "weaknesses",
+     "text": "RoE - allowed RoE: \u22126.2pp (RED vs band: red \u2264 \u22123.0pp, green \u2265 +0.0pp)",
+     "reason": "RoE 6pp below the allowed 15.5%: consolidated ROIC/ROE includes about Rs 1 lakh crore of CWIP that earns only after commissioning, and FY26 core profit is cut by the one-off tax write-back without the regulatory income offset Screener does not separate; analysts (NTPC-S2) cite a steady regulated core RoE of 16-17%.",
+     "cause": "missing sector logic"
+    },
+    {
+     "source": "review",
+     "id": "A07",
+     "list": "weaknesses",
+     "text": "A07 Heavy reinvestment at sub-WACC returns: The company reinvests 145.0% of NOPAT but the last 3 years' incremental ROIC is 4.2%, below WACC (12.6%): growth is destroying value; returning cash would be better.",
+     "reason": "Incremental ROIC below WACC on heavy reinvestment: consolidated ROIC/ROE includes about Rs 1 lakh crore of CWIP that earns only after commissioning, and FY26 core profit is cut by the one-off tax write-back without the regulatory income offset Screener does not separate; analysts (NTPC-S2) cite a steady regulated core RoE of 16-17%; new capacity earns the regulated return once commissioned.",
+     "cause": "missing sector logic"
+    },
+    {
+     "source": "review",
+     "id": "V03",
+     "list": "flags",
+     "text": "V03 P/B well above what returns justify: P/B of 1.8x is 3.3x the 0.5x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise.",
+     "reason": "Justified P/B of 0.5x uses consolidated core ROE of 9.3%: consolidated ROIC/ROE includes about Rs 1 lakh crore of CWIP that earns only after commissioning, and FY26 core profit is cut by the one-off tax write-back without the regulatory income offset Screener does not separate; analysts (NTPC-S2) cite a steady regulated core RoE of 16-17%.",
+     "cause": "missing sector logic"
     }
    ],
-   "reviewed": 0
+   "reviewed": 13
   },
   "DMART": {
    "archetype": "retail",
@@ -3310,17 +3553,15 @@
      "contradicted": false,
      "blocked": false,
      "hits": [
-      "implied_minus_delivered_growth",
       "ev_ic_to_roic_wacc",
-      "V01",
       "V04"
      ],
      "evidence": [
       "pe_percentile_10y GREEN 11.1%",
       "ev_ebitda_percentile_10y GREEN 11.1%",
-      "implied_minus_delivered_growth RED +17.0pp",
-      "ev_ic_to_roic_wacc RED 11.14x",
-      "flag V01 fired",
+      "implied_minus_delivered_growth n/a (no value for the as-of year)",
+      "ev_ic_to_roic_wacc RED 10.74x",
+      "flag V01 not evaluable",
       "flag V02 clear",
       "flag V04 fired"
      ]
@@ -3421,17 +3662,17 @@
     },
     {
      "list": "weaknesses",
-     "id": "V01",
-     "text": "V01 Priced for acceleration: Today's EV implies 42.1% a year FCF growth for 10 years, +17.0pp above the growth delivered over the last 5 years: the price needs an acceleration that has not happened yet."
+     "id": "V03",
+     "text": "V03 P/B well above what returns justify: P/B of 10.5x is 11.4x the 0.9x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
     },
     {
      "list": "weaknesses",
-     "id": "V03",
-     "text": "V03 P/B well above what returns justify: P/B of 10.5x is 11.4x the 0.9x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+     "id": "roic_wacc_spread",
+     "text": "ROIC - WACC: \u22121.7pp (RED vs band: red \u2264 +0.0pp, green \u2265 +5.0pp); deteriorating \u22120.1 pts/yr over FY22-FY26"
     }
    ],
    "false_alarms": [],
-   "reviewed": 0
+   "reviewed": 12
   },
   "ADANIENT": {
    "archetype": "holdco",
@@ -3688,11 +3929,20 @@
     {
      "list": "flags",
      "id": "V03",
-     "text": "V03 P/B well above what returns justify: P/B of 2.8x is 63.4x the 0.0x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+     "text": "V03 P/B well above what returns justify: P/B of 2.8x is 63.4x the 0.0x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
     }
    ],
-   "false_alarms": [],
-   "reviewed": 0
+   "false_alarms": [
+    {
+     "source": "review",
+     "id": "share_count_change",
+     "list": "strengths",
+     "text": "Share count change: \u22120.1% (GREEN vs band: red \u2265 3.0%, green \u2264 0.0%, indicative); improving \u22120.3 pts/yr over FY22-FY26",
+     "reason": "Screener's adjusted share basis restates all earlier years by 1.12x for the FY26 rights issue (Rs 24,930 cr, ADANIENT-W1), so share-count change reads -0.1% while reported shares rose 12%.",
+     "cause": "parsing"
+    }
+   ],
+   "reviewed": 21
   },
   "BHARTIARTL": {
    "archetype": "telecom",
@@ -3854,18 +4104,8 @@
     },
     {
      "list": "weaknesses",
-     "id": "B05",
-     "text": "B05 Altman Z'' in distress zone: India-adapted Altman Z''-EM score is 4.21 (distress zone < 4.35; working capital/assets -0.17, EBIT/assets 0.12)."
-    },
-    {
-     "list": "weaknesses",
      "id": "A01",
      "text": "A01 Dilution while ROE falls: Share count rose 6.9% while ROE fell -3.1pp: new equity is being raised and deployed at lower returns."
-    },
-    {
-     "list": "weaknesses",
-     "id": "B04",
-     "text": "B04 Liquidity squeeze: Other assets cover other liabilities only 0.5x and cash covers debt 0.2x: short-term obligations depend on refinancing."
     },
     {
      "list": "weaknesses",
@@ -3875,12 +4115,748 @@
     {
      "list": "weaknesses",
      "id": "V03",
-     "text": "V03 P/B well above what returns justify: P/B of 7.3x is 4.1x the 1.8x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+     "text": "V03 P/B well above what returns justify: P/B of 7.3x is 4.1x the 1.8x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
     },
     {
      "list": "weaknesses",
      "id": "q_pat_yoy",
      "text": "Latest quarter PAT YoY: \u221233.5% (RED vs band: red \u2264 4.0%, green \u2265 8.9%)"
+    },
+    {
+     "list": "weaknesses",
+     "id": "ebitda_margin_sd_10y",
+     "text": "EBITDA margin volatility (sd): +7.8pp (RED vs band: red \u2265 +5.0pp, green \u2264 +2.0pp, indicative)"
+    },
+    {
+     "list": "weaknesses",
+     "id": "ev_ic_to_roic_wacc",
+     "text": "EV/IC / justified EV/IC: 4.34x (RED vs band: red \u2265 1.50x, green \u2264 1.00x, indicative)"
+    }
+   ],
+   "false_alarms": [],
+   "reviewed": 12
+  },
+  "ICICIBANK": {
+   "archetype": "bank",
+   "role": "holdout",
+   "asof": "FY26",
+   "items": [
+    {
+     "id": "ICICIBANK-S1",
+     "kind": "strengths",
+     "tag": "kpi",
+     "claim": "Best-in-class asset quality (NNPA about 0.33%, GNPA about 1.4%, low credit costs)",
+     "status": "match",
+     "matched": true,
+     "headline": true,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [
+      "nnpa_ratio",
+      "credit_cost"
+     ],
+     "evidence": [
+      "gnpa_ratio n/a (n/a in FY26: missing gnpa_pct FY26 (manual KPI))",
+      "nnpa_ratio GREEN 0.3%",
+      "credit_cost GREEN 0.4%",
+      "pcr n/a (n/a in FY26: missing pcr_pct FY26 (manual KPI))"
+     ]
+    },
+    {
+     "id": "ICICIBANK-S2",
+     "kind": "strengths",
+     "tag": "financial",
+     "claim": "High profitability (RoA above 2.3%)",
+     "status": "match",
+     "matched": true,
+     "headline": true,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [
+      "roa"
+     ],
+     "evidence": [
+      "roa GREEN 2.0% (stable)",
+      "roe AMBER 16.0% (stable)",
+      "roe_ke_spread AMBER +0.2pp (improving)"
+     ]
+    },
+    {
+     "id": "ICICIBANK-S3",
+     "kind": "strengths",
+     "tag": "kpi",
+     "claim": "Loan growth rebounded to about 15.8% YoY",
+     "status": "match",
+     "matched": true,
+     "headline": false,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [
+      "loan_growth",
+      "assets_cagr_3y"
+     ],
+     "evidence": [
+      "loan_growth GREEN 15.8%",
+      "assets_cagr_3y GREEN 14.2% (improving)"
+     ]
+    },
+    {
+     "id": "ICICIBANK-W1",
+     "kind": "weaknesses",
+     "tag": "financial",
+     "claim": "Margin pressure (NIM expected to decline as rates fall)",
+     "status": "miss",
+     "matched": false,
+     "headline": false,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [],
+     "evidence": [
+      "nii_to_assets GREEN 3.8% (stable)",
+      "nim_reported n/a (n/a in FY26: missing nim_pct FY26 (manual KPI))",
+      "nii_cagr_3y GREEN 14.6% (deteriorating)",
+      "flag M08 clear"
+     ]
+    },
+    {
+     "id": "ICICIBANK-W2",
+     "kind": "weaknesses",
+     "tag": "financial",
+     "claim": "Weak operating profit growth (about +3% YoY) as expenses jumped 12%",
+     "status": "miss",
+     "matched": false,
+     "headline": false,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [],
+     "evidence": [
+      "cost_to_income N/A 65.5% (stable)",
+      "bank_opex_to_assets N/A 5.1%",
+      "opex_to_assets N/A 5.1% (stable)",
+      "q_pat_yoy GREEN 9.3%"
+     ]
+    },
+    {
+     "id": "ICICIBANK-W3",
+     "kind": "weaknesses",
+     "tag": "financial",
+     "claim": "High market expectations hard to meet (valuation)",
+     "status": "match",
+     "matched": true,
+     "headline": true,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [
+      "pb_to_justified_pb",
+      "V03"
+     ],
+     "evidence": [
+      "pb_to_justified_pb RED 2.01x",
+      "implied_pb_growth_minus_delivered GREEN -2.9pp",
+      "pb_percentile_10y AMBER 44.4%",
+      "flag V03 fired",
+      "flag V05 clear",
+      "flag V06 clear"
+     ]
+    }
+   ],
+   "headline_items": [
+    {
+     "list": "strengths",
+     "id": "revenue_cagr_3y",
+     "text": "Revenue CAGR 3y: 17.3% (GREEN vs band: red \u2264 4.0%, green \u2265 8.9%); improving +2.7 pts/yr over FY22-FY26"
+    },
+    {
+     "list": "strengths",
+     "id": "bvps_cagr_5y",
+     "text": "Book value per share CAGR 5y: 17.3% (GREEN vs band: red \u2264 4.0%, green \u2265 8.9%); improving +2.1 pts/yr over FY22-FY26"
+    },
+    {
+     "list": "strengths",
+     "id": "roa",
+     "text": "Return on assets: 2.0% (GREEN vs band: red \u2264 1.1%, green \u2265 1.7%); stable +0.1 pts/yr over FY22-FY26; +0.1 pts over 3y; 598% from other income / assets, partly offset by the other drivers; other income / assets rose 3.5% \u2192 4.2%"
+    },
+    {
+     "list": "strengths",
+     "id": "cet1",
+     "text": "CET1 ratio: 16.4% (GREEN vs band: red \u2264 8.0%, green \u2265 13.0%)"
+    },
+    {
+     "list": "strengths",
+     "id": "nnpa_ratio",
+     "text": "Net NPA ratio: 0.3% (GREEN vs band: red \u2265 1.0%, green \u2264 0.5%)"
+    },
+    {
+     "list": "strengths",
+     "id": "cd_ratio",
+     "text": "Credit-deposit ratio: 0.87 (GREEN on trend and stability only (no band or peer set))"
+    },
+    {
+     "list": "weaknesses",
+     "id": "G05",
+     "text": "G05 Quarterly growth decelerating: Year-on-year revenue growth has slowed by -2.4pp per quarter over the last four quarters and the latest quarter grew only 2.5%."
+    },
+    {
+     "list": "weaknesses",
+     "id": "V03",
+     "text": "V03 P/B well above what returns justify: P/B of 2.4x is 2.0x the 1.2x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
+    },
+    {
+     "list": "weaknesses",
+     "id": "cost_to_income_bank",
+     "text": "Cost-to-income (ex-provisions): 63.0% (RED vs band: red \u2265 55.0%, green \u2264 42.0%, indicative)"
+    },
+    {
+     "list": "weaknesses",
+     "id": "pat_growth_volatility",
+     "text": "PAT growth volatility: 1.75 (RED vs band: red \u2265 1.50, green \u2264 0.50, indicative)"
+    }
+   ],
+   "false_alarms": [],
+   "reviewed": 0
+  },
+  "INFY": {
+   "archetype": "it_services",
+   "role": "holdout",
+   "asof": "FY26",
+   "items": [
+    {
+     "id": "INFY-S1",
+     "kind": "strengths",
+     "tag": "financial",
+     "claim": "Healthy operating margin (about 21%; FY27 guided 20-22%)",
+     "status": "match",
+     "matched": true,
+     "headline": false,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [
+      "ebit_margin",
+      "ebitda_margin"
+     ],
+     "evidence": [
+      "ebit_margin GREEN 22.6% (stable)",
+      "operating_margin N/A 20.9% (stable)",
+      "ebitda_margin GREEN 23.7% (stable)"
+     ]
+    },
+    {
+     "id": "INFY-S2",
+     "kind": "strengths",
+     "tag": "kpi",
+     "claim": "Large deal wins of USD 14.9 bn in FY26 (+24%)",
+     "status": "contradicted",
+     "matched": false,
+     "headline": false,
+     "contradicted": true,
+     "blocked": false,
+     "hits": [],
+     "evidence": [
+      "deal_tcv_growth N/A 28.4%",
+      "book_to_bill RED 0.74x"
+     ]
+    },
+    {
+     "id": "INFY-S3",
+     "kind": "strengths",
+     "tag": "financial",
+     "claim": "Profit growth (Q4 net profit +21% YoY)",
+     "status": "match",
+     "matched": true,
+     "headline": true,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [
+      "q_pat_yoy"
+     ],
+     "evidence": [
+      "q_pat_yoy GREEN 20.9%"
+     ]
+    },
+    {
+     "id": "INFY-W1",
+     "kind": "weaknesses",
+     "tag": "financial",
+     "claim": "Slow growth: FY26 constant-currency growth about 3%, weak FY27 guidance of 1.5-3.5%",
+     "status": "match",
+     "matched": true,
+     "headline": false,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [
+      "revenue_cagr_3y",
+      "cc_growth"
+     ],
+     "evidence": [
+      "revenue_cagr_3y RED 6.8% (deteriorating)",
+      "cc_growth RED 3.1%",
+      "q_revenue_yoy GREEN 13.4%",
+      "flag IT03 clear"
+     ]
+    },
+    {
+     "id": "INFY-W2",
+     "kind": "weaknesses",
+     "tag": "qualitative",
+     "claim": "Margin pressure ahead from wage hikes and AI productivity pass-through ('AI deflation')",
+     "status": "miss (qualitative)",
+     "matched": false,
+     "headline": false,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [],
+     "evidence": []
+    },
+    {
+     "id": "INFY-W3",
+     "kind": "weaknesses",
+     "tag": "qualitative",
+     "claim": "Rising competitive intensity in AI-led services; weakness at a large European client",
+     "status": "miss (qualitative)",
+     "matched": false,
+     "headline": false,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [],
+     "evidence": []
+    }
+   ],
+   "headline_items": [
+    {
+     "list": "strengths",
+     "id": "roic",
+     "text": "Return on invested capital: 48.3% (GREEN vs band: red \u2264 12.5%, green \u2265 17.5%); stable \u22120.3 pts/yr over FY22-FY26; +1.3 pts over 3y; 56% from invested-capital turnover; invested-capital turnover rose because other assets (loans, advances, other) / sales fell 85 days \u2192 79 days"
+    },
+    {
+     "list": "strengths",
+     "id": "roce",
+     "text": "Return on capital employed: 39.2% (GREEN vs band: red \u2264 16.6%, green \u2265 23.3%); stable +0.1 pts/yr over FY22-FY26"
+    },
+    {
+     "list": "strengths",
+     "id": "beneish_m_score",
+     "text": "Beneish M-score (Screener proxies): -2.55 (GREEN vs band: red \u2265 -1.78, green \u2264 -2.22); improving \u22120.08/yr over FY22-FY26"
+    },
+    {
+     "list": "strengths",
+     "id": "q_pat_yoy",
+     "text": "Latest quarter PAT YoY: 20.9% (GREEN vs band: red \u2264 4.0%, green \u2265 8.9%)"
+    },
+    {
+     "list": "strengths",
+     "id": "q_revenue_yoy",
+     "text": "Latest quarter revenue YoY: 13.4% (GREEN vs band: red \u2264 4.0%, green \u2265 8.9%)"
+    },
+    {
+     "list": "strengths",
+     "id": "accruals_ratio",
+     "text": "Accruals ratio: \u22123.0% (GREEN vs band: red \u2265 10.0%, green \u2264 0.0%); improving \u22121.1 pts/yr over FY22-FY26"
+    },
+    {
+     "list": "weaknesses",
+     "id": "book_to_bill",
+     "text": "Book-to-bill (TCV / revenue): 0.74x (RED vs band: red \u2264 1.00x, green \u2265 1.30x, indicative)"
+    },
+    {
+     "list": "weaknesses",
+     "id": "ebitda_cagr_3y",
+     "text": "EBITDA CAGR 3y: 6.4% (RED vs band: red \u2264 4.0%, green \u2265 8.9%); deteriorating \u22122.8 pts/yr over FY22-FY26"
+    },
+    {
+     "list": "weaknesses",
+     "id": "receivables_vs_revenue_growth",
+     "text": "Receivables growth - revenue growth: +3.5pp (RED vs band: red \u2265 +10.0pp, green \u2264 +0.0pp, indicative); deteriorating +2.0 pts/yr over FY22-FY26"
+    },
+    {
+     "list": "weaknesses",
+     "id": "ev_ic_to_roic_wacc",
+     "text": "EV/IC / justified EV/IC: 1.65x (RED vs band: red \u2265 1.50x, green \u2264 1.00x, indicative)"
+    },
+    {
+     "list": "weaknesses",
+     "id": "pb_to_justified_pb",
+     "text": "P/B / justified P/B: 1.45x (RED vs band: red \u2265 1.50x, green \u2264 1.00x, indicative)"
+    }
+   ],
+   "false_alarms": [
+    {
+     "source": "contradiction",
+     "id": "INFY-S2",
+     "text": "Large deal wins of USD 14.9 bn in FY26 (+24%)",
+     "evidence": [
+      "deal_tcv_growth N/A 28.4%",
+      "book_to_bill RED 0.74x"
+     ]
+    }
+   ],
+   "reviewed": 0
+  },
+  "NESTLEIND": {
+   "archetype": "fmcg",
+   "role": "holdout",
+   "asof": "FY26",
+   "items": [
+    {
+     "id": "NESTLEIND-S1",
+     "kind": "strengths",
+     "tag": "financial",
+     "claim": "Volume-led revenue growth (FY26 sales +14.9%; Q4 +22.6% with mid-teens volume growth)",
+     "status": "match",
+     "matched": true,
+     "headline": true,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [
+      "q_revenue_yoy"
+     ],
+     "evidence": [
+      "q_revenue_yoy GREEN 22.6%",
+      "revenue_cagr_3y RED 6.6% (deteriorating)",
+      "volume_growth n/a (n/a in FY26: missing volume_growth_pct FY26 (manual KPI))"
+     ]
+    },
+    {
+     "id": "NESTLEIND-S2",
+     "kind": "strengths",
+     "tag": "financial",
+     "claim": "High EBITDA margin (Q4 26.3%, beat expectations of compression)",
+     "status": "match",
+     "matched": true,
+     "headline": true,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [
+      "ebitda_margin",
+      "ebit_margin",
+      "pat_margin"
+     ],
+     "evidence": [
+      "ebitda_margin GREEN 22.9% (stable)",
+      "ebit_margin GREEN 20.6% (stable)",
+      "pat_margin GREEN 15.3% (stable)"
+     ]
+    },
+    {
+     "id": "NESTLEIND-S3",
+     "kind": "strengths",
+     "tag": "financial",
+     "claim": "Q4 profit up about 26-27%",
+     "status": "match",
+     "matched": true,
+     "headline": true,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [
+      "q_pat_yoy"
+     ],
+     "evidence": [
+      "q_pat_yoy GREEN 25.8%"
+     ]
+    },
+    {
+     "id": "NESTLEIND-W1",
+     "kind": "weaknesses",
+     "tag": "financial",
+     "claim": "Gross margin down about 140 bps in FY26 (palm oil and input costs absorbed for volume); FY26 PAT only +6.9%",
+     "status": "match",
+     "matched": true,
+     "headline": false,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [
+      "pat_cagr_3y"
+     ],
+     "evidence": [
+      "gross_margin GREEN 51.0% (stable)",
+      "gross_margin_change_1y N/A -1.3pp",
+      "materials_pct N/A 38.6% (stable)",
+      "pat_cagr_3y AMBER 5.7% (deteriorating)",
+      "flag M03 clear",
+      "flag FM04 not evaluable"
+     ]
+    },
+    {
+     "id": "NESTLEIND-W2",
+     "kind": "weaknesses",
+     "tag": "financial",
+     "claim": "Valuation a concern (Jefferies)",
+     "status": "match",
+     "matched": true,
+     "headline": true,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [
+      "implied_minus_delivered_growth",
+      "ev_ic_to_roic_wacc",
+      "V01",
+      "V04"
+     ],
+     "evidence": [
+      "pe_percentile_10y GREEN 11.1%",
+      "ev_ebitda_percentile_10y GREEN 25.0%",
+      "implied_minus_delivered_growth RED +15.1pp",
+      "ev_ic_to_roic_wacc RED 3.12x",
+      "flag V01 fired",
+      "flag V02 clear",
+      "flag V04 fired"
+     ]
+    },
+    {
+     "id": "NESTLEIND-W3",
+     "kind": "weaknesses",
+     "tag": "financial",
+     "claim": "Heavy capacity capex (about Rs 3,900 crore, new Odisha factory) weighing on near-term margins and returns",
+     "status": "miss",
+     "matched": false,
+     "headline": false,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [],
+     "evidence": [
+      "capex_to_sales N/A 3.7% (rising)",
+      "capex_to_depreciation N/A 1.22x (rising)",
+      "cwip_to_net_block GREEN 8.1% (improving)",
+      "fcf_to_pat GREEN 1.18 (stable)",
+      "flag C03 clear",
+      "flag C06 clear"
+     ]
+    }
+   ],
+   "headline_items": [
+    {
+     "list": "strengths",
+     "id": "beneish_m_score",
+     "text": "Beneish M-score (Screener proxies): -3.14 (GREEN vs band: red \u2265 -1.78, green \u2264 -2.22); improving \u22120.10/yr over FY22-FY26"
+    },
+    {
+     "list": "strengths",
+     "id": "accruals_ratio",
+     "text": "Accruals ratio: \u221211.7% (GREEN vs band: red \u2265 10.0%, green \u2264 0.0%); improving \u22121.0 pts/yr over FY22-FY26"
+    },
+    {
+     "list": "strengths",
+     "id": "ebit_margin",
+     "text": "EBIT margin: 20.6% (GREEN vs band: red \u2264 10.7%, green \u2265 16.1%); stable +0.2 pts/yr over FY22-FY26; \u22122.0 pts over 5y; 62% from EBITDA margin; EBITDA margin fell because materials % of sales rose 35.5% \u2192 38.6%"
+    },
+    {
+     "list": "strengths",
+     "id": "pat_margin",
+     "text": "PAT margin: 15.3% (GREEN vs band: red \u2264 8.2%, green \u2265 12.3%); stable +0.3 pts/yr over FY22-FY26; \u22120.5 pts over 5y; 322% from EBIT margin, partly offset by the other drivers; EBIT margin fell because materials % of sales rose 35.5% \u2192 38.6%"
+    },
+    {
+     "list": "strengths",
+     "id": "q_pat_yoy",
+     "text": "Latest quarter PAT YoY: 25.8% (GREEN vs band: red \u2264 4.0%, green \u2265 8.9%)"
+    },
+    {
+     "list": "strengths",
+     "id": "q_revenue_yoy",
+     "text": "Latest quarter revenue YoY: 22.6% (GREEN vs band: red \u2264 4.0%, green \u2265 8.9%)"
+    },
+    {
+     "list": "weaknesses",
+     "id": "V01",
+     "text": "V01 Priced for acceleration: Today's EV implies 23.7% a year FCF growth for 10 years, +15.1pp above the growth delivered over the last 5 years: the price needs an acceleration that has not happened yet."
+    },
+    {
+     "list": "weaknesses",
+     "id": "V03",
+     "text": "V03 P/B well above what returns justify: P/B of 42.7x is 2.9x the 14.5x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
+    },
+    {
+     "list": "weaknesses",
+     "id": "revenue_cagr_3y",
+     "text": "Revenue CAGR 3y: 6.6% (RED vs band: red \u2264 4.0%, green \u2265 8.9%); deteriorating \u22121.5 pts/yr over FY22-FY26"
+    },
+    {
+     "list": "weaknesses",
+     "id": "ebitda_cagr_3y",
+     "text": "EBITDA CAGR 3y: 5.9% (RED vs band: red \u2264 4.0%, green \u2265 8.9%); deteriorating \u22120.8 pts/yr over FY22-FY26"
+    },
+    {
+     "list": "weaknesses",
+     "id": "current_ratio_proxy",
+     "text": "Current ratio (Screener proxy): 0.86x (RED vs band: red \u2264 1.00x, green \u2265 1.50x, indicative); stable \u22120.01x/yr over FY22-FY26"
+    }
+   ],
+   "false_alarms": [],
+   "reviewed": 0
+  },
+  "HAL": {
+   "archetype": "capital_goods_defence",
+   "role": "holdout",
+   "asof": "FY26",
+   "items": [
+    {
+     "id": "HAL-S1",
+     "kind": "strengths",
+     "tag": "kpi",
+     "claim": "Massive order book (about Rs 2.54 lakh crore, about 7.7x revenue)",
+     "status": "match",
+     "matched": true,
+     "headline": false,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [
+      "order_book_to_revenue",
+      "book_to_bill_orders"
+     ],
+     "evidence": [
+      "order_book_to_revenue GREEN 7.69x",
+      "book_to_bill_orders GREEN 2.93x",
+      "order_book_growth N/A 34.7%"
+     ]
+    },
+    {
+     "id": "HAL-S2",
+     "kind": "strengths",
+     "tag": "financial",
+     "claim": "Profit growth (FY26 PAT Rs 9,116 crore vs Rs 8,364 crore)",
+     "status": "match",
+     "matched": true,
+     "headline": true,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [
+      "pat_cagr_3y",
+      "pat_cagr_5y",
+      "eps_cagr_3y"
+     ],
+     "evidence": [
+      "pat_cagr_3y GREEN 16.1% (stable)",
+      "pat_cagr_5y GREEN 23.0% (improving)",
+      "eps_cagr_3y GREEN 16.1% (stable)"
+     ]
+    },
+    {
+     "id": "HAL-S3",
+     "kind": "strengths",
+     "tag": "qualitative",
+     "claim": "Programme mix (LCA Tejas, ALH, engine MRO) supports revenue visibility",
+     "status": "miss (qualitative)",
+     "matched": false,
+     "headline": false,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [],
+     "evidence": []
+    },
+    {
+     "id": "HAL-W1",
+     "kind": "weaknesses",
+     "tag": "financial",
+     "claim": "Slow conversion of the order book (Q4 revenue +2%, FY26 about +7%): execution bottlenecks",
+     "status": "match",
+     "matched": true,
+     "headline": false,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [
+      "q_revenue_yoy"
+     ],
+     "evidence": [
+      "q_revenue_yoy RED 1.8%",
+      "revenue_cagr_3y AMBER 7.1% (stable)",
+      "execution_rate N/A 17.5%",
+      "flag CG01 not evaluable"
+     ]
+    },
+    {
+     "id": "HAL-W2",
+     "kind": "weaknesses",
+     "tag": "qualitative",
+     "claim": "Engine supply (deliveries) constraining production",
+     "status": "miss (qualitative)",
+     "matched": false,
+     "headline": false,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [],
+     "evidence": []
+    },
+    {
+     "id": "HAL-W3",
+     "kind": "weaknesses",
+     "tag": "financial",
+     "claim": "Lumpy, year-end-loaded revenue recognition (Q4 profit +125% QoQ)",
+     "status": "miss",
+     "matched": false,
+     "headline": false,
+     "contradicted": false,
+     "blocked": false,
+     "hits": [],
+     "evidence": [
+      "revenue_growth_volatility GREEN 0.45",
+      "pat_growth_volatility AMBER 1.20",
+      "flag G04 clear"
+     ]
+    }
+   ],
+   "headline_items": [
+    {
+     "list": "strengths",
+     "id": "pat_cagr_5y",
+     "text": "PAT CAGR 5y: 23.0% (GREEN vs band: red \u2264 4.0%, green \u2265 8.9%); improving +2.9 pts/yr over FY22-FY26"
+    },
+    {
+     "list": "strengths",
+     "id": "ebitda_cagr_3y",
+     "text": "EBITDA CAGR 3y: 13.5% (GREEN vs band: red \u2264 4.0%, green \u2265 8.9%); improving +2.5 pts/yr over FY22-FY26"
+    },
+    {
+     "list": "strengths",
+     "id": "ebit_margin",
+     "text": "EBIT margin: 36.8% (GREEN vs band: red \u2264 16.6%, green \u2265 24.9%); improving +4.1 pts/yr over FY22-FY26; +12.4 pts over 3y; 41% from core other income / sales; core other income / sales rose 6.2% \u2192 11.3%"
+    },
+    {
+     "list": "strengths",
+     "id": "ebitda_margin",
+     "text": "EBITDA margin: 29.6% (GREEN vs band: red \u2264 18.3%, green \u2265 27.5%); improving +2.1 pts/yr over FY22-FY26; +4.8 pts over 3y; 223% from other expenses % of sales, partly offset by the other drivers; other expenses % of sales fell 20.4% \u2192 9.8%"
+    },
+    {
+     "list": "strengths",
+     "id": "roce",
+     "text": "Return on capital employed: 32.0% (GREEN vs band: red \u2264 23.7%, green \u2265 30.4%); stable +0.7 pts/yr over FY22-FY26"
+    },
+    {
+     "list": "strengths",
+     "id": "fcf_to_pat_5y",
+     "text": "FCF / PAT (5y cumulative): 1.26 (GREEN vs band: red \u2264 0.30, green \u2265 0.70, indicative); improving +0.12/yr over FY22-FY26"
+    },
+    {
+     "list": "weaknesses",
+     "id": "C02",
+     "text": "C02 Inventory days up three years running: Inventory days rose in each of the last 3 years, from 461 days to 740 days: slowing sell-through, obsolescence risk, or stock-building ahead of price increases."
+    },
+    {
+     "list": "weaknesses",
+     "id": "C03",
+     "text": "C03 Capital stuck in work-in-progress: CWIP has exceeded 30% of net block for at least 2 years (46.4% then 45.4%): projects are slow to commission, so capital is not yet earning; check for delays, overruns or capitalised interest."
+    },
+    {
+     "list": "weaknesses",
+     "id": "G05",
+     "text": "G05 Quarterly growth decelerating: Year-on-year revenue growth has slowed by -2.7pp per quarter over the last four quarters and the latest quarter grew only 1.8%."
+    },
+    {
+     "list": "weaknesses",
+     "id": "M02",
+     "text": "M02 Profits leaning on other income: Other income is 30.8% of PBT (Rs 3,743 cr, of which an estimated Rs 0 cr is exceptional). Operating profit alone would show a weaker business; check treasury income sustainability and one-offs."
+    },
+    {
+     "list": "weaknesses",
+     "id": "M03",
+     "text": "M03 Materials cost creeping up: Materials rose +5.6pp of sales over 3 years to 42.2%: input inflation is not being passed on, or the mix is shifting to lower-margin products."
+    },
+    {
+     "list": "weaknesses",
+     "id": "V01",
+     "text": "V01 Priced for acceleration: Today's EV implies 25.4% a year FCF growth for 10 years, +10.5pp above the growth delivered over the last 5 years: the price needs an acceleration that has not happened yet."
+    },
+    {
+     "list": "flags",
+     "id": "V03",
+     "text": "V03 P/B well above what returns justify: P/B of 5.7x is 3.3x the 1.7x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
     }
    ],
    "false_alarms": [],
@@ -3943,10 +4919,10 @@
      "kind": "weaknesses",
      "tag": "kpi",
      "claim": "Reported asset quality unreliable: RBI divergence for FY16 (NPA Rs 749 crore reported vs Rs 4,926 crore assessed) and FY17 (Rs 6,355 crore under-reported)",
-     "status": "contradicted",
+     "status": "miss",
      "matched": false,
      "headline": false,
-     "contradicted": true,
+     "contradicted": false,
      "blocked": false,
      "hits": [],
      "evidence": [
@@ -3962,15 +4938,18 @@
      "kind": "weaknesses",
      "tag": "financial",
      "claim": "Credit-deposit ratio climbing (70% in Mar-13 to about 100%+ by FY18-19): funding stretched",
-     "status": "miss (missing data)",
-     "matched": false,
+     "status": "match",
+     "matched": true,
      "headline": false,
      "contradicted": false,
-     "blocked": true,
-     "hits": [],
+     "blocked": false,
+     "hits": [
+      "cd_ratio",
+      "BK07"
+     ],
      "evidence": [
-      "cd_ratio n/a (n/a in FY18: missing deposits_cr FY18 (manual KPI))",
-      "flag BK07 not evaluable"
+      "cd_ratio RED 1.01",
+      "flag BK07 fired"
      ]
     },
     {
@@ -3990,33 +4969,8 @@
    "headline_items": [
     {
      "list": "strengths",
-     "id": "loan_growth",
-     "text": "Loan growth: 53.9% (GREEN vs band: red \u2264 4.0%, green \u2265 8.9%)"
-    },
-    {
-     "list": "strengths",
-     "id": "eps_cagr_10y",
-     "text": "EPS CAGR (full span, up to 10y): 25.6% (GREEN vs band: red \u2264 4.0%, green \u2265 8.9%)"
-    },
-    {
-     "list": "strengths",
-     "id": "gnpa_ratio",
-     "text": "Gross NPA ratio: 1.3% (GREEN vs band: red \u2265 3.6%, green \u2264 1.8%)"
-    },
-    {
-     "list": "strengths",
-     "id": "crar",
-     "text": "Capital adequacy (CRAR): 18.4% (GREEN vs band: red \u2264 11.5%, green \u2265 17.3%)"
-    },
-    {
-     "list": "strengths",
      "id": "cost_to_income_bank",
      "text": "Cost-to-income (ex-provisions): 40.5% (GREEN vs band: red \u2265 55.0%, green \u2264 42.0%, indicative)"
-    },
-    {
-     "list": "strengths",
-     "id": "credit_cost",
-     "text": "Credit cost: 0.9% (GREEN vs band: red \u2265 2.0%, green \u2264 0.8%, indicative)"
     },
     {
      "list": "weaknesses",
@@ -4041,29 +4995,21 @@
     {
      "list": "weaknesses",
      "id": "V03",
-     "text": "V03 P/B well above what returns justify: P/B of 2.7x is 2.3x the 1.2x that sustainable ROE justifies ((ROE - g)/(Ke - g)): the market expects returns to rise."
+     "text": "V03 P/B well above what returns justify: P/B of 2.7x is 2.3x the 1.2x that sustainable ROE justifies ((ROE - g)/(Ke - g)), and the price is not explained by growth already delivered: the market expects returns to rise."
     },
     {
      "list": "weaknesses",
      "id": "pat_margin",
      "text": "PAT margin: 20.9% (RED vs band: red \u2264 21.5%, green \u2265 32.2%); drove 12% of the eps_core change over 1y (+3.75)"
-    }
-   ],
-   "false_alarms": [
+    },
     {
-     "source": "contradiction",
-     "id": "YESBANK-W3",
-     "text": "Reported asset quality unreliable: RBI divergence for FY16 (NPA Rs 749 crore reported vs Rs 4,926 crore assessed) and FY17 (Rs 6,355 crore under-reported)",
-     "evidence": [
-      "gnpa_ratio GREEN 1.3%",
-      "nnpa_ratio AMBER 0.6%",
-      "pcr n/a (n/a in FY18: missing pcr_pct FY18 (manual KPI))",
-      "flag BK01 clear",
-      "flag BK02 not evaluable"
-     ]
+     "list": "flags",
+     "id": "BK07",
+     "text": "BK07 Lending more than the deposit base supports: Credit-deposit ratio is 101.4%: growth relies on borrowings or will be constrained by deposit mobilisation."
     }
    ],
-   "reviewed": 0
+   "false_alarms": [],
+   "reviewed": 8
   }
  }
 }

@@ -198,6 +198,11 @@ Remaining non-data look-ahead:
 - the 2026 benchmark vintage (bands, betas, ERP)
 - the rf, unless `rf_history` is supplied
 
+**Strict FY-end mode (Session 4).** `--fy-end` (analyse, analyse-all, compare) applies the same truncation even when the
+as-of year is the newest one: quarters after the fiscal year-end are dropped and the FY-end price replaces the export-date
+price. Reports go to `reports/<TICKER>/asof_<FY>/`. Validation uses this mode, so the engine sees exactly what was published
+for the fiscal year that analysts commented on.
+
 ## 10. Sector modules (config/sectors/<archetype>.yaml)
 
 One file per archetype: bank, nbfc, insurance, it_services, fmcg, consumer_manufacturing, metals, cement, chemicals, auto, pharma, capital_goods_defence, real_estate, utilities, telecom, retail, holdco and default. Each module holds:
@@ -268,7 +273,52 @@ For each KPI that is absent at the as-of year, the panel lists the metrics it le
 
 **No look-ahead.** The as-of guarantee extends to the outputs: the FY21 report.html and analysis.xlsx of a company whose post-FY21 data are scrambled are identical to the unscrambled ones (`tests/test_report_outputs.py`).
 
-## 12. Known limitations
+## 12. Validation-driven rules (Session 4)
+
+Each change below came out of `validation/report.md` and fixes a general cause, with a hand-computed test
+(`tests/test_session4_fixes.py`, `tests/test_metric_formulas.py`, `tests/test_sector_modules.py`, `tests/test_validation.py`).
+
+Standardisation:
+- **One-off tax.** A year whose tax rate on core PBT is negative, more than 15pp below or 20pp above the company's own norm,
+  with a gap of at least 5% of core PBT, is taxed at the norm. The norm is the median of the other years with a 0-45% rate,
+  or the statutory rate when fewer than 3 such years exist. The gap leaves core PAT. A company with more than 2 such years
+  is too erratic and keeps reported tax. A sector module can switch the rule off (`tax_normalisation: {apply: false, ...}`);
+  insurance does, because life profits are taxed under s.115B.
+- **Acquisition spend.** Investing beyond capex is netted for treasury moves (the change in cash plus investments that the
+  net cash flow does not explain), so term deposits and liquid-fund purchases are not read as acquisitions (A05).
+
+Metrics:
+- **Liquidity.** The current-ratio proxy and cash cover of debt include Investments, where Indian companies hold most
+  of their treasury.
+- **EV/IC.** `ev_ic_to_roic_wacc` compares EV/IC with the value-driver steady state (ROIC - g) / (WACC - g), with
+  g = min(ROIC x reinvestment, terminal g). It equals ROIC/WACC only when g = 0.
+- **Reverse DCF.** Implied growth is not meaningful when the 3-year ROIC is at or below WACC. Growth at those returns adds
+  no value, so the price is a bet on rising returns, which V03/V04 test.
+- **Materiality gate** (`config/scoring.yaml: materiality`). A metric keeps its value but gets no RAG when the quantity it
+  judges is immaterial. For example, debt growth is not scored when net debt is below 0.5x EBITDA.
+- **Mergers.** Growth CAGRs whose window spans a share-paid merger are not scored. Growth flags that read those CAGRs
+  become not evaluable.
+
+Rules:
+- `not_for` + `not_for_reason` switch a generic rule off for an archetype:
+  - R02 for insurers (policyholder funds are not leverage)
+  - B05 for telecom (negative working capital and spectrum assets)
+  - V03 for developers (land at historical cost)
+- `suppresses` keeps metrics off the strengths list while a medium or high flag that doubts them stands:
+  - IN01 keeps solvency off
+  - IN03 keeps VNB margin off
+  - BK09 keeps asset quality and profit off
+  - A06 keeps lender growth off
+  - B06 keeps capital ratios off
+- V03/V04 need the growth-aware reverse DCF to agree for non-financials. Financials keep the plain test, because their
+  P/B-implied growth is perpetual and delivered book growth includes equity raises.
+- B01 needs material debt (net debt at least 0.5x EBITDA).
+- RE01 compares collections with the 3-year average of pre-sales (construction-linked payment plans).
+- New bank rule BK09 (RBI NPA divergence) and new NBFC provision-coverage band.
+- Recalibrated rules: IT01 (attrition high or rising), IN01 (fast solvency fall), IN03 (VNB margin fall), TC03 (capex 30%).
+- New bands: telecom ARPU growth, utilities RoE and capacity growth, and retail store growth.
+
+## 13. Known limitations
 
 - Ten annual points and ten quarters per export. YESBANK as of FY18 has two years and no quarters, so trend and stability are not computable there and level-only flags carry the analysis (A06 and B06 still fire).
 - No payables, current/non-current split, capex, goodwill or shareholding in the export. These are proxies until `data/manual` is filled.
@@ -277,3 +327,7 @@ For each KPI that is absent at the as-of year, the panel lists the metrics it le
 - Exceptional items are estimates. Their tax effect assumes the statutory rate (capital gains may be taxed differently).
 - ROIC/ROCE omit balance-sheet minority interest unless supplied, so ROIC is overstated for groups with large minorities (e.g. Bharti).
 - Consolidated vs standalone is inferred, not stated in the file.
+- Valuation tests are single-stage or 10-year models on a Ke built from the G-sec yield plus a country-risk-inclusive
+  ERP. Quality companies at historically low multiples (HDFC Bank, Maruti) can still read rich (see validation/report.md).
+- Screener's adjusted share basis can absorb a rights issue (Adani Enterprises FY26), so share-count change understates
+  that dilution. The export has no debt-maturity split, so B04 treats all borrowings as short-term.
