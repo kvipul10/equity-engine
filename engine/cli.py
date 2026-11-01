@@ -132,6 +132,41 @@ def cmd_compare(args) -> int:
     return 0
 
 
+def cmd_validate(args) -> int:
+    import json
+
+    import yaml
+
+    from .validation import check_expected, evaluate, load_expected, results_markdown
+
+    cfg = _cfg(args)
+    vdir = cfg.paths.root / "validation"
+    exp = load_expected(vdir / "expected.yaml")
+    problems = check_expected(cfg, exp)
+    if problems:
+        print("expected.yaml problems:\n  " + "\n  ".join(problems), file=sys.stderr)
+        return 1
+    adj_path = vdir / "adjudication.yaml"
+    adj = (yaml.safe_load(adj_path.read_text()) or {}) if adj_path.exists() else {}
+    sets = ("test", "blowup", "holdout") if args.include_holdout else ("test", "blowup")
+    res = evaluate(exp, cfg.paths.reports_dir, adj, sets=sets)
+    show = ("test", "blowup", "holdout") if args.holdout_details else ("test", "blowup")
+    (vdir / "results.md").write_text(results_markdown(res, show_details_for=show))
+    (vdir / "results.json").write_text(json.dumps({k: v for k, v in res.items() if k != "companies"} |
+                                                  {"companies": {t: c for t, c in res["companies"].items()
+                                                                 if c.get("role") in show or "error" in c}},
+                                                  indent=1, default=str))
+    for s, v in res["by_set"].items():
+        a, h = v["all"], v["headline"]
+        print(f"{s:<8} hit rate {a['n']}/{a['d']} = {(a['rate'] or 0):.0%}  "
+              f"excl. qualitative {(v['excl_qualitative']['rate'] or 0):.0%}  "
+              f"excl. qual+missing {(v['excl_qualitative_and_missing_data']['rate'] or 0):.0%}  headline {(h['rate'] or 0):.0%}")
+    fa = res["false_alarms"]
+    print(f"false alarms {fa['n']} (headline items {fa['headline_items']}, reviewed {fa['reviewed']})")
+    print(f"Wrote {vdir / 'results.md'}")
+    return 0
+
+
 def cmd_metrics(args) -> int:
     from .registry import REGISTRY, load_all, to_markdown
 
@@ -224,6 +259,10 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--asof", help="common fiscal year for all tickers (default: each ticker's universe as-of)")
     p.add_argument("--out", help="output path (default reports/compare.html)")
     p.set_defaults(fn=cmd_compare)
+    p = sub.add_parser("validate", help="compare reports with validation/expected.yaml -> validation/results.md")
+    p.add_argument("--include-holdout", action="store_true", help="also score the holdout peers (aggregates only)")
+    p.add_argument("--holdout-details", action="store_true", help="show per-item holdout results (final scoring only)")
+    p.set_defaults(fn=cmd_validate)
     p = sub.add_parser("metrics", help="list the metric registry")
     p.add_argument("--markdown", action="store_true", help="write docs/metrics.md")
     p.set_defaults(fn=cmd_metrics)
