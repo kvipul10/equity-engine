@@ -31,3 +31,7 @@
 
 ## quarterly
 - 10 quarters from 2024-06-30 to 2026-09-30 (Q1FY25-Q2FY27). Quarterly profit is as reported (no exceptional-item estimate).
+
+## manual
+- Manual KPIs loaded: ape_cr, embedded_value_cr, operating_roev_pct, persistency_13m_pct, persistency_61m_pct, solvency_ratio_pct, vnb_cr, vnb_margin_pct for FY22, FY23, FY24, FY25, FY26.
+- 36 manual KPI values: 0 verified against the primary document (Y), 36 from secondary sources (N). Provenance is in analysis.json (manual_kpis).

@@ -20,6 +20,7 @@
     "period_end": "2026-03-31",
     "data_window": "FY17-FY26",
     "n_years": 10,
+    "manual_kpi_window": "FY22-FY26",
     "latest_quarter_used": "2026-09-30",
     "price_basis": "export"
   },
@@ -135,29 +136,29 @@
     "text": "Creates value: ROE 16.0% vs Ke 15.8% in FY26 -> economic profit Rs 844 cr. Economic profit was positive in 4 of 9 years; trend improving."
   },
   "overall": {
-    "score": 65.059705,
+    "score": 66.274389,
     "rag": "green",
     "coverage": 0.95,
     "high_flags": 0,
     "capped_by_flags": false,
-    "weights_basis": "bank_like"
+    "weights_basis": "sector:bank"
   },
   "pillars": {
     "growth": {
-      "score": 87.542106,
+      "score": 87.965146,
       "rag": "green",
       "weight": 15.0,
-      "n_scored": 17,
-      "n_metrics": 17,
+      "n_scored": 19,
+      "n_metrics": 19,
       "rag_counts": {
-        "green": 15,
+        "green": 17,
         "amber": 1,
         "red": 1,
         "n/a": 0
       },
       "capped_by_flags": [],
       "name": "1 Growth",
-      "summary": "1 Growth: GREEN (88/100, 17 scored metrics). Strongest: Revenue CAGR (full span, up to 10y) 13.8% (green), PAT CAGR (full span, up to 10y) 20.4% (green). Weakest: PAT growth volatility 1.75 (red), Revenue growth volatility 0.73 (amber).",
+      "summary": "1 Growth: GREEN (88/100, 19 scored metrics). Strongest: Revenue CAGR (full span, up to 10y) 13.8% (green), PAT CAGR (full span, up to 10y) 20.4% (green). Weakest: PAT growth volatility 1.75 (red), Revenue growth volatility 0.73 (amber).",
       "metrics": [
         "revenue_cagr_3y",
         "revenue_cagr_5y",
@@ -175,32 +176,38 @@
         "pat_growth_volatility",
         "q_revenue_yoy",
         "q_pat_yoy",
-        "q_revenue_yoy_trend"
+        "q_revenue_yoy_trend",
+        "loan_growth",
+        "deposit_growth"
       ],
       "flags_triggered": []
     },
     "margins": {
-      "score": 56.423264,
+      "score": 46.706823,
       "rag": "amber",
       "weight": 15.0,
-      "n_scored": 2,
-      "n_metrics": 4,
+      "n_scored": 3,
+      "n_metrics": 7,
       "rag_counts": {
         "green": 1,
         "amber": 1,
-        "red": 0,
-        "n/a": 2
+        "red": 1,
+        "n/a": 4
       },
       "capped_by_flags": [],
       "name": "2 Margins",
-      "summary": "2 Margins: AMBER (56/100, 2 scored metrics). Strongest: NII / average assets (NIM proxy) 3.8% (green), PAT margin 27.8% (amber). Weakest: PAT margin 27.8% (amber), NII / average assets (NIM proxy) 3.8% (green).",
+      "summary": "2 Margins: AMBER (47/100, 3 scored metrics). Strongest: NII / average assets (NIM proxy) 3.8% (green), PAT margin 27.8% (amber). Weakest: Cost-to-income (ex-provisions) 63.0% (red), PAT margin 27.8% (amber).",
       "metrics": [
         "pat_margin",
         "nii_to_assets",
         "yield_on_assets",
         "cost_of_funds",
         "cost_to_income",
-        "other_income_share"
+        "other_income_share",
+        "nim_reported",
+        "yield_on_advances",
+        "cost_of_funds_reported",
+        "cost_to_income_bank"
       ],
       "flags_triggered": []
     },
@@ -221,7 +228,6 @@
       "summary": "3 Capital efficiency: not scored (no metric with a level for this company).",
       "metrics": [
         "opex_to_assets",
-        "credit_deposit_proxy",
         "liquid_assets_ratio"
       ],
       "flags_triggered": []
@@ -229,7 +235,7 @@
     "returns": {
       "score": 53.576781,
       "rag": "amber",
-      "weight": 25.0,
+      "weight": 20.0,
       "n_scored": 3,
       "n_metrics": 3,
       "rag_counts": {
@@ -254,64 +260,77 @@
         "other_income_to_assets",
         "dep_to_assets",
         "tax_to_assets",
-        "minority_to_assets"
+        "minority_to_assets",
+        "bank_opex_to_assets",
+        "provisions_to_assets"
       ],
       "flags_triggered": []
     },
     "cash_quality": {
-      "score": null,
-      "rag": "n/a",
-      "weight": 0.0,
-      "n_scored": 0,
-      "n_metrics": 0,
+      "score": 79.401059,
+      "rag": "green",
+      "weight": 15.0,
+      "n_scored": 3,
+      "n_metrics": 6,
       "rag_counts": {
-        "green": 0,
+        "green": 3,
         "amber": 0,
         "red": 0,
-        "n/a": 0
+        "n/a": 3
       },
       "capped_by_flags": [],
-      "name": "5 Cash and earnings quality",
-      "summary": "5 Cash and earnings quality: not scored (no metric with a level for this company).",
-      "metrics": [],
+      "name": "5 Cash and earnings quality (asset quality)",
+      "summary": "5 Cash and earnings quality: GREEN (79/100, 3 scored metrics). Strongest: Provisions / pre-provision profit 6.5% (green), Credit cost 0.4% (green). Weakest: Net NPA ratio 0.3% (green), Credit cost 0.4% (green).",
+      "metrics": [
+        "credit_cost",
+        "gnpa_ratio",
+        "nnpa_ratio",
+        "pcr",
+        "provisions_to_ppop",
+        "slippage_ratio"
+      ],
       "flags_triggered": []
     },
     "balance_sheet": {
-      "score": 79.306952,
+      "score": 76.659004,
       "rag": "green",
       "weight": 20.0,
-      "n_scored": 2,
-      "n_metrics": 2,
+      "n_scored": 3,
+      "n_metrics": 6,
       "rag_counts": {
-        "green": 2,
+        "green": 3,
         "amber": 0,
         "red": 0,
-        "n/a": 0
+        "n/a": 3
       },
       "capped_by_flags": [],
       "name": "6 Balance sheet",
-      "summary": "6 Balance sheet: GREEN (79/100, 2 scored metrics). Strongest: Equity / assets 12.5% (green), Funding growth - equity growth -5.5pp (green). Weakest: Funding growth - equity growth -5.5pp (green), Equity / assets 12.5% (green).",
+      "summary": "6 Balance sheet: GREEN (77/100, 3 scored metrics). Strongest: CET1 ratio 16.4% (green), Credit-deposit ratio 0.87 (green). Weakest: Capital adequacy (CRAR) 17.2% (green), Credit-deposit ratio 0.87 (green).",
       "metrics": [
         "equity_to_assets",
-        "funding_vs_equity_growth"
+        "funding_vs_equity_growth",
+        "crar",
+        "cet1",
+        "casa_ratio",
+        "cd_ratio"
       ],
       "flags_triggered": []
     },
     "capital_allocation": {
-      "score": 64.304879,
-      "rag": "green",
-      "weight": 10.0,
-      "n_scored": 2,
+      "score": 50.792751,
+      "rag": "amber",
+      "weight": 5.0,
+      "n_scored": 1,
       "n_metrics": 4,
       "rag_counts": {
-        "green": 1,
+        "green": 0,
         "amber": 1,
         "red": 0,
-        "n/a": 2
+        "n/a": 3
       },
       "capped_by_flags": [],
       "name": "7 Capital allocation",
-      "summary": "7 Capital allocation: GREEN (64/100, 2 scored metrics). Strongest: Asset growth - internal capital generation -3.2pp (green), Share count change 0.5% (amber). Weakest: Share count change 0.5% (amber), Asset growth - internal capital generation -3.2pp (green).",
+      "summary": "7 Capital allocation: AMBER (51/100, 1 scored metrics). Strongest: Share count change 0.5% (amber). Weakest: Share count change 0.5% (amber).",
       "metrics": [
         "payout_ratio",
         "share_count_change",
@@ -328,7 +347,7 @@
     "valuation": {
       "score": 45.25841,
       "rag": "amber",
-      "weight": 10.0,
+      "weight": 5.0,
       "n_scored": 4,
       "n_metrics": 4,
       "rag_counts": {
@@ -544,10 +563,11 @@
           ],
           "text": "eps_core moved from 26.58 to 75.71 (FY21->FY26). Largest drivers: revenue (+106,056 cr) -> 36.78 (75% of the change); PAT margin (+7.1pp) -> 13.97 (28% of the change); adjusted_shares_cr (+24.410) -> -1.63 (-3% of the change)."
         }
-      }
+      },
+      "origin": "config/drivers.yaml"
     },
-    "fin_roe": {
-      "title": "ROE = ROA x equity multiplier; ROA = yield - interest + other income - opex - depreciation - tax + minority/associates (all per rupee of assets)",
+    "bank_dupont": {
+      "title": "Bank DuPont: RoE = RoA x A/E; RoA = NII/A + fees & other income/A - opex/A - provisions/A - tax/A (+ minority & associates/A)",
       "root": "roe",
       "windows": {
         "1y": {
@@ -566,6 +586,12 @@
               "share_of_root": 0.393715,
               "method": "shift-share"
             },
+            "nii_to_assets": {
+              "change": -0.000652,
+              "contribution": -0.005541,
+              "share_of_root": 0.293387,
+              "method": "shift-share"
+            },
             "equity_multiplier": {
               "change": -0.573929,
               "contribution": -0.01145,
@@ -581,7 +607,7 @@
               "share_of_root": 1.87783,
               "own_change": -0.004175,
               "own_change_text": "-0.4pp",
-              "path": "roe > roa > yield_on_assets",
+              "path": "roe > roa > nii_to_assets > yield_on_assets",
               "text": "Revenue / average assets (-0.4pp) -> -3.5pp (188% of the change)"
             },
             {
@@ -591,7 +617,7 @@
               "share_of_root": -1.584444,
               "own_change": -0.003523,
               "own_change_text": "-0.4pp",
-              "path": "roe > roa > interest_to_assets",
+              "path": "roe > roa > nii_to_assets > interest_to_assets",
               "text": "Interest expended / assets (-0.4pp) -> +3.0pp (-158% of the change)"
             },
             {
@@ -615,14 +641,14 @@
               "text": "Borrowings / equity (average) (-0.38x) -> -0.8pp (40% of the change)"
             },
             {
-              "driver": "opex_to_assets",
-              "name": "Operating cost / average assets",
-              "contribution": 0.004307,
-              "share_of_root": -0.228074,
-              "own_change": -0.000507,
+              "driver": "bank_opex_to_assets",
+              "name": "Opex (ex provisions) / assets",
+              "contribution": 0.004424,
+              "share_of_root": -0.234248,
+              "own_change": -0.000521,
               "own_change_text": "-0.1pp",
-              "path": "roe > roa > opex_to_assets",
-              "text": "Operating cost / average assets (-0.1pp) -> +0.4pp (-23% of the change)"
+              "path": "roe > roa > bank_opex_to_assets",
+              "text": "Opex (ex provisions) / assets (-0.1pp) -> +0.4pp (-23% of the change)"
             }
           ],
           "text": "Return on equity moved from 17.9% to 16.0% (FY25->FY26). Largest drivers: Revenue / average assets (-0.4pp) -> -3.5pp (188% of the change); Interest expended / assets (-0.4pp) -> +3.0pp (-158% of the change); Other income / assets (-0.1pp) -> -1.0pp (53% of the change)."
@@ -641,6 +667,12 @@
               "change": 0.001168,
               "contribution": 0.010234,
               "share_of_root": -0.888762,
+              "method": "shift-share"
+            },
+            "nii_to_assets": {
+              "change": 0.000214,
+              "contribution": 0.001874,
+              "share_of_root": -0.162705,
               "method": "shift-share"
             },
             "equity_multiplier": {
@@ -662,13 +694,23 @@
               "text": "Other income / assets (+0.7pp) -> +6.1pp (-532% of the change)"
             },
             {
+              "driver": "bank_opex_to_assets",
+              "name": "Opex (ex provisions) / assets",
+              "contribution": -0.053013,
+              "share_of_root": 4.603908,
+              "own_change": 0.006048,
+              "own_change_text": "+0.6pp",
+              "path": "roe > roa > bank_opex_to_assets",
+              "text": "Opex (ex provisions) / assets (+0.6pp) -> -5.3pp (460% of the change)"
+            },
+            {
               "driver": "yield_on_assets",
               "name": "Revenue / average assets",
               "contribution": 0.043986,
               "share_of_root": -3.819936,
               "own_change": 0.005018,
               "own_change_text": "+0.5pp",
-              "path": "roe > roa > yield_on_assets",
+              "path": "roe > roa > nii_to_assets > yield_on_assets",
               "text": "Revenue / average assets (+0.5pp) -> +4.4pp (-382% of the change)"
             },
             {
@@ -678,18 +720,8 @@
               "share_of_root": 3.657231,
               "own_change": 0.004805,
               "own_change_text": "+0.5pp",
-              "path": "roe > roa > interest_to_assets",
+              "path": "roe > roa > nii_to_assets > interest_to_assets",
               "text": "Interest expended / assets (+0.5pp) -> -4.2pp (366% of the change)"
-            },
-            {
-              "driver": "opex_to_assets",
-              "name": "Operating cost / average assets",
-              "contribution": -0.035997,
-              "share_of_root": 3.126136,
-              "own_change": 0.004107,
-              "own_change_text": "+0.4pp",
-              "path": "roe > roa > opex_to_assets",
-              "text": "Operating cost / average assets (+0.4pp) -> -3.6pp (313% of the change)"
             },
             {
               "driver": "debt_to_equity_avg",
@@ -702,86 +734,15 @@
               "text": "Borrowings / equity (average) (-0.91x) -> -1.7pp (150% of the change)"
             }
           ],
-          "text": "Return on equity moved from 17.2% to 16.0% (FY23->FY26). Largest drivers: Other income / assets (+0.7pp) -> +6.1pp (-532% of the change); Revenue / average assets (+0.5pp) -> +4.4pp (-382% of the change); Interest expended / assets (+0.5pp) -> -4.2pp (366% of the change)."
+          "text": "Return on equity moved from 17.2% to 16.0% (FY23->FY26). Largest drivers: Other income / assets (+0.7pp) -> +6.1pp (-532% of the change); Opex (ex provisions) / assets (+0.6pp) -> -5.3pp (460% of the change); Revenue / average assets (+0.5pp) -> +4.4pp (-382% of the change)."
         },
         "5y": {
-          "status": "ok",
-          "from": "FY21",
-          "to": "FY26",
-          "root_from": 0.13106,
-          "root_to": 0.160149,
-          "root_change": 0.029089,
-          "residual": 0.0,
-          "inexact_nodes": [],
-          "intermediate": {
-            "roa": {
-              "change": 0.007051,
-              "contribution": 0.065085,
-              "share_of_root": 2.237468,
-              "method": "shift-share"
-            },
-            "equity_multiplier": {
-              "change": -2.310793,
-              "contribution": -0.035996,
-              "share_of_root": -1.237468,
-              "method": "shift-share"
-            }
-          },
-          "top_drivers": [
-            {
-              "driver": "opex_to_assets",
-              "name": "Operating cost / average assets",
-              "contribution": 0.096201,
-              "share_of_root": 3.307164,
-              "own_change": -0.010422,
-              "own_change_text": "-1.0pp",
-              "path": "roe > roa > opex_to_assets",
-              "text": "Operating cost / average assets (-1.0pp) -> +9.6pp (331% of the change)"
-            },
-            {
-              "driver": "yield_on_assets",
-              "name": "Revenue / average assets",
-              "contribution": 0.090797,
-              "share_of_root": 3.121403,
-              "own_change": 0.009837,
-              "own_change_text": "+1.0pp",
-              "path": "roe > roa > yield_on_assets",
-              "text": "Revenue / average assets (+1.0pp) -> +9.1pp (312% of the change)"
-            },
-            {
-              "driver": "other_income_to_assets",
-              "name": "Other income / assets",
-              "contribution": -0.063117,
-              "share_of_root": -2.169802,
-              "own_change": -0.006838,
-              "own_change_text": "-0.7pp",
-              "path": "roe > roa > other_income_to_assets",
-              "text": "Other income / assets (-0.7pp) -> -6.3pp (-217% of the change)"
-            },
-            {
-              "driver": "tax_to_assets",
-              "name": "Tax / assets",
-              "contribution": -0.028963,
-              "share_of_root": -0.995696,
-              "own_change": 0.003138,
-              "own_change_text": "+0.3pp",
-              "path": "roe > roa > tax_to_assets",
-              "text": "Tax / assets (+0.3pp) -> -2.9pp (-100% of the change)"
-            },
-            {
-              "driver": "interest_to_assets",
-              "name": "Interest expended / assets",
-              "contribution": -0.028917,
-              "share_of_root": -0.994095,
-              "own_change": 0.003133,
-              "own_change_text": "+0.3pp",
-              "path": "roe > roa > interest_to_assets",
-              "text": "Interest expended / assets (+0.3pp) -> -2.9pp (-99% of the change)"
-            }
-          ],
-          "text": "Return on equity moved from 13.1% to 16.0% (FY21->FY26). Largest drivers: Operating cost / average assets (-1.0pp) -> +9.6pp (331% of the change); Revenue / average assets (+1.0pp) -> +9.1pp (312% of the change); Other income / assets (-0.7pp) -> -6.3pp (-217% of the change)."
+          "status": "n/a",
+          "reason": "missing values for bank_opex_to_assets, provisions_to_assets at FY21 or FY26"
         }
-      }
+      },
+      "origin": "config/sectors/bank.yaml",
+      "replaces": "fin_roe"
     }
   },
   "flags": {
@@ -791,6 +752,7 @@
         "name": "P/B well above what returns justify",
         "pillar": "valuation",
         "severity": "medium",
+        "origin": "config/flags.yaml",
         "status": "triggered",
         "values": {
           "pb": 2.765107,
@@ -815,7 +777,12 @@
       "A01",
       "A06",
       "V05",
-      "V06"
+      "V06",
+      "BK03",
+      "BK04",
+      "BK05",
+      "BK07",
+      "BK08"
     ],
     "not_evaluable": [
       {
@@ -827,6 +794,21 @@
         "id": "A03",
         "name": "Promoters selling down",
         "missing": "promoter_holding_change_3y FY26"
+      },
+      {
+        "id": "BK01",
+        "name": "Gross NPAs rising and elevated",
+        "missing": "gnpa_ratio FY26 [n/a in FY26: missing gnpa_pct FY26 (manual KPI)]"
+      },
+      {
+        "id": "BK02",
+        "name": "Thin provision cover",
+        "missing": "pcr FY26 [n/a in FY26: missing pcr_pct FY26 (manual KPI)]"
+      },
+      {
+        "id": "BK06",
+        "name": "Low-cost deposits slipping",
+        "missing": "casa_ratio FY26 [n/a in FY26: missing casa_pct FY26 (manual KPI)]"
       }
     ],
     "counts": {
@@ -844,6 +826,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "core PAT / average equity (share capital + reserves)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Owners' core profit per rupee of shareholders' equity.",
       "value": 0.160149,
       "value_text": "16.0%",
@@ -904,6 +888,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "core PAT / average total assets",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Owners' core profit per rupee of total assets.",
       "value": 0.019511,
       "value_text": "2.0%",
@@ -945,11 +931,11 @@
       "band": {
         "red": 0.0112,
         "green": 0.0168,
-        "origin": "config/bands.yaml (archetype: bank)",
+        "origin": "config/sectors/bank.yaml",
         "source_type": "external",
-        "source_url": "https://www.indiainfoline.com/blog/how-healthy-were-indian-banks-in-the-year-2024-25",
-        "as_of": "2025-06-30",
-        "rationale": "RBI Financial Stability Report (June 2025): scheduled commercial banks' annualised ROA 1.4% (secondary summary; June-2026 FSR figures were not retrievable). Amber zone = 1.4% +/- 20%.",
+        "source_url": "https://www.newsonair.gov.in/rbi-releases-its-report-on-trend-and-progress-of-banking-in-india-2024-25",
+        "as_of": "2025-12-29",
+        "rationale": "RBI Report on Trend and Progress of Banking 2024-25: scheduled commercial banks' RoA 1.4% (RoE 13.5%). Amber zone = 1.4% +/- 20%.",
         "centre": 0.014
       },
       "reason": null,
@@ -964,6 +950,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "ROE - Ke, Ke = rf + beta x ERP",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Value created per rupee of equity for a lender/insurer.",
       "value": 0.002493,
       "value_text": "+0.2pp",
@@ -1024,6 +1012,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "core PAT / (core PBT - core tax)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Owners' share of after-tax profit: below 1 = minorities take a slice; above 1 = associate/JV income adds to it.",
       "value": 0.939908,
       "value_text": "0.94",
@@ -1071,6 +1061,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(core PBT - core tax) / core PBT",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Share of pre-tax profit kept after tax (1 - effective tax rate).",
       "value": 0.748448,
       "value_text": "0.75",
@@ -1118,6 +1110,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "average total assets / average equity",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Assets per rupee of equity: the leverage term in DuPont.",
       "value": 8.208295,
       "value_text": "8.21x",
@@ -1165,6 +1159,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "average borrowings / average equity",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Debt part of the equity multiplier.",
       "value": 5.776957,
       "value_text": "5.78x",
@@ -1212,6 +1208,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "average other liabilities / average equity",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Non-debt liabilities part of the equity multiplier.",
       "value": 1.431338,
       "value_text": "1.43x",
@@ -1259,6 +1257,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "interest / average total assets",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Interest paid per rupee of average assets. ROA = yield - interest + other income - opex - depreciation - tax + minority/associates.",
       "value": 0.032043,
       "value_text": "3.2%",
@@ -1306,6 +1306,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "other_income / average total assets",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Fee and other income per rupee of average assets. ROA = yield - interest + other income - opex - depreciation - tax + minority/associates.",
       "value": 0.042075,
       "value_text": "4.2%",
@@ -1353,6 +1355,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "depreciation / average total assets",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Depreciation per rupee of average assets. ROA = yield - interest + other income - opex - depreciation - tax + minority/associates.",
       "value": 0.001102,
       "value_text": "0.1%",
@@ -1400,6 +1404,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "tax_core / average total assets",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Tax per rupee of average assets. ROA = yield - interest + other income - opex - depreciation - tax + minority/associates.",
       "value": 0.006977,
       "value_text": "0.7%",
@@ -1447,6 +1453,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "minority_and_associates / average total assets",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Associate income less minority share per rupee of average assets. ROA = yield - interest + other income - opex - depreciation - tax + minority/associates.",
       "value": -0.001247,
       "value_text": "-0.1%",
@@ -1494,6 +1502,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "Dividend / core PAT (PAT > 0)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Share of core profit paid as dividends (Screener 'Dividend Amount', declared for the year).",
       "value": 0.158527,
       "value_text": "0.16",
@@ -1541,6 +1551,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "Adjusted shares_t / Adjusted shares_t-1 - 1",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Net issuance (dilution, +) or buyback (-) of shares, adjusted for splits and bonuses.",
       "value": 0.005364,
       "value_text": "0.5%",
@@ -1583,7 +1595,7 @@
         "red": 0.03,
         "green": 0.0,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Net issuance above 3% a year is material dilution; flat or falling share count = no dilution/buybacks.",
@@ -1591,7 +1603,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Share count change: 0.5% AMBER (level amber vs band (green <= 0.0%, red >= 3.0%); trend stable +0.1pp/yr; volatile (CV 0.42))"
+      "text": "Share count change: 0.5% AMBER (level amber vs indicative band (green <= 0.0%, red >= 3.0%); trend stable +0.1pp/yr; volatile (CV 0.42))"
     },
     "buyback_estimate": {
       "name": "Buyback (estimate)",
@@ -1601,6 +1613,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "max(0, -(Adj shares_t - Adj shares_t-1)) x (Price_t + Price_t-1)/2",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Estimated rupees spent on buybacks: shares retired x average of the two year-end prices.",
       "value": 0.0,
       "value_text": "Rs 0 cr",
@@ -1641,6 +1655,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "(Dividend + buyback estimate) / Market cap (FY-end)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Cash returned to shareholders (dividends + estimated buybacks) as a share of year-end market value.",
       "value": 0.009953,
       "value_text": "1.0%",
@@ -1688,6 +1704,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "manual promoter_holding_pct (FY-end)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Promoter (controlling shareholder) stake. Not in the Screener export: supply promoter_holding_pct in data/manual.",
       "value": null,
       "value_text": "n/a",
@@ -1721,6 +1739,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "Promoter holding_t - Promoter holding_t-3",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Change in promoter stake over 3 years (selling down = negative).",
       "value": null,
       "value_text": "n/a",
@@ -1745,7 +1765,7 @@
         "red": -0.03,
         "green": 0.0,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Promoters selling more than 3pp of the company over 3 years is a signal worth explaining.",
@@ -1763,6 +1783,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "manual promoter_pledge_pct (pledged shares / promoter shares)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Share of promoter holding pledged to lenders (forced-selling risk). Manual data only.",
       "value": null,
       "value_text": "n/a",
@@ -1787,7 +1809,7 @@
         "red": 0.25,
         "green": 0.01,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Pledges above a quarter of promoter holding create forced-selling risk in a drawdown.",
@@ -1805,6 +1827,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "ROE x (1 - payout)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Growth in equity a lender can fund from retained profit alone.",
       "value": 0.134761,
       "value_text": "13.5%",
@@ -1852,6 +1876,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "(Total assets_t / Total assets_t-1 - 1) - ROE x (1 - payout)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Balance-sheet growth beyond what retained earnings can support: must be funded by new equity or by higher leverage.",
       "value": -0.031721,
       "value_text": "-3.2pp",
@@ -1867,11 +1893,7 @@
         "FY25": -0.033875,
         "FY26": -0.031721
       },
-      "level": {
-        "score": 77.240322,
-        "basis": "band",
-        "rag": "green"
-      },
+      "level": null,
       "trend": {
         "slope_per_year": -0.004373,
         "normalised_slope": -0.218672,
@@ -1888,21 +1910,12 @@
         "label": "volatile",
         "window": "FY18-FY26"
       },
-      "composite": 71.060943,
-      "rag": "green",
-      "band": {
-        "red": 0.1,
-        "green": 0.0,
-        "origin": "config/bands.yaml (family: bank_like)",
-        "source_type": "rule_of_thumb",
-        "source_url": null,
-        "as_of": "2026-11-01",
-        "rationale": "Balance-sheet growth 10pp+ above internal capital generation must be funded by dilution or by thinner capital.",
-        "centre": null
-      },
-      "reason": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "no sourced band and fewer than 4 same-archetype peers: level not scored",
       "note": null,
-      "text": "Asset growth - internal capital generation: -3.2pp GREEN (level green vs band (green <= +0.0pp, red >= +10.0pp); trend improving -0.4pp/yr; volatile (CV 2.20))"
+      "text": "Asset growth - internal capital generation: -3.2pp [no sourced band and fewer than 4 same-archetype peers: level not scored]"
     },
     "equity_to_assets": {
       "name": "Equity / assets",
@@ -1912,6 +1925,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "Equity / Total assets",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Book capital cushion per rupee of assets (unweighted leverage; regulatory CRAR needs risk weights not in the export).",
       "value": 0.12457,
       "value_text": "12.5%",
@@ -1927,11 +1942,7 @@
         "FY25": 0.118803,
         "FY26": 0.12457
       },
-      "level": {
-        "score": 87.142066,
-        "basis": "band",
-        "rag": "green"
-      },
+      "level": null,
       "trend": {
         "slope_per_year": 0.005067,
         "normalised_slope": 0.044836,
@@ -1948,21 +1959,12 @@
         "label": "stable",
         "window": "FY17-FY26"
       },
-      "composite": 81.1719,
-      "rag": "green",
-      "band": {
-        "red": 0.06,
-        "green": 0.1,
-        "origin": "config/bands.yaml (family: bank_like)",
-        "source_type": "rule_of_thumb",
-        "source_url": null,
-        "as_of": "2026-11-01",
-        "rationale": "RBI's Basel III leverage-ratio floor is 4% (D-SIBs) / 3.5% (others) of Tier-1 to exposure; book equity below 6% of assets leaves a thin cushion, 10%+ is well capitalised.",
-        "centre": null
-      },
-      "reason": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "no sourced band and fewer than 4 same-archetype peers: level not scored",
       "note": null,
-      "text": "Equity / assets: 12.5% GREEN (level green vs band (red <= 6.0%, green >= 10.0%); trend improving +0.5pp/yr; stable (CV 0.10))"
+      "text": "Equity / assets: 12.5% [no sourced band and fewer than 4 same-archetype peers: level not scored]"
     },
     "funding_vs_equity_growth": {
       "name": "Funding growth - equity growth",
@@ -1972,6 +1974,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "(Borrowings_t/Borrowings_t-1 - 1) - (Equity_t/Equity_t-1 - 1)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Deposits + borrowings growing faster than capital = rising leverage.",
       "value": -0.054595,
       "value_text": "-5.5pp",
@@ -1987,11 +1991,7 @@
         "FY25": -0.098606,
         "FY26": -0.054595
       },
-      "level": {
-        "score": 84.865021,
-        "basis": "band",
-        "rag": "green"
-      },
+      "level": null,
       "trend": {
         "slope_per_year": -0.010654,
         "normalised_slope": -0.213875,
@@ -2008,21 +2008,12 @@
         "label": "volatile",
         "window": "FY18-FY26"
       },
-      "composite": 75.577056,
-      "rag": "green",
-      "band": {
-        "red": 0.1,
-        "green": 0.0,
-        "origin": "config/bands.yaml (family: bank_like)",
-        "source_type": "rule_of_thumb",
-        "source_url": null,
-        "as_of": "2026-11-01",
-        "rationale": "Deposits + borrowings growing 10pp a year faster than equity = rapidly rising leverage.",
-        "centre": null
-      },
-      "reason": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "no sourced band and fewer than 4 same-archetype peers: level not scored",
       "note": null,
-      "text": "Funding growth - equity growth: -5.5pp GREEN (level green vs band (green <= +0.0pp, red >= +10.0pp); trend improving -1.1pp/yr; volatile (CV 3.88))"
+      "text": "Funding growth - equity growth: -5.5pp [no sourced band and fewer than 4 same-archetype peers: level not scored]"
     },
     "opex_to_assets": {
       "name": "Operating cost / average assets",
@@ -2032,6 +2023,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "Total opex / average total assets",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Operating costs (incl. provisions; insurers: incl. benefits) per rupee of balance sheet.",
       "value": 0.051459,
       "value_text": "5.1%",
@@ -2071,53 +2064,6 @@
       "note": null,
       "text": "Operating cost / average assets: 5.1% [no sourced band and fewer than 4 same-archetype peers: level not scored]"
     },
-    "credit_deposit_proxy": {
-      "name": "Other assets / (deposits + borrowings)",
-      "pillar": "capital_efficiency",
-      "role": "scored",
-      "unit": "ratio",
-      "direction": "neutral",
-      "kind": "annual",
-      "equation": "Other assets / Borrowings (Screener: deposits + borrowings)",
-      "meaning": "Proxy for the credit-deposit ratio: advances and other assets per rupee of deposits + borrowings.",
-      "value": 0.983184,
-      "value_text": "0.98",
-      "series": {
-        "FY17": 0.958822,
-        "FY18": 0.910955,
-        "FY19": 0.931914,
-        "FY20": 0.910091,
-        "FY21": 0.929867,
-        "FY22": 0.93764,
-        "FY23": 0.934262,
-        "FY24": 0.921368,
-        "FY25": 0.930703,
-        "FY26": 0.983184
-      },
-      "level": null,
-      "trend": {
-        "slope_per_year": 0.008753,
-        "normalised_slope": 0.009298,
-        "n": 5,
-        "window": "FY22-FY26",
-        "score": null,
-        "label": "flat"
-      },
-      "stability": {
-        "cv": 0.023477,
-        "sd": 0.021948,
-        "n": 10,
-        "score": null,
-        "label": "stable",
-        "window": "FY17-FY26"
-      },
-      "composite": null,
-      "rag": "n/a",
-      "band": null,
-      "reason": "informational (neutral direction)",
-      "note": null,
-      "text": "Other assets / (deposits + borrowings): 0.98 [informational (neutral direction)]"
-    },
     "liquid_assets_ratio": {
       "name": "Cash + investments / assets",
       "pillar": "capital_efficiency",
@@ -2126,6 +2072,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "(Cash & bank + Investments) / Total assets",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Share of the balance sheet in cash and investments (liquidity buffer vs yield).",
       "value": 0.340353,
       "value_text": "34.0%",
@@ -2173,6 +2121,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(Revenue_t / Revenue_t-3)^(1/3) - 1; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of revenue (Screener 'Sales'; banks: interest earned; insurers: premium + investment income) over 3 years.",
       "value": 0.172642,
       "value_text": "17.3%",
@@ -2226,6 +2176,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(Revenue_t / Revenue_t-5)^(1/5) - 1; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of revenue (Screener 'Sales'; banks: interest earned; insurers: premium + investment income) over 5 years.",
       "value": 0.169681,
       "value_text": "17.0%",
@@ -2279,6 +2231,8 @@
       "direction": "higher",
       "kind": "point",
       "equation": "(Revenue_t / Revenue_t-n)^(1/n) - 1, n = full available span <= 10; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of revenue (Screener 'Sales'; banks: interest earned; insurers: premium + investment income) over the longest available history (max 10 years; 9 with a 10-column export).",
       "value": 0.138098,
       "value_text": "13.8%",
@@ -2314,6 +2268,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(PAT_t / PAT_t-3)^(1/3) - 1; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of core PAT (owners' net profit excluding estimated exceptional items) over 3 years.",
       "value": 0.167808,
       "value_text": "16.8%",
@@ -2367,6 +2323,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(PAT_t / PAT_t-5)^(1/5) - 1; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of core PAT (owners' net profit excluding estimated exceptional items) over 5 years.",
       "value": 0.241431,
       "value_text": "24.1%",
@@ -2420,6 +2378,8 @@
       "direction": "higher",
       "kind": "point",
       "equation": "(PAT_t / PAT_t-n)^(1/n) - 1, n = full available span <= 10; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of core PAT (owners' net profit excluding estimated exceptional items) over the longest available history (max 10 years; 9 with a 10-column export).",
       "value": 0.204098,
       "value_text": "20.4%",
@@ -2455,6 +2415,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(EPS_t / EPS_t-3)^(1/3) - 1; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of EPS = core PAT / split-adjusted shares over 3 years.",
       "value": 0.158088,
       "value_text": "15.8%",
@@ -2508,6 +2470,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(EPS_t / EPS_t-5)^(1/5) - 1; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of EPS = core PAT / split-adjusted shares over 5 years.",
       "value": 0.232849,
       "value_text": "23.3%",
@@ -2561,6 +2525,8 @@
       "direction": "higher",
       "kind": "point",
       "equation": "(EPS_t / EPS_t-n)^(1/n) - 1, n = full available span <= 10; n/m if either value <= 0",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compound annual growth of EPS = core PAT / split-adjusted shares over the longest available history (max 10 years; 9 with a 10-column export).",
       "value": 0.189319,
       "value_text": "18.9%",
@@ -2596,6 +2562,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(BVPS_t / BVPS_t-5)^(1/5) - 1, BVPS = equity / adjusted shares",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Compounding of book value per share, the core growth measure for lenders and insurers.",
       "value": 0.173488,
       "value_text": "17.3%",
@@ -2649,6 +2617,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(Total assets_t / Total assets_t-3)^(1/3) - 1",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Balance-sheet growth (loan book + investments) for financials.",
       "value": 0.141688,
       "value_text": "14.2%",
@@ -2702,6 +2672,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(NII_t / NII_t-3)^(1/3) - 1, NII = interest earned - interest expended",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Growth of the spread business (interest earned - interest expended).",
       "value": 0.146172,
       "value_text": "14.6%",
@@ -2755,6 +2727,8 @@
       "direction": "lower",
       "kind": "point",
       "equation": "sd(g_t) / |mean(g_t)| over the last 10 annual growth rates (>= 4 needed); n/m if |mean| < 1%",
+      "formula": null,
+      "origin": "engine",
       "meaning": "How erratic annual revenue growth is: standard deviation of yearly growth divided by its mean (lower = steadier).",
       "value": 0.730913,
       "value_text": "0.73",
@@ -2772,7 +2746,7 @@
         "red": 1.5,
         "green": 0.5,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "sd/mean of annual growth below 0.5 = steady compounding; above 1.5 = growth is mostly noise (cyclical or lumpy).",
@@ -2780,7 +2754,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Revenue growth volatility: 0.73 AMBER (level amber vs band (green <= 0.50, red >= 1.50))"
+      "text": "Revenue growth volatility: 0.73 AMBER (level amber vs indicative band (green <= 0.50, red >= 1.50))"
     },
     "pat_growth_volatility": {
       "name": "PAT growth volatility",
@@ -2790,6 +2764,8 @@
       "direction": "lower",
       "kind": "point",
       "equation": "sd(g_t) / |mean(g_t)| of core PAT growth over the last 10 years (base year PAT > 0); n/m if |mean| < 1%",
+      "formula": null,
+      "origin": "engine",
       "meaning": "How erratic annual core-profit growth is (sd / mean of yearly growth).",
       "value": 1.748389,
       "value_text": "1.75",
@@ -2807,7 +2783,7 @@
         "red": 1.5,
         "green": 0.5,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Same scale as revenue growth volatility.",
@@ -2815,7 +2791,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "PAT growth volatility: 1.75 RED (level red vs band (green <= 0.50, red >= 1.50))"
+      "text": "PAT growth volatility: 1.75 RED (level red vs indicative band (green <= 0.50, red >= 1.50))"
     },
     "q_revenue_yoy": {
       "name": "Latest quarter revenue YoY",
@@ -2825,6 +2801,8 @@
       "direction": "higher",
       "kind": "point",
       "equation": "Revenue_q / Revenue_q-4 - 1",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Revenue growth in the latest reported quarter versus the same quarter a year earlier.",
       "value": 0.162118,
       "value_text": "16.2%",
@@ -2860,6 +2838,8 @@
       "direction": "higher",
       "kind": "point",
       "equation": "PAT_q / PAT_q-4 - 1 (PAT_q-4 > 0)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Reported net profit growth in the latest quarter versus a year earlier (n/m if the year-ago quarter was a loss).",
       "value": 0.222813,
       "value_text": "22.3%",
@@ -2895,6 +2875,8 @@
       "direction": "higher",
       "kind": "point",
       "equation": "OLS slope of the last 4 values of (Revenue_q / Revenue_q-4 - 1), per quarter",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Is quarterly growth accelerating or decelerating? Slope of the last 4 quarterly YoY revenue growth prints.",
       "value": 0.04412,
       "value_text": "+4.4pp",
@@ -2912,7 +2894,7 @@
         "red": -0.01,
         "green": 0.01,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "YoY growth accelerating by >= 1pp per quarter = improving momentum; decelerating by >= 1pp per quarter = fading.",
@@ -2920,7 +2902,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "Quarterly YoY growth trend: +4.4pp GREEN (level green vs band (red <= -1.0pp, green >= +1.0pp))"
+      "text": "Quarterly YoY growth trend: +4.4pp GREEN (level green vs indicative band (red <= -1.0pp, green >= +1.0pp))"
     },
     "pat_margin": {
       "name": "PAT margin",
@@ -2930,6 +2912,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "core PAT / Revenue",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Owners' core net profit per rupee of revenue (net profit margin, NPM).",
       "value": 0.277677,
       "value_text": "27.8%",
@@ -2990,6 +2974,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "(Interest earned - Interest expended) / average total assets",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Net interest margin on the whole balance sheet (RBI defines NIM as NII / average total assets).",
       "value": 0.03822,
       "value_text": "3.8%",
@@ -3031,11 +3017,11 @@
       "band": {
         "red": 0.028,
         "green": 0.042,
-        "origin": "config/bands.yaml (archetype: bank)",
+        "origin": "config/sectors/bank.yaml",
         "source_type": "external",
         "source_url": "https://www.indiainfoline.com/blog/how-healthy-were-indian-banks-in-the-year-2024-25",
         "as_of": "2025-06-30",
-        "rationale": "RBI FSR June 2025: SCB net interest margin 3.5% (private banks 4.1%, PSBs 3.0%); RBI defines NIM as NII / average total assets, matching this metric. Amber zone = 3.5% +/- 20%.",
+        "rationale": "RBI FSR June 2025: SCB net interest margin 3.5% (private banks 4.1%, PSBs 3.0%); RBI defines NIM as NII / average total assets. Amber zone = 3.5% +/- 20%.",
         "centre": 0.035
       },
       "reason": null,
@@ -3050,6 +3036,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "Revenue / average total assets",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Gross yield of the balance sheet (banks: interest earned / assets; insurers: revenue / assets).",
       "value": 0.070264,
       "value_text": "7.0%",
@@ -3097,6 +3085,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "Interest expended / average (deposits + borrowings)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Interest paid per rupee of deposits + borrowings.",
       "value": 0.04553,
       "value_text": "4.6%",
@@ -3144,6 +3134,8 @@
       "direction": "lower",
       "kind": "annual",
       "equation": "(Total opex incl. provisions + depreciation) / (NII + other income)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Operating costs including provisions per rupee of net income (Screener does not separate provisions, so this is higher than the reported cost-to-income ratio).",
       "value": 0.654591,
       "value_text": "65.5%",
@@ -3191,6 +3183,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "Other income / (NII + other income)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Share of net income from fees and other non-interest sources.",
       "value": 0.524004,
       "value_text": "52.4%",
@@ -3238,6 +3232,8 @@
       "direction": "higher",
       "kind": "annual",
       "equation": "Non-financials: (ROIC - WACC) x average IC = NOPAT - WACC x average IC (defined even when IC <= 0); financials: (ROE - Ke) x average equity",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Rupees of value created (or destroyed) in the year after charging for all capital at its required return.",
       "value": 843.679474,
       "value_text": "Rs 844 cr",
@@ -3278,6 +3274,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "Market cap / core PAT (current: TTM PAT when available)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "P/E multiple. Series = FY-end values; the last value is the current multiple (export price) in a latest run.",
       "value": 16.996176,
       "value_text": "17.00x",
@@ -3311,6 +3309,8 @@
       "direction": "lower",
       "kind": "point",
       "equation": "(# historical FY-end P/E below current + 0.5 x # equal) / # historical values",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Where today's P/E sits within the company's own FY-end history (0% = cheapest ever, 100% = richest). Needs >= 5 years.",
       "value": 0.2,
       "value_text": "20.0%",
@@ -3328,7 +3328,7 @@
         "red": 0.67,
         "green": 0.33,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Bottom third of the company's own 10-year range = cheap versus itself; top third = rich versus itself.",
@@ -3336,7 +3336,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "P/E percentile vs own history: 20.0% GREEN (level green vs band (green <= 33.0%, red >= 67.0%))"
+      "text": "P/E percentile vs own history: 20.0% GREEN (level green vs indicative band (green <= 33.0%, red >= 67.0%))"
     },
     "pb": {
       "name": "P/B",
@@ -3346,6 +3346,8 @@
       "direction": "neutral",
       "kind": "annual",
       "equation": "Market cap / book equity",
+      "formula": null,
+      "origin": "engine",
       "meaning": "P/B multiple. Series = FY-end values; the last value is the current multiple (export price) in a latest run.",
       "value": 2.765107,
       "value_text": "2.77x",
@@ -3379,6 +3381,8 @@
       "direction": "lower",
       "kind": "point",
       "equation": "(# historical FY-end P/B below current + 0.5 x # equal) / # historical values",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Where today's P/B sits within the company's own FY-end history (0% = cheapest ever, 100% = richest). Needs >= 5 years.",
       "value": 0.6,
       "value_text": "60.0%",
@@ -3396,7 +3400,7 @@
         "red": 0.67,
         "green": 0.33,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Bottom third of the company's own 10-year range = cheap versus itself; top third = rich versus itself.",
@@ -3404,7 +3408,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "P/B percentile vs own history: 60.0% AMBER (level amber vs band (green <= 33.0%, red >= 67.0%))"
+      "text": "P/B percentile vs own history: 60.0% AMBER (level amber vs indicative band (green <= 33.0%, red >= 67.0%))"
     },
     "implied_growth_pb": {
       "name": "P/B-implied growth",
@@ -3414,6 +3418,8 @@
       "direction": "neutral",
       "kind": "point",
       "equation": "g = (Ke x P/B - ROE) / (P/B - 1); n/m if |P/B - 1| < 0.05",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Perpetual growth implied by today's P/B for a lender/insurer (justified P/B solved for g) at its 3-year average ROE.",
       "value": 0.147405,
       "value_text": "14.7%",
@@ -3436,6 +3442,8 @@
       "direction": "lower",
       "kind": "point",
       "equation": "implied_growth_pb - BVPS CAGR 5y (PAT CAGR 5y if n/m)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Growth the market prices in versus the book-value compounding actually delivered over 5 years.",
       "value": -0.026083,
       "value_text": "-2.6pp",
@@ -3453,7 +3461,7 @@
         "red": 0.05,
         "green": 0.0,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Same logic for lenders/insurers versus delivered book-value compounding.",
@@ -3461,7 +3469,7 @@
       },
       "reason": null,
       "note": null,
-      "text": "P/B-implied - delivered growth: -2.6pp GREEN (level green vs band (green <= +0.0pp, red >= +5.0pp))"
+      "text": "P/B-implied - delivered growth: -2.6pp GREEN (level green vs indicative band (green <= +0.0pp, red >= +5.0pp))"
     },
     "justified_pb": {
       "name": "Justified P/B",
@@ -3471,6 +3479,8 @@
       "direction": "neutral",
       "kind": "point",
       "equation": "(ROE - g) / (Ke - g); ROE = 3y avg, g = min(ROE x (1 - 3y avg payout), terminal g)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "P/B a single-stage residual-income model supports: (ROE - g) / (Ke - g) with sustainable ROE and growth.",
       "value": 1.185283,
       "value_text": "1.19x",
@@ -3493,6 +3503,8 @@
       "direction": "lower",
       "kind": "point",
       "equation": "current P/B / justified P/B (justified > 0)",
+      "formula": null,
+      "origin": "engine",
       "meaning": "Market P/B relative to what returns justify: above 1 = paying for more than current ROE supports.",
       "value": 2.332866,
       "value_text": "2.33x",
@@ -3510,7 +3522,7 @@
         "red": 1.5,
         "green": 1.0,
         "origin": "config/bands.yaml (generic)",
-        "source_type": "rule_of_thumb",
+        "source_type": "indicative",
         "source_url": null,
         "as_of": "2026-11-01",
         "rationale": "Paying 50%+ above the P/B that sustainable ROE justifies needs ROE to rise; at or below 1.0x the price is covered by current returns.",
@@ -3518,7 +3530,810 @@
       },
       "reason": null,
       "note": null,
-      "text": "P/B / justified P/B: 2.33x RED (level red vs band (green <= 1.00x, red >= 1.50x))"
+      "text": "P/B / justified P/B: 2.33x RED (level red vs indicative band (green <= 1.00x, red >= 1.50x))"
+    },
+    "loan_growth": {
+      "name": "Loan growth",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "Advances_t / Advances_t-1 - 1",
+      "formula": "growth('kpi:advances_cr', 1)",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "Growth of the loan book (reported advances).",
+      "value": 0.158095,
+      "value_text": "15.8%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": null,
+        "FY25": 0.132866,
+        "FY26": 0.158095
+      },
+      "level": {
+        "score": 100.0,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 100.0,
+      "rag": "green",
+      "band": {
+        "red": 0.04,
+        "green": 0.089,
+        "origin": "config/sectors/bank.yaml",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "Loan growth below CPI inflation = shrinking in real terms; above nominal GDP = gaining share. Unusually fast growth is caught by flags BK05/A06, not by this band.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Loan growth: 15.8% GREEN (level green vs band (red <= 4.0%, green >= 8.9%))"
+    },
+    "deposit_growth": {
+      "name": "Deposit growth",
+      "pillar": "growth",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "Deposits_t / Deposits_t-1 - 1",
+      "formula": "growth('kpi:deposits_cr', 1)",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "Growth of the deposit franchise.",
+      "value": 0.114433,
+      "value_text": "11.4%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": null,
+        "FY25": 0.139827,
+        "FY26": 0.114433
+      },
+      "level": {
+        "score": 83.968047,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 83.968047,
+      "rag": "green",
+      "band": {
+        "red": 0.04,
+        "green": 0.089,
+        "origin": "config/sectors/bank.yaml",
+        "source_type": "derived",
+        "source_url": null,
+        "as_of": null,
+        "rationale": "As loan growth.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Deposit growth: 11.4% GREEN (level green vs band (red <= 4.0%, green >= 8.9%))"
+    },
+    "nim_reported": {
+      "name": "Net interest margin (reported)",
+      "pillar": "margins",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "NIM as reported by the bank",
+      "formula": "kpi('nim_pct')",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "Spread earned on interest-earning assets, bank's own definition.",
+      "value": null,
+      "value_text": "n/a",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": null,
+        "FY25": null,
+        "FY26": null
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": {
+        "red": 0.028,
+        "green": 0.042,
+        "origin": "config/sectors/bank.yaml",
+        "source_type": "external",
+        "source_url": "https://www.indiainfoline.com/blog/how-healthy-were-indian-banks-in-the-year-2024-25",
+        "as_of": "2025-06-30",
+        "rationale": "RBI FSR June 2025: SCB net interest margin 3.5% (private banks 4.1%, PSBs 3.0%); RBI defines NIM as NII / average total assets. Amber zone = 3.5% +/- 20%.",
+        "centre": 0.035
+      },
+      "reason": "no value for the as-of year",
+      "note": "n/a in FY26: missing nim_pct FY26 (manual KPI)",
+      "text": "Net interest margin (reported): n/a [no value for the as-of year] Note: n/a in FY26: missing nim_pct FY26 (manual KPI)"
+    },
+    "yield_on_advances": {
+      "name": "Yield on advances",
+      "pillar": "margins",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "neutral",
+      "kind": "annual",
+      "equation": "Interest on advances / average advances (reported)",
+      "formula": "kpi('yield_on_advances_pct')",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "Pricing of the loan book; higher can mean riskier lending.",
+      "value": null,
+      "value_text": "n/a",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": null,
+        "FY25": null,
+        "FY26": null
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "informational (neutral direction)",
+      "note": "n/a in FY26: missing yield_on_advances_pct FY26 (manual KPI)",
+      "text": "Yield on advances: n/a [informational (neutral direction)] Note: n/a in FY26: missing yield_on_advances_pct FY26 (manual KPI)"
+    },
+    "cost_of_funds_reported": {
+      "name": "Cost of funds (reported)",
+      "pillar": "margins",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "Interest expended / average interest-bearing funds (reported)",
+      "formula": "kpi('cost_of_funds_pct')",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "What the bank pays for deposits and borrowings.",
+      "value": null,
+      "value_text": "n/a",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": null,
+        "FY25": null,
+        "FY26": null
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": {
+        "red": 0.065,
+        "green": 0.05,
+        "origin": "config/sectors/bank.yaml",
+        "source_type": "indicative",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "With the policy repo near 5.5-6.5% in 2024-26, a cost of funds under 5% reflects a strong CASA franchise; above 6.5% is wholesale-like.",
+        "centre": null
+      },
+      "reason": "no value for the as-of year",
+      "note": "n/a in FY26: missing cost_of_funds_pct FY26 (manual KPI)",
+      "text": "Cost of funds (reported): n/a [no value for the as-of year] Note: n/a in FY26: missing cost_of_funds_pct FY26 (manual KPI)"
+    },
+    "cost_to_income_bank": {
+      "name": "Cost-to-income (ex-provisions)",
+      "pillar": "margins",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "(Opex excluding provisions + depreciation) / (NII + other income)",
+      "formula": "(f('total_opex') - kpi('provisions_cr') + f('depreciation')) / f('net_total_income')",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "Operating efficiency before credit costs.",
+      "value": 0.630473,
+      "value_text": "63.0%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": 0.6315,
+        "FY23": 0.609818,
+        "FY24": 0.604289,
+        "FY25": 0.622804,
+        "FY26": 0.630473
+      },
+      "level": {
+        "score": 12.69928,
+        "basis": "band",
+        "rag": "red"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 12.69928,
+      "rag": "red",
+      "band": {
+        "red": 0.55,
+        "green": 0.42,
+        "origin": "config/sectors/bank.yaml",
+        "source_type": "indicative",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Large Indian private banks run at roughly 38-45%; above 55% leaves little room for credit costs.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Cost-to-income (ex-provisions): 63.0% RED (level red vs indicative band (green <= 42.0%, red >= 55.0%))"
+    },
+    "credit_cost": {
+      "name": "Credit cost",
+      "pillar": "cash_quality",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "Provisions & contingencies / average advances",
+      "formula": "kpi('provisions_cr') / avg('kpi:advances_cr')",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "Share of the loan book lost to provisions in the year: the price of growth.",
+      "value": 0.003716,
+      "value_text": "0.4%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": null,
+        "FY25": 0.003707,
+        "FY26": 0.003716
+      },
+      "level": {
+        "score": 78.566119,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 78.566119,
+      "rag": "green",
+      "band": {
+        "red": 0.02,
+        "green": 0.008,
+        "origin": "config/sectors/bank.yaml",
+        "source_type": "indicative",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Credit cost under 0.8% of loans is benign for a diversified Indian bank; above 2% consumes most of the margin.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Credit cost: 0.4% GREEN (level green vs indicative band (green <= 0.8%, red >= 2.0%))"
+    },
+    "gnpa_ratio": {
+      "name": "Gross NPA ratio",
+      "pillar": "cash_quality",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "Gross NPAs / gross advances (reported)",
+      "formula": "kpi('gnpa_pct')",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "Share of loans that have stopped paying.",
+      "value": null,
+      "value_text": "n/a",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": 0.036,
+        "FY23": 0.0281,
+        "FY24": 0.0216,
+        "FY25": 0.0167,
+        "FY26": null
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": {
+        "red": 0.036,
+        "green": 0.018,
+        "origin": "config/sectors/bank.yaml",
+        "source_type": "external",
+        "source_url": "https://psuwatch.com/newsupdates/banks-gnpas-at-a-multidecadal-low-may-inch-up-to-19-pc-by-mar-2028-rbi",
+        "as_of": "2026-06-30",
+        "rationale": "Green = scheduled commercial banks' GNPA of 1.8% at March 2026 (RBI FSR June 2026, multi-decadal low); red = twice the system level.",
+        "centre": null
+      },
+      "reason": "no value for the as-of year",
+      "note": "n/a in FY26: missing gnpa_pct FY26 (manual KPI)",
+      "text": "Gross NPA ratio: n/a [no value for the as-of year] Note: n/a in FY26: missing gnpa_pct FY26 (manual KPI)"
+    },
+    "nnpa_ratio": {
+      "name": "Net NPA ratio",
+      "pillar": "cash_quality",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "(Gross NPAs - provisions) / net advances (reported)",
+      "formula": "kpi('nnpa_pct')",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "Bad loans not yet provided for: the hit still to come.",
+      "value": 0.0033,
+      "value_text": "0.3%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": 0.0076,
+        "FY23": 0.0048,
+        "FY24": 0.0042,
+        "FY25": 0.0039,
+        "FY26": 0.0033
+      },
+      "level": {
+        "score": 78.0,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 78.0,
+      "rag": "green",
+      "band": {
+        "red": 0.01,
+        "green": 0.005,
+        "origin": "config/sectors/bank.yaml",
+        "source_type": "external",
+        "source_url": "https://informistmedia.com/MoneyWire/31505/RBI-Report-Capital-ratio-of-banks-seen-above-mandated-level-even-in-worst-case",
+        "as_of": "2025-06-30",
+        "rationale": "Green = system net NPA of 0.5% at March 2025 (RBI FSR June 2025); red = twice the system level.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Net NPA ratio: 0.3% GREEN (level green vs band (green <= 0.5%, red >= 1.0%))"
+    },
+    "pcr": {
+      "name": "Provision coverage ratio",
+      "pillar": "cash_quality",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "Provisions held / gross NPAs (reported, ex technical write-offs)",
+      "formula": "kpi('pcr_pct')",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "How much of the bad-loan stock is already provided.",
+      "value": null,
+      "value_text": "n/a",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": null,
+        "FY25": null,
+        "FY26": null
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": {
+        "red": 0.6,
+        "green": 0.7,
+        "origin": "config/sectors/bank.yaml",
+        "source_type": "external",
+        "source_url": "https://website.rbi.org.in/web/rbi/-/notifications/provisioning-coverage-ratio-for-advances-6357",
+        "as_of": "2011-04-21",
+        "rationale": "Green = RBI's 70% provisioning coverage benchmark (DBOD.No.BP.BC.64/21.04.048/2009-10 and the April 2011 circular); red = 10pp short of it.",
+        "centre": null
+      },
+      "reason": "no value for the as-of year",
+      "note": "n/a in FY26: missing pcr_pct FY26 (manual KPI)",
+      "text": "Provision coverage ratio: n/a [no value for the as-of year] Note: n/a in FY26: missing pcr_pct FY26 (manual KPI)"
+    },
+    "provisions_to_ppop": {
+      "name": "Provisions / pre-provision profit",
+      "pillar": "cash_quality",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "Provisions / (NII + other income - opex ex provisions - depreciation)",
+      "formula": "kpi('provisions_cr') / (f('net_total_income') - (f('total_opex') - kpi('provisions_cr') + f('depreciation')))",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "Share of operating profit consumed by credit costs.",
+      "value": 0.065266,
+      "value_text": "6.5%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": 0.201505,
+        "FY23": 0.125958,
+        "FY24": 0.056852,
+        "FY25": 0.060393,
+        "FY26": 0.065266
+      },
+      "level": {
+        "score": 81.637059,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 81.637059,
+      "rag": "green",
+      "band": {
+        "red": 0.5,
+        "green": 0.2,
+        "origin": "config/sectors/bank.yaml",
+        "source_type": "indicative",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Provisions taking more than half of pre-provision profit leave earnings exposed to any further stress.",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Provisions / pre-provision profit: 6.5% GREEN (level green vs indicative band (green <= 20.0%, red >= 50.0%))"
+    },
+    "slippage_ratio": {
+      "name": "Slippage ratio",
+      "pillar": "cash_quality",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "Gross slippages / opening standard advances (reported)",
+      "formula": "kpi('slippage_ratio_pct')",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "Pace at which good loans turn bad.",
+      "value": null,
+      "value_text": "n/a",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": null,
+        "FY25": null,
+        "FY26": null
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": {
+        "red": 0.03,
+        "green": 0.015,
+        "origin": "config/sectors/bank.yaml",
+        "source_type": "indicative",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "Fresh slippages under 1.5% of standard advances are benign; above 3% signal a deteriorating book.",
+        "centre": null
+      },
+      "reason": "no value for the as-of year",
+      "note": "n/a in FY26: missing slippage_ratio_pct FY26 (manual KPI)",
+      "text": "Slippage ratio: n/a [no value for the as-of year] Note: n/a in FY26: missing slippage_ratio_pct FY26 (manual KPI)"
+    },
+    "crar": {
+      "name": "Capital adequacy (CRAR)",
+      "pillar": "balance_sheet",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "Total capital / risk-weighted assets (Basel III, reported)",
+      "formula": "kpi('crar_pct')",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "Regulatory capital cushion against losses.",
+      "value": 0.1718,
+      "value_text": "17.2%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": 0.1834,
+        "FY24": 0.1633,
+        "FY25": 0.1655,
+        "FY26": 0.1718
+      },
+      "level": {
+        "score": 65.977011,
+        "basis": "band",
+        "rag": "amber"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 65.977011,
+      "rag": "green",
+      "band": {
+        "red": 0.115,
+        "green": 0.173,
+        "origin": "config/sectors/bank.yaml",
+        "source_type": "external",
+        "source_url": "https://website.rbi.org.in/ml/web/rbi/-/notifications/master-circular-basel-iii-capital-regulations-8142",
+        "as_of": "2025-06-30",
+        "rationale": "Red = RBI Basel III minimum total capital 9% + capital conservation buffer 2.5% = 11.5% (Master Circular, Basel III Capital Regulations). Green = scheduled commercial banks' system CRAR of 17.3% at March 2025 (RBI FSR June 2025, https://informistmedia.com/MoneyWire/31505/RBI-Report-Capital-ratio-of-banks-seen-above-mandated-level-even-in-worst-case).",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Capital adequacy (CRAR): 17.2% GREEN (level amber vs band (red <= 11.5%, green >= 17.3%))"
+    },
+    "cet1": {
+      "name": "CET1 ratio",
+      "pillar": "balance_sheet",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "Common equity tier 1 / risk-weighted assets (reported)",
+      "formula": "kpi('cet1_pct')",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "Highest-quality capital cushion.",
+      "value": 0.1635,
+      "value_text": "16.4%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": 0.156,
+        "FY25": 0.1594,
+        "FY26": 0.1635
+      },
+      "level": {
+        "score": 89.0,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 89.0,
+      "rag": "green",
+      "band": {
+        "red": 0.08,
+        "green": 0.13,
+        "origin": "config/sectors/bank.yaml",
+        "source_type": "external",
+        "source_url": "https://website.rbi.org.in/ml/web/rbi/-/notifications/master-circular-basel-iii-capital-regulations-8142",
+        "as_of": "2024-04-01",
+        "rationale": "Red = RBI minimum CET1 5.5% + CCB 2.5% = 8%. Green 13% = 5pp buffer above the regulatory floor (indicative component).",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "CET1 ratio: 16.4% GREEN (level green vs band (red <= 8.0%, green >= 13.0%))"
+    },
+    "casa_ratio": {
+      "name": "CASA ratio",
+      "pillar": "balance_sheet",
+      "role": "scored",
+      "unit": "pct",
+      "direction": "higher",
+      "kind": "annual",
+      "equation": "CASA deposits / total deposits (reported)",
+      "formula": "kpi('casa_pct')",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "Share of cheap, sticky funding.",
+      "value": null,
+      "value_text": "n/a",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": 0.422,
+        "FY25": 0.418,
+        "FY26": null
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": {
+        "red": 0.3,
+        "green": 0.4,
+        "origin": "config/sectors/bank.yaml",
+        "source_type": "indicative",
+        "source_url": null,
+        "as_of": "2026-11-01",
+        "rationale": "System CASA share is about 39% (secondary report, down from a 44% peak in FY22); 40%+ is a strong low-cost franchise, under 30% means funding at near-wholesale cost.",
+        "centre": null
+      },
+      "reason": "no value for the as-of year",
+      "note": "n/a in FY26: missing casa_pct FY26 (manual KPI)",
+      "text": "CASA ratio: n/a [no value for the as-of year] Note: n/a in FY26: missing casa_pct FY26 (manual KPI)"
+    },
+    "cd_ratio": {
+      "name": "Credit-deposit ratio",
+      "pillar": "balance_sheet",
+      "role": "scored",
+      "unit": "ratio",
+      "direction": "target",
+      "kind": "annual",
+      "equation": "Advances / deposits",
+      "formula": "kpi('advances_cr') / kpi('deposits_cr')",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "How fully deposits are lent out: too low wastes funding, too high relies on wholesale money.",
+      "value": 0.865859,
+      "value_text": "0.87",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": null,
+        "FY23": null,
+        "FY24": 0.838335,
+        "FY25": 0.833215,
+        "FY26": 0.865859
+      },
+      "level": {
+        "score": 75.0,
+        "basis": "band",
+        "rag": "green"
+      },
+      "trend": null,
+      "stability": null,
+      "composite": 75.0,
+      "rag": "green",
+      "band": {
+        "green_low": 0.72,
+        "green_high": 0.88,
+        "red_low": 0.6,
+        "red_high": 1.0,
+        "origin": "config/sectors/bank.yaml",
+        "source_type": "external",
+        "source_url": "https://www.business-standard.com/finance/news/yes-bank-s-casa-liquidity-coverage-ratio-rises-in-q2-loan-growth-up-13-1-124100300477_1.html",
+        "as_of": "2024-09-06",
+        "rationale": "System credit-deposit ratio 77.2% (RBI data, Sep 2024; about 82% by mid-2026). Green = within ~5pp of the system level; red below 60% (idle deposits) or above 100% (lending more than deposits, i.e. wholesale funding).",
+        "centre": null
+      },
+      "reason": null,
+      "note": null,
+      "text": "Credit-deposit ratio: 0.87 GREEN (level green vs band ())"
+    },
+    "bank_opex_to_assets": {
+      "name": "Opex (ex provisions) / assets",
+      "pillar": "returns",
+      "role": "component",
+      "unit": "pct",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "(Opex excluding provisions + depreciation) / average total assets",
+      "formula": "(f('total_opex') - kpi('provisions_cr') + f('depreciation')) / avg('f:total_assets')",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "Operating cost per rupee of balance sheet (bank DuPont).",
+      "value": 0.050624,
+      "value_text": "5.1%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": 0.044184,
+        "FY23": 0.044576,
+        "FY24": 0.045275,
+        "FY25": 0.051145,
+        "FY26": 0.050624
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "component metric (not scored)",
+      "note": null,
+      "text": "Opex (ex provisions) / assets: 5.1% [component metric (not scored)]"
+    },
+    "provisions_to_assets": {
+      "name": "Provisions / assets",
+      "pillar": "returns",
+      "role": "component",
+      "unit": "pct",
+      "direction": "lower",
+      "kind": "annual",
+      "equation": "Provisions & contingencies / average total assets",
+      "formula": "kpi('provisions_cr') / avg('f:total_assets')",
+      "origin": "config/sectors/bank.yaml",
+      "meaning": "Credit cost per rupee of balance sheet (bank DuPont).",
+      "value": 0.001937,
+      "value_text": "0.2%",
+      "series": {
+        "FY17": null,
+        "FY18": null,
+        "FY19": null,
+        "FY20": null,
+        "FY21": null,
+        "FY22": 0.005195,
+        "FY23": 0.003592,
+        "FY24": 0.001686,
+        "FY25": 0.001871,
+        "FY26": 0.001937
+      },
+      "level": null,
+      "trend": null,
+      "stability": null,
+      "composite": null,
+      "rag": "n/a",
+      "band": null,
+      "reason": "component metric (not scored)",
+      "note": null,
+      "text": "Provisions / assets: 0.2% [component metric (not scored)]"
     }
   },
   "sector_references": {
@@ -3555,6 +4370,503 @@
     "revenue_cagr_5y_hist": 0.232334,
     "net_income_cagr_5y_hist": 0.352878,
     "aggregate_tax_rate": 0.192993
+  },
+  "sector": {
+    "archetype": "bank",
+    "lineage": [
+      "default",
+      "bank"
+    ],
+    "file": "config/sectors/bank.yaml",
+    "family": "bank_like",
+    "how_to_read": "Judge a bank after credit costs, not before: RoA = NII/A + fees/A - opex/A - provisions/A - tax/A, and RoE = RoA x leverage.\nNIM and fees show earning power; credit cost, GNPA/NNPA and PCR show what the loan book really earns.\nCRAR and CASA decide how long growth can last: fast loan growth with falling capital is the classic Indian blow-up pattern.\nRead asset quality and capital before profit growth.",
+    "switched_off": [
+      {
+        "id": "credit_deposit_proxy",
+        "name": "Other assets / (deposits + borrowings)",
+        "reason": "Superseded by the reported credit-deposit ratio (cd_ratio, from advances and deposits)"
+      }
+    ],
+    "switched_off_groups": [
+      {
+        "id": "non_financial_metrics",
+        "applies": "NF",
+        "reason": "Banks have no EBITDA, gross margin, capex cycle or working-capital days: interest is the raw material and loans are the inventory",
+        "n_metrics": 84
+      }
+    ],
+    "manual_kpis": [
+      {
+        "id": "promoter_holding_pct",
+        "unit": "%",
+        "required": false,
+        "description": "Promoter and promoter-group shareholding at fiscal year end (% of equity)",
+        "years_present": [],
+        "present_asof": false
+      },
+      {
+        "id": "promoter_pledge_pct",
+        "unit": "%",
+        "required": false,
+        "description": "Promoter shares pledged or encumbered as % of promoter holding at fiscal year end",
+        "years_present": [],
+        "present_asof": false
+      },
+      {
+        "id": "advances_cr",
+        "unit": "Rs cr",
+        "required": true,
+        "description": "Net advances (loans) at 31 March",
+        "years_present": [
+          "FY24",
+          "FY25",
+          "FY26"
+        ],
+        "present_asof": true
+      },
+      {
+        "id": "deposits_cr",
+        "unit": "Rs cr",
+        "required": true,
+        "description": "Total deposits at 31 March",
+        "years_present": [
+          "FY24",
+          "FY25",
+          "FY26"
+        ],
+        "present_asof": true
+      },
+      {
+        "id": "casa_pct",
+        "unit": "%",
+        "required": true,
+        "description": "CASA deposits as % of total deposits at 31 March",
+        "years_present": [
+          "FY24",
+          "FY25"
+        ],
+        "present_asof": false
+      },
+      {
+        "id": "gnpa_pct",
+        "unit": "%",
+        "required": true,
+        "description": "Gross NPA ratio at 31 March (as reported)",
+        "years_present": [
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "present_asof": false
+      },
+      {
+        "id": "nnpa_pct",
+        "unit": "%",
+        "required": true,
+        "description": "Net NPA ratio at 31 March",
+        "years_present": [
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25",
+          "FY26"
+        ],
+        "present_asof": true
+      },
+      {
+        "id": "pcr_pct",
+        "unit": "%",
+        "required": true,
+        "description": "Provision coverage ratio at 31 March (excluding technical write-offs, as reported)",
+        "years_present": [],
+        "present_asof": false
+      },
+      {
+        "id": "crar_pct",
+        "unit": "%",
+        "required": true,
+        "description": "Total capital adequacy ratio (Basel III) at 31 March",
+        "years_present": [
+          "FY23",
+          "FY24",
+          "FY25",
+          "FY26"
+        ],
+        "present_asof": true
+      },
+      {
+        "id": "provisions_cr",
+        "unit": "Rs cr",
+        "required": true,
+        "description": "Provisions and contingencies for the full fiscal year (not one quarter)",
+        "years_present": [
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25",
+          "FY26"
+        ],
+        "present_asof": true
+      },
+      {
+        "id": "cet1_pct",
+        "unit": "%",
+        "required": false,
+        "description": "Common equity tier-1 ratio at 31 March",
+        "years_present": [
+          "FY24",
+          "FY25",
+          "FY26"
+        ],
+        "present_asof": true
+      },
+      {
+        "id": "nim_pct",
+        "unit": "%",
+        "required": false,
+        "description": "Net interest margin for the year as reported (bank's own definition)",
+        "years_present": [],
+        "present_asof": false
+      },
+      {
+        "id": "yield_on_advances_pct",
+        "unit": "%",
+        "required": false,
+        "description": "Yield on advances for the year",
+        "years_present": [],
+        "present_asof": false
+      },
+      {
+        "id": "cost_of_funds_pct",
+        "unit": "%",
+        "required": false,
+        "description": "Cost of funds (or cost of deposits) for the year",
+        "years_present": [],
+        "present_asof": false
+      },
+      {
+        "id": "cost_to_income_pct",
+        "unit": "%",
+        "required": false,
+        "description": "Cost-to-income ratio for the year as reported",
+        "years_present": [],
+        "present_asof": false
+      },
+      {
+        "id": "slippage_ratio_pct",
+        "unit": "%",
+        "required": false,
+        "description": "Gross slippages as % of opening standard advances",
+        "years_present": [],
+        "present_asof": false
+      }
+    ],
+    "required_kpis_present_asof": "5/8",
+    "missing_required_asof": [
+      "casa_pct",
+      "gnpa_pct",
+      "pcr_pct"
+    ],
+    "kpi_values": 29,
+    "kpi_verified_share": 0.0,
+    "indicative_bands_used": [
+      "cost_to_income_bank",
+      "credit_cost",
+      "implied_pb_growth_minus_delivered",
+      "pat_growth_volatility",
+      "pb_percentile_10y",
+      "pb_to_justified_pb",
+      "pe_percentile_10y",
+      "provisions_to_ppop",
+      "q_revenue_yoy_trend",
+      "revenue_growth_volatility",
+      "share_count_change"
+    ],
+    "sector_flags_triggered": [],
+    "constants": {}
+  },
+  "manual_kpis": {
+    "gnpa_pct": {
+      "unit": "%",
+      "description": "Gross NPA ratio at 31 March (as reported)",
+      "values": {
+        "FY22": {
+          "value": 0.036,
+          "raw_value": "3.6",
+          "unit": "%",
+          "source_url": "https://www.business-standard.com/article/companies/icici-bank-s-net-profit-up-59-in-q4-beats-street-estimates-122042300661_1.html",
+          "source_date": "2022-04-23",
+          "verified": "N"
+        },
+        "FY23": {
+          "value": 0.0281,
+          "raw_value": "2.81",
+          "unit": "%",
+          "source_url": "https://www.business-standard.com/companies/results/icici-bank-q4-net-profit-rises-30-to-rs-9-122-crore-on-margin-expansion-123042200588_1.html",
+          "source_date": "2023-04-22",
+          "verified": "N"
+        },
+        "FY24": {
+          "value": 0.0216,
+          "raw_value": "2.16",
+          "unit": "%",
+          "source_url": "https://www.business-standard.com/markets/capital-market-news/icici-bank-hits-life-high-as-pat-climbs-17-yoy-in-q4-124042900339_1.html",
+          "source_date": "2024-04-29",
+          "verified": "N"
+        },
+        "FY25": {
+          "value": 0.0167,
+          "raw_value": "1.67",
+          "unit": "%",
+          "source_url": "https://www.business-standard.com/markets/capital-market-news/icici-bank-q4-pat-climbs-18-yoy-to-rs-12-630-crore-declares-dividend-of-rs-11-sh-125042100357_1.html",
+          "source_date": "2025-04-21",
+          "verified": "N"
+        }
+      }
+    },
+    "nnpa_pct": {
+      "unit": "%",
+      "description": "Net NPA ratio at 31 March",
+      "values": {
+        "FY22": {
+          "value": 0.0076,
+          "raw_value": "0.76",
+          "unit": "%",
+          "source_url": "https://www.business-standard.com/companies/results/icici-bank-q4-net-profit-rises-30-to-rs-9-122-crore-on-margin-expansion-123042200588_1.html",
+          "source_date": "2023-04-22",
+          "verified": "N"
+        },
+        "FY23": {
+          "value": 0.0048,
+          "raw_value": "0.48",
+          "unit": "%",
+          "source_url": "https://www.business-standard.com/companies/results/icici-bank-q4-net-profit-rises-30-to-rs-9-122-crore-on-margin-expansion-123042200588_1.html",
+          "source_date": "2023-04-22",
+          "verified": "N"
+        },
+        "FY24": {
+          "value": 0.0042,
+          "raw_value": "0.42",
+          "unit": "%",
+          "source_url": "https://www.business-standard.com/markets/capital-market-news/icici-bank-hits-life-high-as-pat-climbs-17-yoy-in-q4-124042900339_1.html",
+          "source_date": "2024-04-29",
+          "verified": "N"
+        },
+        "FY25": {
+          "value": 0.0039,
+          "raw_value": "0.39",
+          "unit": "%",
+          "source_url": "https://www.business-standard.com/markets/capital-market-news/icici-bank-q4-pat-climbs-18-yoy-to-rs-12-630-crore-declares-dividend-of-rs-11-sh-125042100357_1.html",
+          "source_date": "2025-04-21",
+          "verified": "N"
+        },
+        "FY26": {
+          "value": 0.0033,
+          "raw_value": "0.33",
+          "unit": "%",
+          "source_url": "https://www.business-standard.com/companies/quarterly-results/icici-bank-net-profit-up-8-5-pc-in-q4-fy26-to-rs-13-701-7-crore-126041800606_1.html",
+          "source_date": "2026-04-18",
+          "verified": "N"
+        }
+      }
+    },
+    "provisions_cr": {
+      "unit": "Rs cr (excl. tax; stated as Rs 86.41 bn)",
+      "description": "Provisions and contingencies for the full fiscal year (not one quarter)",
+      "values": {
+        "FY22": {
+          "value": 8641.0,
+          "raw_value": "8641",
+          "unit": "Rs cr (excl. tax; stated as Rs 86.41 bn)",
+          "source_url": "https://icicibank.com/ms/aboutus/annual-reports/2022-23/icici/directors-report.html",
+          "source_date": "2023 (annual report FY2023)",
+          "verified": "N"
+        },
+        "FY23": {
+          "value": 6666.0,
+          "raw_value": "6666",
+          "unit": "Rs cr (excl. tax; stated as Rs 66.66 bn)",
+          "source_url": "https://icicibank.com/ms/aboutus/annual-reports/2022-23/icici/directors-report.html",
+          "source_date": "2023 (annual report FY2023)",
+          "verified": "N"
+        },
+        "FY24": {
+          "value": 3642.93,
+          "raw_value": "3642.93",
+          "unit": "Rs cr (excl. tax)",
+          "source_url": "https://quantisnow.com/insight/sec-form-6k-filed-by-icici-bank-limited-5995995",
+          "source_date": "2025-04-19",
+          "verified": "N"
+        },
+        "FY25": {
+          "value": 4682.62,
+          "raw_value": "4682.62",
+          "unit": "Rs cr (excl. tax)",
+          "source_url": "https://quantisnow.com/insight/sec-form-6k-filed-by-icici-bank-limited-5995995",
+          "source_date": "2025-04-19",
+          "verified": "N"
+        },
+        "FY26": {
+          "value": 5380.42,
+          "raw_value": "5380.42",
+          "unit": "Rs cr (excl. tax)",
+          "source_url": "https://quantisnow.com/insight/sec-form-6-k-filed-by-icici-bank-limited-6507456",
+          "source_date": "2026-04-18",
+          "verified": "N"
+        }
+      }
+    },
+    "crar_pct": {
+      "unit": "%",
+      "description": "Total capital adequacy ratio (Basel III) at 31 March",
+      "values": {
+        "FY23": {
+          "value": 0.1834,
+          "raw_value": "18.34",
+          "unit": "%",
+          "source_url": "https://www.business-standard.com/companies/results/icici-bank-q4-net-profit-rises-30-to-rs-9-122-crore-on-margin-expansion-123042200588_1.html",
+          "source_date": "2023-04-22",
+          "verified": "N"
+        },
+        "FY24": {
+          "value": 0.1633,
+          "raw_value": "16.33",
+          "unit": "%",
+          "source_url": "https://www.business-standard.com/markets/capital-market-news/icici-bank-hits-life-high-as-pat-climbs-17-yoy-in-q4-124042900339_1.html",
+          "source_date": "2024-04-29",
+          "verified": "N"
+        },
+        "FY25": {
+          "value": 0.1655,
+          "raw_value": "16.55",
+          "unit": "%",
+          "source_url": "https://www.business-standard.com/markets/capital-market-news/icici-bank-q4-pat-climbs-18-yoy-to-rs-12-630-crore-declares-dividend-of-rs-11-sh-125042100357_1.html",
+          "source_date": "2025-04-21",
+          "verified": "N"
+        },
+        "FY26": {
+          "value": 0.1718,
+          "raw_value": "17.18",
+          "unit": "%",
+          "source_url": "https://www.business-standard.com/companies/quarterly-results/icici-bank-net-profit-up-8-5-pc-in-q4-fy26-to-rs-13-701-7-crore-126041800606_1.html",
+          "source_date": "2026-04-18",
+          "verified": "N"
+        }
+      }
+    },
+    "advances_cr": {
+      "unit": "Rs cr (stated as INR 11844 bn)",
+      "description": "Net advances (loans) at 31 March",
+      "values": {
+        "FY24": {
+          "value": 1184400.0,
+          "raw_value": "1184400",
+          "unit": "Rs cr (stated as INR 11844 bn)",
+          "source_url": "https://bsmedia.business-standard.com/_media/bs/data/market-reports/equity-brokertips/2025-04/17452256210.69792500.pdf",
+          "source_date": "2025-04",
+          "verified": "N"
+        },
+        "FY25": {
+          "value": 1341766.0,
+          "raw_value": "1341766",
+          "unit": "Rs cr",
+          "source_url": "https://www.business-standard.com/markets/capital-market-news/icici-bank-q4-pat-climbs-18-yoy-to-rs-12-630-crore-declares-dividend-of-rs-11-sh-125042100357_1.html",
+          "source_date": "2025-04-21",
+          "verified": "N"
+        },
+        "FY26": {
+          "value": 1553893.0,
+          "raw_value": "1553893",
+          "unit": "Rs cr",
+          "source_url": "https://www.business-standard.com/markets/capital-market-news/icici-bank-ends-higher-after-net-profit-rises-over-8-to-rs-13-702-crore-in-q4-126042000767_1.html",
+          "source_date": "2026-04-20",
+          "verified": "N"
+        }
+      }
+    },
+    "casa_pct": {
+      "unit": "% (period-end)",
+      "description": "CASA deposits as % of total deposits at 31 March",
+      "values": {
+        "FY24": {
+          "value": 0.422,
+          "raw_value": "42.2",
+          "unit": "% (period-end)",
+          "source_url": "https://bsmedia.business-standard.com/_media/bs/data/market-reports/equity-brokertips/2025-04/17452256210.69792500.pdf",
+          "source_date": "2025-04",
+          "verified": "N"
+        },
+        "FY25": {
+          "value": 0.418,
+          "raw_value": "41.8",
+          "unit": "% (period-end)",
+          "source_url": "https://bsmedia.business-standard.com/_media/bs/data/market-reports/equity-brokertips/2025-04/17452256210.69792500.pdf",
+          "source_date": "2025-04",
+          "verified": "N"
+        }
+      }
+    },
+    "cet1_pct": {
+      "unit": "%",
+      "description": "Common equity tier-1 ratio at 31 March",
+      "values": {
+        "FY24": {
+          "value": 0.156,
+          "raw_value": "15.60",
+          "unit": "%",
+          "source_url": "https://www.business-standard.com/markets/capital-market-news/icici-bank-hits-life-high-as-pat-climbs-17-yoy-in-q4-124042900339_1.html",
+          "source_date": "2024-04-29",
+          "verified": "N"
+        },
+        "FY25": {
+          "value": 0.1594,
+          "raw_value": "15.94",
+          "unit": "%",
+          "source_url": "https://www.business-standard.com/markets/capital-market-news/icici-bank-q4-pat-climbs-18-yoy-to-rs-12-630-crore-declares-dividend-of-rs-11-sh-125042100357_1.html",
+          "source_date": "2025-04-21",
+          "verified": "N"
+        },
+        "FY26": {
+          "value": 0.1635,
+          "raw_value": "16.35",
+          "unit": "%",
+          "source_url": "https://www.business-standard.com/companies/quarterly-results/icici-bank-net-profit-up-8-5-pc-in-q4-fy26-to-rs-13-701-7-crore-126041800606_1.html",
+          "source_date": "2026-04-18",
+          "verified": "N"
+        }
+      }
+    },
+    "deposits_cr": {
+      "unit": "Rs cr (stated as INR 14128 bn)",
+      "description": "Total deposits at 31 March",
+      "values": {
+        "FY24": {
+          "value": 1412800.0,
+          "raw_value": "1412800",
+          "unit": "Rs cr (stated as INR 14128 bn)",
+          "source_url": "https://bsmedia.business-standard.com/_media/bs/data/market-reports/equity-brokertips/2025-04/17452256210.69792500.pdf",
+          "source_date": "2025-04",
+          "verified": "N"
+        },
+        "FY25": {
+          "value": 1610348.0,
+          "raw_value": "1610348",
+          "unit": "Rs cr",
+          "source_url": "https://www.business-standard.com/markets/capital-market-news/icici-bank-q4-pat-climbs-18-yoy-to-rs-12-630-crore-declares-dividend-of-rs-11-sh-125042100357_1.html",
+          "source_date": "2025-04-21",
+          "verified": "N"
+        },
+        "FY26": {
+          "value": 1794625.0,
+          "raw_value": "1794625",
+          "unit": "Rs cr",
+          "source_url": "https://www.business-standard.com/markets/capital-market-news/icici-bank-ends-higher-after-net-profit-rises-over-8-to-rs-13-702-crore-in-q4-126042000767_1.html",
+          "source_date": "2026-04-20",
+          "verified": "N"
+        }
+      }
+    }
   },
   "data_notes": [
     {
@@ -3611,6 +4923,16 @@
       "category": "quarterly",
       "fy": null,
       "text": "10 quarters from 2024-06-30 to 2026-09-30 (Q1FY25-Q2FY27). Quarterly profit is as reported (no exceptional-item estimate)."
+    },
+    {
+      "category": "manual",
+      "fy": null,
+      "text": "Manual KPIs loaded: advances_cr, casa_pct, cet1_pct, crar_pct, deposits_cr, gnpa_pct, nnpa_pct, provisions_cr for FY22, FY23, FY24, FY25, FY26."
+    },
+    {
+      "category": "manual",
+      "fy": null,
+      "text": "29 manual KPI values: 0 verified against the primary document (Y), 29 from secondary sources (N). Provenance is in analysis.json (manual_kpis)."
     }
   ]
 }

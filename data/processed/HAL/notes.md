@@ -37,3 +37,7 @@
 
 ## quarterly
 - 10 quarters from 2024-03-31 to 2026-06-30 (Q4FY24-Q1FY27). Quarterly profit is as reported (no exceptional-item estimate).
+
+## manual
+- Manual KPIs loaded: order_book_cr, order_inflow_cr for FY22, FY23, FY24, FY25, FY26.
+- 6 manual KPI values: 0 verified against the primary document (Y), 6 from secondary sources (N). Provenance is in analysis.json (manual_kpis).

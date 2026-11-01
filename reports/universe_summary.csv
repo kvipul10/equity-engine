@@ -1,22 +1,22 @@
 ticker,archetype,role,asof,mode,overall_score,overall_rag,coverage,root_verdict,economic_profit_cr,flags_high,flags_medium,flags_low,status,growth_score,growth_rag,margins_score,margins_rag,capital_efficiency_score,capital_efficiency_rag,returns_score,returns_rag,cash_quality_score,cash_quality_rag,balance_sheet_score,balance_sheet_rag,capital_allocation_score,capital_allocation_rag,valuation_score,valuation_rag
-HDFCBANK,bank,test,FY26,latest,56.5438,amber,0.9500,destroys value,-11303.7354,1,2,0,ok,80.4559,green,45.3818,amber,,n/a,35.4484,red,,n/a,73.6549,green,55.0452,amber,57.4335,amber
-ICICIBANK,bank,peer,FY26,latest,65.0597,green,0.9500,creates value,843.6795,0,1,0,ok,87.5421,green,56.4233,amber,,n/a,53.5768,amber,,n/a,79.3070,green,64.3049,green,45.2584,amber
-BAJFINANCE,nbfc,test,FY26,latest,63.5995,green,0.9500,creates value,6811.5899,0,3,0,ok,86.8151,green,41.0623,amber,,n/a,62.2701,green,,n/a,72.9593,green,53.2689,amber,57.5163,amber
-HDFCLIFE,insurance,test,FY26,latest,47.8361,amber,0.7500,destroys value,-355.8435,2,1,1,ok,61.4158,green,36.4516,red,,n/a,33.2871,red,,n/a,,n/a,69.5550,green,59.1971,amber
-TCS,it_services,test,FY26,latest,69.1285,green,1.0000,creates value,42376.1727,0,1,1,ok,67.2586,green,73.8067,green,58.7893,amber,84.1182,green,63.3784,green,67.9338,green,48.7689,amber,65.2750,green
-INFY,it_services,peer,FY26,latest,70.6236,green,1.0000,creates value,20448.5818,0,0,1,ok,60.9129,green,66.7915,green,64.4592,green,80.3073,green,74.0166,green,76.9657,green,70.1393,green,66.5451,green
-HINDUNILVR,fmcg,test,FY26,latest,63.1132,green,1.0000,creates value,6784.3916,0,4,1,ok,51.9556,amber,65.6745,green,63.5630,green,80.8222,green,62.7697,green,68.8043,green,36.4718,red,48.2843,amber
+HDFCBANK,bank,test,FY26,latest,59.4058,amber,0.9500,destroys value,-11303.7354,1,4,0,ok,80.8116,green,45.3818,amber,,n/a,35.4484,red,76.6852,green,68.0853,green,48.5056,amber,57.4335,amber
+ICICIBANK,bank,peer,FY26,latest,66.2744,green,0.9500,creates value,843.6795,0,1,0,ok,87.9651,green,46.7068,amber,,n/a,53.5768,amber,79.4011,green,76.6590,green,50.7928,amber,45.2584,amber
+BAJFINANCE,nbfc,test,FY26,latest,64.0636,green,0.9500,creates value,6811.5899,0,3,0,ok,86.8151,green,41.0623,amber,,n/a,65.1454,green,63.6389,green,66.8360,green,57.2171,amber,57.5163,amber
+HDFCLIFE,insurance,test,FY26,latest,59.4438,amber,1.0000,destroys value,-355.8435,2,0,1,ok,59.2067,amber,47.0138,amber,,n/a,35.4565,red,76.9048,green,63.3333,green,69.5550,green,89.4558,green
+TCS,it_services,test,FY26,latest,67.6677,green,1.0000,creates value,42376.1727,0,3,1,ok,64.4568,green,70.8860,green,52.7651,amber,84.1182,green,63.3784,green,67.9338,green,48.7689,amber,65.2750,green
+INFY,it_services,peer,FY26,latest,69.6513,green,1.0000,creates value,20448.5818,0,0,1,ok,57.1186,amber,63.8114,green,64.8977,green,80.3073,green,74.0166,green,76.9657,green,70.1393,green,66.5451,green
+HINDUNILVR,fmcg,test,FY26,latest,63.1389,green,1.0000,creates value,6784.3916,0,4,1,ok,52.1270,amber,65.6745,green,63.5630,green,80.8222,green,62.7697,green,68.8043,green,36.4718,red,48.2843,amber
 NESTLEIND,fmcg,peer,FY26,latest,67.5978,green,1.0000,creates value,3057.9783,0,2,2,ok,63.6960,green,76.4634,green,61.6514,green,65.5412,green,82.1135,green,69.7629,green,72.0170,green,44.0632,amber
 ASIANPAINT,consumer_manufacturing,test,FY26,latest,62.0459,green,1.0000,creates value,2029.1067,1,3,2,ok,50.4243,amber,68.2862,green,58.4520,amber,61.1710,green,77.6854,green,60.6522,amber,72.2686,green,48.2843,amber
-TATASTEEL,metals,test,FY26,latest,42.6053,amber,1.0000,destroys value,-7227.0802,1,4,2,ok,52.2348,amber,43.2016,amber,67.3795,green,8.7891,red,73.3986,green,38.9932,red,66.4902,green,15.6046,red
-ULTRACEMCO,cement,test,FY26,latest,48.8509,amber,1.0000,destroys value,-2176.6917,1,6,1,ok,71.9002,green,57.6019,amber,64.4124,green,19.9196,red,61.2337,green,54.9756,amber,26.5524,red,29.9020,red
-MARUTI,auto,test,FY26,latest,64.8956,green,1.0000,creates value,6958.2866,0,1,1,ok,75.0206,green,44.0711,amber,54.9221,amber,72.1460,green,67.5984,green,74.9014,green,72.6999,green,58.4559,amber
-SUNPHARMA,pharma,test,FY26,latest,55.7909,amber,1.0000,creates value,4254.5276,0,2,1,ok,61.7088,green,57.9435,amber,47.8212,amber,63.0134,green,59.4926,amber,75.3888,green,45.3208,amber,17.2943,red
-BEL,capital_goods_defence,test,FY26,latest,59.0137,amber,1.0000,creates value,3437.5090,2,6,1,ok,93.9591,green,60.4685,green,52.7444,amber,81.6850,green,29.3430,red,79.5789,green,21.8888,red,7.8431,red
-HAL,capital_goods_defence,peer,FY26,latest,60.3255,green,1.0000,creates value,7383.3675,0,6,2,ok,78.6132,green,61.0067,green,43.8994,amber,64.5480,green,69.5404,green,77.8016,green,73.2027,green,2.1164,red
-DLF,real_estate,test,FY26,latest,46.1605,amber,1.0000,destroys value,-1695.6321,1,5,4,ok,54.0260,amber,34.3268,red,53.9289,amber,26.1250,red,66.2844,green,79.6759,green,63.9375,green,11.8260,red
-NTPC,utilities,test,FY26,latest,48.2187,amber,1.0000,destroys value,-17530.9770,2,4,1,ok,74.8276,green,59.2194,amber,30.0375,red,33.5155,red,62.6202,green,47.9585,amber,31.3740,red,26.4727,red
-BHARTIARTL,telecom,test,FY26,latest,61.5082,green,1.0000,creates value,10367.5031,1,4,2,ok,76.2074,green,62.9425,green,56.7341,amber,62.6164,green,72.3013,green,57.4726,amber,47.8136,amber,34.5588,red
+TATASTEEL,metals,test,FY26,latest,43.6821,amber,1.0000,destroys value,-7227.0802,1,4,1,ok,56.2584,amber,44.9378,amber,69.2913,green,8.7891,red,73.3986,green,39.2096,red,66.4902,green,15.6046,red
+ULTRACEMCO,cement,test,FY26,latest,49.7666,amber,1.0000,destroys value,-2176.6917,1,6,1,ok,76.0378,green,57.6999,amber,65.7655,green,19.9196,red,61.2337,green,56.4262,amber,26.5524,red,29.9020,red
+MARUTI,auto,test,FY26,latest,64.8489,green,1.0000,creates value,6958.2866,0,1,1,ok,74.7090,green,44.0711,amber,54.9221,amber,72.1460,green,67.5984,green,74.9014,green,72.6999,green,58.4559,amber
+SUNPHARMA,pharma,test,FY26,latest,55.9600,amber,1.0000,creates value,4254.5276,0,2,1,ok,62.8364,green,57.9435,amber,47.8212,amber,63.0134,green,59.4926,amber,75.3888,green,45.3208,amber,17.2943,red
+BEL,capital_goods_defence,test,FY26,latest,58.4062,amber,1.0000,creates value,3437.5090,2,6,1,ok,89.9089,green,60.4685,green,52.7444,amber,81.6850,green,29.3430,red,79.5789,green,21.8888,red,7.8431,red
+HAL,capital_goods_defence,peer,FY26,latest,60.6172,green,1.0000,creates value,7383.3675,0,6,2,ok,80.5575,green,61.0067,green,43.8994,amber,64.5480,green,69.5404,green,77.8016,green,73.2027,green,2.1164,red
+DLF,real_estate,test,FY26,latest,52.7499,amber,1.0000,destroys value,-1695.6321,2,5,4,ok,51.4533,amber,34.3268,red,57.5618,amber,26.1250,red,68.3266,amber,81.1969,green,63.9375,green,11.8260,red
+NTPC,utilities,test,FY26,latest,49.6666,amber,1.0000,destroys value,-17530.9770,2,4,1,ok,74.8276,green,59.2194,amber,36.4797,red,35.0555,red,62.6202,green,52.9148,amber,31.3740,red,26.4727,red
+BHARTIARTL,telecom,test,FY26,latest,61.8005,green,1.0000,creates value,10367.5031,1,4,2,ok,76.2074,green,62.6751,green,59.6485,amber,62.6164,green,72.3013,green,57.8822,amber,47.8136,amber,34.5588,red
 DMART,retail,test,FY26,latest,55.7518,amber,1.0000,destroys value,-417.4818,0,6,1,ok,78.2038,green,57.3695,amber,60.9873,green,28.0157,red,60.1590,green,57.9596,amber,78.8628,green,49.5098,amber
 ADANIENT,holdco,test,FY26,latest,36.3098,red,1.0000,destroys value,-13938.0542,3,11,4,ok,58.6464,amber,41.3039,amber,60.6451,green,14.5743,red,30.3941,red,39.4746,red,33.1876,red,21.7195,red
-YESBANK,bank,blowup,FY18,"as-of (truncated, no look-ahead)",44.0899,amber,0.9500,creates value,465.8535,2,2,0,ok,100.0000,green,34.3773,red,,n/a,51.6205,amber,,n/a,34.6785,red,18.8794,red,0.0000,red
+YESBANK,bank,blowup,FY18,"as-of (truncated, no look-ahead)",58.8521,amber,0.9500,creates value,465.8535,2,2,0,ok,100.0000,green,42.4254,amber,,n/a,51.6205,amber,65.8619,green,57.5517,amber,56.6382,amber,0.0000,red
